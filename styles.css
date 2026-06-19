@@ -831,6 +831,16 @@ code {
     grid-template-columns: 1fr;
   }
 
+  .hero-actions,
+  .close-actions,
+  .service-actions,
+  .terms-actions,
+  .request-actions,
+  .checklist-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .button {
     width: 100%;
   }

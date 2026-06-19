@@ -40,6 +40,9 @@ https://jackjin1997.github.io/agent-audit-sprint/samples.html
 Intake:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 
+Short slot reservation:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
+
 Best,
 Zexu
 ```
@@ -64,4 +67,3 @@ No worries if this is not relevant right now.
 - There is a public repo, private repo access path, docs site, package, Docker image, or product slice to audit.
 - The team has a likely business reason to pay $1,000 for faster launch confidence.
 - The outreach can be personalized without making a public security accusation.
-

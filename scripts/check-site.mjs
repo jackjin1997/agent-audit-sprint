@@ -47,6 +47,7 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.html",
   "reports/firecrawl-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
+  ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
   "tools/agent-mcp-audit.mjs",
   "scripts/comment-audit-triage.mjs",
   "docs/mcp-security-audit-service.md",
@@ -116,6 +117,9 @@ try {
     }
     if (!indexBody.includes("browser-only local scanner")) {
       throw new Error(`Index page missing browser scanner copy in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Reserve audit slot")) {
+      throw new Error(`Index page missing short slot reservation CTA in ${viewport.name}`);
     }
     if (!indexBody.includes("Compare both sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
@@ -195,6 +199,9 @@ try {
     if (!serviceText.includes("Ask before booking")) {
       throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);
     }
+    if (!serviceText.includes("Reserve audit slot")) {
+      throw new Error(`Service page missing short slot reservation CTA in ${viewport.name}`);
+    }
     if (
       !serviceText.includes("Trading MCP security audit") ||
       !serviceText.includes("Workspace MCP security audit") ||
@@ -218,6 +225,9 @@ try {
     const scanText = await page.locator("body").innerText();
     if (!scanText.includes("does not upload code") || !scanText.includes("does not execute target code")) {
       throw new Error(`Scanner page missing safety copy in ${viewport.name}`);
+    }
+    if (!scanText.includes("Reserve audit slot")) {
+      throw new Error(`Scanner page missing short slot reservation CTA in ${viewport.name}`);
     }
     await page.locator("[data-local-scan-input]").setInputFiles(resolve(root, "examples/local-scan-fixture"));
     await page.locator("[data-local-scan-form]").evaluate((form) => form.requestSubmit());

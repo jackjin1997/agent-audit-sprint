@@ -1,0 +1,62 @@
+name: Reserve audit slot
+description: Short buying-intent form for the $1,000 Agent/MCP Audit Sprint
+title: "Audit slot: <project name>"
+labels: ["audit-intent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this shorter form when you want to reserve a $1,000 Agent/MCP Audit Sprint slot before writing a full scope. Do not paste secrets, private keys, cookies, customer data, or production logs with sensitive values.
+  - type: input
+    id: project
+    attributes:
+      label: Project or repo URL
+      description: Public repo, docs, package, demo, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Timing
+      description: When do you want the review to start after scope/payment confirmation?
+      options:
+        - 48h target
+        - This week
+        - Date to discuss
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose ETH/SOL if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum after scope acceptance
+        - Solana after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: One-line concern
+      description: Optional short reason this audit is useful.
+      placeholder: Remote MCP launch, write-capable tools, workspace data, trading actions, database access, browser automation...
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, cookies, private keys, or sensitive customer data in this issue.
+          required: true
+        - label: I understand this reserves discussion for a $1,000 fixed-price audit for one repo or product slice.
+          required: true

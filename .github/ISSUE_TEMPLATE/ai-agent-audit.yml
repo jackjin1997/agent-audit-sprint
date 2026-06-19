@@ -1,0 +1,74 @@
+name: AI agent security audit
+description: Start a $1,000 security review for an AI agent, tool-calling app, or MCP-backed product
+title: "AI agent audit: <project name>"
+labels: ["audit-request", "ai-agent-audit"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for an AI Agent Security Audit Sprint. Do not paste secrets, private keys, cookies, customer data, production logs with sensitive values, or proprietary source into a public issue.
+  - type: input
+    id: project
+    attributes:
+      label: Project, repo, demo, or product URL
+      description: Public repo, docs, package, hosted demo, product URL, or "private repo after scope acceptance".
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: textarea
+    id: agent_surface
+    attributes:
+      label: Agent surface
+      description: What does the agent do, and which tools or providers can it call?
+      placeholder: Function calling, MCP tools, browser automation, RAG, memory/state, workspace APIs, cloud/database APIs, payment or trading actions...
+    validations:
+      required: true
+  - type: textarea
+    id: highest_risks
+    attributes:
+      label: Highest-risk paths
+      description: List the specific flows that would hurt most if the agent behaved incorrectly.
+      placeholder: Prompt/tool injection from external content, account mutation, credential exposure, authenticated browser session actions, tenant isolation, destructive cloud/database calls...
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence to review
+      description: Links or sanitized notes that can scope the audit without exposing secrets.
+      placeholder: Public scanner output, SARIF alert URL, workflow run, trace screenshots, architecture notes, test gaps, or sanitized docs.
+    validations:
+      required: true
+  - type: dropdown
+    id: delivery_visibility
+    attributes:
+      label: Delivery visibility
+      description: Where should the final report be delivered?
+      options:
+        - Private Markdown report
+        - Public GitHub issue comment
+        - Private first, public summary later
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose ETH/SOL if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum after scope acceptance
+        - Solana after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, cookies, private keys, sensitive customer data, or proprietary source in this public issue.
+          required: true
+        - label: I understand this is a $1,000 fixed-price audit for one AI agent, repo, MCP server, or product slice.
+          required: true
+        - label: I will send payment only after written scope acceptance.
+          required: true

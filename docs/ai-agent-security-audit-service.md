@@ -10,7 +10,8 @@ Fixed-price human review for one AI agent, MCP server, or tool-using product sli
 - GitHub Code Scanning/SARIF guide: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html
 - MCP server security scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - Fixed quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
-- Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
+- AI agent intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
+- General intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short slot reservation: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 
@@ -32,7 +33,7 @@ Fixed-price human review for one AI agent, MCP server, or tool-using product sli
 
 ## Flow
 
-1. Open an intake issue with repo/product URL, scope, evidence, delivery visibility, payment network, and highest concern.
+1. Open the AI agent intake issue with repo/product URL, agent surface, highest-risk paths, evidence, delivery visibility, payment network, and highest concern.
 2. Optionally attach browser scanner output, SARIF alerts, traces, or sanitized architecture notes.
 3. Scope is accepted in writing for one repo, agent, MCP server, or product slice.
 4. Pay USD $1,000 equivalent only after scope acceptance, or agree an invoice-first path before work starts.

@@ -41,6 +41,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` - sample reports based on real public repos
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, and payment proof forms
+- `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
@@ -60,6 +61,7 @@ Browser:
 
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- AI agent audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
 - MCP server scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
 - GitHub Code Scanning workflow: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html

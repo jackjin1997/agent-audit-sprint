@@ -16,6 +16,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Service: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
+- AI agent intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
 - Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short paid-slot intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Code Scanning audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml

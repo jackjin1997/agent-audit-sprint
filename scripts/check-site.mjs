@@ -52,6 +52,7 @@ const requiredFiles = [
   "LICENSE",
   "action.yml",
   ".github/FUNDING.yml",
+  ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
@@ -467,8 +468,12 @@ try {
       throw new Error(`AI agent service page missing price, risk surface, or payment guardrail in ${viewport.name}`);
     }
     const aiAgentServiceCta = await page.locator("a.button.primary").first().getAttribute("href");
-    if (!aiAgentServiceCta?.includes("audit-request.yml")) {
-      throw new Error(`AI agent service CTA missing intake URL in ${viewport.name}`);
+    if (!aiAgentServiceCta?.includes("ai-agent-audit.yml")) {
+      throw new Error(`AI agent service CTA missing dedicated intake URL in ${viewport.name}`);
+    }
+    const aiAgentIntakeLinks = await page.locator("a[href*='template=ai-agent-audit.yml']").count();
+    if (aiAgentIntakeLinks < 2) {
+      throw new Error(`AI agent service page missing dedicated intake links in ${viewport.name}`);
     }
     const aiAgentServiceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiAgentServiceOverflow) throw new Error(`AI agent service horizontal overflow detected in ${viewport.name}`);

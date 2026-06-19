@@ -5,7 +5,8 @@ import { execFileSync } from "node:child_process";
 
 const root = resolve(import.meta.dirname, "..");
 const index = `file://${resolve(root, "index.html")}`;
-const report = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
+const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
+const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
@@ -29,6 +30,8 @@ const requiredFiles = [
   "assets/payments/sol-address.svg",
   "reports/douban-mcp-sample-audit.html",
   "reports/douban-mcp-sample-audit.md",
+  "reports/firecrawl-mcp-sample-audit.html",
+  "reports/firecrawl-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   "tools/agent-mcp-audit.mjs",
   "docs/mcp-security-audit-service.md",
@@ -106,11 +109,29 @@ try {
     }
     await page.screenshot({ path: resolve(root, `tmp-${viewport.name}.png`), fullPage: true });
 
-    await page.goto(report, { waitUntil: "networkidle" });
+    await page.goto(doubanReport, { waitUntil: "networkidle" });
     const reportTitle = await page.locator("h1").innerText();
     if (!reportTitle.includes("douban-mcp")) throw new Error(`Unexpected report h1 in ${viewport.name}: ${reportTitle}`);
     const reportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (reportOverflow) throw new Error(`Report horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(firecrawlReport, { waitUntil: "networkidle" });
+    const firecrawlReportTitle = await page.locator("h1").innerText();
+    if (!firecrawlReportTitle.includes("firecrawl")) {
+      throw new Error(`Unexpected Firecrawl report h1 in ${viewport.name}: ${firecrawlReportTitle}`);
+    }
+    const firecrawlReportText = await page.locator("body").innerText();
+    if (!firecrawlReportText.includes("independent public-code sample")) {
+      throw new Error(`Firecrawl report missing sample disclaimer in ${viewport.name}`);
+    }
+    const firecrawlReportCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!firecrawlReportCta?.includes("audit-request.yml")) {
+      throw new Error(`Firecrawl report CTA missing intake URL in ${viewport.name}`);
+    }
+    const firecrawlReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (firecrawlReportOverflow) {
+      throw new Error(`Firecrawl report horizontal overflow detected in ${viewport.name}`);
+    }
 
     await page.goto(service, { waitUntil: "networkidle" });
     const serviceTitle = await page.locator("h1").innerText();

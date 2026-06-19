@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sample Agent/MCP audit report for firecrawl/firecrawl-mcp-server.">
+    <title>Sample Audit: firecrawl-mcp-server</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      body {
+        background: #fbfaf7;
+      }
+
+      .report-shell {
+        width: min(980px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 104px 0 80px;
+      }
+
+      .report-hero {
+        padding: 34px 0 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .report-hero h1 {
+        max-width: 900px;
+        color: var(--ink);
+        font-size: clamp(38px, 6vw, 66px);
+      }
+
+      .report-hero p {
+        max-width: 780px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .report-meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .report-meta div,
+      .finding-block,
+      .positive-list,
+      .code-block {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .report-meta div {
+        padding: 16px;
+      }
+
+      .report-meta span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 780;
+        text-transform: uppercase;
+      }
+
+      .report-meta strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+
+      .report-section {
+        padding: 42px 0 0;
+      }
+
+      .report-section h2 {
+        margin-bottom: 16px;
+        font-size: 32px;
+      }
+
+      .report-section p,
+      .report-section li,
+      .report-section td,
+      .report-section th {
+        color: #4d5664;
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .scope-list,
+      .priority-list {
+        padding-left: 22px;
+      }
+
+      .boundary-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .boundary-table th,
+      .boundary-table td {
+        padding: 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .boundary-table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .finding-block {
+        padding: 20px;
+        margin-top: 16px;
+      }
+
+      .finding-title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .severity {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 58px;
+        height: 28px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .severity.high { background: var(--red); }
+      .severity.med { background: var(--amber); }
+      .severity.low { background: var(--teal); }
+
+      .positive-list {
+        display: grid;
+        gap: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .positive-list li {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .positive-list li:last-child {
+        border-bottom: 0;
+      }
+
+      .code-block {
+        padding: 16px;
+        overflow-x: auto;
+      }
+
+      .report-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .report-actions .button.secondary {
+        color: var(--ink);
+        background: transparent;
+        border-color: var(--line);
+      }
+
+      @media (max-width: 760px) {
+        .report-meta {
+          grid-template-columns: 1fr;
+        }
+
+        .boundary-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .finding-title {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="../mcp-security-audit-service.html">Service</a>
+        <a href="../checklist.html">Checklist</a>
+        <a href="../terms.html">Terms</a>
+        <a href="../index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-hero">
+        <p class="eyebrow">Sample audit report</p>
+        <h1>firecrawl/firecrawl-mcp-server</h1>
+        <p>
+          This independent public-code sample is based on commit <code>980a76f31f93e865fe6c6636eb938995e1d3444b</code>. It is not a commissioned review or private vulnerability disclosure, and no Firecrawl API calls, customer data, credentials, or live endpoint tests were used.
+        </p>
+        <div class="report-meta">
+          <div><span>Target</span><strong>Official Firecrawl MCP Server</strong></div>
+          <div><span>Validation</span><strong>pnpm install + build passed</strong></div>
+          <div><span>Scanner Score</span><strong>72/100 heuristic score</strong></div>
+        </div>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary" href="../mcp-security-audit-service.html">View service</a>
+          <a class="button secondary" href="firecrawl-mcp-sample-audit.md">Markdown report</a>
+        </div>
+      </section>
+
+      <section class="report-section">
+        <h2>Scope</h2>
+        <ul class="scope-list">
+          <li>MCP server startup and transport selection</li>
+          <li>OAuth/API-key credential handling</li>
+          <li>Tool schemas and safety annotations</li>
+          <li>Open-web scrape/search/crawl/interact/monitor tools</li>
+          <li>Local file parse tool boundary</li>
+          <li>CI, build, and test surface</li>
+        </ul>
+        <p>Out of scope: private infrastructure, production deployment config, live Firecrawl API behavior, customer data, and unpublished branches.</p>
+      </section>
+
+      <section class="report-section">
+        <h2>Executive Summary</h2>
+        <p>
+          The server has a mature MCP shape: hosted cloud mode is separated from local/stdin use, OAuth access-token introspection exists for hosted MCP, Zod schemas are used heavily, MCP safety annotations are present, and cloud safe mode disables interactive browser actions.
+        </p>
+        <p>
+          The main risks are boundary clarity and regression proof. Remote transport behavior is spread across several docs and env vars, local file parsing can read arbitrary paths when enabled, monitor/update/delete paths need focused tests, and CI currently builds but does not exercise the advertised Jest test command.
+        </p>
+      </section>
+
+      <section class="report-section">
+        <h2>Boundary Map</h2>
+        <table class="boundary-table">
+          <thead>
+            <tr><th>Area</th><th>Evidence</th><th>Risk Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Startup and transport</td><td><code>src/index.ts</code>, <code>VERSIONING.md</code>, <code>README.md</code></td><td>Defaults to stdio; HTTP stream starts from cloud, SSE local, or HTTP stream env flags.</td></tr>
+            <tr><td>Auth</td><td><code>src/index.ts</code></td><td>Hosted cloud requires OAuth/API key except secret-gated keyless sessions; local HTTP stream fails closed without credentials or a self-hosted URL.</td></tr>
+            <tr><td>Safe mode</td><td><code>src/index.ts</code></td><td>Cloud safe mode restricts scrape actions to wait/screenshot/scroll/scrape.</td></tr>
+            <tr><td>Monitor tools</td><td><code>src/monitor.ts</code></td><td>Create, update, delete, run, and inspect monitor resources; destructive annotations are present for update/delete.</td></tr>
+            <tr><td>Local file parsing</td><td><code>src/index.ts</code></td><td>Non-cloud only; reads a user-supplied local file path and posts it to the configured parse endpoint.</td></tr>
+            <tr><td>CI and tests</td><td><code>.github/workflows/ci.yml</code>, <code>package.json</code></td><td>CI builds only. Test script references Jest, but Jest is not declared at this commit.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="report-section">
+        <h2>Findings</h2>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Med</span> Remote transport exposure policy is scattered across code and docs</h3>
+          <p><strong>Evidence:</strong> <code>src/index.ts</code>, <code>README.md</code>, and <code>VERSIONING.md</code>.</p>
+          <p><strong>Impact:</strong> Operators have to reconstruct bind address, auth source, host mode, and safe-mode behavior from several places. That is a common source of unsafe MCP remote deployments.</p>
+          <p><strong>Recommended fix:</strong> Add a single transport exposure matrix and a startup summary log line covering mode, host, port, credential source category, and safe-mode state.</p>
+        </article>
+
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Med</span> Local file parse needs an explicit trust boundary</h3>
+          <p><strong>Evidence:</strong> <code>firecrawl_parse</code> resolves a supplied path, reads it, and uploads it to the configured self-hosted parse endpoint.</p>
+          <p><strong>Impact:</strong> The tool is read-only for filesystem mutation, but a local MCP client can still ask it to read and upload local files. That should be treated as a sensitive local capability.</p>
+          <p><strong>Recommended fix:</strong> Document trusted-client requirements and add an optional parse root allowlist such as <code>FIRECRAWL_PARSE_ROOT</code>.</p>
+        </article>
+
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Med</span> CI builds, but does not prove auth/tool regressions stay fixed</h3>
+          <p><strong>Evidence:</strong> CI runs install and build. The package test script references Jest, but Jest is not present in dev dependencies and no first-party test files were found.</p>
+          <p><strong>Impact:</strong> Build coverage does not prove OAuth failure paths, safe-mode action filtering, monitor annotations, feedback behavior, or parse boundaries.</p>
+          <p><strong>Recommended fix:</strong> Fix the test runner dependency and run focused tests in CI.</p>
+        </article>
+
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span> Feedback write surfaces deserve retry/error regression tests</h3>
+          <p><strong>Evidence:</strong> <code>firecrawl_search_feedback</code> and <code>firecrawl_feedback</code> submit additive account-associated feedback records.</p>
+          <p><strong>Impact:</strong> The annotations are reasonable, but agents can retry or loop if terminal errors are ambiguous.</p>
+          <p><strong>Recommended fix:</strong> Test 400/409 handling, daily cap handling, already-submitted handling, and missing credential behavior.</p>
+        </article>
+      </section>
+
+      <section class="report-section">
+        <h2>Positive Signals</h2>
+        <ul class="positive-list">
+          <li>OAuth access tokens are identified and introspected before conversion to API credentials.</li>
+          <li>HTTP stream mode fails closed without credentials or a self-hosted API URL.</li>
+          <li>Cloud safe mode removes click, write, press, executeJavascript, and generatePDF from scrape actions.</li>
+          <li>Search domain filters use a hostname-only schema and reject simultaneous include/exclude lists.</li>
+          <li>Monitor update/delete tools have destructive annotations.</li>
+          <li><code>redactPII</code>, <code>zeroDataRetention</code>, and <code>lockdown</code> are exposed as user-controllable options.</li>
+          <li><code>pnpm run build</code> passed at the audited commit.</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Priority Fix Plan</h2>
+        <ol class="priority-list">
+          <li>Add a transport exposure matrix and startup summary.</li>
+          <li>Fix the test script/dependencies and run tests in CI.</li>
+          <li>Add auth, safe-mode, monitor annotation, feedback, and parse-boundary unit tests.</li>
+          <li>Add a parse-root allowlist for local file parsing.</li>
+          <li>Add a short operator checklist for local HTTP/SSE deployments.</li>
+        </ol>
+      </section>
+
+      <section class="report-section">
+        <h2>Example Validation Commands</h2>
+        <pre class="code-block"><code>pnpm install --frozen-lockfile
+pnpm run build
+pnpm test
+HTTP_STREAMABLE_SERVER=true node dist/index.js</code></pre>
+      </section>
+
+      <section class="report-section">
+        <h2>What The Paid Sprint Adds</h2>
+        <p>
+          The paid sprint would go deeper than this public sample: live local reproduction where safe, focused tests written against the repo's actual runner, issue-ready remediation text, deployment-mode threat table, and a concise launch handoff for owners.
+        </p>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary" href="../terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

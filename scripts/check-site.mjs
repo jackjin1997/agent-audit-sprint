@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 
@@ -44,6 +44,7 @@ const requiredFiles = [
   "script.js",
   "scan.js",
   ".nojekyll",
+  "llms.txt",
   "robots.txt",
   "sitemap.xml",
   "LICENSE",
@@ -92,6 +93,27 @@ for (const file of requiredFiles) {
   if (!existsSync(resolve(root, file))) {
     throw new Error(`Missing required file: ${file}`);
   }
+}
+
+const llmsText = readFileSync(resolve(root, "llms.txt"), "utf8");
+if (!llmsText.includes("Fixed USD $1,000 async security audit")) {
+  throw new Error("llms.txt is missing the fixed-price service summary");
+}
+if (!llmsText.includes("payment only after written scope acceptance")) {
+  throw new Error("llms.txt is missing the payment timing guardrail");
+}
+if (!llmsText.includes("MCP Security Radar")) {
+  throw new Error("llms.txt is missing the Radar link context");
+}
+if (!llmsText.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
+  throw new Error("llms.txt is missing the standalone Action usage");
+}
+if (!llmsText.includes("Do not paste secrets")) {
+  throw new Error("llms.txt is missing the secret-handling warning");
+}
+const robotsText = readFileSync(resolve(root, "robots.txt"), "utf8");
+if (!robotsText.includes("llms.txt")) {
+  throw new Error("robots.txt is missing the llms.txt pointer");
 }
 
 const markdownOutput = execFileSync(process.execPath, [resolve(root, "tools/agent-mcp-audit.mjs"), root], {

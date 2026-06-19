@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Machine-readable service summary for AI/agent tools:
+# https://jackjin1997.github.io/agent-audit-sprint/llms.txt
+
 Sitemap: https://jackjin1997.github.io/agent-audit-sprint/sitemap.xml

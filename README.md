@@ -25,7 +25,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `trading-mcp-security-audit.html` / `workspace-mcp-security-audit.html` / `cloud-database-mcp-security-audit.html` / `browser-automation-mcp-security-audit.html` - vertical landing pages for high-risk MCP buyer segments
 - `samples.html` - public sample report index and conversion page
 - `checklist.html` / `docs/mcp-security-audit-checklist.md` - MCP security audit checklist content page
-- `robots.txt` / `sitemap.xml` - static search metadata
+- `llms.txt` / `robots.txt` / `sitemap.xml` - machine-readable LLM/service summary and static search metadata
 - `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
@@ -57,6 +57,7 @@ Run a quick local triage pass against an agent or MCP repo:
 
 Browser:
 
+- LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
 - MCP server scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
 - GitHub Code Scanning workflow: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html

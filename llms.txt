@@ -1,0 +1,66 @@
+# Agent/MCP Audit Sprint
+
+> Fixed USD $1,000 async security audit for one Agent/MCP repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking.
+
+Base URL: https://jackjin1997.github.io/agent-audit-sprint/
+Repository: https://github.com/jackjin1997/agent-audit-sprint
+Operator: Zexu Jin
+GitHub: https://github.com/jackjin1997
+Price: USD $1,000 fixed for one accepted audit scope
+Start rule: payment only after written scope acceptance
+Delivery target: 48 hours after written scope acceptance and payment confirmation
+
+## Primary Pages
+
+- Service: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html
+- Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
+- Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
+- Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
+- Short paid-slot intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
+- Code Scanning audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
+- Booking FAQ: https://github.com/jackjin1997/agent-audit-sprint/discussions/1
+
+## Free Triage
+
+- Browser scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
+- Shareable repo scan URL format: https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo
+- MCP server scan entry: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
+- MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
+- Code Scanning workflow guide: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html
+- Standalone GitHub Action: https://github.com/jackjin1997/agent-mcp-code-scan-action
+- GitHub Action usage: jackjin1997/agent-mcp-code-scan-action@v1
+- Local CLI via GitHub: npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
+
+## Audit Fit
+
+- MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
+- Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
+- Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.
+
+## High-Intent Verticals
+
+- Trading MCP audit: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
+- Workspace MCP audit: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html
+- Cloud and database MCP audit: https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html
+- Browser automation MCP audit: https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html
+
+## Public Samples
+
+- Sample report index: https://jackjin1997.github.io/agent-audit-sprint/samples.html
+- douban-mcp sample: https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html
+- firecrawl sample: https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html
+- Browserbase sample: https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html
+
+## Radar Detail Briefs
+
+- microsoft/playwright-mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/playwright-mcp-security-scan.html
+- ChromeDevTools/chrome-devtools-mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/chrome-devtools-mcp-security-scan.html
+- github/github-mcp-server: https://jackjin1997.github.io/agent-audit-sprint/reports/github-mcp-server-security-scan.html
+- BrowserMCP/mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/browsermcp-mcp-security-scan.html
+
+## Safety And Scope
+
+- Free scanner and Radar triage do not install target dependencies, execute target code, or call target live services.
+- Public Radar scores are heuristic triage signals, not confirmed vulnerabilities, certification, endorsement, or commissioned audit results.
+- Do not paste secrets, private keys, cookies, access tokens, customer data, or proprietary source into public issues.
+- Payment should not be sent until scope is accepted in writing.

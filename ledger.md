@@ -93,7 +93,7 @@ Checked on 2026-06-20:
 | Request brief builder | `index.html#request`, `script.js` | Published |
 | Scanner paid-review handoff | `tools/agent-mcp-audit.mjs` Markdown output | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
-| Search metadata | `robots.txt`, `sitemap.xml`, JSON-LD | Published |
+| Search metadata | `llms.txt`, `robots.txt`, `sitemap.xml`, JSON-LD | Added machine-readable LLM/agent service summary for the fixed $1,000 Agent/MCP audit offer |
 | GitHub Pages static mode | `.nojekyll` | Published |
 | npm package preparation | `agent-mcp-audit` | Prepared for npmjs.org; npm not logged in, not published |
 | CI validation workflow | `.github/workflows/validate.yml` | Published |

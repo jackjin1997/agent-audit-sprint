@@ -93,6 +93,42 @@
         </div>
       </section>
 
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Payment packet</p>
+          <h2>Copy one block after scope acceptance</h2>
+          <p>
+            Use this block when a buyer needs the exact acceptance, payment, and proof instructions in one place. Amount is kept in USD so the crypto equivalent can be calculated at payment time.
+          </p>
+          <div class="service-actions">
+            <button class="button primary" type="button" data-copy-target="#payment-packet">Copy payment packet</button>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Submit payment proof</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div>
+            <strong>Copyable payment packet</strong>
+            <code id="payment-packet">I accept the USD $1,000 Agent/MCP Audit Sprint quote for one repo or product slice.
+
+Scope: [repo/product slice]
+Delivery: [public issue comment or private Markdown report]
+Payment timing: after written scope acceptance only.
+
+Ethereum address:
+0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
+
+Solana address:
+5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
+
+Payment proof form:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml
+
+Start rule:
+The 48-hour target starts after both scope acceptance and payment confirmation.</code>
+          </div>
+        </div>
+      </section>
+
       <section class="service-band service-flow">
         <p class="eyebrow">Flow</p>
         <h2>From quote to delivery</h2>
@@ -117,5 +153,6 @@
       <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
       <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -482,8 +482,21 @@ try {
     if (!quoteText.includes("Submit payment proof")) {
       throw new Error(`Quote page missing payment proof CTA in ${viewport.name}`);
     }
+    if (!quoteText.includes("Copy payment packet")) {
+      throw new Error(`Quote page missing copyable payment packet action in ${viewport.name}`);
+    }
+    if (!quoteText.includes("Payment timing: after written scope acceptance only.")) {
+      throw new Error(`Quote page missing payment packet timing guardrail in ${viewport.name}`);
+    }
+    if (!quoteText.includes("The 48-hour target starts after both scope acceptance and payment confirmation.")) {
+      throw new Error(`Quote page missing payment packet start rule in ${viewport.name}`);
+    }
     if (!quoteText.includes("48-hour target")) {
       throw new Error(`Quote page missing delivery target in ${viewport.name}`);
+    }
+    const paymentPacketTarget = await page.locator("[data-copy-target='#payment-packet']").getAttribute("data-copy-target");
+    if (paymentPacketTarget !== "#payment-packet") {
+      throw new Error(`Quote page payment packet copy target missing in ${viewport.name}`);
     }
     const quoteOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (quoteOverflow) throw new Error(`Quote horizontal overflow detected in ${viewport.name}`);

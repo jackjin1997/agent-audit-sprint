@@ -14,6 +14,23 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const target = document.querySelector(button.getAttribute("data-copy-target") || "");
+    const value = target?.textContent?.trim() || "";
+    try {
+      await navigator.clipboard.writeText(value);
+      const original = button.textContent;
+      button.textContent = "Copied";
+      window.setTimeout(() => {
+        button.textContent = original;
+      }, 1300);
+    } catch {
+      button.textContent = "Select";
+    }
+  });
+});
+
 const intakeForm = document.querySelector("[data-intake-form]");
 
 function setButtonText(button, value) {

@@ -16,6 +16,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Files
 
 - `index.html` - public landing page
+- `checklist.html` / `docs/mcp-security-audit-checklist.md` - MCP security audit checklist content page
 - `robots.txt` / `sitemap.xml` - static search metadata
 - `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner

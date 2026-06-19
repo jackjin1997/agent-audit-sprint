@@ -553,6 +553,90 @@ code {
   font-size: 14px;
 }
 
+.checklist-page {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 104px 0 72px;
+}
+
+.checklist-hero {
+  padding: 34px 0 38px;
+  border-bottom: 1px solid var(--line);
+}
+
+.checklist-hero h1 {
+  color: var(--ink);
+  font-size: clamp(38px, 6vw, 70px);
+}
+
+.checklist-hero p,
+.check-card li,
+.checklist-close p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.checklist-hero p {
+  max-width: 780px;
+}
+
+.checklist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 42px 0;
+}
+
+.check-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.check-card span {
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.check-card h2 {
+  margin-top: 8px;
+  font-size: 26px;
+}
+
+.check-card ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+}
+
+.check-card li + li {
+  margin-top: 8px;
+}
+
+.checklist-close {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.checklist-close > div {
+  margin: 0;
+}
+
 @media (max-width: 900px) {
   .topbar {
     padding: 0 18px;
@@ -577,6 +661,7 @@ code {
   .field-grid,
   .payment-steps,
   .pay-grid,
+  .checklist-grid,
   .split {
     grid-template-columns: 1fr;
   }
@@ -592,6 +677,12 @@ code {
   .close {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .checklist-close {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px;
   }
 }
 

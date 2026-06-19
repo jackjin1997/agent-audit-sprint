@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="MCP security audit checklist for agent tools: transports, auth, write actions, schemas, secrets, prompt injection, tests, and release gates.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/checklist.html">
+    <meta property="og:title" content="MCP Security Audit Checklist">
+    <meta property="og:description" content="Practical pre-launch checklist for MCP servers and agent tools.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/checklist.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MCP Security Audit Checklist">
+    <meta name="twitter:description" content="Practical pre-launch checklist for MCP servers and agent tools.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>MCP Security Audit Checklist</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "MCP Security Audit Checklist",
+        "description": "Practical pre-launch checklist for MCP servers and agent tools.",
+        "author": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Zexu Jin"
+        },
+        "mainEntityOfPage": "https://jackjin1997.github.io/agent-audit-sprint/checklist.html"
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#deliverables">Deliverables</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="reports/douban-mcp-sample-audit.html">Sample</a>
+        <a href="terms.html">Terms</a>
+        <a href="index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="checklist-page">
+      <section class="checklist-hero">
+        <p class="eyebrow">Pre-launch review</p>
+        <h1>MCP Security Audit Checklist</h1>
+        <p>
+          A practical checklist for maintainers shipping MCP servers, agent tools, or tool-using products that can read data, write data, call APIs, or run in a remote transport.
+        </p>
+        <div class="checklist-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Book the $1,000 sprint</a>
+          <a class="button secondary dark" href="index.html#request">Generate request brief</a>
+          <a class="button secondary dark" href="docs/mcp-security-audit-checklist.md">Markdown checklist</a>
+        </div>
+      </section>
+
+      <section class="checklist-grid" aria-label="Audit checklist">
+        <article class="check-card">
+          <span>01</span>
+          <h2>Tool Inventory</h2>
+          <ul>
+            <li>List every tool, resource, prompt, and external API call.</li>
+            <li>Classify each path as read-only, write, destructive, privileged, or external.</li>
+            <li>Document which tools are disabled by default and which require operator opt-in.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>02</span>
+          <h2>Transport Exposure</h2>
+          <ul>
+            <li>State whether stdio, local HTTP, remote HTTP, SSE, or WebSocket transports are supported.</li>
+            <li>Document bind address, trusted clients, proxy layer, CORS/origin assumptions, and TLS expectations.</li>
+            <li>Fail closed when remote mode is enabled without an explicit exposure policy.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>03</span>
+          <h2>Auth And Session Boundaries</h2>
+          <ul>
+            <li>Separate user identity, app identity, tool permission, and provider token scopes.</li>
+            <li>Check auth failures for each transport and each write-capable tool.</li>
+            <li>Make session expiry, refresh, revocation, and tenant isolation visible in tests.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>04</span>
+          <h2>Write Action Controls</h2>
+          <ul>
+            <li>Gate write, delete, publish, send, transfer, and execute actions behind explicit config.</li>
+            <li>Use dry-run or preview modes for high-impact operations.</li>
+            <li>Test that write tools are absent or blocked when the safe mode is active.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>05</span>
+          <h2>Schema And Input Constraints</h2>
+          <ul>
+            <li>Constrain strings with length, format, enum, and path rules where possible.</li>
+            <li>Reject path traversal, command fragments, unexpected URLs, and oversized payloads.</li>
+            <li>Keep tool descriptions clear enough that agents do not infer hidden permissions.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>06</span>
+          <h2>Secret Handling</h2>
+          <ul>
+            <li>Redact provider keys, cookies, Authorization headers, private keys, and account tokens.</li>
+            <li>Apply redaction to logs, thrown errors, telemetry, tool output, and report artifacts.</li>
+            <li>Test real object shapes from HTTP clients, SDK errors, and config loaders.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>07</span>
+          <h2>Prompt And Tool Injection</h2>
+          <ul>
+            <li>Treat tool output, retrieved documents, web pages, tickets, and logs as untrusted data.</li>
+            <li>Keep instructions separate from data when returning external content to an agent.</li>
+            <li>Test malicious tool output that asks the agent to call privileged tools or reveal secrets.</li>
+          </ul>
+        </article>
+        <article class="check-card">
+          <span>08</span>
+          <h2>Release Gate</h2>
+          <ul>
+            <li>Run install, lint, typecheck, focused tests, and the heuristic scanner in CI.</li>
+            <li>Keep a launch note that lists accepted risks, owner, monitoring, and rollback path.</li>
+            <li>Block release when auth, secret redaction, or write-mode tests are missing.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="checklist-close">
+        <div>
+          <p class="eyebrow">Human review</p>
+          <h2>Turn this checklist into a ranked report</h2>
+          <p>
+            The $1,000 Agent/MCP Audit Sprint covers one repo or product slice and returns a boundary map, ranked findings, test plan, and launch notes within the 48-hour target after scope and payment confirmation.
+          </p>
+        </div>
+        <div class="close-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

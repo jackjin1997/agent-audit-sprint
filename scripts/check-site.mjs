@@ -7,8 +7,10 @@ const root = resolve(import.meta.dirname, "..");
 const index = `file://${resolve(root, "index.html")}`;
 const report = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
+const checklist = `file://${resolve(root, "checklist.html")}`;
 const requiredFiles = [
   "index.html",
+  "checklist.html",
   "terms.html",
   "styles.css",
   "script.js",
@@ -27,6 +29,7 @@ const requiredFiles = [
   "reports/douban-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   "tools/agent-mcp-audit.mjs",
+  "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
   "templates/receipt.md",
   "templates/statement-of-work.md",
@@ -99,6 +102,18 @@ try {
     if (!reportTitle.includes("douban-mcp")) throw new Error(`Unexpected report h1 in ${viewport.name}: ${reportTitle}`);
     const reportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (reportOverflow) throw new Error(`Report horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(checklist, { waitUntil: "networkidle" });
+    const checklistTitle = await page.locator("h1").innerText();
+    if (!checklistTitle.includes("MCP Security Audit Checklist")) {
+      throw new Error(`Unexpected checklist h1 in ${viewport.name}: ${checklistTitle}`);
+    }
+    const checklistCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!checklistCta?.includes("audit-request.yml")) {
+      throw new Error(`Checklist CTA missing intake URL in ${viewport.name}`);
+    }
+    const checklistOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (checklistOverflow) throw new Error(`Checklist horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(terms, { waitUntil: "networkidle" });
     const termsTitle = await page.locator("h1").innerText();

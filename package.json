@@ -9,6 +9,7 @@
   "files": [
     "tools/",
     "templates/",
+    "docs/",
     "reports/",
     "examples/",
     "action.yml",

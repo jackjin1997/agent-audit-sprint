@@ -39,7 +39,7 @@
         <p class="eyebrow">Browser-only triage</p>
         <h1>Local Agent/MCP Audit Scanner</h1>
         <p>
-          Select a local repo folder or files to generate a first-pass Agent/MCP risk report. The scan runs entirely in your browser, does not upload code, does not install dependencies, and does not execute target code.
+          Paste a public GitHub repo URL or select local files to generate a first-pass Agent/MCP risk report. The scan runs entirely in your browser, does not install dependencies, and does not execute target code.
         </p>
         <div class="service-actions">
           <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start paid audit</a>
@@ -51,10 +51,30 @@
 
       <section class="service-band service-split">
         <div>
-          <p class="eyebrow">Free local scan</p>
+          <p class="eyebrow">Free public repo scan</p>
+          <h2>Paste a GitHub URL</h2>
+          <p>
+            For public repos, this browser page fetches selected text files through GitHub and raw file URLs, then generates the same paid audit handoff. Private code stays out of this path.
+          </p>
+        </div>
+        <form class="request-tool" data-public-scan-form>
+          <label>
+            <span>Public GitHub repo URL</span>
+            <input data-public-repo-url type="url" placeholder="https://github.com/org/repo" autocomplete="url">
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Scan public repo</button>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start paid audit</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Private local scan</p>
           <h2>No upload, no execution</h2>
           <p>
-            This is a triage helper, not a security certification. It looks for review signals around MCP/tool surfaces, transports, write actions, secrets, auth, redaction, annotations, tests, and CI.
+            Select a folder when the repo is private or local-only. This path reads selected files in your browser and does not upload code.
           </p>
           <p>
             Prefer a terminal scan without cloning this repo:

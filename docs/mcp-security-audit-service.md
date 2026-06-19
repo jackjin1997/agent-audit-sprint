@@ -6,7 +6,7 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 - Turnaround target: 48 hours after scope acceptance and payment confirmation
 - Output: boundary map, ranked findings, test plan, launch notes
 - Public GitHub repo intakes receive an automated no-execution scanner triage comment
-- Browser-only local scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
+- Browser scanner for public GitHub URLs and private local files: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Terminal scanner without cloning: `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo`
 - Fixed quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
@@ -41,7 +41,7 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 ## Flow
 
 1. Open an intake issue with repo/product URL, scope, delivery visibility, payment network, and highest concern.
-2. Optionally run the browser-only local scanner first and paste the generated Markdown into the intake.
+2. Optionally run the browser scanner first with a public GitHub URL or private local files, then paste the generated Markdown into the intake.
 3. Public GitHub repo intakes receive an automated no-execution scanner triage comment in the issue.
 4. Scope is accepted for one repo or product slice.
 5. Pay USD $1,000 equivalent via Ethereum or Solana, or agree an invoice-first payment path before work starts.

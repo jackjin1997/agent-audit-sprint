@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-19.
+Last updated: 2026-06-20.
 
 ## Paid
 
@@ -12,7 +12,7 @@ Last updated: 2026-06-19.
 
 ## Chain Check
 
-Checked on 2026-06-19:
+Checked on 2026-06-20:
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
@@ -29,6 +29,7 @@ Checked on 2026-06-19:
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
+| Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |
 | GitHub npx scanner path | `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo` | Verified locally |
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |
 | Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |

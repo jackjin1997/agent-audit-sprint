@@ -3,6 +3,10 @@ const localScanInput = document.querySelector("[data-local-scan-input]");
 const localScanOutput = document.querySelector("[data-local-scan-output]");
 const localScanSummary = document.querySelector("[data-local-scan-summary]");
 const openScanRequest = document.querySelector("[data-open-scan-request]");
+const publicScanForm = document.querySelector("[data-public-scan-form]");
+const publicRepoInput = document.querySelector("[data-public-repo-url]");
+
+const maxRemoteFiles = 45;
 
 const ignorePathParts = new Set([
   ".git",
@@ -86,9 +90,13 @@ function extensionFor(path) {
 
 function shouldScanFile(file) {
   const path = pathForFile(file);
+  return shouldScanPath(path, file.size);
+}
+
+function shouldScanPath(path, size = 0) {
   const parts = path.split(/[\\/]+/);
   if (parts.some((part) => ignorePathParts.has(part))) return false;
-  if (file.size > 700_000) return false;
+  if (size > 700_000) return false;
   return textExtensions.has(extensionFor(path));
 }
 
@@ -118,10 +126,13 @@ async function analyzeBrowserFiles(files) {
   const candidates = Array.from(files).filter(shouldScanFile);
   const signals = Object.fromEntries(scanSignals.map((signal) => [signal.id, { ...signal, files: [] }]));
   let packageJson = null;
-
-  for (const file of candidates) {
+  const fileTexts = await Promise.all(candidates.map(async (file) => {
     const path = pathForFile(file);
     const text = await file.text().catch(() => "");
+    return { path, text };
+  }));
+
+  for (const { path, text } of fileTexts) {
     if (!text) continue;
     if (path.endsWith("package.json")) {
       try {
@@ -282,10 +293,18 @@ function renderReport(result) {
     `Fix direction: ${finding.fix}`,
   ].join("\n"));
 
+  const title = result.sourceTitle || "Local Agent/MCP Audit Scanner Report";
+  const safety = result.sourceKind === "github"
+    ? "This browser scan fetched selected public GitHub repository files through GitHub and raw file URLs. No dependencies were installed, and no target code was executed."
+    : "This browser-only scan read local files selected by the user. No code was uploaded, no dependencies were installed, and no target code was executed.";
+  const targetLine = result.targetUrl ? [`Target: ${result.targetUrl}`, ""] : [];
+
   return [
-    "# Local Agent/MCP Audit Scanner Report",
+    `# ${title}`,
     "",
-    "This browser-only scan read local files selected by the user. No code was uploaded, no dependencies were installed, and no target code was executed.",
+    safety,
+    "",
+    ...targetLine,
     "",
     `Heuristic score: ${result.score}/100`,
     `Files scanned: ${result.filesScanned}`,
@@ -323,14 +342,14 @@ function updateSummary(result) {
   localScanSummary.innerHTML = rows.join("");
 }
 
-function updateIssueLink(report) {
-  const title = "Audit request: local scanner report";
+function updateIssueLink(report, projectUrl = "TBD") {
+  const title = projectUrl === "TBD" ? "Audit request: scanner report" : `Audit request: ${projectUrl.replace(/^https:\/\/github\.com\//, "")}`;
   const body = [
     "## Project or repo URL",
-    "TBD",
+    projectUrl,
     "",
     "## Scope",
-    "Review the repo or product slice represented by this local scanner report.",
+    "Review the repo or product slice represented by this scanner report.",
     "",
     "## Delivery visibility",
     "Private Markdown report",
@@ -345,12 +364,125 @@ function updateIssueLink(report) {
     "Pending until scope is accepted and payment is sent.",
     "",
     "## Highest concern",
-    "Local scanner report attached below.",
+    "Scanner report attached below.",
     "",
-    "## Local scanner report",
+    "## Scanner report",
     report,
   ].join("\n");
   openScanRequest.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
+function parseGitHubRepoUrl(value) {
+  let parsed;
+  try {
+    parsed = new URL(value.trim());
+  } catch {
+    return null;
+  }
+  if (parsed.hostname !== "github.com") return null;
+  const [owner, repo] = parsed.pathname.replace(/^\/+/, "").replace(/\.git$/, "").split("/");
+  if (!owner || !repo) return null;
+  return { owner, repo, fullName: `${owner}/${repo}`, htmlUrl: `https://github.com/${owner}/${repo}` };
+}
+
+function remoteFilePriority(path) {
+  const normalized = path.toLowerCase();
+  let value = 0;
+  if (normalized === "package.json") value += 100;
+  if (normalized.startsWith(".github/workflows/")) value += 90;
+  if (/(mcp|agent|tool|server|transport|auth|permission|secret|credential|route|api)/.test(normalized)) value += 60;
+  if (/(src|lib|app|packages|server|tools)\//.test(normalized)) value += 25;
+  if (/(test|spec|__tests__)/.test(normalized)) value += 12;
+  return value;
+}
+
+function encodePath(path) {
+  return path.split("/").map(encodeURIComponent).join("/");
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, {
+    headers: {
+      accept: "application/vnd.github+json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`GitHub request failed (${response.status})`);
+  }
+  return response.json();
+}
+
+async function fetchPublicGitHubFiles(repo) {
+  const repoApiUrl = `https://api.github.com/repos/${repo.fullName}`;
+  const repoMeta = await fetchJson(repoApiUrl);
+  const branch = repoMeta.default_branch || "main";
+  const tree = await fetchJson(`${repoApiUrl}/git/trees/${encodeURIComponent(branch)}?recursive=1`);
+  const entries = Array.isArray(tree.tree) ? tree.tree : [];
+  const candidates = entries
+    .filter((entry) => entry.type === "blob" && shouldScanPath(entry.path, entry.size || 0))
+    .sort((a, b) => remoteFilePriority(b.path) - remoteFilePriority(a.path) || a.path.localeCompare(b.path))
+    .slice(0, maxRemoteFiles);
+
+  const files = candidates.map((entry) => ({
+    name: entry.path.split("/").pop(),
+    webkitRelativePath: entry.path,
+    size: entry.size || 0,
+    text: async () => {
+      const rawUrl = `https://raw.githubusercontent.com/${repo.fullName}/${encodeURIComponent(branch)}/${encodePath(entry.path)}`;
+      const response = await fetch(rawUrl);
+      if (!response.ok) return "";
+      return response.text();
+    },
+  }));
+
+  return { branch, files, truncated: Boolean(tree.truncated), htmlUrl: repoMeta.html_url || repo.htmlUrl };
+}
+
+async function runPublicScan() {
+  const repo = parseGitHubRepoUrl(publicRepoInput?.value || "");
+  if (!repo) {
+    localScanOutput.value = "Paste a public GitHub repo URL like https://github.com/org/repo.";
+    return;
+  }
+
+  localScanOutput.value = `Fetching public GitHub metadata for ${repo.fullName}...`;
+  try {
+    const { files, truncated, htmlUrl } = await fetchPublicGitHubFiles(repo);
+    if (!files.length) {
+      localScanOutput.value = `No text files under 700 KB were found in ${repo.fullName}.`;
+      return;
+    }
+
+    localScanOutput.value = `Scanning ${files.length} selected public files from ${repo.fullName}...`;
+    const result = await analyzeBrowserFiles(files);
+    result.sourceKind = "github";
+    result.sourceTitle = `Public GitHub Repo Scan: ${repo.fullName}`;
+    result.targetUrl = htmlUrl;
+
+    if (truncated) {
+      addFinding(
+        result.findings,
+        "Info",
+        "GitHub tree response was truncated",
+        [],
+        "Large repositories may exceed GitHub tree response limits, so this browser scan may miss some files.",
+        "Run the terminal scanner locally for a complete scan, then attach the report to the paid audit request."
+      );
+    }
+
+    const report = renderReport(result);
+    localScanOutput.value = report;
+    updateSummary(result);
+    updateIssueLink(report, htmlUrl);
+  } catch (error) {
+    localScanOutput.value = [
+      `Could not scan ${repo.fullName}.`,
+      "",
+      error instanceof Error ? error.message : "Unknown error",
+      "",
+      "If the repo is private or GitHub rate-limited this browser, use the local folder scanner or terminal command instead.",
+    ].join("\n");
+  }
 }
 
 async function runLocalScan() {
@@ -364,6 +496,13 @@ async function runLocalScan() {
   localScanOutput.value = report;
   updateSummary(result);
   updateIssueLink(report);
+}
+
+if (publicScanForm) {
+  publicScanForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runPublicScan();
+  });
 }
 
 if (localScanForm) {

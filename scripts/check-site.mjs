@@ -203,8 +203,11 @@ try {
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
     }
-    if (!indexBody.includes("browser-only local scanner")) {
-      throw new Error(`Index page missing browser scanner copy in ${viewport.name}`);
+    if (!indexBody.includes("browser scanner for public GitHub URLs")) {
+      throw new Error(`Index page missing public GitHub scanner copy in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Paste a public GitHub URL")) {
+      throw new Error(`Index page missing public scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Index page missing GitHub npx scanner command in ${viewport.name}`);
@@ -314,6 +317,63 @@ try {
     const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
 
+    await page.route("https://api.github.com/repos/example/agent-mcp**", async (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/git/trees/main?recursive=1")) {
+        await route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({
+            truncated: false,
+            tree: [
+              { path: "package.json", type: "blob", size: 150 },
+              { path: "src/server.ts", type: "blob", size: 1200 },
+              { path: ".github/workflows/ci.yml", type: "blob", size: 260 },
+            ],
+          }),
+        });
+        return;
+      }
+      await route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          full_name: "example/agent-mcp",
+          default_branch: "main",
+          html_url: "https://github.com/example/agent-mcp",
+        }),
+      });
+    });
+    await page.route("https://raw.githubusercontent.com/example/agent-mcp/main/**", async (route) => {
+      const url = decodeURIComponent(route.request().url());
+      if (url.endsWith("/package.json")) {
+        await route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({
+            scripts: {
+              test: "vitest",
+            },
+          }),
+        });
+        return;
+      }
+      if (url.endsWith("/.github/workflows/ci.yml")) {
+        await route.fulfill({
+          contentType: "text/yaml",
+          body: "name: ci\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n",
+        });
+        return;
+      }
+      await route.fulfill({
+        contentType: "text/typescript",
+        body: [
+          "import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';",
+          "import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';",
+          "const server = new McpServer({ name: 'agent-mcp', version: '1.0.0' });",
+          "server.registerTool('write_note', { description: 'write', inputSchema: {} }, async () => fetch('https://api.example.test/notes', { method: 'POST' }));",
+          "server.listen(process.env.PORT);",
+        ].join("\n"),
+      });
+    });
+
     await page.goto(scan, { waitUntil: "networkidle" });
     const scanTitle = await page.locator("h1").innerText();
     if (!scanTitle.includes("Local Agent/MCP Audit Scanner")) {
@@ -328,6 +388,23 @@ try {
     }
     if (!scanText.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Scanner page missing GitHub npx scanner command in ${viewport.name}`);
+    }
+    if (!scanText.includes("Paste a GitHub URL")) {
+      throw new Error(`Scanner page missing public GitHub URL scan copy in ${viewport.name}`);
+    }
+    await page.locator("[data-public-repo-url]").fill("https://github.com/example/agent-mcp");
+    await page.locator("[data-public-scan-form]").evaluate((form) => form.requestSubmit());
+    await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("Public GitHub Repo Scan"));
+    const publicScanOutput = await page.locator("[data-local-scan-output]").inputValue();
+    if (!publicScanOutput.includes("https://github.com/example/agent-mcp")) {
+      throw new Error(`Public scanner output missing GitHub target in ${viewport.name}`);
+    }
+    if (!publicScanOutput.includes("Paid 48-hour review")) {
+      throw new Error(`Public scanner output missing paid review handoff in ${viewport.name}`);
+    }
+    const publicScanHref = await page.locator("[data-open-scan-request]").getAttribute("href");
+    if (!decodeURIComponent(publicScanHref || "").includes("https://github.com/example/agent-mcp")) {
+      throw new Error(`Public scanner request link missing GitHub target in ${viewport.name}`);
     }
     await page.locator("[data-local-scan-input]").setInputFiles(resolve(root, "examples/local-scan-fixture"));
     await page.locator("[data-local-scan-form]").evaluate((form) => form.requestSubmit());

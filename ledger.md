@@ -62,6 +62,7 @@ Checked on 2026-06-19:
 | Public outbound playbook | `outreach/qualified-prospects-2026-06-19.md` | Published |
 | Scanner-led outreach playbook | `outreach/scanner-led-outreach.md` | Published |
 | Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | 20 targets prepared locally with scanner context; not public, not sent |
+| Private email draft pack | `private-notes/email-drafts-2026-06-19.md` | 9 public-contact drafts prepared locally; not public, not sent |
 
 ## Payment Addresses
 
@@ -72,7 +73,7 @@ Checked on 2026-06-19:
 
 ## Next Actions
 
-1. Send the scanner-led outreach message in `outreach/prospect-list.md` to 20 qualified MCP/agent teams.
-2. Post the landing page from the GitHub account and profile surfaces where appropriate.
+1. Review and send the prepared scanner-led email drafts in `private-notes/email-drafts-2026-06-19.md`.
+2. Use `private-notes/qualified-prospects-2026-06-19.md` for the remaining contact-form/discussion targets.
 3. If an inbound issue appears, qualify the scope, then request payment before beginning private work.
 4. Count revenue only after payment is confirmed on-chain or in an account statement.

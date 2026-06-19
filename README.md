@@ -17,7 +17,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
-- `trading-mcp-security-audit.html` / `workspace-mcp-security-audit.html` - vertical landing pages for high-risk MCP buyer segments
+- `trading-mcp-security-audit.html` / `workspace-mcp-security-audit.html` / `cloud-database-mcp-security-audit.html` / `browser-automation-mcp-security-audit.html` - vertical landing pages for high-risk MCP buyer segments
 - `samples.html` - public sample report index and conversion page
 - `checklist.html` / `docs/mcp-security-audit-checklist.md` - MCP security audit checklist content page
 - `robots.txt` / `sitemap.xml` - static search metadata

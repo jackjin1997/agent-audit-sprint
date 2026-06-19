@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="$1,000 fixed-price security audit for database, Kubernetes, cloud, infrastructure, and admin MCP servers with query execution, credentials, and destructive actions.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html">
+    <meta property="og:title" content="Cloud and Database MCP Security Audit">
+    <meta property="og:description" content="$1,000 audit for database, Kubernetes, cloud, and infrastructure MCP servers before agents can mutate production systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cloud and Database MCP Security Audit">
+    <meta name="twitter:description" content="$1,000 audit for database, Kubernetes, cloud, and infrastructure MCP servers.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>Cloud and Database MCP Security Audit</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="samples.html">Samples</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="terms.html">Terms</a>
+        <a href="index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Infrastructure MCP slice</p>
+        <h1>Cloud and Database MCP Security Audit</h1>
+        <p>
+          A $1,000 fixed-price review for MCP servers and agent tools that can query databases, manage Kubernetes, call cloud APIs, inspect logs, mutate infrastructure, or administer production systems.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary dark" href="samples.html">Read samples</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Price</span><strong>USD $1,000 fixed</strong></div>
+          <div><span>Target</span><strong>Database, Kubernetes, cloud, infra MCP</strong></div>
+          <div><span>Risk</span><strong>Queries, credentials, admin APIs, destructive actions</strong></div>
+          <div><span>Output</span><strong>Boundary map + release gate plan</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Why this is high impact</p>
+          <h2>Infrastructure tools turn agent mistakes into production incidents</h2>
+          <p>
+            Database, Kubernetes, and cloud MCP servers often give agents privileged read access plus mutation paths. The audit focuses on where those paths cross credentials, tenants, destructive commands, and remote transports.
+          </p>
+        </div>
+        <div class="service-list">
+          <div>Read-only inspect/list/query tools separated from write, delete, deploy, scale, and admin actions</div>
+          <div>Credential scope, connection-string handling, kubeconfig/cloud-token redaction, and tenant isolation</div>
+          <div>SQL/query constraints, command argument validation, namespace/project allowlists, and path controls</div>
+          <div>Destructive-action annotations, confirmations, dry-run behavior, and rollback assumptions</div>
+          <div>Remote transport exposure, trusted clients, auth layer, audit logs, and operator docs</div>
+          <div>Regression tests for auth failures, blocked destructive tools, and sensitive error redaction</div>
+        </div>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Sprint path</p>
+        <h2>48-hour target after scope and payment</h2>
+        <ol>
+          <li>Open an intake with the repo, deployment docs, or sanitized infrastructure tool slice.</li>
+          <li>Public GitHub repo intakes receive an automated no-execution scanner triage comment.</li>
+          <li>Scope is accepted around one database, cloud, or Kubernetes MCP surface.</li>
+          <li>Payment is confirmed before private review work starts.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open intake</a>
+          <a class="button secondary dark" href="mcp-security-audit-service.html">General MCP audit</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">Ask before booking</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

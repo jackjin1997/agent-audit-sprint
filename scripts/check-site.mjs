@@ -13,11 +13,15 @@ const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
 const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
 const workspace = `file://${resolve(root, "workspace-mcp-security-audit.html")}`;
+const cloudDatabase = `file://${resolve(root, "cloud-database-mcp-security-audit.html")}`;
+const browserAutomation = `file://${resolve(root, "browser-automation-mcp-security-audit.html")}`;
 const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
   "trading-mcp-security-audit.html",
   "workspace-mcp-security-audit.html",
+  "cloud-database-mcp-security-audit.html",
+  "browser-automation-mcp-security-audit.html",
   "samples.html",
   "checklist.html",
   "terms.html",
@@ -185,7 +189,12 @@ try {
     if (!serviceText.includes("Ask before booking")) {
       throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);
     }
-    if (!serviceText.includes("Trading MCP security audit") || !serviceText.includes("Workspace MCP security audit")) {
+    if (
+      !serviceText.includes("Trading MCP security audit") ||
+      !serviceText.includes("Workspace MCP security audit") ||
+      !serviceText.includes("Cloud and database MCP security audit") ||
+      !serviceText.includes("Browser automation MCP security audit")
+    ) {
       throw new Error(`Service page missing vertical audit links in ${viewport.name}`);
     }
     const serviceCta = await page.locator("a.button.primary").first().getAttribute("href");
@@ -198,6 +207,8 @@ try {
     for (const verticalPage of [
       { url: trading, title: "Trading MCP Security Audit", marker: "order placement", name: "trading" },
       { url: workspace, title: "Workspace MCP Security Audit", marker: "workspace systems", name: "workspace" },
+      { url: cloudDatabase, title: "Cloud and Database MCP Security Audit", marker: "production systems", name: "cloud-database" },
+      { url: browserAutomation, title: "Browser Automation MCP Security Audit", marker: "authenticated browser sessions", name: "browser-automation" },
     ]) {
       await page.goto(verticalPage.url, { waitUntil: "networkidle" });
       const verticalTitle = await page.locator("h1").innerText();

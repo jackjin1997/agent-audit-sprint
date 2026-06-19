@@ -8,8 +8,10 @@ const index = `file://${resolve(root, "index.html")}`;
 const report = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
+const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const requiredFiles = [
   "index.html",
+  "mcp-security-audit-service.html",
   "checklist.html",
   "terms.html",
   "styles.css",
@@ -29,6 +31,7 @@ const requiredFiles = [
   "reports/douban-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   "tools/agent-mcp-audit.mjs",
+  "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
   "templates/receipt.md",
@@ -102,6 +105,22 @@ try {
     if (!reportTitle.includes("douban-mcp")) throw new Error(`Unexpected report h1 in ${viewport.name}: ${reportTitle}`);
     const reportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (reportOverflow) throw new Error(`Report horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(service, { waitUntil: "networkidle" });
+    const serviceTitle = await page.locator("h1").innerText();
+    if (!serviceTitle.includes("MCP Security Audit Service")) {
+      throw new Error(`Unexpected service h1 in ${viewport.name}: ${serviceTitle}`);
+    }
+    const serviceText = await page.locator("body").innerText();
+    if (!serviceText.includes("USD $1,000")) {
+      throw new Error(`Service page missing fixed price in ${viewport.name}`);
+    }
+    const serviceCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!serviceCta?.includes("audit-request.yml")) {
+      throw new Error(`Service CTA missing intake URL in ${viewport.name}`);
+    }
+    const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(checklist, { waitUntil: "networkidle" });
     const checklistTitle = await page.locator("h1").innerText();

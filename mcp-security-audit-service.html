@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fixed-price MCP security audit service for remote MCP servers, agent tools, write actions, auth boundaries, secrets, schemas, tests, and launch risk.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html">
+    <meta property="og:title" content="MCP Security Audit Service">
+    <meta property="og:description" content="$1,000 fixed-price human review for MCP servers and agent tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MCP Security Audit Service">
+    <meta name="twitter:description" content="$1,000 fixed-price human review for MCP servers and agent tools.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>MCP Security Audit Service</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "MCP Security Audit Service",
+        "description": "Fixed-price human review for MCP servers, agent tools, auth boundaries, write actions, secrets, schemas, tests, and launch risk.",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "areaServed": "Worldwide",
+        "serviceType": "MCP security audit",
+        "offers": {
+          "@type": "Offer",
+          "price": "1000",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="reports/douban-mcp-sample-audit.html">Sample</a>
+        <a href="terms.html">Terms</a>
+        <a href="index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Fixed-price human review</p>
+        <h1>MCP Security Audit Service</h1>
+        <p>
+          A $1,000 async audit for one MCP server, agent tool surface, or tool-using product slice before launch. The review focuses on the practical failure modes that expose accounts, secrets, write actions, customer data, and remote transports.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary dark" href="index.html#request">Generate request brief</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Price</span><strong>USD $1,000 fixed</strong></div>
+          <div><span>Turnaround</span><strong>48-hour target after scope and payment confirmation</strong></div>
+          <div><span>Scope</span><strong>One repo or product slice</strong></div>
+          <div><span>Output</span><strong>Boundary map, ranked findings, tests, launch notes</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Review areas</p>
+          <h2>What the audit covers</h2>
+          <p>
+            The sprint is scoped for teams that already have a working agent integration and need an outside engineering review before users connect accounts, credentials, or production workflows.
+          </p>
+        </div>
+        <div class="service-list">
+          <div>Tool inventory and read/write/destructive classification</div>
+          <div>Remote transport exposure, bind address, CORS/origin, TLS, and proxy assumptions</div>
+          <div>Auth boundaries across user identity, provider tokens, and tool permissions</div>
+          <div>Secret redaction across logs, errors, telemetry, and agent-readable output</div>
+          <div>Input schema constraints for paths, URLs, command fragments, and oversized payloads</div>
+          <div>Prompt/tool injection tests using malicious external content and tool output</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Good fit</p>
+          <h2>When to book this</h2>
+        </div>
+        <div class="service-list compact-list">
+          <div>Your MCP server has write tools, account mutation, messaging, publishing, file access, database access, browser control, or shell execution.</div>
+          <div>You are moving from local stdio use to remote HTTP, SSE, WebSocket, hosted cloud, or multi-tenant deployment.</div>
+          <div>You have a launch date and need a ranked fix plan, not a broad compliance project.</div>
+          <div>You can share a public repo, private repo access, sanitized docs, or a focused product slice without secrets.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Flow</p>
+        <h2>How the paid sprint starts</h2>
+        <ol>
+          <li>Open an intake issue with repo/product URL, scope, delivery visibility, payment network, and highest concern.</li>
+          <li>Scope is accepted for one repo or product slice.</li>
+          <li>Pay USD $1,000 equivalent via Ethereum or Solana and reply with the transaction hash.</li>
+          <li>The 48-hour target starts after payment confirmation and scope acceptance.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open intake</a>
+          <a class="button secondary dark" href="checklist.html">Use free checklist first</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

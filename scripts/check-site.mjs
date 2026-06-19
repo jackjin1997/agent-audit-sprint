@@ -57,6 +57,7 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.html",
   "reports/firecrawl-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
+  ".github/ISSUE_TEMPLATE/code-scanning-audit.yml",
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
   ".github/ISSUE_TEMPLATE/payment-confirmation.yml",
   "tools/agent-mcp-audit.mjs",
@@ -406,9 +407,16 @@ try {
     if (!mcpCodeScanningText.includes("Pay USD $1,000 only after written scope acceptance")) {
       throw new Error(`MCP code scanning page missing payment guardrail in ${viewport.name}`);
     }
+    if (!mcpCodeScanningText.includes("Start code scanning audit")) {
+      throw new Error(`MCP code scanning page missing dedicated intake CTA in ${viewport.name}`);
+    }
     const mcpCodeScanningCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (mcpCodeScanningCta !== "examples/github-code-scanning.yml") {
       throw new Error(`MCP code scanning primary CTA should open workflow example in ${viewport.name}`);
+    }
+    const codeScanningAuditLinks = await page.locator("a[href*='template=code-scanning-audit.yml']").count();
+    if (codeScanningAuditLinks < 1) {
+      throw new Error(`MCP code scanning page missing code scanning audit issue link in ${viewport.name}`);
     }
     const mcpCodeScanningOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (mcpCodeScanningOverflow) {

@@ -51,6 +51,7 @@ Checked on 2026-06-20:
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
+| Code scanning audit intake template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml | Added for SARIF/GitHub Security alert conversion |
 | Short audit slot reservation template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml | Published |
 | Audit intent label | `audit-intent` | Published for short paid-slot workflow |
 | Payment proof template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml | Published |

@@ -1,0 +1,74 @@
+name: Code scanning audit
+description: Convert SARIF or GitHub Code Scanning findings into a $1,000 Agent/MCP Audit Sprint
+title: "Code scanning audit: <project name>"
+labels: ["audit-request", "code-scanning-audit"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when the Agent/MCP scanner, SARIF upload, or GitHub Code Scanning alerts show enough risk for a paid human review. Do not paste secrets, private keys, cookies, customer data, or production logs with sensitive values.
+  - type: input
+    id: project
+    attributes:
+      label: Project or repo URL
+      description: Public repo, docs, package, demo, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: input
+    id: code_scanning_url
+    attributes:
+      label: Code scanning or SARIF evidence URL
+      description: GitHub Security alert URL, workflow run, SARIF artifact, scanner report, or "will attach after scope acceptance".
+      placeholder: https://github.com/org/repo/security/code-scanning
+    validations:
+      required: true
+  - type: textarea
+    id: alert_summary
+    attributes:
+      label: Alert summary
+      description: Summarize the highest-risk findings without secrets.
+      placeholder: Remote MCP transport, write-capable tools, missing auth, credential paths without redaction, missing tests...
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Desired audit scope
+      description: What should the paid sprint review?
+      placeholder: One MCP server, the hosted transport, write tools, deployment docs, auth flow, and Code Scanning findings.
+    validations:
+      required: true
+  - type: dropdown
+    id: delivery_visibility
+    attributes:
+      label: Delivery visibility
+      description: Where should the final report be delivered?
+      options:
+        - Private Markdown report
+        - Public GitHub issue comment
+        - Private first, public summary later
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose ETH/SOL if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum after scope acceptance
+        - Solana after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, cookies, private keys, or sensitive customer data in this issue.
+          required: true
+        - label: I understand this is a $1,000 fixed-price audit for one repo or product slice.
+          required: true
+        - label: I will send payment only after written scope acceptance.
+          required: true

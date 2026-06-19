@@ -36,6 +36,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - GitHub Discussion #1 - booking FAQ and pre-intake questions
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` - sample reports based on real public repos
 - `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, and payment proof forms
+- `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
 - `outreach/scanner-led-outreach.md` - safe scanner-led outreach workflow and templates
@@ -97,6 +98,8 @@ Use GitHub Code Scanning:
 ```
 
 See [`examples/github-code-scanning.yml`](examples/github-code-scanning.yml) for a complete workflow.
+When Code Scanning findings justify human review, use the dedicated intake:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
 
 ## Local Preview
 

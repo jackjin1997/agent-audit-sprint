@@ -97,6 +97,29 @@
         border-bottom: 0;
       }
 
+      .terms-wallets {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .terms-wallet {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .terms-wallet strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .terms-wallet code {
+        overflow-wrap: anywhere;
+        color: var(--ink);
+      }
+
       .terms-actions {
         display: flex;
         flex-wrap: wrap;
@@ -177,6 +200,16 @@
         <p>
           Open the intake issue first. After scope is accepted, pay USD $1,000 equivalent via the selected network and reply with the transaction hash. The 48-hour target starts after payment confirmation and scope acceptance.
         </p>
+        <div class="terms-wallets" aria-label="Accepted payment addresses">
+          <div class="terms-wallet">
+            <strong>Ethereum</strong>
+            <code>0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF</code>
+          </div>
+          <div class="terms-wallet">
+            <strong>Solana</strong>
+            <code>5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM</code>
+          </div>
+        </div>
       </section>
 
       <section class="terms-section">

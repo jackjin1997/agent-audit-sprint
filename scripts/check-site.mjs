@@ -69,6 +69,13 @@ try {
     await page.goto(terms, { waitUntil: "networkidle" });
     const termsTitle = await page.locator("h1").innerText();
     if (!termsTitle.includes("Terms")) throw new Error(`Unexpected terms h1 in ${viewport.name}: ${termsTitle}`);
+    const termsBody = await page.locator("body").innerText();
+    if (!termsBody.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF")) {
+      throw new Error(`Ethereum payment address missing from terms in ${viewport.name}`);
+    }
+    if (!termsBody.includes("5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM")) {
+      throw new Error(`Solana payment address missing from terms in ${viewport.name}`);
+    }
     const termsOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (termsOverflow) throw new Error(`Terms horizontal overflow detected in ${viewport.name}`);
 

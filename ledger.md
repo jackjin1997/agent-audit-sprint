@@ -25,7 +25,7 @@ Checked on 2026-06-20:
 |---|---|---|
 | Agent/MCP Audit Sprint landing page | https://jackjin1997.github.io/agent-audit-sprint/ | Published |
 | GitHub repo | https://github.com/jackjin1997/agent-audit-sprint | Public |
-| GitHub repo metadata | Description mentions free browser/SARIF MCP server security scan plus `$1,000` audit sprint; homepage and topics include `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
+| GitHub repo metadata | Description mentions free browser/SARIF AI agent and MCP security scanner plus `$1,000` audit sprint; homepage and topics include `ai-agent-security`, `mcp-security`, `agent-security`, `ai-security` | Published for AI agent/MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | AI agent security audit service page | https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html, `docs/ai-agent-security-audit-service.md` | Added broader high-intent buyer entry for tool-calling AI agents, prompt/tool injection, browser sessions, credentials, memory/state, and launch risk |
 | AI agent security audit intake | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml | Added dedicated high-intent issue template with `audit-request` automation label and `ai-agent-audit` segmentation label |
@@ -44,7 +44,7 @@ Checked on 2026-06-20:
 | Public URL scanner distribution | Release notes, gist, GitHub profile, checklist docs, discussion update | Updated |
 | GitHub npx scanner path | `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo` | Verified locally |
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |
-| Standalone GitHub Action repo | https://github.com/jackjin1997/agent-mcp-code-scan-action | Published for cleaner Action discovery and Code Scanning usage |
+| Standalone GitHub Action repo | https://github.com/jackjin1997/agent-mcp-code-scan-action | Published for cleaner Action discovery and Code Scanning usage; description/topics now include AI agent security |
 | Standalone GitHub Action distribution | GitHub profile README, public gist, launch release, scanner discussion comment https://github.com/jackjin1997/agent-audit-sprint/discussions/3#discussioncomment-17367911 | Updated with `jackjin1997/agent-mcp-code-scan-action@v1` and paid audit intake links |
 | Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |
 | Copyable quote payment packet | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Added for accepted-scope payment handoff |

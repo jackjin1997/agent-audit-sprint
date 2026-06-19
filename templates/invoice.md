@@ -49,6 +49,11 @@ Pay after scope is accepted and before private audit work begins.
 
 If invoice-first processing is needed, confirm billing details, payment method, and expected settlement evidence before work starts.
 
+Accepted crypto assets:
+
+- Ethereum: ETH or ERC-20 USDC/USDT/DAI
+- Solana: SOL or SPL USDC
+
 Ethereum:
 
 ```text
@@ -63,7 +68,7 @@ Solana:
 
 After payment, reply with:
 
-- Network
+- Network and asset
 - Transaction hash
 - Payer wallet address
 - GitHub intake issue URL

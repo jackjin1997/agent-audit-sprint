@@ -7,6 +7,7 @@ Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
 Price: USD $1,000 fixed for one accepted audit scope
+Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
 Delivery target: 48 hours after written scope acceptance and payment confirmation
 

@@ -30,7 +30,7 @@ Not included:
 I accept the USD $1,000 Agent/MCP Audit Sprint quote for one repo or product slice.
 Scope: [repo/product slice].
 Delivery: [public issue comment or private Markdown report].
-Payment path: [Ethereum, Solana, or invoice-first].
+Payment path: [Ethereum ETH/ERC-20 stablecoin, Solana SOL/SPL USDC, or invoice-first].
 I will not share secrets or sensitive customer data in GitHub.
 ```
 
@@ -38,13 +38,13 @@ I will not share secrets or sensitive customer data in GitHub.
 
 Payment is due after written scope acceptance and before private audit work begins.
 
-Ethereum:
+Ethereum (ETH or ERC-20 USDC/USDT/DAI):
 
 ```text
 0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
 ```
 
-Solana:
+Solana (SOL or SPL USDC):
 
 ```text
 5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
@@ -63,10 +63,10 @@ Scope: [repo/product slice]
 Delivery: [public issue comment or private Markdown report]
 Payment timing: after written scope acceptance only.
 
-Ethereum address:
+Ethereum address (ETH or ERC-20 USDC/USDT/DAI):
 0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
 
-Solana address:
+Solana address (SOL or SPL USDC):
 5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
 
 Payment proof form:

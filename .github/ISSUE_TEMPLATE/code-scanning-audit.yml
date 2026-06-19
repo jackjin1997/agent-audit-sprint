@@ -54,10 +54,12 @@ body:
     id: payment
     attributes:
       label: Payment path
-      description: Choose ETH/SOL if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      description: Choose network and asset if ready, or invoice/discussion first if billing details need to be agreed before payment.
       options:
-        - Ethereum after scope acceptance
-        - Solana after scope acceptance
+        - Ethereum ETH after scope acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after scope acceptance
+        - Solana SOL after scope acceptance
+        - Solana SPL USDC after scope acceptance
         - Need invoice/discussion first
     validations:
       required: true

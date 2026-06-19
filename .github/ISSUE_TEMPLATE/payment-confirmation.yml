@@ -20,8 +20,10 @@ body:
     attributes:
       label: Payment network
       options:
-        - Ethereum
-        - Solana
+        - Ethereum ETH
+        - Ethereum ERC-20 USDC/USDT/DAI
+        - Solana SOL
+        - Solana SPL USDC
         - Invoice or other agreed path
     validations:
       required: true
@@ -37,8 +39,8 @@ body:
     id: amount
     attributes:
       label: Amount sent
-      description: Include unit, for example "0.42 ETH", "6.8 SOL", or "USD 1,000".
-      placeholder: USD 1,000 equivalent
+      description: Include unit, network, and asset, for example "1,000 USDC on Ethereum", "1,000 USDC on Solana", "0.42 ETH", "6.8 SOL", or "USD 1,000".
+      placeholder: USD 1,000 equivalent, asset, and network
     validations:
       required: true
   - type: textarea

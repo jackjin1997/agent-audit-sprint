@@ -8,7 +8,7 @@ Receipt ID: `AAS-R-YYYYMMDD-CLIENT`
 | Field | Value |
 |---|---|
 | Amount | USD $1,000 equivalent |
-| Network | `<Ethereum or Solana>` |
+| Network / asset | `<Ethereum ETH/ERC-20 stablecoin or Solana SOL/SPL USDC>` |
 | Transaction hash | `<tx hash>` |
 | Payer wallet | `<wallet address>` |
 | Recipient wallet | `<recipient address>` |

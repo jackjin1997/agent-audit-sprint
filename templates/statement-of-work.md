@@ -35,12 +35,12 @@ Amount: USD $1,000 equivalent.
 
 Accepted networks:
 
-- Ethereum: `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF`
-- Solana: `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM`
+- Ethereum: ETH or ERC-20 USDC/USDT/DAI to `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF`
+- Solana: SOL or SPL USDC to `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM`
 
 If invoice-first processing is needed, billing details, payment method, and settlement evidence must be agreed before work starts.
 
-Buyer should reply with network, transaction hash, payer wallet address, and intake issue URL.
+Buyer should reply with network, asset, transaction hash, payer wallet address, and intake issue URL.
 
 Payment proof form:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml

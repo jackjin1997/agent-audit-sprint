@@ -265,6 +265,9 @@ if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-spr
 if (!paymentProofOutput.includes("USD $1,000 equivalent")) {
   throw new Error("Payment proof dry-run output is missing amount verification rule");
 }
+if (!paymentProofOutput.includes("ERC-20 USDC/USDT/DAI") || !paymentProofOutput.includes("SPL USDC")) {
+  throw new Error("Payment proof dry-run output is missing stablecoin asset options");
+}
 
 const codeScanningAuditOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-code-scanning-audit.mjs")], {
   encoding: "utf8",
@@ -331,6 +334,9 @@ try {
     const indexBody = await page.locator("body").innerText();
     if (!indexBody.includes("invoice-first")) {
       throw new Error(`Index page missing invoice-first payment path in ${viewport.name}`);
+    }
+    if (!indexBody.includes("ERC-20 USDC/USDT/DAI") || !indexBody.includes("SPL USDC")) {
+      throw new Error(`Index page missing stablecoin payment options in ${viewport.name}`);
     }
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
@@ -856,6 +862,9 @@ try {
     if (!quoteText.includes("Submit payment proof")) {
       throw new Error(`Quote page missing payment proof CTA in ${viewport.name}`);
     }
+    if (!quoteText.includes("ERC-20 USDC/USDT/DAI") || !quoteText.includes("SPL USDC")) {
+      throw new Error(`Quote page missing stablecoin payment options in ${viewport.name}`);
+    }
     if (!quoteText.includes("Copy payment packet")) {
       throw new Error(`Quote page missing copyable payment packet action in ${viewport.name}`);
     }
@@ -951,6 +960,9 @@ try {
     const termsBody = await page.locator("body").innerText();
     if (!termsBody.includes("invoice-first")) {
       throw new Error(`Terms page missing invoice-first payment path in ${viewport.name}`);
+    }
+    if (!termsBody.includes("ERC-20 USDC/USDT/DAI") || !termsBody.includes("SPL USDC")) {
+      throw new Error(`Terms page missing stablecoin payment options in ${viewport.name}`);
     }
     if (!termsBody.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF")) {
       throw new Error(`Ethereum payment address missing from terms in ${viewport.name}`);

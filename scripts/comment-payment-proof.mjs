@@ -40,10 +40,10 @@ Before the audit starts, I will verify:
 3. The recipient matches the agreed address or invoice path.
 4. The amount is USD $1,000 equivalent unless another written agreement exists.
 
-Accepted native payment addresses:
+Accepted payment addresses and assets:
 
-- Ethereum: \`${ETH_ADDRESS}\`
-- Solana: \`${SOL_ADDRESS}\`
+- Ethereum: \`${ETH_ADDRESS}\` for ETH or ERC-20 USDC/USDT/DAI
+- Solana: \`${SOL_ADDRESS}\` for SOL or SPL USDC
 
 Terms: ${TERMS_URL}  
 Receipt template: ${RECEIPT_TEMPLATE_URL}

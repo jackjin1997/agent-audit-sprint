@@ -118,7 +118,7 @@ Open `index.html` directly in a browser or serve the directory with any static f
 
 ## Payment Ops
 
-Use `templates/invoice.md` after accepting scope. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.
+Use `templates/invoice.md` after accepting scope. Crypto payment can use ETH or ERC-20 USDC/USDT/DAI on Ethereum, or SOL or SPL USDC on Solana. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.
 
 ## npm Publishing
 

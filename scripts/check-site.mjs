@@ -12,10 +12,14 @@ const requiredFiles = [
   "action.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
+  "assets/payments/eth-address.svg",
+  "assets/payments/sol-address.svg",
   "reports/douban-mcp-sample-audit.html",
   "reports/douban-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   "tools/agent-mcp-audit.mjs",
+  "templates/invoice.md",
+  "templates/receipt.md",
   "outreach/qualified-prospects-2026-06-19.md",
 ];
 
@@ -37,6 +41,10 @@ try {
     if (!title.includes("$1,000")) throw new Error(`Unexpected h1 in ${viewport.name}: ${title}`);
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
+    const qrImagesLoaded = await page.locator(".qr-code").evaluateAll((images) =>
+      images.length === 2 && images.every((img) => img.complete && img.naturalWidth > 0)
+    );
+    if (!qrImagesLoaded) throw new Error(`Payment QR images failed to load in ${viewport.name}`);
     const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (horizontalOverflow) throw new Error(`Horizontal overflow detected in ${viewport.name}`);
     const buttons = await page.locator("a.button").count();

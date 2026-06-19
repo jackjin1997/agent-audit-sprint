@@ -22,6 +22,8 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/ISSUE_TEMPLATE/audit-request.yml` - intake form
 - `outreach/prospect-list.md` - initial outbound list and message
 - `outreach/qualified-prospects-2026-06-19.md` - public outbound playbook without project-specific claims
+- `templates/invoice.md` - invoice template for accepted audit scopes
+- `templates/receipt.md` - receipt template after payment confirmation
 - `tools/agent-mcp-audit.mjs` - local heuristic scanner for agent/MCP review signals
 - `assets/audit-dashboard.html` - source for the hero bitmap
 - `assets/audit-dashboard.png` - generated hero bitmap
@@ -52,3 +54,7 @@ See [`examples/github-action.yml`](examples/github-action.yml) for a complete wo
 ## Local Preview
 
 Open `index.html` directly in a browser or serve the directory with any static file server.
+
+## Payment Ops
+
+Use `templates/invoice.md` after accepting scope. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.

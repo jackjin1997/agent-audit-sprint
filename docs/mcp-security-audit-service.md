@@ -10,6 +10,8 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
 - Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html
+- Cloud and database MCP page: https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html
+- Browser automation MCP page: https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html
 - Sample index: https://jackjin1997.github.io/agent-audit-sprint/samples.html
 - Sample reports:
   - https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html

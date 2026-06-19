@@ -31,6 +31,8 @@ Fixed price: $1,000. Typical turnaround: 48 hours for one repo or product slice.
 Sample reports: https://jackjin1997.github.io/agent-audit-sprint/samples.html
 Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
 Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html
+Cloud/database MCP page: https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html
+Browser automation MCP page: https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html
 
 Public GitHub repo intakes get an automated no-execution scanner triage comment before paid scope acceptance.
 

@@ -46,6 +46,7 @@ const requiredFiles = [
   ".github/workflows/respond-payment-proof.yml",
   ".github/workflows/smoke-action-v1.yml",
   "examples/github-action.yml",
+  "examples/github-code-scanning.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",
   "assets/payments/sol-address.svg",
@@ -87,6 +88,27 @@ if (!markdownOutput.includes("https://jackjin1997.github.io/agent-audit-sprint/t
 }
 if (markdownOutput.includes("private-notes")) {
   throw new Error("Scanner Markdown output should not include private-notes paths");
+}
+const sarifOutput = execFileSync(process.execPath, [resolve(root, "tools/agent-mcp-audit.mjs"), root, "--sarif"], {
+  encoding: "utf8",
+  maxBuffer: 10 * 1024 * 1024,
+});
+const sarifReport = JSON.parse(sarifOutput);
+if (sarifReport.version !== "2.1.0") {
+  throw new Error("Scanner SARIF output is missing SARIF 2.1.0 version");
+}
+const sarifRun = sarifReport.runs?.[0];
+if (!sarifRun?.tool?.driver?.rules?.length) {
+  throw new Error("Scanner SARIF output is missing rules");
+}
+if (!Array.isArray(sarifRun.results)) {
+  throw new Error("Scanner SARIF output is missing results array");
+}
+if (!sarifRun.tool.driver.informationUri?.includes("mcp-server-security-scan.html")) {
+  throw new Error("Scanner SARIF output is missing scanner information URI");
+}
+if (!sarifRun.tool.driver.rules.some((rule) => rule.helpUri?.includes("mcp-server-security-scan.html"))) {
+  throw new Error("Scanner SARIF rules are missing help URI");
 }
 
 const triageOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-triage.mjs")], {

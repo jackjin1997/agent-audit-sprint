@@ -29,7 +29,8 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
-- `examples/github-action.yml` - copyable workflow example
+- `examples/github-action.yml` - copyable Markdown artifact workflow example
+- `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - GitHub Discussion #1 - booking FAQ and pre-intake questions
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` - sample reports based on real public repos
@@ -62,6 +63,7 @@ Terminal:
 npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
 npm run audit:repo -- /path/to/repo
 npm --silent run audit:repo -- /path/to/repo --json
+node tools/agent-mcp-audit.mjs /path/to/repo --sarif > agent-mcp-audit.sarif
 node tools/agent-mcp-audit.mjs /path/to/repo --json
 ```
 
@@ -78,6 +80,21 @@ Use it from GitHub Actions:
 ```
 
 See [`examples/github-action.yml`](examples/github-action.yml) for a complete workflow.
+
+Use GitHub Code Scanning:
+
+```yaml
+- uses: jackjin1997/agent-audit-sprint@v1
+  with:
+    path: "."
+    sarif: "true"
+    output: "agent-mcp-audit.sarif"
+- uses: github/codeql-action/upload-sarif@v4
+  with:
+    sarif_file: agent-mcp-audit.sarif
+```
+
+See [`examples/github-code-scanning.yml`](examples/github-code-scanning.yml) for a complete workflow.
 
 ## Local Preview
 

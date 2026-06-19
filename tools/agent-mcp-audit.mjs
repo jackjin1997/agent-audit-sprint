@@ -72,7 +72,7 @@ const SIGNALS = [
 ];
 
 function usage() {
-  console.error("Usage: node tools/agent-mcp-audit.mjs <repo-dir> [--json]");
+  console.error("Usage: node tools/agent-mcp-audit.mjs <repo-dir> [--json|--sarif]");
 }
 
 function isTextCandidate(file) {
@@ -317,17 +317,143 @@ function renderMarkdown(report) {
   return lines.join("\n");
 }
 
+function slugFor(value) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80) || "finding";
+}
+
+function sarifLevel(severity) {
+  return {
+    High: "error",
+    Medium: "warning",
+    Low: "note",
+    Info: "note",
+  }[severity] || "note";
+}
+
+function sarifSecuritySeverity(severity) {
+  return {
+    High: "8.0",
+    Medium: "5.0",
+    Low: "2.5",
+    Info: "1.0",
+  }[severity] || "1.0";
+}
+
+function sarifUri(path) {
+  return path.replaceAll("\\", "/");
+}
+
+function renderSarif(report) {
+  const rulesById = new Map();
+  const results = report.findings.map((finding) => {
+    const ruleId = `agent-mcp-audit/${slugFor(finding.title)}`;
+    if (!rulesById.has(ruleId)) {
+      rulesById.set(ruleId, {
+        id: ruleId,
+        name: finding.title,
+        shortDescription: {
+          text: finding.title,
+        },
+        fullDescription: {
+          text: finding.why,
+        },
+        help: {
+          text: `${finding.why}\n\nSuggested fix: ${finding.fix}\n\nFor a fixed USD $1,000 human review, use https://jackjin1997.github.io/agent-audit-sprint/quote.html after written scope acceptance.`,
+        },
+        helpUri: "https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html",
+        properties: {
+          tags: ["agent", "mcp", "security", "heuristic"],
+          precision: "medium",
+          "security-severity": sarifSecuritySeverity(finding.severity),
+        },
+      });
+    }
+    return {
+      ruleId,
+      level: sarifLevel(finding.severity),
+      message: {
+        text: `${finding.title}. ${finding.why} Suggested fix: ${finding.fix}`,
+      },
+      locations: finding.evidence.map((path) => ({
+        physicalLocation: {
+          artifactLocation: {
+            uri: sarifUri(path),
+            uriBaseId: "%SRCROOT%",
+          },
+          region: {
+            startLine: 1,
+          },
+        },
+      })),
+      properties: {
+        severity: finding.severity,
+      },
+    };
+  });
+
+  return {
+    $schema: "https://json.schemastore.org/sarif-2.1.0.json",
+    version: "2.1.0",
+    runs: [
+      {
+        tool: {
+          driver: {
+            name: "Agent/MCP Audit Heuristic",
+            informationUri: "https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html",
+            version: "1.0.0",
+            rules: Array.from(rulesById.values()),
+          },
+        },
+        originalUriBaseIds: {
+          "%SRCROOT%": {
+            uri: `file://${sarifUri(report.target).replace(/\/?$/, "/")}`,
+          },
+        },
+        invocations: [
+          {
+            executionSuccessful: true,
+            toolExecutionNotifications: [
+              {
+                level: "note",
+                message: {
+                  text: `Scanned ${report.filesScanned} files. Heuristic score: ${report.score}/100. This is triage, not a security certification.`,
+                },
+              },
+            ],
+          },
+        ],
+        results,
+      },
+    ],
+  };
+}
+
 const args = process.argv.slice(2);
 const json = args.includes("--json");
+const sarif = args.includes("--sarif");
 const target = args.find((arg) => !arg.startsWith("--")) ?? ".";
 if (args.includes("--help")) {
   usage();
   process.exit(0);
 }
+if (json && sarif) {
+  console.error("Choose only one output format: --json or --sarif.");
+  usage();
+  process.exit(1);
+}
 
 try {
   const report = await analyze(target);
-  process.stdout.write(json ? `${JSON.stringify(report, null, 2)}\n` : `${renderMarkdown(report)}\n`);
+  const output = sarif ? renderSarif(report) : report;
+  if (sarif || json) {
+    process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
+  } else {
+    process.stdout.write(`${renderMarkdown(report)}\n`);
+  }
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   usage();

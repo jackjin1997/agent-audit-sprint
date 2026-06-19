@@ -28,6 +28,7 @@ Checked on 2026-06-20:
 | GitHub repo metadata | Description, homepage, topics including `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
+| MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Added as search-focused scanner entry point |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
 | Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |
 | Shareable repo scanner links | `scan.html?repo=https://github.com/org/repo` | Added for direct prospect handoff |

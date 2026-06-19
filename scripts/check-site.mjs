@@ -10,6 +10,7 @@ const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-au
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
+const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
@@ -20,6 +21,7 @@ const browserAutomation = `file://${resolve(root, "browser-automation-mcp-securi
 const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
+  "mcp-server-security-scan.html",
   "scan.html",
   "quote.html",
   "trading-mcp-security-audit.html",
@@ -221,6 +223,9 @@ try {
     if (!indexBody.includes("Paste a public GitHub URL")) {
       throw new Error(`Index page missing public scanner link in ${viewport.name}`);
     }
+    if (!indexBody.includes("Open the MCP server security scan page")) {
+      throw new Error(`Index page missing MCP server security scan link in ${viewport.name}`);
+    }
     if (!indexBody.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Index page missing GitHub npx scanner command in ${viewport.name}`);
     }
@@ -328,6 +333,30 @@ try {
     }
     const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(mcpServerScan, { waitUntil: "networkidle" });
+    const mcpServerScanTitle = await page.locator("h1").innerText();
+    if (!mcpServerScanTitle.includes("MCP Server Security Scan")) {
+      throw new Error(`Unexpected MCP server scan h1 in ${viewport.name}: ${mcpServerScanTitle}`);
+    }
+    const mcpServerScanText = await page.locator("body").innerText();
+    if (!mcpServerScanText.includes("scan.html?repo=https://github.com/org/repo")) {
+      throw new Error(`MCP server scan page missing shareable URL format in ${viewport.name}`);
+    }
+    if (!mcpServerScanText.includes("USD $1,000") || !mcpServerScanText.includes("Open fixed quote")) {
+      throw new Error(`MCP server scan page missing paid audit handoff in ${viewport.name}`);
+    }
+    if (!mcpServerScanText.includes("does not execute target code")) {
+      throw new Error(`MCP server scan page missing no-execution safety copy in ${viewport.name}`);
+    }
+    const mcpServerScanCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (mcpServerScanCta !== "scan.html") {
+      throw new Error(`MCP server scan primary CTA should open scan.html in ${viewport.name}`);
+    }
+    const mcpServerScanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (mcpServerScanOverflow) {
+      throw new Error(`MCP server scan horizontal overflow detected in ${viewport.name}`);
+    }
 
     await page.route("https://api.github.com/repos/example/agent-mcp**", async (route) => {
       const url = route.request().url();

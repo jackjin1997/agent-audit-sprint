@@ -33,12 +33,13 @@ For $1,000, I review one repo or product slice and deliver a ranked report cover
 
 Offer: https://jackjin1997.github.io/agent-audit-sprint/
 Sample reports: https://jackjin1997.github.io/agent-audit-sprint/samples.html
+Local browser scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
 Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html
 Cloud/database MCP page: https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html
 Browser automation MCP page: https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html
 
-Public GitHub repo intakes get an automated no-execution scanner triage comment before paid scope acceptance.
+The browser scanner runs locally with no upload and can produce a Markdown handoff before booking. Public GitHub repo intakes also get an automated no-execution scanner triage comment before paid scope acceptance.
 
 If useful, open an intake issue here:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml

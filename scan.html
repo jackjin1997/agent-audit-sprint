@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Run a local browser-only Agent/MCP audit scan without uploading code. Generate a first-pass report and $1,000 audit request handoff.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/scan.html">
+    <meta property="og:title" content="Local Agent/MCP Audit Scanner">
+    <meta property="og:description" content="Browser-only local scan for MCP and agent tool risk signals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/scan.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Local Agent/MCP Audit Scanner">
+    <meta name="twitter:description" content="Browser-only local scan for MCP and agent tool risk signals.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>Local Agent/MCP Audit Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="scan.html">Scanner</a>
+        <a href="samples.html">Samples</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Browser-only triage</p>
+        <h1>Local Agent/MCP Audit Scanner</h1>
+        <p>
+          Select a local repo folder or files to generate a first-pass Agent/MCP risk report. The scan runs entirely in your browser, does not upload code, does not install dependencies, and does not execute target code.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start paid audit</a>
+          <a class="button secondary dark" href="mcp-security-audit-service.html">View service</a>
+          <a class="button secondary dark" href="samples.html">Read samples</a>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Free local scan</p>
+          <h2>No upload, no execution</h2>
+          <p>
+            This is a triage helper, not a security certification. It looks for review signals around MCP/tool surfaces, transports, write actions, secrets, auth, redaction, annotations, tests, and CI.
+          </p>
+        </div>
+        <form class="request-tool" data-local-scan-form>
+          <label>
+            <span>Repo folder or files</span>
+            <input data-local-scan-input type="file" multiple webkitdirectory>
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Run local scan</button>
+            <button class="button secondary dark" type="button" data-copy-scan>Copy report</button>
+            <a class="button secondary dark" data-open-scan-request href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open audit request</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Result</p>
+          <h2>First-pass report</h2>
+          <p>
+            Use the generated report as a starting point. For one repo or product slice, the paid sprint turns it into a ranked human review with evidence, tests, and launch notes.
+          </p>
+        </div>
+        <div class="report-preview" data-local-scan-summary aria-label="Local scan summary">
+          <div class="report-row pass"><span>Local</span><strong>Select files to run the browser-only scanner.</strong></div>
+          <div class="report-row low"><span>Safe</span><strong>No files leave this browser page.</strong></div>
+          <div class="report-row medium"><span>Paid</span><strong>Book the $1,000 sprint for human review and fix planning.</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <label>
+          <span>Generated Markdown report</span>
+          <textarea class="brief-output" data-local-scan-output rows="18" readonly aria-label="Generated local scan report">Select files and run the local scan.</textarea>
+        </label>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+    <script src="scan.js"></script>
+  </body>
+</html>

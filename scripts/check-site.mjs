@@ -10,6 +10,7 @@ const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-au
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
+const scan = `file://${resolve(root, "scan.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
 const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
 const workspace = `file://${resolve(root, "workspace-mcp-security-audit.html")}`;
@@ -18,6 +19,7 @@ const browserAutomation = `file://${resolve(root, "browser-automation-mcp-securi
 const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
+  "scan.html",
   "trading-mcp-security-audit.html",
   "workspace-mcp-security-audit.html",
   "cloud-database-mcp-security-audit.html",
@@ -27,6 +29,7 @@ const requiredFiles = [
   "terms.html",
   "styles.css",
   "script.js",
+  "scan.js",
   ".nojekyll",
   "robots.txt",
   "sitemap.xml",
@@ -110,6 +113,9 @@ try {
     }
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
+    }
+    if (!indexBody.includes("browser-only local scanner")) {
+      throw new Error(`Index page missing browser scanner copy in ${viewport.name}`);
     }
     if (!indexBody.includes("Compare both sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
@@ -203,6 +209,29 @@ try {
     }
     const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(scan, { waitUntil: "networkidle" });
+    const scanTitle = await page.locator("h1").innerText();
+    if (!scanTitle.includes("Local Agent/MCP Audit Scanner")) {
+      throw new Error(`Unexpected scanner h1 in ${viewport.name}: ${scanTitle}`);
+    }
+    const scanText = await page.locator("body").innerText();
+    if (!scanText.includes("does not upload code") || !scanText.includes("does not execute target code")) {
+      throw new Error(`Scanner page missing safety copy in ${viewport.name}`);
+    }
+    await page.locator("[data-local-scan-input]").setInputFiles(resolve(root, "examples/local-scan-fixture"));
+    await page.locator("[data-local-scan-form]").evaluate((form) => form.requestSubmit());
+    await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("Heuristic score"));
+    const scanOutput = await page.locator("[data-local-scan-output]").inputValue();
+    if (!scanOutput.includes("Paid 48-hour review")) {
+      throw new Error(`Scanner output missing paid review handoff in ${viewport.name}`);
+    }
+    const scanHref = await page.locator("[data-open-scan-request]").getAttribute("href");
+    if (!scanHref?.includes("labels=audit-request")) {
+      throw new Error(`Scanner request link missing audit label in ${viewport.name}`);
+    }
+    const scanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (scanOverflow) throw new Error(`Scanner horizontal overflow detected in ${viewport.name}`);
 
     for (const verticalPage of [
       { url: trading, title: "Trading MCP Security Audit", marker: "order placement", name: "trading" },

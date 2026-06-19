@@ -92,6 +92,7 @@ Checked on 2026-06-20:
 | Scanner-led outreach playbook | `outreach/scanner-led-outreach.md` | Published |
 | Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | 20 targets prepared locally with scanner context; not public, not sent |
 | Private email draft pack | `private-notes/email-drafts-2026-06-19.md` | 9 public-contact drafts prepared locally; not public, not sent |
+| Private Action/Code Scanning outreach draft pack | `private-notes/action-code-scanning-outreach-2026-06-20.md` | 16 current public MCP targets and reusable SARIF Action pitch prepared locally; not public, not sent |
 
 ## Payment Addresses
 

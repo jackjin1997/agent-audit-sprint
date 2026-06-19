@@ -58,7 +58,7 @@ Checked on 2026-06-20:
 | Audit intent label | `audit-intent` | Published for short paid-slot workflow |
 | Payment proof template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml | Published |
 | Payment proof label | `payment-proof` | Published for payment evidence workflow |
-| Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Published |
+| Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Updated with standalone Code Scanning Action, current 48-hour slot, Code Scanning audit intake, and payment guardrail |
 | Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published with MCP server scan entry comment |
 | GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |

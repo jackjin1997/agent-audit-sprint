@@ -19,6 +19,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npx playwright install chromium
       - run: npm run check
       - run: npm --silent run audit:repo -- . --json > audit.json
       - run: node -e "const fs=require('fs'); const r=JSON.parse(fs.readFileSync('audit.json','utf8')); if (!r.score || !Array.isArray(r.findings)) process.exit(1); console.log('score=' + r.score + ' findings=' + r.findings.length);"

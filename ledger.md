@@ -27,6 +27,7 @@ Last updated: 2026-06-19.
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
+| Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
 | Invoice-first payment path | Intake form, terms, invoice template, booking discussion | Published |

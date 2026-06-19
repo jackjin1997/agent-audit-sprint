@@ -24,6 +24,7 @@ const requiredFiles = [
   "action.yml",
   ".github/FUNDING.yml",
   ".github/workflows/validate.yml",
+  ".github/workflows/triage-audit-request.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",
@@ -34,6 +35,7 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   "tools/agent-mcp-audit.mjs",
+  "scripts/comment-audit-triage.mjs",
   "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
@@ -62,6 +64,26 @@ if (markdownOutput.includes("private-notes")) {
   throw new Error("Scanner Markdown output should not include private-notes paths");
 }
 
+const triageOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-triage.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    TRIAGE_DRY_RUN: "true",
+    TRIAGE_SKIP_CLONE: "true",
+    ISSUE_BODY: "### Project or repo URL\n\nhttps://github.com/example/agent-mcp\n",
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!triageOutput.includes("Automated free triage")) {
+  throw new Error("Triage dry-run output is missing heading");
+}
+if (!triageOutput.includes("https://github.com/example/agent-mcp")) {
+  throw new Error("Triage dry-run output is missing normalized repo URL");
+}
+if (!triageOutput.includes("Safety: no dependencies were installed")) {
+  throw new Error("Triage dry-run output is missing safety statement");
+}
+
 const browser = await chromium.launch();
 try {
   for (const viewport of [
@@ -75,6 +97,9 @@ try {
     const indexBody = await page.locator("body").innerText();
     if (!indexBody.includes("invoice-first")) {
       throw new Error(`Index page missing invoice-first payment path in ${viewport.name}`);
+    }
+    if (!indexBody.includes("automated no-execution scanner triage")) {
+      throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
     }
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
@@ -144,6 +169,9 @@ try {
     }
     if (!serviceText.includes("invoice-first")) {
       throw new Error(`Service page missing invoice-first payment path in ${viewport.name}`);
+    }
+    if (!serviceText.includes("automated no-execution scanner triage")) {
+      throw new Error(`Service page missing automated triage copy in ${viewport.name}`);
     }
     if (!serviceText.includes("Ask before booking")) {
       throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);

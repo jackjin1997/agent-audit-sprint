@@ -27,6 +27,7 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 ## Flow
 
 1. Open an intake issue with repo/product URL, scope, delivery visibility, payment network, and highest concern.
-2. Scope is accepted for one repo or product slice.
-3. Pay USD $1,000 equivalent via Ethereum or Solana, or agree an invoice-first payment path before work starts.
-4. The 48-hour target starts after payment confirmation and scope acceptance.
+2. Public GitHub repo intakes receive an automated no-execution scanner triage comment in the issue.
+3. Scope is accepted for one repo or product slice.
+4. Pay USD $1,000 equivalent via Ethereum or Solana, or agree an invoice-first payment path before work starts.
+5. The 48-hour target starts after payment confirmation and scope acceptance.

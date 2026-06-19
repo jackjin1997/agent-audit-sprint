@@ -29,6 +29,7 @@ Checked on 2026-06-19:
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
+| Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |
 | Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |
 | Workspace MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html | Published |
 | Cloud and database MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html | Published |

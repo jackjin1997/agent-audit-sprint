@@ -11,6 +11,7 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
+const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
 const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
 const workspace = `file://${resolve(root, "workspace-mcp-security-audit.html")}`;
@@ -20,6 +21,7 @@ const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
   "scan.html",
+  "quote.html",
   "trading-mcp-security-audit.html",
   "workspace-mcp-security-audit.html",
   "cloud-database-mcp-security-audit.html",
@@ -58,6 +60,7 @@ const requiredFiles = [
   "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
+  "templates/quote.md",
   "templates/receipt.md",
   "templates/statement-of-work.md",
   "outreach/qualified-prospects-2026-06-19.md",
@@ -205,6 +208,9 @@ try {
     if (!indexBody.includes("Reserve audit slot")) {
       throw new Error(`Index page missing short slot reservation CTA in ${viewport.name}`);
     }
+    if (!indexBody.includes("Open the fixed $1,000 quote")) {
+      throw new Error(`Index page missing fixed quote link in ${viewport.name}`);
+    }
     if (!indexBody.includes("Compare both sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
     }
@@ -286,6 +292,9 @@ try {
     if (!serviceText.includes("Reserve audit slot")) {
       throw new Error(`Service page missing short slot reservation CTA in ${viewport.name}`);
     }
+    if (!serviceText.includes("View quote")) {
+      throw new Error(`Service page missing fixed quote CTA in ${viewport.name}`);
+    }
     if (
       !serviceText.includes("Trading MCP security audit") ||
       !serviceText.includes("Workspace MCP security audit") ||
@@ -326,6 +335,24 @@ try {
     }
     const scanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (scanOverflow) throw new Error(`Scanner horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(quote, { waitUntil: "networkidle" });
+    const quoteTitle = await page.locator("h1").innerText();
+    if (!quoteTitle.includes("$1,000 Agent/MCP Audit Sprint Quote")) {
+      throw new Error(`Unexpected quote h1 in ${viewport.name}: ${quoteTitle}`);
+    }
+    const quoteText = await page.locator("body").innerText();
+    if (!quoteText.includes("Acceptance text")) {
+      throw new Error(`Quote page missing acceptance text in ${viewport.name}`);
+    }
+    if (!quoteText.includes("Submit payment proof")) {
+      throw new Error(`Quote page missing payment proof CTA in ${viewport.name}`);
+    }
+    if (!quoteText.includes("48-hour target")) {
+      throw new Error(`Quote page missing delivery target in ${viewport.name}`);
+    }
+    const quoteOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (quoteOverflow) throw new Error(`Quote horizontal overflow detected in ${viewport.name}`);
 
     for (const verticalPage of [
       { url: trading, title: "Trading MCP Security Audit", marker: "order placement", name: "trading" },

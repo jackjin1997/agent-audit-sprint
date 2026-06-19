@@ -192,6 +192,10 @@ try {
     if (!checklistCta?.includes("audit-request.yml")) {
       throw new Error(`Checklist CTA missing intake URL in ${viewport.name}`);
     }
+    const checklistText = await page.locator("body").innerText();
+    if (!checklistText.includes("automated no-execution scanner triage")) {
+      throw new Error(`Checklist page missing automated triage copy in ${viewport.name}`);
+    }
     const checklistOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (checklistOverflow) throw new Error(`Checklist horizontal overflow detected in ${viewport.name}`);
 

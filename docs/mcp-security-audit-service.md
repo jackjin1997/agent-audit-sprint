@@ -5,8 +5,12 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 - Price: USD $1,000
 - Turnaround target: 48 hours after scope acceptance and payment confirmation
 - Output: boundary map, ranked findings, test plan, launch notes
+- Public GitHub repo intakes receive an automated no-execution scanner triage comment
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
+- Sample reports:
+  - https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html
+  - https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html
 
 ## Review Areas
 

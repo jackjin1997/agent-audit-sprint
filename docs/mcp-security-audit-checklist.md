@@ -55,5 +55,9 @@ Practical pre-launch checklist for MCP servers, agent tools, and tool-using prod
 The fixed-price Agent/MCP Audit Sprint turns this checklist into a ranked report for one repo or product slice.
 
 - Price: USD $1,000
+- Public GitHub repo intakes receive an automated no-execution scanner triage comment
+- Sample reports:
+  - https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html
+  - https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml

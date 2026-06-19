@@ -31,8 +31,10 @@ I do fixed-price Agent/MCP audit sprints for teams shipping tool-using AI produc
 
 For $1,000, I review one repo or product slice and deliver a ranked report covering tool boundaries, auth/secrets, write-action safety, prompt/tool injection paths, tests, and deployment assumptions.
 
-Sample reports: https://jackjin1997.github.io/agent-audit-sprint/samples.html
 Offer: https://jackjin1997.github.io/agent-audit-sprint/
+Sample reports: https://jackjin1997.github.io/agent-audit-sprint/samples.html
+Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
+Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html
 
 Public GitHub repo intakes get an automated no-execution scanner triage comment before paid scope acceptance.
 

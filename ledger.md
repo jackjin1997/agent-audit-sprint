@@ -25,10 +25,10 @@ Checked on 2026-06-20:
 |---|---|---|
 | Agent/MCP Audit Sprint landing page | https://jackjin1997.github.io/agent-audit-sprint/ | Published |
 | GitHub repo | https://github.com/jackjin1997/agent-audit-sprint | Public |
-| GitHub repo metadata | Description, homepage, topics including `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
+| GitHub repo metadata | Description mentions free browser MCP server security scan plus `$1,000` audit sprint; homepage and topics include `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
-| MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Added as search-focused scanner entry point |
+| MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Published and distributed via profile README, gist, and scanner discussion |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
 | Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |
 | Shareable repo scanner links | `scan.html?repo=https://github.com/org/repo` | Added for direct prospect handoff |
@@ -41,21 +41,21 @@ Checked on 2026-06-20:
 | Workspace MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html | Published |
 | Cloud and database MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html | Published |
 | Browser automation MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html | Published |
-| Browser scanner distribution | Profile README, gist, booking discussion, release notes, outreach docs | Published |
+| Browser scanner distribution | Profile README, gist, booking discussion, scanner discussion, release notes, outreach docs | Published with MCP server scan entry point |
 | Vertical page distribution | Profile README, gist, booking discussion, release notes, outreach docs | Published |
 | Sample report index page | https://jackjin1997.github.io/agent-audit-sprint/samples.html | Published |
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
-| Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published |
+| Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | Short audit slot reservation template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml | Published |
 | Audit intent label | `audit-intent` | Published for short paid-slot workflow |
 | Payment proof template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml | Published |
 | Payment proof label | `payment-proof` | Published for payment evidence workflow |
 | Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Published |
-| Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published |
-| GitHub profile placement | https://github.com/jackjin1997 | Published |
+| Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published with MCP server scan entry comment |
+| GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |

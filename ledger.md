@@ -10,6 +10,15 @@ Last updated: 2026-06-19.
 |---|---:|---|
 | None yet | $0 | No verified payment received. |
 
+## Chain Check
+
+Checked on 2026-06-19:
+
+| Network | Address | Observed balance | Result |
+|---|---|---:|---|
+| Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH | Not a $1,000 audit payment |
+| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL | Not a $1,000 audit payment |
+
 ## Submitted / Published Assets
 
 | Asset | URL | Status |

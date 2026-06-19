@@ -28,7 +28,9 @@ I do focused Agent/MCP audit sprints for teams shipping tool-using AI products. 
 
 Fixed price: $1,000. Typical turnaround: 48 hours for one repo or product slice.
 
-Sample report: https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html
+Sample reports: https://jackjin1997.github.io/agent-audit-sprint/samples.html
+
+Public GitHub repo intakes get an automated no-execution scanner triage comment before paid scope acceptance.
 
 If useful, open a request here:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml

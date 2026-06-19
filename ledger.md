@@ -42,6 +42,7 @@ Checked on 2026-06-19:
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | Short audit slot reservation template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml | Published |
+| Audit intent label | `audit-intent` | Published for short paid-slot workflow |
 | Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Published |
 | Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
@@ -50,6 +51,7 @@ Checked on 2026-06-19:
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
+| Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
 | Invoice-first payment path | Intake form, terms, invoice template, booking discussion | Published |

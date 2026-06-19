@@ -41,7 +41,7 @@ The scanner looks for tool registration, remote transports, write actions, crede
 Use it from GitHub Actions:
 
 ```yaml
-- uses: jackjin1997/agent-audit-sprint@main
+- uses: jackjin1997/agent-audit-sprint@v1
   with:
     path: "."
     output: "agent-mcp-audit.md"

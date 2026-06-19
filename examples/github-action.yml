@@ -22,7 +22,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: jackjin1997/agent-audit-sprint@main
+      - uses: jackjin1997/agent-audit-sprint@v1
         with:
           path: "."
           output: "agent-mcp-audit.md"

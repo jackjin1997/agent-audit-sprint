@@ -48,6 +48,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 Run a quick local triage pass against an agent or MCP repo:
 
 ```bash
+npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
 npm run audit:repo -- /path/to/repo
 npm --silent run audit:repo -- /path/to/repo --json
 node tools/agent-mcp-audit.mjs /path/to/repo --json

@@ -205,6 +205,9 @@ try {
     if (!indexBody.includes("browser-only local scanner")) {
       throw new Error(`Index page missing browser scanner copy in ${viewport.name}`);
     }
+    if (!indexBody.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
+      throw new Error(`Index page missing GitHub npx scanner command in ${viewport.name}`);
+    }
     if (!indexBody.includes("Reserve audit slot")) {
       throw new Error(`Index page missing short slot reservation CTA in ${viewport.name}`);
     }
@@ -321,6 +324,9 @@ try {
     }
     if (!scanText.includes("Reserve audit slot")) {
       throw new Error(`Scanner page missing short slot reservation CTA in ${viewport.name}`);
+    }
+    if (!scanText.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
+      throw new Error(`Scanner page missing GitHub npx scanner command in ${viewport.name}`);
     }
     await page.locator("[data-local-scan-input]").setInputFiles(resolve(root, "examples/local-scan-fixture"));
     await page.locator("[data-local-scan-form]").evaluate((form) => form.requestSubmit());

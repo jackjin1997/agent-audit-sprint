@@ -53,6 +53,7 @@ Checked on 2026-06-19:
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
+| GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published |
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |

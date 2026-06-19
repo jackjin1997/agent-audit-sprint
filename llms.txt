@@ -12,6 +12,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## Primary Pages
 
+- AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - Service: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
@@ -33,6 +34,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## Audit Fit
 
+- AI agents with tool calls, function calling, LangGraph flows, browser automation, RAG, memory/state, workspace integrations, cloud/API access, or irreversible write actions.
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
 - Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.

@@ -14,6 +14,7 @@ const githubMcpScanReport = `file://${resolve(root, "reports/github-mcp-server-s
 const browserMcpScanReport = `file://${resolve(root, "reports/browsermcp-mcp-security-scan.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
+const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
 const mcpSecurityRadar = `file://${resolve(root, "mcp-security-radar.html")}`;
@@ -27,6 +28,7 @@ const cloudDatabase = `file://${resolve(root, "cloud-database-mcp-security-audit
 const browserAutomation = `file://${resolve(root, "browser-automation-mcp-security-audit.html")}`;
 const requiredFiles = [
   "index.html",
+  "ai-agent-security-audit-service.html",
   "mcp-security-audit-service.html",
   "mcp-server-security-scan.html",
   "mcp-security-radar.html",
@@ -81,6 +83,7 @@ const requiredFiles = [
   "scripts/comment-code-scanning-audit.mjs",
   "scripts/comment-payment-proof.mjs",
   "docs/mcp-security-audit-service.md",
+  "docs/ai-agent-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
   "templates/quote.md",
@@ -340,6 +343,9 @@ try {
     if (!indexBody.includes("Open the MCP server security scan page")) {
       throw new Error(`Index page missing MCP server security scan link in ${viewport.name}`);
     }
+    if (!indexBody.includes("Open the AI agent security audit page")) {
+      throw new Error(`Index page missing AI agent security audit link in ${viewport.name}`);
+    }
     if (!indexBody.includes("Open the MCP Security Radar")) {
       throw new Error(`Index page missing MCP Security Radar link in ${viewport.name}`);
     }
@@ -444,6 +450,28 @@ try {
     if (browserbaseReportOverflow) {
       throw new Error(`Browserbase report horizontal overflow detected in ${viewport.name}`);
     }
+
+    await page.goto(aiAgentService, { waitUntil: "networkidle" });
+    const aiAgentServiceTitle = await page.locator("h1").innerText();
+    if (!aiAgentServiceTitle.includes("AI Agent Security Audit Service")) {
+      throw new Error(`Unexpected AI agent service h1 in ${viewport.name}: ${aiAgentServiceTitle}`);
+    }
+    const aiAgentServiceText = await page.locator("body").innerText();
+    if (
+      !aiAgentServiceText.includes("USD $1,000") ||
+      !aiAgentServiceText.includes("tool calls") ||
+      !aiAgentServiceText.includes("prompt/tool injection") ||
+      !aiAgentServiceText.includes("browser sessions") ||
+      !aiAgentServiceText.includes("Pay USD $1,000 equivalent only after scope acceptance")
+    ) {
+      throw new Error(`AI agent service page missing price, risk surface, or payment guardrail in ${viewport.name}`);
+    }
+    const aiAgentServiceCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!aiAgentServiceCta?.includes("audit-request.yml")) {
+      throw new Error(`AI agent service CTA missing intake URL in ${viewport.name}`);
+    }
+    const aiAgentServiceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiAgentServiceOverflow) throw new Error(`AI agent service horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(service, { waitUntil: "networkidle" });
     const serviceTitle = await page.locator("h1").innerText();

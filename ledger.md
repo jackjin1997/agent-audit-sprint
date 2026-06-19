@@ -27,6 +27,7 @@ Checked on 2026-06-20:
 | GitHub repo | https://github.com/jackjin1997/agent-audit-sprint | Public |
 | GitHub repo metadata | Description mentions free browser/SARIF MCP server security scan plus `$1,000` audit sprint; homepage and topics include `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
+| AI agent security audit service page | https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html, `docs/ai-agent-security-audit-service.md` | Added broader high-intent buyer entry for tool-calling AI agents, prompt/tool injection, browser sessions, credentials, memory/state, and launch risk |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
 | MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Published and distributed via profile README, gist, and scanner discussion |
 | MCP Security Radar page | https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html | Added public no-execution snapshot of 8 popular MCP repos with scan handoff and paid audit path |

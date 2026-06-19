@@ -27,6 +27,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `robots.txt` / `sitemap.xml` - static search metadata
 - `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
+- Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
@@ -77,7 +78,7 @@ The Markdown output and browser-generated audit request packet include paid audi
 Use it from GitHub Actions:
 
 ```yaml
-- uses: jackjin1997/agent-audit-sprint@v1
+- uses: jackjin1997/agent-mcp-code-scan-action@v1
   with:
     path: "."
     output: "agent-mcp-audit.md"
@@ -88,7 +89,7 @@ See [`examples/github-action.yml`](examples/github-action.yml) for a complete wo
 Use GitHub Code Scanning:
 
 ```yaml
-- uses: jackjin1997/agent-audit-sprint@v1
+- uses: jackjin1997/agent-mcp-code-scan-action@v1
   with:
     path: "."
     sarif: "true"
@@ -99,6 +100,7 @@ Use GitHub Code Scanning:
 ```
 
 See [`examples/github-code-scanning.yml`](examples/github-code-scanning.yml) for a complete workflow.
+The standalone action repository is available at https://github.com/jackjin1997/agent-mcp-code-scan-action and has a passing `@v1` smoke workflow.
 When Code Scanning findings justify human review, use the dedicated intake:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
 

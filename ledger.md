@@ -37,6 +37,7 @@ Checked on 2026-06-20:
 | Public URL scanner distribution | Release notes, gist, GitHub profile, checklist docs, discussion update | Updated |
 | GitHub npx scanner path | `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo` | Verified locally |
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |
+| Standalone GitHub Action repo | https://github.com/jackjin1997/agent-mcp-code-scan-action | Published for cleaner Action discovery and Code Scanning usage |
 | Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |
 | Copyable quote payment packet | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Added for accepted-scope payment handoff |
 | Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |
@@ -61,6 +62,8 @@ Checked on 2026-06-20:
 | GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
+| Standalone GitHub Action stable tags | `jackjin1997/agent-mcp-code-scan-action@v1`, `v1.0.0` | Published |
+| Standalone GitHub Action smoke workflow | https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/runs/27841321568 | Passed; verifies `@v1` Markdown and SARIF outputs |
 | SARIF/code scanning workflow | `examples/github-code-scanning.yml`, `--sarif`, `sarif: "true"` | Published and distributed via README, release notes, profile README, gist, and scanner discussion |
 | GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |
 | Manual action smoke workflow | https://github.com/jackjin1997/agent-audit-sprint/actions/runs/27840087216 | Passed; verifies `@v1` Markdown and SARIF outputs |

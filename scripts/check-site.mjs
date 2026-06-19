@@ -308,6 +308,9 @@ try {
     if (!indexBody.includes("Use the GitHub Code Scanning workflow")) {
       throw new Error(`Index page missing Code Scanning workflow link in ${viewport.name}`);
     }
+    if (!indexBody.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
+      throw new Error(`Index page missing standalone Code Scanning action usage in ${viewport.name}`);
+    }
     if (!indexBody.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Index page missing GitHub npx scanner command in ${viewport.name}`);
     }
@@ -457,6 +460,9 @@ try {
     }
     if (!mcpCodeScanningText.includes("sarif: \"true\"")) {
       throw new Error(`MCP code scanning page missing action SARIF input in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
+      throw new Error(`MCP code scanning page missing standalone action usage in ${viewport.name}`);
     }
     if (!mcpCodeScanningText.includes("Pay USD $1,000 only after written scope acceptance")) {
       throw new Error(`MCP code scanning page missing payment guardrail in ${viewport.name}`);

@@ -23,7 +23,7 @@ jobs:
       security-events: write
     steps:
       - uses: actions/checkout@v4
-      - uses: jackjin1997/agent-audit-sprint@v1
+      - uses: jackjin1997/agent-mcp-code-scan-action@v1
         with:
           path: "."
           sarif: "true"

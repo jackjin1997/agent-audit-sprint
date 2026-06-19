@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Run an MCP security scan as a GitHub Code Scanning workflow. SARIF output for agent and MCP repos, plus a $1,000 human audit handoff.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html">
+    <meta property="og:title" content="MCP Code Scanning GitHub Action">
+    <meta property="og:description" content="Copy a GitHub Action workflow that uploads Agent/MCP scanner results to GitHub Code Scanning as SARIF.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MCP Code Scanning GitHub Action">
+    <meta name="twitter:description" content="SARIF output for Agent/MCP code scanning in GitHub Security.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>MCP Code Scanning GitHub Action</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "MCP Code Scanning GitHub Action",
+        "description": "GitHub Action workflow for Agent/MCP heuristic scanner SARIF output and GitHub Code Scanning upload.",
+        "codeRepository": "https://github.com/jackjin1997/agent-audit-sprint",
+        "programmingLanguage": "JavaScript",
+        "runtimePlatform": "GitHub Actions",
+        "license": "https://github.com/jackjin1997/agent-audit-sprint/blob/main/LICENSE"
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="mcp-server-security-scan.html">MCP Scan</a>
+        <a href="mcp-code-scanning-github-action.html">Code Scanning</a>
+        <a href="scan.html">Scanner</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">GitHub Security tab workflow</p>
+        <h1>MCP Code Scanning GitHub Action</h1>
+        <p>
+          Add a free Agent/MCP scanner to GitHub Code Scanning. The workflow runs the heuristic scanner with SARIF 2.1.0 output, uploads findings to the Security tab, and keeps the fixed USD $1,000 human audit path one click away for launch-blocking risks.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="examples/github-code-scanning.yml">Open workflow example</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/blob/main/examples/github-code-scanning.yml">View on GitHub</a>
+          <a class="button secondary dark" href="mcp-server-security-scan.html">Use browser scanner</a>
+          <a class="button secondary dark" href="mcp-security-audit-service.html">Book human review</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Output</span><strong>SARIF 2.1.0 for GitHub Code Scanning</strong></div>
+          <div><span>Runtime</span><strong>No target dependency install or target code execution</strong></div>
+          <div><span>Action</span><strong>jackjin1997/agent-audit-sprint@v1</strong></div>
+          <div><span>Upgrade</span><strong>USD $1,000 human audit for one repo or slice</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Copy workflow</p>
+          <h2>Upload MCP scan findings to Code Scanning</h2>
+          <p>
+            Save this as <code>.github/workflows/agent-mcp-code-scanning.yml</code>. It checks TypeScript, JavaScript, Python, Go, Rust, Markdown, package metadata, and workflow changes, then uploads SARIF through GitHub's supported action.
+          </p>
+        </div>
+        <pre><code>name: Agent/MCP Code Scanning
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.mjs"
+      - "**/*.py"
+      - "**/*.go"
+      - "**/*.rs"
+      - "**/*.md"
+      - "package.json"
+      - ".github/workflows/**"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jackjin1997/agent-audit-sprint@v1
+        with:
+          path: "."
+          sarif: "true"
+          output: "agent-mcp-audit.sarif"
+      - uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: agent-mcp-audit.sarif</code></pre>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">What appears</p>
+          <h2>Findings become reviewable security alerts</h2>
+          <p>
+            The SARIF output maps scanner findings into GitHub's security interface with rule names, severity levels, file evidence, and help links back to the free scanner and paid audit handoff.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Remote transport exposure appears as warning or error level scanner output.</div>
+          <div>Write, destructive, shell, browser, database, cloud, and external API paths are highlighted for review.</div>
+          <div>Credential paths without redaction signals are promoted as high-risk triage findings.</div>
+          <div>Missing tests, CI, or common quality scripts are kept visible before launch.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Local command</p>
+          <h2>Generate SARIF without GitHub Actions</h2>
+          <p>
+            The same scanner can emit SARIF locally for a repo folder. This is useful for private review, CI systems outside GitHub, or attaching a scan artifact to an audit request.
+          </p>
+        </div>
+        <code>node tools/agent-mcp-audit.mjs /path/to/repo --sarif &gt; agent-mcp-audit.sarif</code>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Human review</p>
+        <h2>When SARIF is not enough</h2>
+        <ol>
+          <li>Use the workflow for free triage before launch or before opening a paid audit request.</li>
+          <li>Attach the generated SARIF or Markdown scanner report to the audit intake.</li>
+          <li>Confirm scope for one repo or product slice before any payment is sent.</li>
+          <li>Pay USD $1,000 only after written scope acceptance; delivery starts after payment confirmation.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start audit request</a>
+          <a class="button secondary dark" href="quote.html">Open fixed quote</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

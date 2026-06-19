@@ -525,6 +525,19 @@ code {
   overflow-wrap: anywhere;
 }
 
+pre {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}
+
+pre code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
 .close {
   display: flex;
   justify-content: space-between;
@@ -716,6 +729,10 @@ code {
   grid-template-columns: minmax(0, 0.8fr) minmax(360px, 1fr);
   gap: 36px;
   align-items: start;
+}
+
+.service-split > * {
+  min-width: 0;
 }
 
 .service-list {

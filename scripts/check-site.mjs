@@ -11,6 +11,7 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
+const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
@@ -22,6 +23,7 @@ const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
   "mcp-server-security-scan.html",
+  "mcp-code-scanning-github-action.html",
   "scan.html",
   "quote.html",
   "trading-mcp-security-audit.html",
@@ -248,6 +250,9 @@ try {
     if (!indexBody.includes("Open the MCP server security scan page")) {
       throw new Error(`Index page missing MCP server security scan link in ${viewport.name}`);
     }
+    if (!indexBody.includes("Use the GitHub Code Scanning workflow")) {
+      throw new Error(`Index page missing Code Scanning workflow link in ${viewport.name}`);
+    }
     if (!indexBody.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Index page missing GitHub npx scanner command in ${viewport.name}`);
     }
@@ -378,6 +383,36 @@ try {
     const mcpServerScanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (mcpServerScanOverflow) {
       throw new Error(`MCP server scan horizontal overflow detected in ${viewport.name}`);
+    }
+
+    await page.goto(mcpCodeScanning, { waitUntil: "networkidle" });
+    const mcpCodeScanningTitle = await page.locator("h1").innerText();
+    if (!mcpCodeScanningTitle.includes("MCP Code Scanning GitHub Action")) {
+      throw new Error(`Unexpected MCP code scanning h1 in ${viewport.name}: ${mcpCodeScanningTitle}`);
+    }
+    const mcpCodeScanningText = await page.locator("body").innerText();
+    if (!mcpCodeScanningText.includes("SARIF 2.1.0")) {
+      throw new Error(`MCP code scanning page missing SARIF copy in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("github/codeql-action/upload-sarif@v4")) {
+      throw new Error(`MCP code scanning page missing upload-sarif workflow step in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("security-events: write")) {
+      throw new Error(`MCP code scanning page missing security-events permission in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("sarif: \"true\"")) {
+      throw new Error(`MCP code scanning page missing action SARIF input in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("Pay USD $1,000 only after written scope acceptance")) {
+      throw new Error(`MCP code scanning page missing payment guardrail in ${viewport.name}`);
+    }
+    const mcpCodeScanningCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (mcpCodeScanningCta !== "examples/github-code-scanning.yml") {
+      throw new Error(`MCP code scanning primary CTA should open workflow example in ${viewport.name}`);
+    }
+    const mcpCodeScanningOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (mcpCodeScanningOverflow) {
+      throw new Error(`MCP code scanning horizontal overflow detected in ${viewport.name}`);
     }
 
     await page.route("https://api.github.com/repos/example/agent-mcp**", async (route) => {

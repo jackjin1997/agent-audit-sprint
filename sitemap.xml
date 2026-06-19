@@ -91,6 +91,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/reports/playwright-mcp-security-scan.html</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/reports/chrome-devtools-mcp-security-scan.html</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/reports/github-mcp-server-security-scan.html</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/reports/browsermcp-mcp-security-scan.html</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://jackjin1997.github.io/agent-audit-sprint/checklist.html</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>monthly</changefreq>

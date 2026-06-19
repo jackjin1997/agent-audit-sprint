@@ -8,6 +8,10 @@ const index = `file://${resolve(root, "index.html")}`;
 const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
 const browserbaseReport = `file://${resolve(root, "reports/browserbase-mcp-sample-audit.html")}`;
+const playwrightScanReport = `file://${resolve(root, "reports/playwright-mcp-security-scan.html")}`;
+const chromeDevtoolsScanReport = `file://${resolve(root, "reports/chrome-devtools-mcp-security-scan.html")}`;
+const githubMcpScanReport = `file://${resolve(root, "reports/github-mcp-server-security-scan.html")}`;
+const browserMcpScanReport = `file://${resolve(root, "reports/browsermcp-mcp-security-scan.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
@@ -62,6 +66,10 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.md",
   "reports/browserbase-mcp-sample-audit.html",
   "reports/browserbase-mcp-sample-audit.md",
+  "reports/playwright-mcp-security-scan.html",
+  "reports/chrome-devtools-mcp-security-scan.html",
+  "reports/github-mcp-server-security-scan.html",
+  "reports/browsermcp-mcp-security-scan.html",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   ".github/ISSUE_TEMPLATE/code-scanning-audit.yml",
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
@@ -505,6 +513,12 @@ try {
     if (!radarText.includes("Start audit from scan")) {
       throw new Error(`MCP Security Radar missing paid audit handoff in ${viewport.name}`);
     }
+    const radarDetailLinks = await page.locator(
+      "a[href='reports/playwright-mcp-security-scan.html'], a[href='reports/chrome-devtools-mcp-security-scan.html'], a[href='reports/github-mcp-server-security-scan.html'], a[href='reports/browsermcp-mcp-security-scan.html']"
+    ).count();
+    if (radarDetailLinks !== 4) {
+      throw new Error(`MCP Security Radar missing detail report links in ${viewport.name}`);
+    }
     const radarCards = await page.locator(".radar-card").count();
     if (radarCards !== 8) {
       throw new Error(`MCP Security Radar expected 8 cards in ${viewport.name}, found ${radarCards}`);
@@ -512,6 +526,33 @@ try {
     const radarOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (radarOverflow) {
       throw new Error(`MCP Security Radar horizontal overflow detected in ${viewport.name}`);
+    }
+
+    for (const reportPage of [
+      { url: playwrightScanReport, title: "microsoft/playwright-mcp security scan", marker: "32/100 heuristic" },
+      { url: chromeDevtoolsScanReport, title: "ChromeDevTools/chrome-devtools-mcp security scan", marker: "72/100 heuristic" },
+      { url: githubMcpScanReport, title: "github/github-mcp-server security scan", marker: "76/100 heuristic" },
+      { url: browserMcpScanReport, title: "BrowserMCP/mcp security scan", marker: "38/100 heuristic" },
+    ]) {
+      await page.goto(reportPage.url, { waitUntil: "networkidle" });
+      const reportPageTitle = await page.locator("h1").innerText();
+      if (!reportPageTitle.includes(reportPage.title)) {
+        throw new Error(`Unexpected Radar detail h1 in ${viewport.name}: ${reportPageTitle}`);
+      }
+      const reportPageText = await page.locator("body").innerText();
+      if (
+        !reportPageText.includes(reportPage.marker) ||
+        !reportPageText.includes("Partial no-execution triage") ||
+        !reportPageText.includes("not a commissioned audit") ||
+        !reportPageText.includes("Start audit from scan") ||
+        !reportPageText.includes("Pay USD $1,000 only after written scope acceptance")
+      ) {
+        throw new Error(`Radar detail page missing score, guardrail, or paid handoff in ${viewport.name}: ${reportPage.title}`);
+      }
+      const reportPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+      if (reportPageOverflow) {
+        throw new Error(`Radar detail page horizontal overflow detected in ${viewport.name}: ${reportPage.title}`);
+      }
     }
 
     await page.goto(mcpCodeScanning, { waitUntil: "networkidle" });

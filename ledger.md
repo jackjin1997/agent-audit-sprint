@@ -31,6 +31,7 @@ Checked on 2026-06-20:
 | MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Published and distributed via profile README, gist, and scanner discussion |
 | MCP Security Radar page | https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html | Added public no-execution snapshot of 8 popular MCP repos with scan handoff and paid audit path |
 | MCP Security Radar distribution | GitHub profile README, public gist, scanner discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/3#discussioncomment-17368298, booking discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/1#discussioncomment-17368299 | Published |
+| MCP Security Radar detail pages | `reports/playwright-mcp-security-scan.html`, `reports/chrome-devtools-mcp-security-scan.html`, `reports/github-mcp-server-security-scan.html`, `reports/browsermcp-mcp-security-scan.html` | Added long-tail public scan briefs for high-intent MCP search traffic |
 | MCP Code Scanning GitHub Action page | https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html | Published and distributed via release notes, profile README, gist, and scanner discussion |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
 | Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |

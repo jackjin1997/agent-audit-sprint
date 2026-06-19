@@ -44,14 +44,14 @@ Checked on 2026-06-20:
 | Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |
 | Workspace MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html | Published |
 | Cloud and database MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/cloud-database-mcp-security-audit.html | Published |
-| Browser automation MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html | Published |
+| Browser automation MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/browser-automation-mcp-security-audit.html | Published with Browserbase sample proof path |
 | Browser scanner distribution | Profile README, gist, booking discussion, scanner discussion, release notes, outreach docs | Published with MCP server scan entry point |
 | Vertical page distribution | Profile README, gist, booking discussion, release notes, outreach docs | Published |
 | Sample report index page | https://jackjin1997.github.io/agent-audit-sprint/samples.html | Published |
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |
 | Browserbase MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html | Added public browser automation MCP sample; install, build, and tests passed locally |
-| Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion | Updated with Browserbase sample report link |
+| Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |

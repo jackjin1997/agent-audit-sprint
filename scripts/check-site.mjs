@@ -323,8 +323,14 @@ try {
     if (!indexBody.includes("Open the fixed $1,000 quote")) {
       throw new Error(`Index page missing fixed quote link in ${viewport.name}`);
     }
-    if (!indexBody.includes("Compare both sample reports")) {
+    if (!indexBody.includes("Compare all three sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("browserbase/mcp-server-browserbase")) {
+      throw new Error(`Index page missing Browserbase sample copy in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the Browserbase MCP sample report")) {
+      throw new Error(`Index page missing Browserbase sample report link in ${viewport.name}`);
     }
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
@@ -746,6 +752,14 @@ try {
       const verticalText = await page.locator("body").innerText();
       if (!verticalText.includes("USD $1,000") || !verticalText.includes(verticalPage.marker)) {
         throw new Error(`${verticalPage.name} page missing price or marker copy in ${viewport.name}`);
+      }
+      if (
+        verticalPage.name === "browser-automation" &&
+        (!verticalText.includes("browserbase/mcp-server-browserbase") ||
+          !verticalText.includes("Read Browserbase sample") ||
+          !verticalText.includes("Use Code Scanning"))
+      ) {
+        throw new Error(`Browser automation page missing Browserbase sample conversion path in ${viewport.name}`);
       }
       const verticalCta = await page.locator("a.button.primary").first().getAttribute("href");
       if (!verticalCta?.includes("audit-request.yml")) {

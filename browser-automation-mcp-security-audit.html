@@ -44,8 +44,8 @@
         </p>
         <div class="service-actions">
           <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary dark" href="reports/browserbase-mcp-sample-audit.html">Read Browserbase sample</a>
           <a class="button secondary dark" href="scan.html">Run local scanner</a>
-          <a class="button secondary dark" href="samples.html">Read samples</a>
           <a class="button secondary dark" href="terms.html">Review terms</a>
         </div>
       </section>
@@ -56,6 +56,27 @@
           <div><span>Target</span><strong>Browser, crawler, scraping, web-agent MCP</strong></div>
           <div><span>Risk</span><strong>Clicks, forms, sessions, downloads, untrusted pages</strong></div>
           <div><span>Output</span><strong>Tool boundary + injection test plan</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Public sample</p>
+          <h2>Browserbase MCP sample audit</h2>
+          <p>
+            The browser automation offer is backed by an independent public-code sample on <a href="https://github.com/browserbase/mcp-server-browserbase">browserbase/mcp-server-browserbase</a>. The sample used a local clone, passed pnpm install, build, and tests, and did not use live Browserbase sessions, customer data, credentials, hosted MCP endpoints, or live websites.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="reports/browserbase-mcp-sample-audit.html">Read Browserbase sample</a>
+            <a class="button secondary dark" href="mcp-code-scanning-github-action.html">Use Code Scanning</a>
+            <a class="button secondary dark" href="samples.html">Compare sample reports</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div>Medium: HTTP transport exposure matrix for local, remote, and hosted deployment modes</div>
+          <div>Medium: browser action launch-mode policy before click, type, observe, or extract tools</div>
+          <div>Low: operational log handling for URLs, session IDs, profile paths, and downloaded artifacts</div>
+          <div>Pass: pnpm install, build, and test suite completed on the sampled commit</div>
         </div>
       </section>
 

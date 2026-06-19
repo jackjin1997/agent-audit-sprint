@@ -1,0 +1,28 @@
+name: Smoke Action v1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jackjin1997/agent-audit-sprint@v1
+        with:
+          path: examples/local-scan-fixture
+          output: tmp-action-v1-report.md
+      - name: Verify action output
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "Heuristic score" tmp-action-v1-report.md
+          grep -q "Paid 48-hour review" tmp-action-v1-report.md
+          grep -q 'USD $1,000' tmp-action-v1-report.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: action-v1-smoke-report
+          path: tmp-action-v1-report.md

@@ -42,6 +42,7 @@ const requiredFiles = [
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
   ".github/workflows/respond-payment-proof.yml",
+  ".github/workflows/smoke-action-v1.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",

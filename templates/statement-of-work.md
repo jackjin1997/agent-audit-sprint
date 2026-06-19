@@ -38,6 +38,8 @@ Accepted networks:
 - Ethereum: `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF`
 - Solana: `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM`
 
+If invoice-first processing is needed, billing details, payment method, and settlement evidence must be agreed before work starts.
+
 Buyer should reply with network, transaction hash, payer wallet address, and intake issue URL.
 
 ## Data Handling

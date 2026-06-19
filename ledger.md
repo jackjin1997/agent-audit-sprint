@@ -27,6 +27,7 @@ Last updated: 2026-06-19.
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
+| Invoice-first payment path | Intake form, terms, invoice template, booking discussion | Published |
 | Statement of Work terms | `terms.html`, `templates/statement-of-work.md` | Published |
 | Request brief builder | `index.html#request`, `script.js` | Published |
 | Scanner paid-review handoff | `tools/agent-mcp-audit.mjs` Markdown output | Published |

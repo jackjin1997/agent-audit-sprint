@@ -11,7 +11,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - 48-hour async audit for one agent, MCP server, or tool-using product slice
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
-- Payment-ready via ETH or SOL addresses on the page
+- Payment-ready via ETH or SOL addresses, with invoice-first discussion available before work starts
 
 ## Files
 

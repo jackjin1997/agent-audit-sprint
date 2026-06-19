@@ -47,6 +47,8 @@ Not included unless separately agreed:
 
 Pay after scope is accepted and before private audit work begins.
 
+If invoice-first processing is needed, confirm billing details, payment method, and expected settlement evidence before work starts.
+
 Ethereum:
 
 ```text

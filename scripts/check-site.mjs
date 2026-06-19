@@ -69,6 +69,10 @@ try {
     await page.goto(index, { waitUntil: "networkidle" });
     const title = await page.locator("h1").innerText();
     if (!title.includes("$1,000")) throw new Error(`Unexpected h1 in ${viewport.name}: ${title}`);
+    const indexBody = await page.locator("body").innerText();
+    if (!indexBody.includes("invoice-first")) {
+      throw new Error(`Index page missing invoice-first payment path in ${viewport.name}`);
+    }
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
     const qrImagesLoaded = await page.locator(".qr-code").evaluateAll((images) =>
@@ -117,6 +121,9 @@ try {
     if (!serviceText.includes("USD $1,000")) {
       throw new Error(`Service page missing fixed price in ${viewport.name}`);
     }
+    if (!serviceText.includes("invoice-first")) {
+      throw new Error(`Service page missing invoice-first payment path in ${viewport.name}`);
+    }
     if (!serviceText.includes("Ask before booking")) {
       throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);
     }
@@ -143,6 +150,9 @@ try {
     const termsTitle = await page.locator("h1").innerText();
     if (!termsTitle.includes("Terms")) throw new Error(`Unexpected terms h1 in ${viewport.name}: ${termsTitle}`);
     const termsBody = await page.locator("body").innerText();
+    if (!termsBody.includes("invoice-first")) {
+      throw new Error(`Terms page missing invoice-first payment path in ${viewport.name}`);
+    }
     if (!termsBody.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF")) {
       throw new Error(`Ethereum payment address missing from terms in ${viewport.name}`);
     }

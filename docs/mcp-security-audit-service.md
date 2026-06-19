@@ -28,5 +28,5 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 
 1. Open an intake issue with repo/product URL, scope, delivery visibility, payment network, and highest concern.
 2. Scope is accepted for one repo or product slice.
-3. Pay USD $1,000 equivalent via Ethereum or Solana and reply with the transaction hash.
+3. Pay USD $1,000 equivalent via Ethereum or Solana, or agree an invoice-first payment path before work starts.
 4. The 48-hour target starts after payment confirmation and scope acceptance.

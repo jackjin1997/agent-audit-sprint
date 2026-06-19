@@ -17,6 +17,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `robots.txt` / `sitemap.xml` - static search metadata
+- `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - `examples/github-action.yml` - copyable workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer

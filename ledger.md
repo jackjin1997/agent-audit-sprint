@@ -23,6 +23,7 @@ Last updated: 2026-06-19.
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
+| Statement of Work terms | `terms.html`, `templates/statement-of-work.md` | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
 | Search metadata | `robots.txt`, `sitemap.xml`, JSON-LD | Published |
 | GitHub Pages static mode | `.nojekyll` | Published |

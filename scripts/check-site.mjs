@@ -5,8 +5,10 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const index = `file://${resolve(root, "index.html")}`;
 const report = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
+const terms = `file://${resolve(root, "terms.html")}`;
 const requiredFiles = [
   "index.html",
+  "terms.html",
   "styles.css",
   "script.js",
   ".nojekyll",
@@ -26,6 +28,7 @@ const requiredFiles = [
   "tools/agent-mcp-audit.mjs",
   "templates/invoice.md",
   "templates/receipt.md",
+  "templates/statement-of-work.md",
   "outreach/qualified-prospects-2026-06-19.md",
 ];
 
@@ -62,6 +65,12 @@ try {
     if (!reportTitle.includes("douban-mcp")) throw new Error(`Unexpected report h1 in ${viewport.name}: ${reportTitle}`);
     const reportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (reportOverflow) throw new Error(`Report horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(terms, { waitUntil: "networkidle" });
+    const termsTitle = await page.locator("h1").innerText();
+    if (!termsTitle.includes("Terms")) throw new Error(`Unexpected terms h1 in ${viewport.name}: ${termsTitle}`);
+    const termsOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (termsOverflow) throw new Error(`Terms horizontal overflow detected in ${viewport.name}`);
 
     await page.close();
   }

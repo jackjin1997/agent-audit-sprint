@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Statement of work and terms for the $1,000 Agent/MCP Audit Sprint.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/terms.html">
+    <title>Terms | Agent/MCP Audit Sprint</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        background: #fbfaf7;
+      }
+
+      .terms-shell {
+        width: min(980px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 104px 0 80px;
+      }
+
+      .terms-hero {
+        padding: 34px 0 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .terms-hero h1 {
+        color: var(--ink);
+        font-size: clamp(38px, 6vw, 66px);
+      }
+
+      .terms-hero p,
+      .terms-section p,
+      .terms-section li,
+      .terms-section td,
+      .terms-section th {
+        color: #4d5664;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .terms-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .terms-card,
+      .terms-table {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .terms-card {
+        padding: 18px;
+      }
+
+      .terms-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 780;
+        text-transform: uppercase;
+      }
+
+      .terms-card strong {
+        display: block;
+        margin-top: 8px;
+      }
+
+      .terms-section {
+        padding-top: 42px;
+      }
+
+      .terms-section h2 {
+        margin-bottom: 14px;
+        font-size: 32px;
+      }
+
+      .terms-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+      }
+
+      .terms-table th,
+      .terms-table td {
+        padding: 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .terms-table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .terms-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+
+      .terms-actions .button.secondary {
+        color: var(--ink);
+        background: transparent;
+        border-color: var(--line);
+      }
+
+      @media (max-width: 760px) {
+        .terms-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .terms-table {
+          display: block;
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#deliverables">Deliverables</a>
+        <a href="reports/douban-mcp-sample-audit.html">Sample</a>
+        <a href="index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="terms-shell">
+      <section class="terms-hero">
+        <p class="eyebrow">Statement of Work</p>
+        <h1>$1,000 Agent/MCP Audit Sprint Terms</h1>
+        <p>
+          These terms are designed for a compact async engineering review. They set clear scope, payment, delivery, and data-handling expectations before private work begins.
+        </p>
+        <div class="terms-grid">
+          <div class="terms-card"><span>Price</span><strong>USD $1,000 fixed</strong></div>
+          <div class="terms-card"><span>Turnaround</span><strong>48 hours after payment confirmation</strong></div>
+          <div class="terms-card"><span>Scope</span><strong>One repo or product slice</strong></div>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2>Included</h2>
+        <table class="terms-table">
+          <tbody>
+            <tr><td>Boundary map</td><td>Tools, transports, credentials, external APIs, write actions, destructive paths, and privileged operations.</td></tr>
+            <tr><td>Risk findings</td><td>Ranked issues with evidence, affected files, impact, and practical remediation path.</td></tr>
+            <tr><td>Test plan</td><td>Focused tests for schema parsing, auth gates, secret redaction, write-mode defaults, and transport assumptions.</td></tr>
+            <tr><td>Launch notes</td><td>What to fix now, what to monitor, and what can safely wait.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="terms-section">
+        <h2>Not Included</h2>
+        <ul>
+          <li>Implementing fixes, unless separately agreed.</li>
+          <li>Legal, financial, compliance, SOC 2, or penetration-test certification.</li>
+          <li>Handling private keys, cookies, production credentials, or raw sensitive customer data.</li>
+          <li>Emergency incident response or live production operations.</li>
+          <li>More than one repo/product slice in the same sprint.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>Payment And Start</h2>
+        <p>
+          Open the intake issue first. After scope is accepted, pay USD $1,000 equivalent via the selected network and reply with the transaction hash. The 48-hour target starts after payment confirmation and scope acceptance.
+        </p>
+      </section>
+
+      <section class="terms-section">
+        <h2>Confidentiality And Data Handling</h2>
+        <p>
+          Do not paste secrets, private keys, cookies, customer data, production logs with sensitive values, or live credentials into GitHub issues. For private code or private docs, share only the minimum access needed and remove access after delivery.
+        </p>
+      </section>
+
+      <section class="terms-section">
+        <h2>Delivery</h2>
+        <p>
+          Delivery is a Markdown report unless otherwise agreed in the intake issue. The report can be public or private depending on the buyer's preference and repository sensitivity.
+        </p>
+        <div class="terms-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary" href="templates/statement-of-work.md">Markdown SOW</a>
+          <a class="button secondary" href="index.html">Back to offer</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

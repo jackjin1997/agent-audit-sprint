@@ -24,6 +24,23 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: delivery_visibility
+    attributes:
+      label: Delivery visibility
+      description: Where should the final report be delivered?
+      options:
+        - Public GitHub issue comment
+        - Private Markdown report
+        - Private first, public summary later
+    validations:
+      required: true
+  - type: input
+    id: target_date
+    attributes:
+      label: Target delivery date
+      description: Optional requested delivery date. Default target is 48 hours after payment confirmation and scope acceptance.
+      placeholder: YYYY-MM-DD or "48h default"
+  - type: dropdown
     id: payment
     attributes:
       label: Payment network
@@ -33,6 +50,12 @@ body:
         - Need invoice/discussion first
     validations:
       required: true
+  - type: input
+    id: transaction_hash
+    attributes:
+      label: Transaction hash
+      description: Optional at intake time. Add this after scope is accepted and payment is sent.
+      placeholder: tx hash or "pending"
   - type: textarea
     id: risk
     attributes:
@@ -49,4 +72,6 @@ body:
         - label: I will not include secrets, credentials, cookies, private keys, or sensitive customer data in this issue.
           required: true
         - label: I understand this is a $1,000 fixed-price audit for one repo or product slice.
+          required: true
+        - label: I have reviewed the Statement of Work and payment/start terms at https://jackjin1997.github.io/agent-audit-sprint/terms.html.
           required: true

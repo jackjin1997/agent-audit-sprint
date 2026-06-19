@@ -25,7 +25,7 @@ Checked on 2026-06-20:
 |---|---|---|
 | Agent/MCP Audit Sprint landing page | https://jackjin1997.github.io/agent-audit-sprint/ | Published |
 | GitHub repo | https://github.com/jackjin1997/agent-audit-sprint | Public |
-| GitHub repo metadata | Description mentions free browser MCP server security scan plus `$1,000` audit sprint; homepage and topics include `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
+| GitHub repo metadata | Description mentions free browser/SARIF MCP server security scan plus `$1,000` audit sprint; homepage and topics include `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
 | MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Published and distributed via profile README, gist, and scanner discussion |
@@ -59,9 +59,9 @@ Checked on 2026-06-20:
 | GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
-| SARIF/code scanning workflow | `examples/github-code-scanning.yml`, `--sarif`, `sarif: "true"` | Added for GitHub Security tab distribution |
+| SARIF/code scanning workflow | `examples/github-code-scanning.yml`, `--sarif`, `sarif: "true"` | Published and distributed via README, release notes, profile README, gist, and scanner discussion |
 | GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |
-| Manual action smoke workflow | `.github/workflows/smoke-action-v1.yml` | Covers `@v1` Markdown and SARIF outputs |
+| Manual action smoke workflow | https://github.com/jackjin1997/agent-audit-sprint/actions/runs/27840087216 | Passed; verifies `@v1` Markdown and SARIF outputs |
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published with quote/payment packet and shareable scanner link |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published with quote/payment packet and shareable scanner link |
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |

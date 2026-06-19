@@ -38,6 +38,7 @@ Checked on 2026-06-20:
 | GitHub npx scanner path | `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo` | Verified locally |
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |
 | Standalone GitHub Action repo | https://github.com/jackjin1997/agent-mcp-code-scan-action | Published for cleaner Action discovery and Code Scanning usage |
+| Standalone GitHub Action distribution | GitHub profile README, public gist, launch release, scanner discussion comment https://github.com/jackjin1997/agent-audit-sprint/discussions/3#discussioncomment-17367911 | Updated with `jackjin1997/agent-mcp-code-scan-action@v1` and paid audit intake links |
 | Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |
 | Copyable quote payment packet | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Added for accepted-scope payment handoff |
 | Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |

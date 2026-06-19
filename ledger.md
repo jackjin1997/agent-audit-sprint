@@ -51,6 +51,7 @@ Checked on 2026-06-20:
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |
 | Browserbase MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html | Added public browser automation MCP sample; install, build, and tests passed locally |
+| Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |

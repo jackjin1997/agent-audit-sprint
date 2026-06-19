@@ -16,6 +16,7 @@ Last updated: 2026-06-19.
 |---|---|---|
 | Agent/MCP Audit Sprint landing page | https://jackjin1997.github.io/agent-audit-sprint/ | Published |
 | GitHub repo | https://github.com/jackjin1997/agent-audit-sprint | Public |
+| GitHub repo metadata | Description, homepage, topics | Published for MCP/LLM/security discovery |
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |

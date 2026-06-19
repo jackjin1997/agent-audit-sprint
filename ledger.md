@@ -54,7 +54,7 @@ Checked on 2026-06-19:
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |
-| Manual action smoke workflow | `.github/workflows/smoke-action-v1.yml` | Added to verify `@v1` consumer path |
+| Manual action smoke workflow | https://github.com/jackjin1997/agent-audit-sprint/actions/runs/27820504557 | Passed; verified `@v1` consumer path |
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published |
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |

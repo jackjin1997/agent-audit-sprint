@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jackjin1997.github.io/agent-audit-sprint/sitemap.xml

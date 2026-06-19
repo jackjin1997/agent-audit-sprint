@@ -1,11 +1,35 @@
 {
-  "name": "agent-audit-sprint",
+  "name": "agent-mcp-audit",
   "version": "1.0.0",
-  "private": true,
-  "description": "Static landing page and sales assets for a $1,000 fixed-price Agent/MCP audit service.",
+  "description": "Agent/MCP heuristic audit scanner plus sales assets for a fixed-price Agent/MCP audit sprint.",
   "type": "module",
   "bin": {
     "agent-mcp-audit": "tools/agent-mcp-audit.mjs"
+  },
+  "files": [
+    "tools/",
+    "templates/",
+    "reports/",
+    "examples/",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://jackjin1997.github.io/agent-audit-sprint/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackjin1997/agent-audit-sprint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jackjin1997/agent-audit-sprint/issues"
+  },
+  "funding": {
+    "type": "custom",
+    "url": "https://jackjin1997.github.io/agent-audit-sprint/"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "audit:repo": "node tools/agent-mcp-audit.mjs",

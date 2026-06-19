@@ -16,6 +16,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Files
 
 - `index.html` - public landing page
+- `robots.txt` / `sitemap.xml` - static search metadata
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - `examples/github-action.yml` - copyable workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
@@ -59,3 +60,17 @@ Open `index.html` directly in a browser or serve the directory with any static f
 ## Payment Ops
 
 Use `templates/invoice.md` after accepting scope. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.
+
+## npm Publishing
+
+The package name `agent-mcp-audit` is currently available, but this machine is not logged in to npm. After npm login, publish with:
+
+```bash
+npm publish --registry https://registry.npmjs.org/
+```
+
+After publish, the public CLI command will be:
+
+```bash
+npx agent-mcp-audit /path/to/repo
+```

@@ -24,6 +24,10 @@ Last updated: 2026-06-19.
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
+| Search metadata | `robots.txt`, `sitemap.xml`, JSON-LD | Published |
+| GitHub Pages static mode | `.nojekyll` | Published |
+| npm package preparation | `agent-mcp-audit` | Prepared for npmjs.org; npm not logged in, not published |
+| CI validation workflow | `.github/workflows/validate.yml` | Published |
 | Public outbound playbook | `outreach/qualified-prospects-2026-06-19.md` | Published |
 | Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | Prepared locally, not public, not sent |
 

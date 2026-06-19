@@ -19,6 +19,8 @@ Last updated: 2026-06-19.
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
+| Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
+| Qualified prospect list | `outreach/qualified-prospects-2026-06-19.md` | Prepared, not sent |
 
 ## Payment Addresses
 

@@ -13,6 +13,8 @@ const requiredFiles = [
   "reports/douban-mcp-sample-audit.html",
   "reports/douban-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
+  "tools/agent-mcp-audit.mjs",
+  "outreach/qualified-prospects-2026-06-19.md",
 ];
 
 for (const file of requiredFiles) {

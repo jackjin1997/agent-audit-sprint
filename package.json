@@ -5,6 +5,10 @@
   "description": "Static landing page and sales assets for a $1,000 fixed-price Agent/MCP audit service.",
   "type": "module",
   "scripts": {
+    "audit:repo": "node tools/agent-mcp-audit.mjs",
+    "lint": "node --check tools/agent-mcp-audit.mjs && node --check scripts/check-site.mjs && node --check scripts/render-assets.mjs && node --check script.js",
+    "test": "npm run check",
+    "typecheck": "npm run lint",
     "render:assets": "node scripts/render-assets.mjs",
     "check": "node scripts/check-site.mjs"
   },

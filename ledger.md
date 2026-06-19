@@ -57,7 +57,7 @@ Checked on 2026-06-20:
 | Browserbase MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html | Added public browser automation MCP sample; install, build, and tests passed locally |
 | Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
-| Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point |
+| Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point and LLM/agent service summary |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | Code scanning audit intake template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml | Added for SARIF/GitHub Security alert conversion |
 | Short audit slot reservation template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml | Published |
@@ -66,7 +66,7 @@ Checked on 2026-06-20:
 | Payment proof label | `payment-proof` | Published for payment evidence workflow |
 | Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Updated with standalone Code Scanning Action, current 48-hour slot, Code Scanning audit intake, and payment guardrail |
 | Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published with MCP server scan entry comment |
-| GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point |
+| GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point and LLM/agent service summary |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | Standalone GitHub Action stable tags | `jackjin1997/agent-mcp-code-scan-action@v1`, `v1.0.0`, `v1.0.1` | `v1` points to the current discovery-copy release; `v1.0.0` retained |
@@ -93,7 +93,7 @@ Checked on 2026-06-20:
 | Request brief builder | `index.html#request`, `script.js` | Published |
 | Scanner paid-review handoff | `tools/agent-mcp-audit.mjs` Markdown output | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
-| Search metadata | `llms.txt`, `robots.txt`, `sitemap.xml`, JSON-LD | Added machine-readable LLM/agent service summary for the fixed $1,000 Agent/MCP audit offer |
+| Search metadata | `llms.txt`, `robots.txt`, `sitemap.xml`, JSON-LD | Added machine-readable LLM/agent service summary for the fixed $1,000 Agent/MCP audit offer and distributed it via profile README and public gist |
 | GitHub Pages static mode | `.nojekyll` | Published |
 | npm package preparation | `agent-mcp-audit` | Prepared for npmjs.org; npm not logged in, not published |
 | CI validation workflow | `.github/workflows/validate.yml` | Published |

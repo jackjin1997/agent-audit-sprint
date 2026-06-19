@@ -11,9 +11,13 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
+const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
+const workspace = `file://${resolve(root, "workspace-mcp-security-audit.html")}`;
 const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
+  "trading-mcp-security-audit.html",
+  "workspace-mcp-security-audit.html",
   "samples.html",
   "checklist.html",
   "terms.html",
@@ -181,12 +185,36 @@ try {
     if (!serviceText.includes("Ask before booking")) {
       throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);
     }
+    if (!serviceText.includes("Trading MCP security audit") || !serviceText.includes("Workspace MCP security audit")) {
+      throw new Error(`Service page missing vertical audit links in ${viewport.name}`);
+    }
     const serviceCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (!serviceCta?.includes("audit-request.yml")) {
       throw new Error(`Service CTA missing intake URL in ${viewport.name}`);
     }
     const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
+
+    for (const verticalPage of [
+      { url: trading, title: "Trading MCP Security Audit", marker: "order placement", name: "trading" },
+      { url: workspace, title: "Workspace MCP Security Audit", marker: "workspace systems", name: "workspace" },
+    ]) {
+      await page.goto(verticalPage.url, { waitUntil: "networkidle" });
+      const verticalTitle = await page.locator("h1").innerText();
+      if (!verticalTitle.includes(verticalPage.title)) {
+        throw new Error(`Unexpected ${verticalPage.name} h1 in ${viewport.name}: ${verticalTitle}`);
+      }
+      const verticalText = await page.locator("body").innerText();
+      if (!verticalText.includes("USD $1,000") || !verticalText.includes(verticalPage.marker)) {
+        throw new Error(`${verticalPage.name} page missing price or marker copy in ${viewport.name}`);
+      }
+      const verticalCta = await page.locator("a.button.primary").first().getAttribute("href");
+      if (!verticalCta?.includes("audit-request.yml")) {
+        throw new Error(`${verticalPage.name} CTA missing intake URL in ${viewport.name}`);
+      }
+      const verticalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+      if (verticalOverflow) throw new Error(`${verticalPage.name} horizontal overflow detected in ${viewport.name}`);
+    }
 
     await page.goto(samples, { waitUntil: "networkidle" });
     const samplesTitle = await page.locator("h1").innerText();

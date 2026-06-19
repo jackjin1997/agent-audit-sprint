@@ -19,6 +19,18 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>monthly</changefreq>

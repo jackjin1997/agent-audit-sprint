@@ -28,6 +28,8 @@ Checked on 2026-06-19:
 | GitHub repo metadata | Description, homepage, topics including `mcp-security`, `agent-security`, `ai-security` | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
+| Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |
+| Workspace MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html | Published |
 | Sample report index page | https://jackjin1997.github.io/agent-audit-sprint/samples.html | Published |
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |

@@ -109,6 +109,12 @@ if (!triageOutput.includes("Safety: no dependencies were installed")) {
 if (!triageOutput.includes("payment-confirmation.yml")) {
   throw new Error("Triage dry-run output is missing payment proof link");
 }
+if (!triageOutput.includes("quote.html")) {
+  throw new Error("Triage dry-run output is missing fixed quote link");
+}
+if (!triageOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
+  throw new Error("Triage dry-run output is missing shareable scanner link");
+}
 
 const intentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
   encoding: "utf8",
@@ -149,6 +155,12 @@ if (!intentOutput.includes("payment-confirmation.yml")) {
 }
 if (!intentOutput.includes("audit-request.yml")) {
   throw new Error("Intent dry-run output is missing conversion links");
+}
+if (!intentOutput.includes("quote.html")) {
+  throw new Error("Intent dry-run output is missing fixed quote link");
+}
+if (!intentOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
+  throw new Error("Intent dry-run output is missing shareable scanner link");
 }
 
 const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {

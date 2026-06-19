@@ -6,6 +6,8 @@ import { join, resolve } from "node:path";
 
 const MARKER = "<!-- agent-mcp-audit-triage -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/";
+const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
+const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const REQUEST_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -51,6 +53,7 @@ function renderFindings(findings = []) {
 }
 
 function renderSuccessComment(repoInfo, result) {
+  const scannerUrl = `${SCANNER_URL}?repo=${encodeURIComponent(repoInfo.url)}`;
   return `${MARKER}
 ## Automated free triage
 
@@ -74,6 +77,8 @@ This is a first-pass signal scan, not the paid audit. It helps decide whether th
 Reply in this issue with any scope corrections and preferred delivery visibility. After scope acceptance and payment confirmation, I will deliver the full ranked report, evidence, patch plan, and launch notes.
 
 - Service page: ${SERVICE_URL}
+- Browser scanner link: ${scannerUrl}
+- Fixed quote and copyable payment packet: ${QUOTE_URL}
 - Terms and payment/start rules: ${TERMS_URL}
 - New request form: ${REQUEST_URL}
 - Payment proof form, after scope acceptance only: ${PAYMENT_PROOF_URL}
@@ -89,6 +94,8 @@ I could not run the scanner automatically because this intake does not include a
 The paid sprint can still cover product docs, private repos, demos, or a narrow code slice, but the automated no-execution triage only works for public GitHub repositories.
 
 - Service page: ${SERVICE_URL}
+- Browser scanner: ${SCANNER_URL}
+- Fixed quote and copyable payment packet: ${QUOTE_URL}
 - Terms and payment/start rules: ${TERMS_URL}
 `;
 }
@@ -105,6 +112,8 @@ Reason: \`${message}\`
 This can happen when the repo is private, very large, temporarily unavailable, or outside the shape expected by the scanner. The paid sprint can still proceed after scope acceptance.
 
 - Service page: ${SERVICE_URL}
+- Browser scanner: ${SCANNER_URL}?repo=${encodeURIComponent(repoInfo.url)}
+- Fixed quote and copyable payment packet: ${QUOTE_URL}
 - Terms and payment/start rules: ${TERMS_URL}
 `;
 }

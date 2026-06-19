@@ -3,6 +3,7 @@
 const MARKER = "<!-- agent-mcp-audit-intent -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
+const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const FULL_INTAKE_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -15,6 +16,18 @@ function extractField(body = "", label) {
   const pattern = new RegExp(`###\\s+${escaped}\\s+([\\s\\S]*?)(?=\\n###\\s+|$)`, "i");
   const match = body.match(pattern);
   return match?.[1]?.trim().replace(/^_No response_$/i, "") || "";
+}
+
+function normalizeGitHubRepoUrl(value = "") {
+  const match = value.match(/https?:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)/);
+  if (!match) return "";
+  return `https://github.com/${match[1]}/${match[2].replace(/\.git$/i, "")}`;
+}
+
+function scannerLinkFor(project) {
+  const repoUrl = normalizeGitHubRepoUrl(project);
+  if (!repoUrl) return SCANNER_URL;
+  return `${SCANNER_URL}?repo=${encodeURIComponent(repoUrl)}`;
 }
 
 function renderIntentComment(issueBody = "") {
@@ -39,6 +52,8 @@ Preferred contact recorded from the form: **${contact}**
 Requested timing: **${timing}**  
 Payment path: **${paymentPath}**
 
+Fixed quote and copyable payment packet: ${QUOTE_URL}
+
 ### Payment/start rule
 
 Do not send payment until scope is accepted in writing. After scope is accepted, pay USD $1,000 equivalent through the agreed path and submit the transaction hash or invoice settlement evidence here:
@@ -51,9 +66,9 @@ ${PAYMENT_PROOF_URL}
 
 ### Optional before scope
 
-If the repo can be scanned locally, run the browser-only scanner first and paste the generated Markdown into this issue:
+Run the browser scanner before scope acceptance and paste the generated Markdown into this issue. Public GitHub repos can use the shareable scan link; private repos can use the local folder selector:
 
-${SCANNER_URL}
+${scannerLinkFor(project)}
 
 It does not upload code, install dependencies, or execute target code.
 

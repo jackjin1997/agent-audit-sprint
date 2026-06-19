@@ -23,6 +23,7 @@ Last updated: 2026-06-19.
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
+| GitHub Funding link | `.github/FUNDING.yml` | Published |
 | Public outbound playbook | `outreach/qualified-prospects-2026-06-19.md` | Published |
 | Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | Prepared locally, not public, not sent |
 

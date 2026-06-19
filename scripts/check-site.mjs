@@ -10,6 +10,7 @@ const requiredFiles = [
   "styles.css",
   "script.js",
   "action.yml",
+  ".github/FUNDING.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",

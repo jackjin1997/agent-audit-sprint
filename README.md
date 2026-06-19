@@ -25,6 +25,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
+- `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
 - `examples/github-action.yml` - copyable workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - GitHub Discussion #1 - booking FAQ and pre-intake questions

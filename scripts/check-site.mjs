@@ -38,6 +38,7 @@ const requiredFiles = [
   ".github/FUNDING.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
+  ".github/workflows/respond-audit-intent.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",
@@ -50,6 +51,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
   "tools/agent-mcp-audit.mjs",
   "scripts/comment-audit-triage.mjs",
+  "scripts/comment-audit-intent.mjs",
   "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
@@ -96,6 +98,44 @@ if (!triageOutput.includes("https://github.com/example/agent-mcp")) {
 }
 if (!triageOutput.includes("Safety: no dependencies were installed")) {
   throw new Error("Triage dry-run output is missing safety statement");
+}
+
+const intentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Project or repo URL",
+      "",
+      "https://github.com/example/agent-mcp",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!intentOutput.includes("Audit slot received")) {
+  throw new Error("Intent dry-run output is missing heading");
+}
+if (!intentOutput.includes("Do not send payment until scope is accepted")) {
+  throw new Error("Intent dry-run output is missing payment guardrail");
+}
+if (!intentOutput.includes("https://github.com/example/agent-mcp")) {
+  throw new Error("Intent dry-run output is missing project URL");
+}
+if (!intentOutput.includes("paid-audit-intent") && !intentOutput.includes("audit-request.yml")) {
+  throw new Error("Intent dry-run output is missing conversion links");
 }
 
 const browser = await chromium.launch();

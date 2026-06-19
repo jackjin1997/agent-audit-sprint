@@ -1,0 +1,52 @@
+name: Audit request
+description: Start a $1,000 Agent/MCP Audit Sprint
+title: "Audit request: <project name>"
+labels: ["audit-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a fixed-price Agent/MCP Audit Sprint. Do not paste secrets, private keys, cookies, customer data, or production logs with sensitive values.
+  - type: input
+    id: project
+    attributes:
+      label: Project or repo URL
+      description: Public repo, docs, package, demo, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What should be reviewed in this sprint?
+      placeholder: MCP server transport, write tools, auth flow, deployment docs, etc.
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment network
+      options:
+        - Ethereum
+        - Solana
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Highest concern
+      description: What failure would hurt most?
+      placeholder: Tool injection, exposed remote transport, account mutation, secret leakage, missing tests...
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, cookies, private keys, or sensitive customer data in this issue.
+          required: true
+        - label: I understand this is a $1,000 fixed-price audit for one repo or product slice.
+          required: true

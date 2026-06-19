@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sample Agent/MCP audit report for jackjin1997/douban-mcp.">
+    <title>Sample Audit: douban-mcp</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      body {
+        background: #fbfaf7;
+      }
+
+      .report-shell {
+        width: min(980px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 104px 0 80px;
+      }
+
+      .report-hero {
+        padding: 34px 0 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .report-hero h1 {
+        max-width: 900px;
+        color: var(--ink);
+        font-size: clamp(38px, 6vw, 66px);
+      }
+
+      .report-hero p {
+        max-width: 780px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .report-meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .report-meta div,
+      .finding-block,
+      .positive-list,
+      .code-block {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .report-meta div {
+        padding: 16px;
+      }
+
+      .report-meta span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 780;
+        text-transform: uppercase;
+      }
+
+      .report-meta strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+
+      .report-section {
+        padding: 42px 0 0;
+      }
+
+      .report-section h2 {
+        margin-bottom: 16px;
+        font-size: 32px;
+      }
+
+      .report-section p,
+      .report-section li,
+      .report-section td,
+      .report-section th {
+        color: #4d5664;
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .scope-list,
+      .priority-list {
+        padding-left: 22px;
+      }
+
+      .boundary-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .boundary-table th,
+      .boundary-table td {
+        padding: 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .boundary-table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .finding-block {
+        padding: 20px;
+        margin-top: 16px;
+      }
+
+      .finding-title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .severity {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 58px;
+        height: 28px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .severity.high { background: var(--red); }
+      .severity.med { background: var(--amber); }
+      .severity.low { background: var(--teal); }
+
+      .positive-list {
+        display: grid;
+        gap: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .positive-list li {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .positive-list li:last-child {
+        border-bottom: 0;
+      }
+
+      .code-block {
+        padding: 18px;
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 14px;
+        overflow-x: auto;
+      }
+
+      .report-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .report-actions .button.secondary {
+        color: var(--ink);
+        background: transparent;
+        border-color: var(--line);
+      }
+
+      @media (max-width: 720px) {
+        .report-meta {
+          grid-template-columns: 1fr;
+        }
+
+        .boundary-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .finding-title {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="../index.html#deliverables">Deliverables</a>
+        <a href="../index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-hero">
+        <p class="eyebrow">Sample audit</p>
+        <h1>jackjin1997/douban-mcp</h1>
+        <p>
+          A public example of the output included in the $1,000 Agent/MCP Audit Sprint. This sample is based on commit
+          <code>452db35dc9a80742a3be243531beeb8edb88a080</code> dated 2026-05-10.
+        </p>
+        <div class="report-meta">
+          <div><span>Scope</span><strong>MCP server, CLI, auth, write tools, SSE</strong></div>
+          <div><span>Primary risk</span><strong>Remote exposure and operator write-mode assumptions</strong></div>
+          <div><span>Output</span><strong>Ranked findings with fix plan</strong></div>
+        </div>
+      </section>
+
+      <section class="report-section">
+        <h2>Executive Summary</h2>
+        <p>
+          `douban-mcp` has a solid agent-facing shape: one tool registry feeds CLI and MCP surfaces, write tools are opt-in,
+          write actions are marked destructive, and common cookie values are redacted in structured logs. The main launch risk
+          is not a missing code primitive; it is operator exposure. Remote SSE mode, write enablement, and cookie readiness
+          should be documented and tested as explicit deployment states before broader distribution.
+        </p>
+      </section>
+
+      <section class="report-section">
+        <h2>Scope</h2>
+        <ul class="scope-list">
+          <li>MCP server registration and tool metadata</li>
+          <li>CLI and stdio/SSE entry points</li>
+          <li>Cookie and write-action handling</li>
+          <li>Secret redaction and error boundaries</li>
+          <li>Tests and launch documentation surface</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Boundary Map</h2>
+        <table class="boundary-table">
+          <thead>
+            <tr><th>Area</th><th>Evidence</th><th>Risk Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tool registry</td><td><code>src/tools/registry.ts</code></td><td>Single source for CLI/MCP tools reduces schema drift.</td></tr>
+            <tr><td>MCP registration</td><td><code>src/server.ts</code></td><td>Zod object shape is passed to SDK; handlers parse args before execution.</td></tr>
+            <tr><td>Write tools</td><td><code>src/tools/mutation.ts</code></td><td><code>destructiveHint</code> is present; tools require auth and env-level enablement.</td></tr>
+            <tr><td>Cookie handling</td><td><code>src/auth/CookieManager.ts</code></td><td><code>dbcl2</code> identifies login; <code>ck</code> token is required before writes.</td></tr>
+            <tr><td>Remote transport</td><td><code>src/server-entry.ts</code></td><td>SSE mode starts an HTTP server on the requested port with no app-level auth.</td></tr>
+            <tr><td>Error handling</td><td><code>src/tools/_boundary.ts</code></td><td>Known domain errors are mapped; unknown errors are logged through pino redaction.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="report-section">
+        <h2>Findings</h2>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity high">High</span>Remote SSE deployment policy is underspecified</h3>
+          <p><strong>Evidence:</strong> <code>src/server-entry.ts</code> starts an HTTP server when <code>--transport sse</code> is selected and logs <code>SSE listening on http://localhost:${opts.port}/sse</code>.</p>
+          <p><strong>Impact:</strong> In container, tunnel, or reverse-proxy deployments, the same command can become remotely reachable. If authenticated write tools are enabled, a connected client can mutate the account.</p>
+          <p><strong>Fix:</strong> Bind explicitly to loopback for local mode or document the current binding behavior. Add README deployment language and a transport/write-mode launch checklist.</p>
+        </article>
+
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Med</span>Write enablement is safe by code path, but operator confirmation is too implicit</h3>
+          <p><strong>Evidence:</strong> Mutation tools are registered only when <code>enableWrite</code> is true, and <code>server-entry.ts</code> refuses write mode without a cookie.</p>
+          <p><strong>Impact:</strong> Operators may not understand that enabling writes lets a connected MCP client mutate a real account.</p>
+          <p><strong>Fix:</strong> Keep write mode omitted or explicitly false in examples. Add a short write-mode checklist to every MCP setup path.</p>
+        </article>
+
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span>Cookie readiness should distinguish login from write-token readiness</h3>
+          <p><strong>Evidence:</strong> <code>CookieManager.hasLogin()</code> checks <code>dbcl2</code>, while write methods separately require <code>ck</code>.</p>
+          <p><strong>Impact:</strong> Diagnostics can report a cookie as valid even when write actions will fail due to a missing write token.</p>
+          <p><strong>Fix:</strong> Add <code>hasWriteToken()</code> and update <code>doctor</code> output to show login readiness and write readiness separately.</p>
+        </article>
+      </section>
+
+      <section class="report-section">
+        <h2>Positive Signals</h2>
+        <ul class="positive-list">
+          <li><code>src/utils/logger.ts</code> defines redaction paths for common cookie locations under config, request, response, and serialized error shapes.</li>
+          <li><code>HtmlDataSource</code> locks write operations for the process after 401/403 risk-control responses.</li>
+          <li><code>shareToFeed</code> defaults false in the mutation schema.</li>
+          <li>The README clearly warns about account risk and write mode requirements.</li>
+          <li>The project includes unit, integration, e2e, stdio, and CLI tests.</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Priority Fix Plan</h2>
+        <ol class="priority-list">
+          <li>Document and test SSE exposure assumptions before promoting remote usage.</li>
+          <li>Add write-mode checklist to all MCP client setup examples.</li>
+          <li>Split <code>doctor</code> diagnostics into login readiness and write readiness.</li>
+          <li>Add registry tests for mutation tool absence/presence by env state.</li>
+          <li>Normalize top-level CLI bootstrap errors.</li>
+        </ol>
+      </section>
+
+      <section class="report-section">
+        <h2>Example Validation Commands</h2>
+        <pre class="code-block">pnpm test __tests__/unit/tools/registry.test.ts
+pnpm test __tests__/integration/server-bootstrap.test.ts
+pnpm test __tests__/e2e/stdio.test.ts
+pnpm typecheck</pre>
+      </section>
+
+      <section class="report-section">
+        <h2>What the Paid Sprint Adds</h2>
+        <p>
+          The paid sprint goes deeper than this public sample: live local reproduction where possible, a full threat/risk table,
+          issue-ready fix text, test cases written to match the repository's stack, and a launch handoff for the owner.
+        </p>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary" href="../index.html">Back to offer</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

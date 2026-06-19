@@ -24,7 +24,7 @@
         "@type": "SoftwareSourceCode",
         "name": "MCP Code Scanning GitHub Action",
         "description": "GitHub Action workflow for Agent/MCP heuristic scanner SARIF output and GitHub Code Scanning upload.",
-        "codeRepository": "https://github.com/jackjin1997/agent-audit-sprint",
+        "codeRepository": "https://github.com/jackjin1997/agent-mcp-code-scan-action",
         "programmingLanguage": "JavaScript",
         "runtimePlatform": "GitHub Actions",
         "license": "https://github.com/jackjin1997/agent-audit-sprint/blob/main/LICENSE"
@@ -67,6 +67,7 @@
           <div><span>Output</span><strong>SARIF 2.1.0 for GitHub Code Scanning</strong></div>
           <div><span>Runtime</span><strong>No target dependency install or target code execution</strong></div>
           <div><span>Action</span><strong>jackjin1997/agent-mcp-code-scan-action@v1</strong></div>
+          <div><span>Verified</span><strong>Public @v1 smoke workflow checks Markdown and SARIF output</strong></div>
           <div><span>Upgrade</span><strong>USD $1,000 human audit for one repo or slice</strong></div>
         </div>
       </section>
@@ -127,6 +128,21 @@ jobs:
           <div>Write, destructive, shell, browser, database, cloud, and external API paths are highlighted for review.</div>
           <div>Credential paths without redaction signals are promoted as high-risk triage findings.</div>
           <div>Missing tests, CI, or common quality scripts are kept visible before launch.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Action repository</p>
+          <h2>Install the standalone scanner action</h2>
+          <p>
+            The action-only repository keeps installation, support, issue templates, and the stable <code>v1</code> tag focused on GitHub Actions users. Its smoke workflow verifies both Markdown and SARIF output from the public tag.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Repository: <a href="https://github.com/jackjin1997/agent-mcp-code-scan-action">jackjin1997/agent-mcp-code-scan-action</a></div>
+          <div>Smoke workflow: <a href="https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/workflows/smoke-action-v1.yml">Smoke Action v1</a></div>
+          <div>Support: scanner bug form plus paid audit, browser scanner, and terms links in the issue chooser.</div>
         </div>
       </section>
 

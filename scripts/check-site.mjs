@@ -464,6 +464,12 @@ try {
     if (!mcpCodeScanningText.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
       throw new Error(`MCP code scanning page missing standalone action usage in ${viewport.name}`);
     }
+    if (!mcpCodeScanningText.includes("Public @v1 smoke workflow checks Markdown and SARIF output")) {
+      throw new Error(`MCP code scanning page missing standalone action verification copy in ${viewport.name}`);
+    }
+    if (!mcpCodeScanningText.includes("jackjin1997/agent-mcp-code-scan-action")) {
+      throw new Error(`MCP code scanning page missing standalone action repo link in ${viewport.name}`);
+    }
     if (!mcpCodeScanningText.includes("Pay USD $1,000 only after written scope acceptance")) {
       throw new Error(`MCP code scanning page missing payment guardrail in ${viewport.name}`);
     }

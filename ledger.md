@@ -66,6 +66,7 @@ Checked on 2026-06-20:
 | Standalone GitHub Action stable tags | `jackjin1997/agent-mcp-code-scan-action@v1`, `v1.0.0` | Published |
 | Standalone GitHub Action smoke workflow | https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/runs/27841321568 | Passed; verifies `@v1` Markdown and SARIF outputs |
 | Standalone GitHub Action support funnel | https://github.com/jackjin1997/agent-mcp-code-scan-action/issues/new/choose, `.github/FUNDING.yml` | Added scanner bug form plus paid audit, browser scanner, and terms contact links |
+| Standalone GitHub Action Marketplace copy | https://github.com/jackjin1997/agent-mcp-code-scan-action/blob/main/MARKETPLACE.md | Added listing copy and verified after `@v1` smoke run https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/runs/27842031999 |
 | SARIF/code scanning workflow | `examples/github-code-scanning.yml`, `--sarif`, `sarif: "true"` | Published and distributed via README, release notes, profile README, gist, and scanner discussion |
 | GitHub Action stable tags | `v1`, `v1.0.0` | Point to current scanner release |
 | Manual action smoke workflow | https://github.com/jackjin1997/agent-audit-sprint/actions/runs/27840087216 | Passed; verifies `@v1` Markdown and SARIF outputs |

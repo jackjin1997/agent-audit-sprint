@@ -79,6 +79,8 @@ try {
     if (horizontalOverflow) throw new Error(`Horizontal overflow detected in ${viewport.name}`);
     const buttons = await page.locator("a.button").count();
     if (buttons < 2) throw new Error(`Expected CTA buttons in ${viewport.name}`);
+    const discussionLinks = await page.locator("a[href='https://github.com/jackjin1997/agent-audit-sprint/discussions/1']").count();
+    if (discussionLinks < 1) throw new Error(`Expected booking FAQ link in ${viewport.name}`);
 
     await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
     await page.locator("[name='scope']").fill("Review MCP transport, write tools, and auth gates.");
@@ -114,6 +116,9 @@ try {
     const serviceText = await page.locator("body").innerText();
     if (!serviceText.includes("USD $1,000")) {
       throw new Error(`Service page missing fixed price in ${viewport.name}`);
+    }
+    if (!serviceText.includes("Ask before booking")) {
+      throw new Error(`Service page missing booking discussion CTA in ${viewport.name}`);
     }
     const serviceCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (!serviceCta?.includes("audit-request.yml")) {

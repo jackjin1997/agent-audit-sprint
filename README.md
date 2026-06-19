@@ -23,6 +23,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - `examples/github-action.yml` - copyable workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
+- GitHub Discussion #1 - booking FAQ and pre-intake questions
 - `reports/douban-mcp-sample-audit.md` - sample report based on a real public repo
 - `.github/ISSUE_TEMPLATE/audit-request.yml` - intake form
 - `script.js` - local-only request brief builder and payment address copy actions

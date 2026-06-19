@@ -7,6 +7,7 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 - Output: boundary map, ranked findings, test plan, launch notes
 - Public GitHub repo intakes receive an automated no-execution scanner triage comment
 - Browser scanner for public GitHub URLs and private local files: https://jackjin1997.github.io/agent-audit-sprint/scan.html
+- Shareable public repo scan link format: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Terminal scanner without cloning: `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo`
 - Fixed quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml

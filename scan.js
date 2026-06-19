@@ -5,8 +5,45 @@ const localScanSummary = document.querySelector("[data-local-scan-summary]");
 const openScanRequest = document.querySelector("[data-open-scan-request]");
 const publicScanForm = document.querySelector("[data-public-scan-form]");
 const publicRepoInput = document.querySelector("[data-public-repo-url]");
+const copyPublicScanLink = document.querySelector("[data-copy-public-scan-link]");
 
 const maxRemoteFiles = 45;
+
+const fallbackRemotePaths = [
+  "package.json",
+  "README.md",
+  "readme.md",
+  "src/index.ts",
+  "src/index.js",
+  "src/server.ts",
+  "src/server.js",
+  "src/mcp.ts",
+  "src/mcp.js",
+  "src/app.ts",
+  "src/app.js",
+  "src/main.ts",
+  "src/main.js",
+  "src/tools/index.ts",
+  "src/tools/index.js",
+  "src/tools/registry.ts",
+  "src/tools/registry.js",
+  "src/tools/auth.ts",
+  "src/tools/auth.js",
+  "src/transport.ts",
+  "src/transport.js",
+  "src/auth.ts",
+  "src/auth.js",
+  "server.ts",
+  "server.js",
+  "index.ts",
+  "index.js",
+  "mcp.ts",
+  "mcp.js",
+  ".github/workflows/ci.yml",
+  ".github/workflows/ci.yaml",
+  ".github/workflows/test.yml",
+  ".github/workflows/test.yaml",
+];
 
 const ignorePathParts = new Set([
   ".git",
@@ -372,6 +409,18 @@ function updateIssueLink(report, projectUrl = "TBD") {
   openScanRequest.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 
+function publicScanUrl(repoUrl) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("repo", repoUrl);
+  return url.toString();
+}
+
+function syncPublicScanUrl(repoUrl) {
+  const nextUrl = publicScanUrl(repoUrl);
+  window.history.replaceState(null, "", nextUrl);
+  return nextUrl;
+}
+
 function parseGitHubRepoUrl(value) {
   let parsed;
   try {
@@ -400,8 +449,18 @@ function encodePath(path) {
   return path.split("/").map(encodeURIComponent).join("/");
 }
 
+async function fetchWithTimeout(url, options = {}, timeoutMs = 6000) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
 async function fetchJson(url) {
-  const response = await fetch(url, {
+  const response = await fetchWithTimeout(url, {
     headers: {
       accept: "application/vnd.github+json",
     },
@@ -412,11 +471,48 @@ async function fetchJson(url) {
   return response.json();
 }
 
+async function fetchRawText(repo, ref, path) {
+  const rawUrl = `https://raw.githubusercontent.com/${repo.fullName}/${encodeURIComponent(ref)}/${encodePath(path)}`;
+  const response = await fetchWithTimeout(rawUrl);
+  if (!response.ok) return "";
+  return response.text();
+}
+
+function cachedRemoteFile(path, text) {
+  return {
+    name: path.split("/").pop(),
+    webkitRelativePath: path,
+    size: text.length,
+    text: async () => text,
+  };
+}
+
+async function fetchFallbackPublicGitHubFiles(repo, apiError) {
+  const fetched = await Promise.all(fallbackRemotePaths.map(async (path) => {
+    const text = await fetchRawText(repo, "HEAD", path).catch(() => "");
+    return text ? cachedRemoteFile(path, text) : null;
+  }));
+  return {
+    branch: "HEAD",
+    files: fetched.filter(Boolean),
+    truncated: false,
+    htmlUrl: repo.htmlUrl,
+    apiError,
+  };
+}
+
 async function fetchPublicGitHubFiles(repo) {
   const repoApiUrl = `https://api.github.com/repos/${repo.fullName}`;
-  const repoMeta = await fetchJson(repoApiUrl);
-  const branch = repoMeta.default_branch || "main";
-  const tree = await fetchJson(`${repoApiUrl}/git/trees/${encodeURIComponent(branch)}?recursive=1`);
+  let repoMeta;
+  let tree;
+  let branch = "main";
+  try {
+    repoMeta = await fetchJson(repoApiUrl);
+    branch = repoMeta.default_branch || "main";
+    tree = await fetchJson(`${repoApiUrl}/git/trees/${encodeURIComponent(branch)}?recursive=1`);
+  } catch (error) {
+    return fetchFallbackPublicGitHubFiles(repo, error instanceof Error ? error.message : "GitHub API unavailable");
+  }
   const entries = Array.isArray(tree.tree) ? tree.tree : [];
   const candidates = entries
     .filter((entry) => entry.type === "blob" && shouldScanPath(entry.path, entry.size || 0))
@@ -428,10 +524,7 @@ async function fetchPublicGitHubFiles(repo) {
     webkitRelativePath: entry.path,
     size: entry.size || 0,
     text: async () => {
-      const rawUrl = `https://raw.githubusercontent.com/${repo.fullName}/${encodeURIComponent(branch)}/${encodePath(entry.path)}`;
-      const response = await fetch(rawUrl);
-      if (!response.ok) return "";
-      return response.text();
+      return fetchRawText(repo, branch, entry.path);
     },
   }));
 
@@ -446,8 +539,9 @@ async function runPublicScan() {
   }
 
   localScanOutput.value = `Fetching public GitHub metadata for ${repo.fullName}...`;
+  syncPublicScanUrl(repo.htmlUrl);
   try {
-    const { files, truncated, htmlUrl } = await fetchPublicGitHubFiles(repo);
+    const { files, truncated, htmlUrl, apiError } = await fetchPublicGitHubFiles(repo);
     if (!files.length) {
       localScanOutput.value = `No text files under 700 KB were found in ${repo.fullName}.`;
       return;
@@ -467,6 +561,16 @@ async function runPublicScan() {
         [],
         "Large repositories may exceed GitHub tree response limits, so this browser scan may miss some files.",
         "Run the terminal scanner locally for a complete scan, then attach the report to the paid audit request."
+      );
+    }
+    if (apiError) {
+      addFinding(
+        result.findings,
+        "Info",
+        "GitHub API unavailable; used raw-file fallback",
+        [],
+        `The GitHub API request failed (${apiError}), so this browser scan tried a conservative set of common source, package, README, and CI paths through raw.githubusercontent.com.`,
+        "For a complete scan, use the terminal scanner locally or open an intake issue with repo access details."
       );
     }
 
@@ -503,6 +607,33 @@ if (publicScanForm) {
     event.preventDefault();
     runPublicScan();
   });
+}
+
+if (copyPublicScanLink) {
+  copyPublicScanLink.addEventListener("click", async (event) => {
+    const repo = parseGitHubRepoUrl(publicRepoInput?.value || "");
+    if (!repo) {
+      localScanOutput.value = "Paste a public GitHub repo URL before copying a scan link.";
+      return;
+    }
+    const link = syncPublicScanUrl(repo.htmlUrl);
+    try {
+      await navigator.clipboard.writeText(link);
+      event.currentTarget.textContent = "Copied";
+      window.setTimeout(() => {
+        event.currentTarget.textContent = "Copy scan link";
+      }, 1300);
+    } catch {
+      localScanOutput.value = link;
+      event.currentTarget.textContent = "Link shown";
+    }
+  });
+}
+
+const initialRepo = new URLSearchParams(window.location.search).get("repo");
+if (initialRepo && publicRepoInput) {
+  publicRepoInput.value = initialRepo;
+  runPublicScan();
 }
 
 if (localScanForm) {

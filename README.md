@@ -50,6 +50,7 @@ Run a quick local triage pass against an agent or MCP repo:
 Browser:
 
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
+- Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
 
 Terminal:

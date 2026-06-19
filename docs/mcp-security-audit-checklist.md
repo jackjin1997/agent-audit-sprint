@@ -56,6 +56,7 @@ The fixed-price Agent/MCP Audit Sprint turns this checklist into a ranked report
 
 - Price: USD $1,000
 - Browser scanner for public GitHub URLs and private local files: https://jackjin1997.github.io/agent-audit-sprint/scan.html
+- Shareable public repo scan link format: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Public GitHub repo intakes receive an automated no-execution scanner triage comment
 - Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
 - Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html

@@ -3,20 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Run a local browser-only Agent/MCP audit scan without uploading code. Generate a first-pass report and $1,000 audit request handoff.">
+    <meta name="description" content="Run a browser Agent/MCP audit scan from a public GitHub URL or private local files. Generate a first-pass report and $1,000 audit request handoff.">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Zexu Jin">
     <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/scan.html">
-    <meta property="og:title" content="Local Agent/MCP Audit Scanner">
-    <meta property="og:description" content="Browser-only local scan for MCP and agent tool risk signals.">
+    <meta property="og:title" content="Browser Agent/MCP Audit Scanner">
+    <meta property="og:description" content="Browser scan for public GitHub URLs, private local files, and Agent/MCP tool risk signals.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/scan.html">
     <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Local Agent/MCP Audit Scanner">
-    <meta name="twitter:description" content="Browser-only local scan for MCP and agent tool risk signals.">
+    <meta name="twitter:title" content="Browser Agent/MCP Audit Scanner">
+    <meta name="twitter:description" content="Browser scan for public GitHub URLs, private local files, and Agent/MCP tool risk signals.">
     <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
-    <title>Local Agent/MCP Audit Scanner</title>
+    <title>Browser Agent/MCP Audit Scanner</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -37,7 +37,7 @@
     <main class="service-page">
       <section class="service-hero">
         <p class="eyebrow">Browser-only triage</p>
-        <h1>Local Agent/MCP Audit Scanner</h1>
+        <h1>Browser Agent/MCP Audit Scanner</h1>
         <p>
           Paste a public GitHub repo URL or select local files to generate a first-pass Agent/MCP risk report. The scan runs entirely in your browser, does not install dependencies, and does not execute target code.
         </p>
@@ -56,6 +56,9 @@
           <p>
             For public repos, this browser page fetches selected text files through GitHub and raw file URLs, then generates the same paid audit handoff. Private code stays out of this path.
           </p>
+          <p>
+            Shareable format: <code>scan.html?repo=https://github.com/org/repo</code>
+          </p>
         </div>
         <form class="request-tool" data-public-scan-form>
           <label>
@@ -64,6 +67,7 @@
           </label>
           <div class="request-actions">
             <button class="button primary" type="submit">Scan public repo</button>
+            <button class="button secondary dark" type="button" data-copy-public-scan-link>Copy scan link</button>
             <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start paid audit</a>
           </div>
         </form>
@@ -103,7 +107,7 @@
           </p>
         </div>
         <div class="report-preview" data-local-scan-summary aria-label="Local scan summary">
-          <div class="report-row pass"><span>Local</span><strong>Select files to run the browser-only scanner.</strong></div>
+          <div class="report-row pass"><span>Repo</span><strong>Paste a public GitHub URL or select local files.</strong></div>
           <div class="report-row low"><span>Safe</span><strong>No files leave this browser page.</strong></div>
           <div class="report-row medium"><span>Paid</span><strong>Book the $1,000 sprint for human review and fix planning.</strong></div>
         </div>

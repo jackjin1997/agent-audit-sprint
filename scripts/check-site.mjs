@@ -373,10 +373,44 @@ try {
         ].join("\n"),
       });
     });
+    await page.route("https://api.github.com/repos/example/rate-limited**", async (route) => {
+      await route.fulfill({
+        status: 403,
+        contentType: "application/json",
+        body: JSON.stringify({ message: "API rate limit exceeded" }),
+      });
+    });
+    await page.route("https://raw.githubusercontent.com/example/rate-limited/HEAD/**", async (route) => {
+      const url = decodeURIComponent(route.request().url());
+      if (url.endsWith("/package.json")) {
+        await route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({
+            scripts: {
+              test: "vitest",
+              lint: "eslint .",
+            },
+          }),
+        });
+        return;
+      }
+      if (url.endsWith("/src/server.ts")) {
+        await route.fulfill({
+          contentType: "text/typescript",
+          body: [
+            "import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';",
+            "const server = new McpServer({ name: 'rate-limited', version: '1.0.0' });",
+            "server.registerTool('write_note', { description: 'write' }, async () => fetch('https://api.example.test/notes', { method: 'POST' }));",
+          ].join("\n"),
+        });
+        return;
+      }
+      await route.fulfill({ status: 404, body: "" });
+    });
 
-    await page.goto(scan, { waitUntil: "networkidle" });
+    await page.goto(`${scan}?repo=${encodeURIComponent("https://github.com/example/agent-mcp")}`, { waitUntil: "networkidle" });
     const scanTitle = await page.locator("h1").innerText();
-    if (!scanTitle.includes("Local Agent/MCP Audit Scanner")) {
+    if (!scanTitle.includes("Browser Agent/MCP Audit Scanner")) {
       throw new Error(`Unexpected scanner h1 in ${viewport.name}: ${scanTitle}`);
     }
     const scanText = await page.locator("body").innerText();
@@ -392,8 +426,12 @@ try {
     if (!scanText.includes("Paste a GitHub URL")) {
       throw new Error(`Scanner page missing public GitHub URL scan copy in ${viewport.name}`);
     }
-    await page.locator("[data-public-repo-url]").fill("https://github.com/example/agent-mcp");
-    await page.locator("[data-public-scan-form]").evaluate((form) => form.requestSubmit());
+    if (!scanText.includes("scan.html?repo=https://github.com/org/repo")) {
+      throw new Error(`Scanner page missing shareable repo URL format in ${viewport.name}`);
+    }
+    if (!scanText.includes("Copy scan link")) {
+      throw new Error(`Scanner page missing copy scan link action in ${viewport.name}`);
+    }
     await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("Public GitHub Repo Scan"));
     const publicScanOutput = await page.locator("[data-local-scan-output]").inputValue();
     if (!publicScanOutput.includes("https://github.com/example/agent-mcp")) {
@@ -402,9 +440,21 @@ try {
     if (!publicScanOutput.includes("Paid 48-hour review")) {
       throw new Error(`Public scanner output missing paid review handoff in ${viewport.name}`);
     }
+    if (!page.url().includes("repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
+      throw new Error(`Public scanner URL missing shareable repo parameter in ${viewport.name}`);
+    }
     const publicScanHref = await page.locator("[data-open-scan-request]").getAttribute("href");
     if (!decodeURIComponent(publicScanHref || "").includes("https://github.com/example/agent-mcp")) {
       throw new Error(`Public scanner request link missing GitHub target in ${viewport.name}`);
+    }
+    await page.goto(`${scan}?repo=${encodeURIComponent("https://github.com/example/rate-limited")}`, { waitUntil: "networkidle" });
+    await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("raw-file fallback"));
+    const fallbackScanOutput = await page.locator("[data-local-scan-output]").inputValue();
+    if (!fallbackScanOutput.includes("Public GitHub Repo Scan: example/rate-limited")) {
+      throw new Error(`Fallback public scanner output missing title in ${viewport.name}`);
+    }
+    if (!fallbackScanOutput.includes("Paid 48-hour review")) {
+      throw new Error(`Fallback public scanner output missing paid review handoff in ${viewport.name}`);
     }
     await page.locator("[data-local-scan-input]").setInputFiles(resolve(root, "examples/local-scan-fixture"));
     await page.locator("[data-local-scan-form]").evaluate((form) => form.requestSubmit());

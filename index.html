@@ -112,14 +112,14 @@
           <p class="eyebrow">Free triage tool</p>
           <h2 id="scanner-title">Run the same first-pass scanner before booking</h2>
           <p>
-            The repo includes a local Node script that scans an agent or MCP codebase for review signals: transports, write actions, credential paths, auth gates, redaction, tests, and CI.
+            The repo includes a local Node script and reusable GitHub Action that scan an agent or MCP codebase for review signals: transports, write actions, credential paths, auth gates, redaction, tests, and CI.
           </p>
           <a class="text-link" href="https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner">Use the scanner</a>
         </div>
         <div class="report-preview" aria-label="Scanner command preview">
           <div class="report-row pass"><span>Run</span><strong>npm run audit:repo -- /path/to/repo</strong></div>
           <div class="report-row low"><span>JSON</span><strong>npm --silent run audit:repo -- /path/to/repo --json</strong></div>
-          <div class="report-row medium"><span>Finds</span><strong>Remote transports, write tools, secrets, tests, and CI gaps</strong></div>
+          <div class="report-row medium"><span>CI</span><strong>uses: jackjin1997/agent-audit-sprint@main</strong></div>
           <div class="report-row high"><span>Then</span><strong>Book the paid sprint for human review and fix planning</strong></div>
         </div>
       </section>

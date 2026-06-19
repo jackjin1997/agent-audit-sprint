@@ -20,7 +20,9 @@ Last updated: 2026-06-19.
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
-| Qualified prospect list | `outreach/qualified-prospects-2026-06-19.md` | Prepared, not sent |
+| Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published |
+| Public outbound playbook | `outreach/qualified-prospects-2026-06-19.md` | Published |
+| Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | Prepared locally, not public, not sent |
 
 ## Payment Addresses
 

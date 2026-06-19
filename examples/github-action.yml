@@ -1,0 +1,32 @@
+name: Agent/MCP Audit Heuristic
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.mjs"
+      - "**/*.py"
+      - "**/*.go"
+      - "**/*.rs"
+      - "**/*.md"
+      - "package.json"
+      - ".github/workflows/**"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jackjin1997/agent-audit-sprint@main
+        with:
+          path: "."
+          output: "agent-mcp-audit.md"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-mcp-audit
+          path: agent-mcp-audit.md

@@ -9,6 +9,8 @@ const requiredFiles = [
   "index.html",
   "styles.css",
   "script.js",
+  "action.yml",
+  "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "reports/douban-mcp-sample-audit.html",
   "reports/douban-mcp-sample-audit.md",

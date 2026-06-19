@@ -15,6 +15,11 @@ jobs:
         with:
           path: examples/local-scan-fixture
           output: tmp-action-v1-report.md
+      - uses: jackjin1997/agent-audit-sprint@v1
+        with:
+          path: examples/local-scan-fixture
+          sarif: "true"
+          output: tmp-action-v1-report.sarif
       - name: Verify action output
         shell: bash
         run: |
@@ -22,7 +27,10 @@ jobs:
           grep -q "Heuristic score" tmp-action-v1-report.md
           grep -q "Paid 48-hour review" tmp-action-v1-report.md
           grep -q 'USD $1,000' tmp-action-v1-report.md
+          node -e "const fs=require('fs'); const r=JSON.parse(fs.readFileSync('tmp-action-v1-report.sarif','utf8')); const run=r.runs&&r.runs[0]; if (r.version!=='2.1.0'||!run?.tool?.driver?.rules?.length||!Array.isArray(run.results)) process.exit(1); console.log('sarif-results=' + run.results.length);"
       - uses: actions/upload-artifact@v4
         with:
           name: action-v1-smoke-report
-          path: tmp-action-v1-report.md
+          path: |
+            tmp-action-v1-report.md
+            tmp-action-v1-report.sarif

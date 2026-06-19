@@ -17,6 +17,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
+- `ai-agent-security-radar.html` - public no-execution radar snapshot of popular AI agent repo scan signals
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
 - `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
@@ -61,6 +62,7 @@ Browser:
 
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - AI agent audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
 - MCP server scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html

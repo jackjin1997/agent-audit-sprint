@@ -27,6 +27,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 - Browser scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable repo scan URL format: https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo
+- AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - MCP server scan entry: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
 - Code Scanning workflow guide: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html
@@ -61,6 +62,17 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - ChromeDevTools/chrome-devtools-mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/chrome-devtools-mcp-security-scan.html
 - github/github-mcp-server: https://jackjin1997.github.io/agent-audit-sprint/reports/github-mcp-server-security-scan.html
 - BrowserMCP/mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/browsermcp-mcp-security-scan.html
+
+## AI Agent Radar Snapshot
+
+- browser-use/browser-use: browser automation agent surface
+- OpenHands/OpenHands: coding agent and software development surface
+- microsoft/autogen: multi-agent programming framework
+- crewAIInc/crewAI: multi-agent orchestration framework
+- agno-agi/agno: agent platform framework
+- langchain-ai/langgraph: graph-based agent runtime
+- huggingface/smolagents: code-execution agent framework
+- openai/openai-agents-python: multi-agent workflow framework
 
 ## Safety And Scope
 

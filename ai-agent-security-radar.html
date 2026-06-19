@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Public AI Agent Security Radar with no-execution heuristic scans of popular agent frameworks, coding agents, browser agents, and multi-agent runtimes.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html">
+    <meta property="og:title" content="AI Agent Security Radar">
+    <meta property="og:description" content="No-execution heuristic scans of popular public AI agent repos, with a fixed $1,000 human audit handoff.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Agent Security Radar">
+    <meta name="twitter:description" content="Public AI agent security scan radar for browser agents, coding agents, multi-agent runtimes, and code-execution agents.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>AI Agent Security Radar</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="ai-agent-security-audit-service.html">AI Audit</a>
+        <a href="ai-agent-security-radar.html">AI Radar</a>
+        <a href="mcp-security-radar.html">MCP Radar</a>
+        <a href="scan.html">Scanner</a>
+        <a href="samples.html">Samples</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Public AI agent scan radar</p>
+        <h1>AI Agent Security Radar</h1>
+        <p>
+          A no-execution snapshot of popular public AI agent repos across browser automation, coding agents, multi-agent frameworks, graph runtimes, code-execution agents, and MCP-backed tool surfaces. Scores are heuristic triage signals, not confirmed vulnerabilities, certification, endorsement, or commissioned audit results.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="scan.html">Run your own scan</a>
+          <a class="button secondary dark" href="ai-agent-security-audit-service.html">AI agent audit service</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Request paid audit</a>
+          <a class="button secondary dark" href="quote.html">Open fixed quote</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Sample</span><strong>8 public AI agent repos</strong></div>
+          <div><span>Method</span><strong>90 selected public text files per repo via GitHub API</strong></div>
+          <div><span>Safety</span><strong>No clone, dependency install, target execution, or live-service calls</strong></div>
+          <div><span>Handoff</span><strong>USD $1,000 human audit for one agent, repo, or slice</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">How to read this</p>
+          <h2>Use the score to prioritize review, not to claim a bug</h2>
+          <p>
+            The scanner fetched public GitHub metadata and selected text blobs on June 20, 2026 Asia/Shanghai time. It looked for agent/tool surfaces, remote listeners, write actions, credential paths, auth gates, redaction, tests, and CI.
+          </p>
+          <p>
+            A lower score means the selected files produced more review signals. It can still miss controls outside the fetched slice, so paid work starts with fresh scope confirmation and evidence review.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Browser agents need review for authenticated sessions, clicks, downloads, page content, and JavaScript execution.</div>
+          <div>Coding agents and code-execution agents need sandbox, filesystem, network, token, and patch/write boundaries reviewed.</div>
+          <div>Multi-agent frameworks need memory, tool routing, human approval, remote runtime, and tenant boundary tests.</div>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <p class="eyebrow">Radar snapshot</p>
+        <h2>Popular public AI agent repos with review signals</h2>
+        <div class="radar-grid" aria-label="AI Agent Security Radar entries">
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a></h3>
+                <p>Browser automation for AI agents</p>
+              </div>
+              <strong class="score-badge high">62</strong>
+            </div>
+            <div class="radar-meta"><span>99,596 stars</span><span>90 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Credential signals detected without redaction signals.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/browser-use/browser-use">Run shareable scan</a>
+              <a class="text-link" href="browser-automation-mcp-security-audit.html">Browser audit path</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">AI agent audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/OpenHands/OpenHands">OpenHands/OpenHands</a></h3>
+                <p>AI-driven software development agent</p>
+              </div>
+              <strong class="score-badge medium">68</strong>
+            </div>
+            <div class="radar-meta"><span>77,768 stars</span><span>90 files scanned</span><span>1 high / 1 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Write actions detected without obvious tool safety annotations.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/OpenHands/OpenHands">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">Coding agent audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/microsoft/autogen">microsoft/autogen</a></h3>
+                <p>Agentic AI programming framework</p>
+              </div>
+              <strong class="score-badge high">62</strong>
+            </div>
+            <div class="radar-meta"><span>59,075 stars</span><span>90 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Credential signals detected without redaction signals.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/microsoft/autogen">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">Multi-agent audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/crewAIInc/crewAI">crewAIInc/crewAI</a></h3>
+                <p>Multi-agent orchestration framework</p>
+              </div>
+              <strong class="score-badge medium">68</strong>
+            </div>
+            <div class="radar-meta"><span>53,986 stars</span><span>90 files scanned</span><span>1 high / 1 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Write actions detected without obvious tool safety annotations.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/crewAIInc/crewAI">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">Multi-agent audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/agno-agi/agno">agno-agi/agno</a></h3>
+                <p>Agent platform framework</p>
+              </div>
+              <strong class="score-badge high">54</strong>
+            </div>
+            <div class="radar-meta"><span>40,769 stars</span><span>90 files scanned</span><span>2 high / 1 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Write actions detected without obvious tool safety annotations.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/agno-agi/agno">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">Agent platform audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></h3>
+                <p>Resilient agent graph framework</p>
+              </div>
+              <strong class="score-badge medium">76</strong>
+            </div>
+            <div class="radar-meta"><span>35,224 stars</span><span>90 files scanned</span><span>0 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener needs an explicit exposure policy.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/langchain-ai/langgraph">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">LangGraph audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/huggingface/smolagents">huggingface/smolagents</a></h3>
+                <p>Agents that think in code</p>
+              </div>
+              <strong class="score-badge high">62</strong>
+            </div>
+            <div class="radar-meta"><span>27,935 stars</span><span>90 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Credential signals detected without redaction signals.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/huggingface/smolagents">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">Code agent audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/openai/openai-agents-python">openai/openai-agents-python</a></h3>
+                <p>Multi-agent workflow framework</p>
+              </div>
+              <strong class="score-badge medium">76</strong>
+            </div>
+            <div class="radar-meta"><span>27,266 stars</span><span>90 files scanned</span><span>0 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener needs an explicit exposure policy.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/openai/openai-agents-python">Run shareable scan</a>
+              <a class="text-link" href="ai-agent-security-audit-service.html">AI agent audit path</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Convert a signal</p>
+        <h2>When to use the paid audit</h2>
+        <ol>
+          <li>You ship an AI agent that can browse, write files, execute code, call cloud APIs, use memory, or mutate workspace data.</li>
+          <li>The free scan points to write actions, credential paths, remote listeners, missing redaction evidence, or weak test visibility.</li>
+          <li>You need human validation, source-specific evidence, a ranked fix plan, and launch notes.</li>
+          <li>Payment starts only after written scope acceptance; the fixed quote is USD $1,000.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Start audit from Radar</a>
+          <a class="button secondary dark" href="quote.html">Open quote</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

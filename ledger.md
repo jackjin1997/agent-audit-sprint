@@ -19,6 +19,7 @@ Last updated: 2026-06-19.
 | GitHub repo metadata | Description, homepage, topics | Published for MCP/LLM/security discovery |
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
+| Sample report index page | https://jackjin1997.github.io/agent-audit-sprint/samples.html | Published |
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |

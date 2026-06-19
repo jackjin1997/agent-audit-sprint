@@ -10,9 +10,11 @@ const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-au
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
+const samples = `file://${resolve(root, "samples.html")}`;
 const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
+  "samples.html",
   "checklist.html",
   "terms.html",
   "styles.css",
@@ -101,6 +103,9 @@ try {
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
     }
+    if (!indexBody.includes("Compare both sample reports")) {
+      throw new Error(`Index page missing sample index link in ${viewport.name}`);
+    }
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
     const qrImagesLoaded = await page.locator(".qr-code").evaluateAll((images) =>
@@ -182,6 +187,25 @@ try {
     }
     const serviceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (serviceOverflow) throw new Error(`Service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(samples, { waitUntil: "networkidle" });
+    const samplesTitle = await page.locator("h1").innerText();
+    if (!samplesTitle.includes("Sample Reports")) {
+      throw new Error(`Unexpected samples h1 in ${viewport.name}: ${samplesTitle}`);
+    }
+    const samplesText = await page.locator("body").innerText();
+    if (!samplesText.includes("douban-mcp") || !samplesText.includes("firecrawl-mcp-server")) {
+      throw new Error(`Samples page missing report names in ${viewport.name}`);
+    }
+    if (!samplesText.includes("automated triage clones the public repo")) {
+      throw new Error(`Samples page missing automated triage flow in ${viewport.name}`);
+    }
+    const samplesCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!samplesCta?.includes("audit-request.yml")) {
+      throw new Error(`Samples CTA missing intake URL in ${viewport.name}`);
+    }
+    const samplesOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (samplesOverflow) throw new Error(`Samples horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(checklist, { waitUntil: "networkidle" });
     const checklistTitle = await page.locator("h1").innerText();

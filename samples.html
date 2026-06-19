@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Real public sample audit reports for the $1,000 Agent/MCP Audit Sprint, covering douban-mcp and firecrawl-mcp-server.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/samples.html">
+    <meta property="og:title" content="Agent/MCP Audit Sample Reports">
+    <meta property="og:description" content="Real public sample reports for MCP and agent tool audit work.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/samples.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agent/MCP Audit Sample Reports">
+    <meta name="twitter:description" content="Real public sample reports for MCP and agent tool audit work.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>Agent/MCP Audit Sample Reports</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="samples.html">Samples</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="terms.html">Terms</a>
+        <a href="index.html#payment">Pay</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Sample evidence</p>
+        <h1>Agent/MCP Audit Sample Reports</h1>
+        <p>
+          Two public-code samples show the paid sprint format: scoped evidence, boundary map, ranked findings, fix plan, and launch notes. They are independent samples, not private vulnerability disclosures.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary dark" href="mcp-security-audit-service.html">View service</a>
+          <a class="button secondary dark" href="checklist.html">Use checklist</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Samples</span><strong>2 real public repos</strong></div>
+          <div><span>Output</span><strong>Boundary map + ranked findings</strong></div>
+          <div><span>Automation</span><strong>No-execution intake triage</strong></div>
+          <div><span>Paid Sprint</span><strong>USD $1,000 fixed</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Sample 01</p>
+          <h2>douban-mcp</h2>
+          <p>
+            Public MCP server and CLI with auth, cookie handling, external scraping, write-capable tools, and agent-facing output.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="reports/douban-mcp-sample-audit.html">Read HTML report</a>
+            <a class="button secondary dark" href="reports/douban-mcp-sample-audit.md">Markdown</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>High:</strong> Remote SSE should document binding and exposure policy.</div>
+          <div><strong>Medium:</strong> Write tools rely on env opt-in but need operator confirmation notes.</div>
+          <div><strong>Low:</strong> Cookie validation can distinguish login from write readiness.</div>
+          <div><strong>Pass:</strong> Cookie redaction paths cover common axios/pino shapes.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Sample 02</p>
+          <h2>firecrawl-mcp-server</h2>
+          <p>
+            Public MCP server with hosted and local transports, OAuth/API-key auth, monitor tools, open-web actions, and local file parsing.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="reports/firecrawl-mcp-sample-audit.html">Read HTML report</a>
+            <a class="button secondary dark" href="reports/firecrawl-mcp-sample-audit.md">Markdown</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Medium:</strong> Remote transport exposure policy is scattered across code and docs.</div>
+          <div><strong>Medium:</strong> Local file parse needs an explicit trust boundary.</div>
+          <div><strong>Medium:</strong> CI builds, but does not prove auth/tool regressions stay fixed.</div>
+          <div><strong>Low:</strong> Feedback write surfaces deserve retry/error regression tests.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Start path</p>
+        <h2>Turn a public repo into a scoped paid sprint</h2>
+        <ol>
+          <li>Open the audit intake issue with the public repo URL and highest concern.</li>
+          <li>The automated triage clones the public repo, reads files, and posts scanner findings without executing target code.</li>
+          <li>Scope is accepted for one repo or product slice.</li>
+          <li>Payment is confirmed via ETH, SOL, or an agreed invoice-first path before work starts.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open intake</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">Ask before booking</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

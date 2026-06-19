@@ -17,6 +17,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
+- `samples.html` - public sample report index and conversion page
 - `checklist.html` / `docs/mcp-security-audit-checklist.md` - MCP security audit checklist content page
 - `robots.txt` / `sitemap.xml` - static search metadata
 - `terms.html` / `templates/statement-of-work.md` - statement of work and scope/payment terms

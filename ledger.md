@@ -55,6 +55,7 @@ Checked on 2026-06-19:
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
 | Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |
+| Automated payment-proof smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/5 | Passed and closed; non-customer test; no payment received |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
 | Invoice-first payment path | Intake form, terms, invoice template, booking discussion | Published |

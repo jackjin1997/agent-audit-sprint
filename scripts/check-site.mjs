@@ -45,6 +45,7 @@ const requiredFiles = [
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
+  ".github/workflows/respond-code-scanning-audit.yml",
   ".github/workflows/respond-payment-proof.yml",
   ".github/workflows/smoke-action-v1.yml",
   "examples/github-action.yml",
@@ -63,6 +64,7 @@ const requiredFiles = [
   "tools/agent-mcp-audit.mjs",
   "scripts/comment-audit-triage.mjs",
   "scripts/comment-audit-intent.mjs",
+  "scripts/comment-code-scanning-audit.mjs",
   "scripts/comment-payment-proof.mjs",
   "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
@@ -223,6 +225,58 @@ if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-spr
 }
 if (!paymentProofOutput.includes("USD $1,000 equivalent")) {
   throw new Error("Payment proof dry-run output is missing amount verification rule");
+}
+
+const codeScanningAuditOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-code-scanning-audit.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    CODE_SCANNING_AUDIT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Project or repo URL",
+      "",
+      "https://github.com/example/agent-mcp",
+      "",
+      "### Code scanning or SARIF evidence URL",
+      "",
+      "https://github.com/example/agent-mcp/security/code-scanning/1",
+      "",
+      "### Alert summary",
+      "",
+      "Remote MCP transport and write tool alerts.",
+      "",
+      "### Desired audit scope",
+      "",
+      "Review the hosted MCP transport, write tools, auth gates, and SARIF findings.",
+      "",
+      "### Delivery visibility",
+      "",
+      "Private Markdown report",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!codeScanningAuditOutput.includes("Code scanning audit received")) {
+  throw new Error("Code scanning audit dry-run output is missing heading");
+}
+if (!codeScanningAuditOutput.includes("https://github.com/example/agent-mcp/security/code-scanning/1")) {
+  throw new Error("Code scanning audit dry-run output is missing evidence URL");
+}
+if (!codeScanningAuditOutput.includes("Do not send payment until scope is accepted in writing")) {
+  throw new Error("Code scanning audit dry-run output is missing payment guardrail");
+}
+if (!codeScanningAuditOutput.includes("payment-confirmation.yml")) {
+  throw new Error("Code scanning audit dry-run output is missing payment proof link");
+}
+if (!codeScanningAuditOutput.includes("mcp-code-scanning-github-action.html")) {
+  throw new Error("Code scanning audit dry-run output is missing Code Scanning page link");
+}
+if (!codeScanningAuditOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
+  throw new Error("Code scanning audit dry-run output is missing shareable scanner link");
 }
 
 const browser = await chromium.launch();

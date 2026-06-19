@@ -34,7 +34,7 @@
   },
   "scripts": {
     "audit:repo": "node tools/agent-mcp-audit.mjs",
-    "lint": "node --check tools/agent-mcp-audit.mjs && node --check scripts/check-site.mjs && node --check scripts/comment-audit-triage.mjs && node --check scripts/comment-audit-intent.mjs && node --check scripts/comment-payment-proof.mjs && node --check scripts/render-assets.mjs && node --check scripts/render-payment-qr.mjs && node --check script.js && node --check scan.js",
+    "lint": "node --check tools/agent-mcp-audit.mjs && node --check scripts/check-site.mjs && node --check scripts/comment-audit-triage.mjs && node --check scripts/comment-audit-intent.mjs && node --check scripts/comment-code-scanning-audit.mjs && node --check scripts/comment-payment-proof.mjs && node --check scripts/render-assets.mjs && node --check scripts/render-payment-qr.mjs && node --check script.js && node --check scan.js",
     "test": "npm run check",
     "typecheck": "npm run lint",
     "render:assets": "node scripts/render-assets.mjs && node scripts/render-payment-qr.mjs",

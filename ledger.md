@@ -66,6 +66,7 @@ Checked on 2026-06-20:
 | Manual action smoke workflow | https://github.com/jackjin1997/agent-audit-sprint/actions/runs/27840087216 | Passed; verifies `@v1` Markdown and SARIF outputs |
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published with quote/payment packet and shareable scanner link |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published with quote/payment packet and shareable scanner link |
+| Automated code-scanning audit response | `.github/workflows/respond-code-scanning-audit.yml`, `scripts/comment-code-scanning-audit.mjs` | Added for SARIF/GitHub Security alert audit requests |
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
 | Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |

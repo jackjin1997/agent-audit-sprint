@@ -29,6 +29,7 @@ Checked on 2026-06-20:
 | Public launch release | https://github.com/jackjin1997/agent-audit-sprint/releases/tag/audit-sprint-2026-06-19 | Published |
 | MCP security audit service page | `mcp-security-audit-service.html`, `docs/mcp-security-audit-service.md` | Published |
 | MCP server security scan page | https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html | Published and distributed via profile README, gist, and scanner discussion |
+| MCP Security Radar page | https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html | Added public no-execution snapshot of 8 popular MCP repos with scan handoff and paid audit path |
 | MCP Code Scanning GitHub Action page | https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html | Published and distributed via release notes, profile README, gist, and scanner discussion |
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
 | Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |

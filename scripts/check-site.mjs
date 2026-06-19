@@ -12,6 +12,7 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
+const mcpSecurityRadar = `file://${resolve(root, "mcp-security-radar.html")}`;
 const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
@@ -24,6 +25,7 @@ const requiredFiles = [
   "index.html",
   "mcp-security-audit-service.html",
   "mcp-server-security-scan.html",
+  "mcp-security-radar.html",
   "mcp-code-scanning-github-action.html",
   "scan.html",
   "quote.html",
@@ -308,6 +310,9 @@ try {
     if (!indexBody.includes("Open the MCP server security scan page")) {
       throw new Error(`Index page missing MCP server security scan link in ${viewport.name}`);
     }
+    if (!indexBody.includes("Open the MCP Security Radar")) {
+      throw new Error(`Index page missing MCP Security Radar link in ${viewport.name}`);
+    }
     if (!indexBody.includes("Use the GitHub Code Scanning workflow")) {
       throw new Error(`Index page missing Code Scanning workflow link in ${viewport.name}`);
     }
@@ -464,6 +469,9 @@ try {
     if (!mcpServerScanText.includes("does not execute target code")) {
       throw new Error(`MCP server scan page missing no-execution safety copy in ${viewport.name}`);
     }
+    if (!mcpServerScanText.includes("Open MCP Security Radar")) {
+      throw new Error(`MCP server scan page missing Radar link in ${viewport.name}`);
+    }
     const mcpServerScanCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (mcpServerScanCta !== "scan.html") {
       throw new Error(`MCP server scan primary CTA should open scan.html in ${viewport.name}`);
@@ -471,6 +479,39 @@ try {
     const mcpServerScanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (mcpServerScanOverflow) {
       throw new Error(`MCP server scan horizontal overflow detected in ${viewport.name}`);
+    }
+
+    await page.goto(mcpSecurityRadar, { waitUntil: "networkidle" });
+    const radarTitle = await page.locator("h1").innerText();
+    if (!radarTitle.includes("MCP Security Radar")) {
+      throw new Error(`Unexpected MCP Security Radar h1 in ${viewport.name}: ${radarTitle}`);
+    }
+    const radarText = await page.locator("body").innerText();
+    if (
+      !radarText.includes("microsoft/playwright-mcp") ||
+      !radarText.includes("ChromeDevTools/chrome-devtools-mcp") ||
+      !radarText.includes("github/github-mcp-server") ||
+      !radarText.includes("googleapis/mcp-toolbox") ||
+      !radarText.includes("BrowserMCP/mcp")
+    ) {
+      throw new Error(`MCP Security Radar missing expected public repo entries in ${viewport.name}`);
+    }
+    if (!radarText.includes("Up to 90 selected text files per repo")) {
+      throw new Error(`MCP Security Radar missing methodology copy in ${viewport.name}`);
+    }
+    if (!radarText.includes("Scores are heuristic triage signals")) {
+      throw new Error(`MCP Security Radar missing non-certification guardrail in ${viewport.name}`);
+    }
+    if (!radarText.includes("Start audit from scan")) {
+      throw new Error(`MCP Security Radar missing paid audit handoff in ${viewport.name}`);
+    }
+    const radarCards = await page.locator(".radar-card").count();
+    if (radarCards !== 8) {
+      throw new Error(`MCP Security Radar expected 8 cards in ${viewport.name}, found ${radarCards}`);
+    }
+    const radarOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (radarOverflow) {
+      throw new Error(`MCP Security Radar horizontal overflow detected in ${viewport.name}`);
     }
 
     await page.goto(mcpCodeScanning, { waitUntil: "networkidle" });

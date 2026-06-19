@@ -748,6 +748,90 @@ pre code {
   font-weight: 650;
 }
 
+.radar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.radar-card {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.radar-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.radar-card h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.radar-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.score-badge {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-width: 52px;
+  height: 36px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 820;
+}
+
+.score-badge.high {
+  background: var(--red);
+}
+
+.score-badge.medium {
+  background: var(--amber);
+}
+
+.radar-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.radar-meta span {
+  display: inline-flex;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.radar-finding {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.radar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
 .service-flow {
   border-bottom: 0;
 }
@@ -791,6 +875,7 @@ pre code {
   .proof-strip,
   .deliverable-grid,
   .fit-grid,
+  .radar-grid,
   .field-grid,
   .payment-steps,
   .pay-grid,

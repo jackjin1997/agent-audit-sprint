@@ -18,6 +18,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `index.html` - public landing page
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
+- `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
 - `quote.html` / `templates/quote.md` - fixed $1,000 quote, acceptance text, and copyable payment packet
@@ -56,6 +57,7 @@ Run a quick local triage pass against an agent or MCP repo:
 Browser:
 
 - MCP server scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
+- MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
 - GitHub Code Scanning workflow: https://jackjin1997.github.io/agent-audit-sprint/mcp-code-scanning-github-action.html
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`

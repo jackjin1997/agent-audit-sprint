@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Public MCP Security Radar with heuristic scans of popular browser, cloud, database, GitHub, Notion, and Atlassian MCP repos.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html">
+    <meta property="og:title" content="MCP Security Radar">
+    <meta property="og:description" content="Partial no-execution heuristic scans of popular public MCP repos, with a fixed $1,000 human audit handoff.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MCP Security Radar">
+    <meta name="twitter:description" content="Public MCP security scan radar for popular browser, cloud, database, and workspace MCP repos.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>MCP Security Radar</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-security-audit-service.html">Service</a>
+        <a href="mcp-server-security-scan.html">MCP Scan</a>
+        <a href="mcp-security-radar.html">Radar</a>
+        <a href="scan.html">Scanner</a>
+        <a href="samples.html">Samples</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Public MCP scan radar</p>
+        <h1>MCP Security Radar</h1>
+        <p>
+          A no-execution snapshot of popular public MCP repos across browser automation, DevTools, GitHub, database, cloud, Notion, Atlassian, and browser-control surfaces. Scores are heuristic triage signals, not confirmed vulnerabilities or certifications.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="scan.html">Run your own scan</a>
+          <a class="button secondary dark" href="mcp-code-scanning-github-action.html">Use Code Scanning</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml">Request paid audit</a>
+          <a class="button secondary dark" href="quote.html">Open fixed quote</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Sample</span><strong>8 public repos</strong></div>
+          <div><span>Method</span><strong>Up to 90 selected text files per repo</strong></div>
+          <div><span>Safety</span><strong>No dependency install or target code execution</strong></div>
+          <div><span>Handoff</span><strong>USD $1,000 human audit for one repo or slice</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">How to read this</p>
+          <h2>Use the score to prioritize review, not to claim a bug</h2>
+          <p>
+            The scanner fetched public GitHub metadata plus a limited set of raw text files from each repo on June 20, 2026 Asia/Shanghai time. It looked for MCP surfaces, remote transports, write actions, credentials, auth gates, redaction, tests, and CI.
+          </p>
+          <p>
+            A low score means the selected files produced more review signals. It may also miss tests or controls that live outside the fetched slice, so paid work still starts with scope confirmation and fresh validation.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Browser automation surfaces need special review for clicks, sessions, page content, and downloads.</div>
+          <div>Cloud, database, GitHub, Notion, and Atlassian tools need write-mode and credential boundary tests.</div>
+          <div>Each card links to a shareable browser scan so maintainers can reproduce or rerun a public triage pass.</div>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <p class="eyebrow">Radar snapshot</p>
+        <h2>Popular public MCP repos with review signals</h2>
+        <div class="radar-grid" aria-label="MCP Security Radar entries">
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/microsoft/playwright-mcp">microsoft/playwright-mcp</a></h3>
+                <p>Playwright MCP server</p>
+              </div>
+              <strong class="score-badge high">32</strong>
+            </div>
+            <div class="radar-meta"><span>34,117 stars</span><span>6 files scanned</span><span>3 high / 1 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Write actions detected without obvious tool safety annotations.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/microsoft/playwright-mcp">Run shareable scan</a>
+              <a class="text-link" href="browser-automation-mcp-security-audit.html">Browser audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">ChromeDevTools/chrome-devtools-mcp</a></h3>
+                <p>Chrome DevTools for coding agents</p>
+              </div>
+              <strong class="score-badge medium">72</strong>
+            </div>
+            <div class="radar-meta"><span>44,014 stars</span><span>87 files scanned</span><span>0 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener needs an explicit exposure policy.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/ChromeDevTools/chrome-devtools-mcp">Run shareable scan</a>
+              <a class="text-link" href="browser-automation-mcp-security-audit.html">Browser audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/github/github-mcp-server">github/github-mcp-server</a></h3>
+                <p>GitHub's official MCP Server</p>
+              </div>
+              <strong class="score-badge medium">76</strong>
+            </div>
+            <div class="radar-meta"><span>30,819 stars</span><span>59 files scanned</span><span>0 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener needs an explicit exposure policy.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/github/github-mcp-server">Run shareable scan</a>
+              <a class="text-link" href="mcp-security-audit-service.html">General audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/googleapis/mcp-toolbox">googleapis/mcp-toolbox</a></h3>
+                <p>MCP Toolbox for Databases</p>
+              </div>
+              <strong class="score-badge medium">58</strong>
+            </div>
+            <div class="radar-meta"><span>15,664 stars</span><span>90 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> No obvious tests found in the fetched slice.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/googleapis/mcp-toolbox">Run shareable scan</a>
+              <a class="text-link" href="cloud-database-mcp-security-audit.html">Database audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/awslabs/mcp">awslabs/mcp</a></h3>
+                <p>Open source MCP Servers for AWS</p>
+              </div>
+              <strong class="score-badge medium">58</strong>
+            </div>
+            <div class="radar-meta"><span>9,302 stars</span><span>90 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Credential signals detected without redaction signals in the fetched slice.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/awslabs/mcp">Run shareable scan</a>
+              <a class="text-link" href="cloud-database-mcp-security-audit.html">Cloud audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/makenotion/notion-mcp-server">makenotion/notion-mcp-server</a></h3>
+                <p>Official Notion MCP Server</p>
+              </div>
+              <strong class="score-badge medium">72</strong>
+            </div>
+            <div class="radar-meta"><span>4,444 stars</span><span>31 files scanned</span><span>0 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener needs an explicit exposure policy.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/makenotion/notion-mcp-server">Run shareable scan</a>
+              <a class="text-link" href="workspace-mcp-security-audit.html">Workspace audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/sooperset/mcp-atlassian">sooperset/mcp-atlassian</a></h3>
+                <p>MCP server for Atlassian tools</p>
+              </div>
+              <strong class="score-badge medium">54</strong>
+            </div>
+            <div class="radar-meta"><span>5,422 stars</span><span>89 files scanned</span><span>1 high / 2 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> No obvious tests found in the fetched slice.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/sooperset/mcp-atlassian">Run shareable scan</a>
+              <a class="text-link" href="workspace-mcp-security-audit.html">Workspace audit path</a>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="radar-card-head">
+              <div>
+                <h3><a href="https://github.com/BrowserMCP/mcp">BrowserMCP/mcp</a></h3>
+                <p>Browser-control MCP server</p>
+              </div>
+              <strong class="score-badge high">38</strong>
+            </div>
+            <div class="radar-meta"><span>6,700 stars</span><span>14 files scanned</span><span>3 high / 0 medium</span></div>
+            <p class="radar-finding"><strong>Top heuristic:</strong> Remote listener detected without nearby auth or permission signals.</p>
+            <div class="radar-actions">
+              <a class="text-link" href="scan.html?repo=https://github.com/BrowserMCP/mcp">Run shareable scan</a>
+              <a class="text-link" href="browser-automation-mcp-security-audit.html">Browser audit path</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="service-band service-flow">
+        <p class="eyebrow">Convert a signal</p>
+        <h2>When to use the paid audit</h2>
+        <ol>
+          <li>You have remote transport, hosted MCP, browser-control, cloud, database, or account-writing tools.</li>
+          <li>The free scan points to write actions, credential paths, missing redaction evidence, or weak test visibility.</li>
+          <li>You need human validation, source-specific evidence, a ranked fix plan, and launch notes.</li>
+          <li>Payment starts only after written scope acceptance; the fixed quote is USD $1,000.</li>
+        </ol>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml">Start audit from scan</a>
+          <a class="button secondary dark" href="quote.html">Open quote</a>
+          <a class="button secondary dark" href="terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+  </body>
+</html>

@@ -20,6 +20,8 @@ Use this list to sell the Agent/MCP Audit Sprint without opening PRs or touching
 
 ## Outreach message
 
+For the scanner-led variant and follow-up copy, use `outreach/scanner-led-outreach.md`.
+
 Subject: Fixed-price audit for your MCP/agent tool launch
 
 Hi,

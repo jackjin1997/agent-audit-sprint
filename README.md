@@ -32,6 +32,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/ISSUE_TEMPLATE/audit-request.yml` - intake form
 - `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
+- `outreach/scanner-led-outreach.md` - safe scanner-led outreach workflow and templates
 - `outreach/qualified-prospects-2026-06-19.md` - public outbound playbook without project-specific claims
 - `templates/invoice.md` - invoice template for accepted audit scopes
 - `templates/receipt.md` - receipt template after payment confirmation

@@ -24,6 +24,8 @@ This public playbook explains how to sell the audit sprint without posting proje
 
 ## General Short Message
 
+For a scanner-led version with a follow-up template, use `outreach/scanner-led-outreach.md`.
+
 ```text
 Hi,
 

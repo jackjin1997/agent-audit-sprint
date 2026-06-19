@@ -42,6 +42,7 @@ Checked on 2026-06-19:
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published |
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Published |
+| Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
@@ -59,7 +60,8 @@ Checked on 2026-06-19:
 | npm package preparation | `agent-mcp-audit` | Prepared for npmjs.org; npm not logged in, not published |
 | CI validation workflow | `.github/workflows/validate.yml` | Published |
 | Public outbound playbook | `outreach/qualified-prospects-2026-06-19.md` | Published |
-| Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | Prepared locally, not public, not sent |
+| Scanner-led outreach playbook | `outreach/scanner-led-outreach.md` | Published |
+| Private qualified prospect notes | `private-notes/qualified-prospects-2026-06-19.md` | 20 targets prepared locally with scanner context; not public, not sent |
 
 ## Payment Addresses
 

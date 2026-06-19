@@ -36,7 +36,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - GitHub Discussion #1 - booking FAQ and pre-intake questions
-- `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` - sample reports based on real public repos
+- `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` - sample reports based on real public repos
 - `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, and payment proof forms
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions

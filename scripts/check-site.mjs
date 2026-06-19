@@ -7,6 +7,7 @@ const root = resolve(import.meta.dirname, "..");
 const index = `file://${resolve(root, "index.html")}`;
 const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
+const browserbaseReport = `file://${resolve(root, "reports/browserbase-mcp-sample-audit.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
@@ -57,6 +58,8 @@ const requiredFiles = [
   "reports/douban-mcp-sample-audit.md",
   "reports/firecrawl-mcp-sample-audit.html",
   "reports/firecrawl-mcp-sample-audit.md",
+  "reports/browserbase-mcp-sample-audit.html",
+  "reports/browserbase-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   ".github/ISSUE_TEMPLATE/code-scanning-audit.yml",
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
@@ -378,6 +381,27 @@ try {
     const firecrawlReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (firecrawlReportOverflow) {
       throw new Error(`Firecrawl report horizontal overflow detected in ${viewport.name}`);
+    }
+
+    await page.goto(browserbaseReport, { waitUntil: "networkidle" });
+    const browserbaseReportTitle = await page.locator("h1").innerText();
+    if (!browserbaseReportTitle.includes("browserbase")) {
+      throw new Error(`Unexpected Browserbase report h1 in ${viewport.name}: ${browserbaseReportTitle}`);
+    }
+    const browserbaseReportText = await page.locator("body").innerText();
+    if (!browserbaseReportText.includes("independent public-code sample")) {
+      throw new Error(`Browserbase report missing sample disclaimer in ${viewport.name}`);
+    }
+    if (!browserbaseReportText.includes("pnpm install + build + tests passed")) {
+      throw new Error(`Browserbase report missing validation summary in ${viewport.name}`);
+    }
+    const browserbaseReportCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!browserbaseReportCta?.includes("audit-request.yml")) {
+      throw new Error(`Browserbase report CTA missing intake URL in ${viewport.name}`);
+    }
+    const browserbaseReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (browserbaseReportOverflow) {
+      throw new Error(`Browserbase report horizontal overflow detected in ${viewport.name}`);
     }
 
     await page.goto(service, { waitUntil: "networkidle" });
@@ -737,7 +761,11 @@ try {
       throw new Error(`Unexpected samples h1 in ${viewport.name}: ${samplesTitle}`);
     }
     const samplesText = await page.locator("body").innerText();
-    if (!samplesText.includes("douban-mcp") || !samplesText.includes("firecrawl-mcp-server")) {
+    if (
+      !samplesText.includes("douban-mcp") ||
+      !samplesText.includes("firecrawl-mcp-server") ||
+      !samplesText.includes("browserbase/mcp-server-browserbase")
+    ) {
       throw new Error(`Samples page missing report names in ${viewport.name}`);
     }
     if (!samplesText.includes("automated triage clones the public repo")) {

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sample Agent/MCP audit report for browserbase/mcp-server-browserbase.">
+    <title>Sample Audit: browserbase-mcp-server</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      body { background: #fbfaf7; }
+      .report-shell { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 104px 0 80px; }
+      .report-hero { padding: 34px 0 30px; border-bottom: 1px solid var(--line); }
+      .report-hero h1 { max-width: 900px; color: var(--ink); font-size: clamp(38px, 6vw, 66px); }
+      .report-hero p { max-width: 780px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+      .report-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+      .report-meta div, .finding-block, .positive-list, .code-block { border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .report-meta div { padding: 16px; }
+      .report-meta span { display: block; color: var(--muted); font-size: 12px; font-weight: 780; text-transform: uppercase; }
+      .report-meta strong { display: block; margin-top: 8px; font-size: 15px; overflow-wrap: anywhere; }
+      .report-section { padding: 42px 0 0; }
+      .report-section h2 { margin-bottom: 16px; font-size: 32px; }
+      .report-section p, .report-section li, .report-section td, .report-section th { color: #4d5664; font-size: 16px; line-height: 1.62; }
+      .scope-list, .priority-list { padding-left: 22px; }
+      .boundary-table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .boundary-table th, .boundary-table td { padding: 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .boundary-table tr:last-child td { border-bottom: 0; }
+      .finding-block { padding: 20px; margin-top: 16px; }
+      .finding-title { display: flex; gap: 12px; align-items: center; margin: 0 0 10px; font-size: 20px; }
+      .severity { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; height: 28px; border-radius: 999px; color: #fff; font-size: 12px; font-weight: 820; }
+      .severity.med { background: var(--amber); }
+      .severity.low { background: var(--teal); }
+      .positive-list { display: grid; gap: 0; padding: 0; list-style: none; }
+      .positive-list li { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+      .positive-list li:last-child { border-bottom: 0; }
+      .code-block { padding: 16px; overflow-x: auto; }
+      .report-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .report-actions .button.secondary { color: var(--ink); background: transparent; border-color: var(--line); }
+      @media (max-width: 760px) {
+        .report-meta { grid-template-columns: 1fr; }
+        .boundary-table { display: block; overflow-x: auto; }
+        .finding-title { align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="../mcp-security-audit-service.html">Service</a>
+        <a href="../mcp-code-scanning-github-action.html">Code Scanning</a>
+        <a href="../samples.html">Samples</a>
+        <a href="../terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-hero">
+        <p class="eyebrow">Sample audit report</p>
+        <h1>browserbase/mcp-server-browserbase</h1>
+        <p>
+          This independent public-code sample is based on commit <code>1e196b3d3c4dc70944e0d19038dd9eb3608b207a</code>. It is not a commissioned review or private vulnerability disclosure, and no Browserbase sessions, customer data, credentials, hosted MCP endpoints, or live websites were used.
+        </p>
+        <div class="report-meta">
+          <div><span>Target</span><strong>Browserbase MCP Server</strong></div>
+          <div><span>Validation</span><strong>pnpm install + build + tests passed</strong></div>
+          <div><span>Scanner Score</span><strong>72/100 heuristic score</strong></div>
+        </div>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
+          <a class="button secondary" href="../mcp-code-scanning-github-action.html">Use Code Scanning</a>
+          <a class="button secondary" href="browserbase-mcp-sample-audit.md">Markdown report</a>
+        </div>
+      </section>
+
+      <section class="report-section">
+        <h2>Scope</h2>
+        <ul class="scope-list">
+          <li>STDIO and Streamable HTTP transport setup</li>
+          <li>Browserbase and model credential configuration</li>
+          <li>Browser session lifecycle tools</li>
+          <li>Browser navigation, action, observe, and extract tools</li>
+          <li>Tool schemas, test coverage, and CI shape</li>
+        </ul>
+        <p>Out of scope: Browserbase production infrastructure, hosted MCP service behavior, live Browserbase account authorization, external website interaction, customer data, and unpublished branches.</p>
+      </section>
+
+      <section class="report-section">
+        <h2>Executive Summary</h2>
+        <p>
+          The repo has a clean, focused MCP surface: six tools match the hosted Browserbase MCP server, inputs use Zod schemas, tests assert tool names and schema behavior, and the self-hosted server supports both stdio and Streamable HTTP.
+        </p>
+        <p>
+          The highest-value review work is around launch and operator boundaries. Browser automation MCP servers sit at a sensitive boundary: an agent can navigate authenticated sessions, act on web pages, observe actionable elements, and extract page data.
+        </p>
+      </section>
+
+      <section class="report-section">
+        <h2>Boundary Map</h2>
+        <table class="boundary-table">
+          <thead>
+            <tr><th>Area</th><th>Evidence</th><th>Risk Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Transport</td><td><code>src/transport.ts</code>, <code>README.md</code>, <code>src/config.ts</code></td><td>STDIO and HTTP/SHTTP are supported. HTTP binds to the configured host; docs describe localhost default and <code>0.0.0.0</code>.</td></tr>
+            <tr><td>MCP tool surface</td><td><code>src/index.ts</code>, <code>src/tools/index.ts</code></td><td>Six tools are registered: start, end, navigate, act, observe, and extract.</td></tr>
+            <tr><td>Browser sessions</td><td><code>src/sessionManager.ts</code>, <code>src/tools/session.ts</code></td><td>Session creation uses Browserbase and Stagehand; context IDs and persistence are configurable.</td></tr>
+            <tr><td>Browser actions</td><td><code>src/tools/navigate.ts</code>, <code>src/tools/act.ts</code>, <code>src/tools/observe.ts</code>, <code>src/tools/extract.ts</code></td><td>Tools navigate URLs, perform page actions, observe elements, and extract page data.</td></tr>
+            <tr><td>Credentials</td><td><code>src/config.ts</code>, <code>src/sessionManager.ts</code>, <code>README.md</code></td><td>Browserbase, project, Gemini/Google, and custom model keys are loaded from env/CLI/config.</td></tr>
+            <tr><td>Tests and CI</td><td><code>src/config.test.ts</code>, <code>src/tools/__tests__/tools.test.ts</code>, <code>tests/smoke.test.ts</code>, <code>.github/workflows/ci.yml</code></td><td>Unit and smoke tests exist and passed locally. CI also runs secret-backed evals.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="report-section">
+        <h2>Findings</h2>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>HTTP transport needs an operator-facing exposure matrix</h3>
+          <p>Evidence: <code>README.md</code> documents SHTTP and <code>--host</code>; <code>src/config.ts</code> exposes <code>server.host</code>; <code>src/transport.ts</code> starts an HTTP server and creates Streamable HTTP sessions.</p>
+          <p>Recommended fix: add a transport exposure matrix covering hosted MCP, stdio self-hosted, local HTTP, Docker, reverse proxy deployment, host binding, external auth expectations, and credential sharing assumptions.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>Browser action tools need explicit launch-mode policy</h3>
+          <p>Evidence: <code>navigate</code> opens URLs, <code>act</code> performs natural-language page actions, <code>observe</code> returns actionable elements, and <code>extract</code> returns page data.</p>
+          <p>Recommended fix: document risk modes for anonymous browsing, authenticated browsing, persistent context, and verified identity; add examples for deployments that want observe/extract without unrestricted act.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span>Operational logs should be treated as sensitive artifacts</h3>
+          <p>Evidence: <code>Context.run</code> logs tool names and serialized args; <code>SessionManager</code> logs session lifecycle events, Browserbase session IDs, and live debugger URLs.</p>
+          <p>Recommended fix: add log-sensitivity guidance, redact URL query strings and session IDs in structured logs, and test provider error formatting.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span>Secret-backed evals should be separated from public CI expectations</h3>
+          <p>Evidence: CI runs install, lint, format, build, tests, then <code>pnpm evals</code> with Browserbase/model provider secrets.</p>
+          <p>Recommended fix: split public CI from secret-backed evals or skip evals when required secrets are absent, then publish the minimum local validation command set.</p>
+        </article>
+      </section>
+
+      <section class="report-section">
+        <h2>Positive Signals</h2>
+        <ul class="positive-list">
+          <li>The MCP surface is intentionally small and testable: six named tools.</li>
+          <li>Tool input schemas reject empty URL, action, and instruction values where appropriate.</li>
+          <li>Tests verify removed legacy tools are not exposed.</li>
+          <li><code>configSchema</code> requires <code>modelApiKey</code> when a non-default model is configured.</li>
+          <li>Local build and tests passed in this sample.</li>
+          <li>HTTP sessions use generated session IDs and remove sessions on transport close.</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Priority Fix Plan</h2>
+        <ol class="priority-list">
+          <li>Add a transport exposure matrix and startup summary for self-hosted HTTP/SHTTP.</li>
+          <li>Add a session risk-mode section for authenticated browsing, persistent context, and verified identity.</li>
+          <li>Add log sensitivity and redaction guidance for tool args, URLs, session IDs, and debugger URLs.</li>
+          <li>Split public CI from secret-backed evals or document the secret-backed job behavior.</li>
+          <li>Add example wrappers or config guidance for deployments that want observe/extract without unrestricted act.</li>
+        </ol>
+      </section>
+
+      <section class="report-section">
+        <h2>Example Validation Commands</h2>
+        <pre class="code-block"><code>corepack pnpm install --frozen-lockfile
+corepack pnpm build
+BROWSERBASE_API_KEY=test-key BROWSERBASE_PROJECT_ID=test-project corepack pnpm test
+node tools/agent-mcp-audit.mjs /path/to/mcp-server-browserbase --sarif &gt; agent-mcp-audit.sarif</code></pre>
+      </section>
+
+      <section class="report-section">
+        <h2>What the Paid Sprint Adds</h2>
+        <p>
+          The paid sprint would go deeper than this public sample: focused tests against the repo's actual CI shape, a deployment-mode threat table, log-redaction checks, recommended wrapper policy for browser actions, issue-ready remediation text, and a concise launch handoff for owners.
+        </p>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open audit intake</a>
+          <a class="button secondary" href="../quote.html">View fixed quote</a>
+          <a class="button secondary" href="../terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

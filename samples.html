@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Real public sample audit reports for the $1,000 Agent/MCP Audit Sprint, covering douban-mcp and firecrawl-mcp-server.">
+    <meta name="description" content="Real public sample audit reports for the $1,000 Agent/MCP Audit Sprint, covering douban-mcp, firecrawl-mcp-server, and Browserbase MCP.">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Zexu Jin">
     <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/samples.html">
@@ -40,7 +40,7 @@
         <p class="eyebrow">Sample evidence</p>
         <h1>Agent/MCP Audit Sample Reports</h1>
         <p>
-          Two public-code samples show the paid sprint format: scoped evidence, boundary map, ranked findings, fix plan, and launch notes. They are independent samples, not private vulnerability disclosures.
+          Three public-code samples show the paid sprint format: scoped evidence, boundary map, ranked findings, fix plan, and launch notes. They are independent samples, not private vulnerability disclosures.
         </p>
         <div class="service-actions">
           <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
@@ -52,7 +52,7 @@
 
       <section class="service-band">
         <div class="service-summary">
-          <div><span>Samples</span><strong>2 real public repos</strong></div>
+          <div><span>Samples</span><strong>3 real public repos</strong></div>
           <div><span>Output</span><strong>Boundary map + ranked findings</strong></div>
           <div><span>Automation</span><strong>No-execution intake triage</strong></div>
           <div><span>Paid Sprint</span><strong>USD $1,000 fixed</strong></div>
@@ -96,6 +96,26 @@
           <div><strong>Medium:</strong> Local file parse needs an explicit trust boundary.</div>
           <div><strong>Medium:</strong> CI builds, but does not prove auth/tool regressions stay fixed.</div>
           <div><strong>Low:</strong> Feedback write surfaces deserve retry/error regression tests.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Sample 03</p>
+          <h2>browserbase/mcp-server-browserbase</h2>
+          <p>
+            Public browser automation MCP server with stdio and Streamable HTTP transports, Browserbase sessions, page actions, observation, and extraction tools.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="reports/browserbase-mcp-sample-audit.html">Read HTML report</a>
+            <a class="button secondary dark" href="reports/browserbase-mcp-sample-audit.md">Markdown</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Medium:</strong> HTTP transport needs an operator-facing exposure matrix.</div>
+          <div><strong>Medium:</strong> Browser action tools need explicit launch-mode policy.</div>
+          <div><strong>Low:</strong> Operational logs should be treated as sensitive artifacts.</div>
+          <div><strong>Pass:</strong> Local install, build, and tests passed in the sample review.</div>
         </div>
       </section>
 

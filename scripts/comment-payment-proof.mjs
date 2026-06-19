@@ -1,12 +1,8 @@
 #!/usr/bin/env node
 
-const MARKER = "<!-- agent-mcp-audit-intent -->";
-const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html";
-const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
+const MARKER = "<!-- agent-mcp-payment-proof -->";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
-const FULL_INTAKE_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml";
-const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
-const DISCUSSION_URL = "https://github.com/jackjin1997/agent-audit-sprint/discussions/1";
+const RECEIPT_TEMPLATE_URL = "https://github.com/jackjin1997/agent-audit-sprint/blob/main/templates/receipt.md";
 const ETH_ADDRESS = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
 const SOL_ADDRESS = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
 
@@ -17,48 +13,40 @@ function extractField(body = "", label) {
   return match?.[1]?.trim().replace(/^_No response_$/i, "") || "";
 }
 
-function renderIntentComment(issueBody = "") {
-  const project = extractField(issueBody, "Project or repo URL") || "the project";
-  const contact = extractField(issueBody, "Preferred contact") || "this issue";
-  const timing = extractField(issueBody, "Timing") || "48h target";
-  const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
+function renderPaymentProofComment(issueBody = "") {
+  const scopeIssue = extractField(issueBody, "Accepted scope issue URL") || "not provided";
+  const network = extractField(issueBody, "Payment network") || "not provided";
+  const txHash = extractField(issueBody, "Transaction hash or settlement reference") || "not provided";
+  const amount = extractField(issueBody, "Amount sent") || "not provided";
 
   return `${MARKER}
-## Audit slot received
+## Payment proof received
 
-Thanks for reserving a $1,000 Agent/MCP Audit Sprint slot for **${project}**.
+Payment evidence has been recorded for manual verification.
 
-### Next step
+| Field | Value |
+|---|---|
+| Accepted scope issue | ${scopeIssue} |
+| Network | ${network} |
+| Transaction / settlement reference | \`${txHash}\` |
+| Reported amount | ${amount} |
 
-Please reply in this issue with either:
+### Verification checklist
 
-1. A full scope using the intake form: ${FULL_INTAKE_URL}
-2. A short scope note here covering the exact repo/product slice, delivery visibility, and highest concern
+Before the audit starts, I will verify:
 
-Preferred contact recorded from the form: **${contact}**  
-Requested timing: **${timing}**  
-Payment path: **${paymentPath}**
+1. Scope was accepted in writing before payment.
+2. The transaction or settlement reference is valid.
+3. The recipient matches the agreed address or invoice path.
+4. The amount is USD $1,000 equivalent unless another written agreement exists.
 
-### Payment/start rule
-
-Do not send payment until scope is accepted in writing. After scope is accepted, pay USD $1,000 equivalent through the agreed path and submit the transaction hash or invoice settlement evidence here:
-
-${PAYMENT_PROOF_URL}
+Accepted native payment addresses:
 
 - Ethereum: \`${ETH_ADDRESS}\`
 - Solana: \`${SOL_ADDRESS}\`
-- Terms: ${TERMS_URL}
 
-### Optional before scope
-
-If the repo can be scanned locally, run the browser-only scanner first and paste the generated Markdown into this issue:
-
-${SCANNER_URL}
-
-It does not upload code, install dependencies, or execute target code.
-
-Questions before booking can go here: ${DISCUSSION_URL}
-Service details: ${SERVICE_URL}
+Terms: ${TERMS_URL}  
+Receipt template: ${RECEIPT_TEMPLATE_URL}
 `;
 }
 
@@ -91,7 +79,7 @@ async function upsertIssueComment(body) {
   const issueNumber = process.env.ISSUE_NUMBER;
   const token = process.env.GITHUB_TOKEN;
 
-  if (process.env.INTENT_DRY_RUN === "true" || !repo || !issueNumber || !token) {
+  if (process.env.PAYMENT_PROOF_DRY_RUN === "true" || !repo || !issueNumber || !token) {
     process.stdout.write(`${body}\n`);
     return;
   }
@@ -114,7 +102,7 @@ async function upsertIssueComment(body) {
 }
 
 async function main() {
-  const body = renderIntentComment(process.env.ISSUE_BODY || "");
+  const body = renderPaymentProofComment(process.env.ISSUE_BODY || "");
   await upsertIssueComment(body);
 }
 

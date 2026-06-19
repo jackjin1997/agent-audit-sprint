@@ -43,6 +43,8 @@ Checked on 2026-06-19:
 | Audit intake issue template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml | Published |
 | Short audit slot reservation template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml | Published |
 | Audit intent label | `audit-intent` | Published for short paid-slot workflow |
+| Payment proof template | https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml | Published |
+| Payment proof label | `payment-proof` | Published for payment evidence workflow |
 | Booking FAQ discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/1 | Published |
 | Scanner announcement discussion | https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Published |
 | GitHub profile placement | https://github.com/jackjin1997 | Published |
@@ -50,6 +52,7 @@ Checked on 2026-06-19:
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
 | Automated intake triage | `.github/workflows/triage-audit-request.yml`, `scripts/comment-audit-triage.mjs` | Published |
 | Automated paid-intent response | `.github/workflows/respond-audit-intent.yml`, `scripts/comment-audit-intent.mjs` | Published |
+| Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
 | Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |
 | ETH/SOL QR payment assets | `assets/payments/` | Published |

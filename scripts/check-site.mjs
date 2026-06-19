@@ -39,6 +39,7 @@ const requiredFiles = [
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
+  ".github/workflows/respond-payment-proof.yml",
   "examples/github-action.yml",
   "assets/audit-dashboard.png",
   "assets/payments/eth-address.svg",
@@ -49,9 +50,11 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.md",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
+  ".github/ISSUE_TEMPLATE/payment-confirmation.yml",
   "tools/agent-mcp-audit.mjs",
   "scripts/comment-audit-triage.mjs",
   "scripts/comment-audit-intent.mjs",
+  "scripts/comment-payment-proof.mjs",
   "docs/mcp-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
@@ -99,6 +102,9 @@ if (!triageOutput.includes("https://github.com/example/agent-mcp")) {
 if (!triageOutput.includes("Safety: no dependencies were installed")) {
   throw new Error("Triage dry-run output is missing safety statement");
 }
+if (!triageOutput.includes("payment-confirmation.yml")) {
+  throw new Error("Triage dry-run output is missing payment proof link");
+}
 
 const intentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
   encoding: "utf8",
@@ -134,8 +140,46 @@ if (!intentOutput.includes("Do not send payment until scope is accepted")) {
 if (!intentOutput.includes("https://github.com/example/agent-mcp")) {
   throw new Error("Intent dry-run output is missing project URL");
 }
-if (!intentOutput.includes("paid-audit-intent") && !intentOutput.includes("audit-request.yml")) {
+if (!intentOutput.includes("payment-confirmation.yml")) {
+  throw new Error("Intent dry-run output is missing payment proof link");
+}
+if (!intentOutput.includes("audit-request.yml")) {
   throw new Error("Intent dry-run output is missing conversion links");
+}
+
+const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    PAYMENT_PROOF_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Accepted scope issue URL",
+      "",
+      "https://github.com/jackjin1997/agent-audit-sprint/issues/123",
+      "",
+      "### Payment network",
+      "",
+      "Ethereum",
+      "",
+      "### Transaction hash or settlement reference",
+      "",
+      "0xabc123",
+      "",
+      "### Amount sent",
+      "",
+      "USD 1,000 equivalent",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!paymentProofOutput.includes("Payment proof received")) {
+  throw new Error("Payment proof dry-run output is missing heading");
+}
+if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-sprint/issues/123")) {
+  throw new Error("Payment proof dry-run output is missing scope issue");
+}
+if (!paymentProofOutput.includes("USD $1,000 equivalent")) {
+  throw new Error("Payment proof dry-run output is missing amount verification rule");
 }
 
 const browser = await chromium.launch();

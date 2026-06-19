@@ -1,0 +1,58 @@
+name: Payment confirmation
+description: Submit transaction evidence after audit scope is accepted
+title: "Payment proof: <project name>"
+labels: ["payment-proof"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this only after scope is accepted in writing. Do not paste private keys, seed phrases, exchange account screenshots, or unrelated sensitive data.
+  - type: input
+    id: scope_issue
+    attributes:
+      label: Accepted scope issue URL
+      description: Link the audit request or audit slot issue where scope was accepted.
+      placeholder: https://github.com/jackjin1997/agent-audit-sprint/issues/123
+    validations:
+      required: true
+  - type: dropdown
+    id: network
+    attributes:
+      label: Payment network
+      options:
+        - Ethereum
+        - Solana
+        - Invoice or other agreed path
+    validations:
+      required: true
+  - type: input
+    id: transaction_hash
+    attributes:
+      label: Transaction hash or settlement reference
+      description: Native-chain transaction hash, or invoice settlement reference if an invoice-first path was agreed.
+      placeholder: tx hash / signature / invoice reference
+    validations:
+      required: true
+  - type: input
+    id: amount
+    attributes:
+      label: Amount sent
+      description: Include unit, for example "0.42 ETH", "6.8 SOL", or "USD 1,000".
+      placeholder: USD 1,000 equivalent
+    validations:
+      required: true
+  - type: textarea
+    id: payer
+    attributes:
+      label: Payer details
+      description: Optional payer wallet address, billing name, or invoice reference. Do not include secrets.
+      placeholder: Wallet address or invoice entity, if useful.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: Scope was accepted before this payment was sent.
+          required: true
+        - label: I did not include private keys, seed phrases, cookies, credentials, or unrelated sensitive data.
+          required: true

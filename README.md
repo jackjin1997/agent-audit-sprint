@@ -26,11 +26,12 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `action.yml` - reusable GitHub Action wrapper for the heuristic scanner
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
+- `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
 - `examples/github-action.yml` - copyable workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - GitHub Discussion #1 - booking FAQ and pre-intake questions
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` - sample reports based on real public repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` - full intake and short paid-slot forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, and payment proof forms
 - `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
 - `outreach/scanner-led-outreach.md` - safe scanner-led outreach workflow and templates

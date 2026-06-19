@@ -8,6 +8,7 @@ const MARKER = "<!-- agent-mcp-audit-triage -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const REQUEST_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml";
+const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
 const root = resolve(import.meta.dirname, "..");
 
 function extractGitHubRepoUrl(body = "") {
@@ -75,6 +76,7 @@ Reply in this issue with any scope corrections and preferred delivery visibility
 - Service page: ${SERVICE_URL}
 - Terms and payment/start rules: ${TERMS_URL}
 - New request form: ${REQUEST_URL}
+- Payment proof form, after scope acceptance only: ${PAYMENT_PROOF_URL}
 `;
 }
 

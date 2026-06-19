@@ -68,6 +68,9 @@ After payment, reply with:
 - Payer wallet address
 - GitHub intake issue URL
 
+Or submit payment evidence here:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml
+
 ## Delivery
 
 Target turnaround: 48 hours after payment confirmation and scope acceptance.

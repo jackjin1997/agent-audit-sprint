@@ -42,6 +42,9 @@ If invoice-first processing is needed, billing details, payment method, and sett
 
 Buyer should reply with network, transaction hash, payer wallet address, and intake issue URL.
 
+Payment proof form:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml
+
 ## Data Handling
 
 Do not provide secrets, private keys, cookies, production customer data, or unsanitized logs. Share only the minimum access needed. Remove access after delivery.

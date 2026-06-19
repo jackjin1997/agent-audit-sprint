@@ -9,6 +9,7 @@ Fixed-price human review for one MCP server, agent tool surface, or tool-using p
 - Browser-only local scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short slot reservation: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
+- Payment proof, after accepted scope only: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - Trading MCP page: https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html
 - Workspace MCP page: https://jackjin1997.github.io/agent-audit-sprint/workspace-mcp-security-audit.html

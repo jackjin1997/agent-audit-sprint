@@ -119,6 +119,30 @@
           <textarea class="brief-output" data-local-scan-output rows="18" readonly aria-label="Generated local scan report">Select files and run the local scan.</textarea>
         </label>
       </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Paid audit handoff</p>
+          <h2>Copy the request packet before opening GitHub</h2>
+          <p>
+            After a scan, this packet turns the report into a paid audit request with scope, payment timing, terms, and the scanner evidence in one pasteable block.
+          </p>
+          <p>
+            Payment timing: after written scope acceptance only. The 48-hour target starts after both scope acceptance and payment confirmation.
+          </p>
+        </div>
+        <div class="request-tool">
+          <label>
+            <span>Audit request packet</span>
+            <textarea class="brief-output" data-audit-packet-output rows="12" readonly aria-label="Generated audit request packet">Run a scan to generate the paid audit request packet.</textarea>
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="button" data-copy-audit-packet>Copy audit request packet</button>
+            <a class="button secondary dark" data-open-scan-request href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open audit request</a>
+            <a class="button secondary dark" href="quote.html">Open fixed quote</a>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">

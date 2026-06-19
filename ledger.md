@@ -32,6 +32,7 @@ Checked on 2026-06-20:
 | Browser-only local scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Published |
 | Public GitHub URL browser scanner | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added for no-clone public repo triage |
 | Shareable repo scanner links | `scan.html?repo=https://github.com/org/repo` | Added for direct prospect handoff |
+| Browser audit request packet | https://jackjin1997.github.io/agent-audit-sprint/scan.html | Added copyable paid-audit handoff after public or private scans |
 | Public URL scanner distribution | Release notes, gist, GitHub profile, checklist docs, discussion update | Updated |
 | GitHub npx scanner path | `npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo` | Verified locally |
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |

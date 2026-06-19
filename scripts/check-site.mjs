@@ -473,6 +473,12 @@ try {
     if (!scanText.includes("Copy scan link")) {
       throw new Error(`Scanner page missing copy scan link action in ${viewport.name}`);
     }
+    if (!scanText.includes("Copy audit request packet")) {
+      throw new Error(`Scanner page missing audit request packet action in ${viewport.name}`);
+    }
+    if (!scanText.includes("Payment timing: after written scope acceptance only.")) {
+      throw new Error(`Scanner page missing audit packet payment timing in ${viewport.name}`);
+    }
     await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("Public GitHub Repo Scan"));
     const publicScanOutput = await page.locator("[data-local-scan-output]").inputValue();
     if (!publicScanOutput.includes("https://github.com/example/agent-mcp")) {
@@ -484,9 +490,31 @@ try {
     if (!page.url().includes("repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
       throw new Error(`Public scanner URL missing shareable repo parameter in ${viewport.name}`);
     }
-    const publicScanHref = await page.locator("[data-open-scan-request]").getAttribute("href");
+    const publicScanHrefs = await page.locator("[data-open-scan-request]").evaluateAll((links) =>
+      links.map((link) => link.getAttribute("href") || "")
+    );
+    if (publicScanHrefs.length !== 2) {
+      throw new Error(`Expected two scanner request links in ${viewport.name}`);
+    }
+    if (new Set(publicScanHrefs).size !== 1) {
+      throw new Error(`Scanner request links are not synchronized in ${viewport.name}`);
+    }
+    const publicScanHref = publicScanHrefs[0];
     if (!decodeURIComponent(publicScanHref || "").includes("https://github.com/example/agent-mcp")) {
       throw new Error(`Public scanner request link missing GitHub target in ${viewport.name}`);
+    }
+    if (decodeURIComponent(publicScanHref || "").length > 9000) {
+      throw new Error(`Public scanner request link is too long in ${viewport.name}`);
+    }
+    const publicAuditPacket = await page.locator("[data-audit-packet-output]").inputValue();
+    if (!publicAuditPacket.includes("## Payment and start terms")) {
+      throw new Error(`Public scanner audit packet missing payment terms in ${viewport.name}`);
+    }
+    if (!publicAuditPacket.includes("Fixed quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html")) {
+      throw new Error(`Public scanner audit packet missing fixed quote link in ${viewport.name}`);
+    }
+    if (!publicAuditPacket.includes("## Scanner report")) {
+      throw new Error(`Public scanner audit packet missing report body in ${viewport.name}`);
     }
     await page.goto(`${scan}?repo=${encodeURIComponent("https://github.com/example/rate-limited")}`, { waitUntil: "networkidle" });
     await page.waitForFunction(() => document.querySelector("[data-local-scan-output]")?.value.includes("raw-file fallback"));
@@ -504,9 +532,16 @@ try {
     if (!scanOutput.includes("Paid 48-hour review")) {
       throw new Error(`Scanner output missing paid review handoff in ${viewport.name}`);
     }
-    const scanHref = await page.locator("[data-open-scan-request]").getAttribute("href");
+    const scanHref = await page.locator("[data-open-scan-request]").first().getAttribute("href");
     if (!scanHref?.includes("labels=audit-request")) {
       throw new Error(`Scanner request link missing audit label in ${viewport.name}`);
+    }
+    const localAuditPacket = await page.locator("[data-audit-packet-output]").inputValue();
+    if (!localAuditPacket.includes("Private or local repo; access details to be shared after scope acceptance.")) {
+      throw new Error(`Local scanner audit packet missing private repo handoff in ${viewport.name}`);
+    }
+    if (!localAuditPacket.includes("Payment timing: after written scope acceptance only.")) {
+      throw new Error(`Local scanner audit packet missing payment guardrail in ${viewport.name}`);
     }
     const scanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (scanOverflow) throw new Error(`Scanner horizontal overflow detected in ${viewport.name}`);

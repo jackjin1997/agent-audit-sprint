@@ -54,6 +54,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake
 
 Terminal:
 
@@ -65,7 +66,7 @@ node tools/agent-mcp-audit.mjs /path/to/repo --json
 ```
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, redaction, tests, and CI. It is a triage helper, not a security certification.
-The Markdown output includes paid audit request and terms links so a free scanner artifact can become an audit handoff.
+The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence.
 
 Use it from GitHub Actions:
 

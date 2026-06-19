@@ -2,10 +2,12 @@ const localScanForm = document.querySelector("[data-local-scan-form]");
 const localScanInput = document.querySelector("[data-local-scan-input]");
 const localScanOutput = document.querySelector("[data-local-scan-output]");
 const localScanSummary = document.querySelector("[data-local-scan-summary]");
-const openScanRequest = document.querySelector("[data-open-scan-request]");
+const openScanRequests = document.querySelectorAll("[data-open-scan-request]");
+const auditPacketOutput = document.querySelector("[data-audit-packet-output]");
 const publicScanForm = document.querySelector("[data-public-scan-form]");
 const publicRepoInput = document.querySelector("[data-public-repo-url]");
 const copyPublicScanLink = document.querySelector("[data-copy-public-scan-link]");
+const copyAuditPacket = document.querySelector("[data-copy-audit-packet]");
 
 const maxRemoteFiles = 45;
 
@@ -379,11 +381,11 @@ function updateSummary(result) {
   localScanSummary.innerHTML = rows.join("");
 }
 
-function updateIssueLink(report, projectUrl = "TBD") {
-  const title = projectUrl === "TBD" ? "Audit request: scanner report" : `Audit request: ${projectUrl.replace(/^https:\/\/github\.com\//, "")}`;
-  const body = [
+function buildAuditRequestPacket(report, projectUrl = "TBD") {
+  const target = projectUrl === "TBD" ? "Private or local repo; access details to be shared after scope acceptance." : projectUrl;
+  return [
     "## Project or repo URL",
-    projectUrl,
+    target,
     "",
     "## Scope",
     "Review the repo or product slice represented by this scanner report.",
@@ -403,10 +405,64 @@ function updateIssueLink(report, projectUrl = "TBD") {
     "## Highest concern",
     "Scanner report attached below.",
     "",
+    "## Payment and start terms",
+    "This is a fixed USD $1,000 Agent/MCP Audit Sprint for one repo or product slice.",
+    "Payment timing: after written scope acceptance only.",
+    "The 48-hour target starts after both scope acceptance and payment confirmation.",
+    "Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html",
+    "Fixed quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html",
+    "",
     "## Scanner report",
     report,
   ].join("\n");
-  openScanRequest.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
+function compactIssueBody(packet, report, projectUrl) {
+  const target = projectUrl === "TBD" ? "Private/local repo" : projectUrl;
+  return [
+    "## Project or repo URL",
+    target,
+    "",
+    "## Scope",
+    "Review the repo or product slice represented by the scanner report.",
+    "",
+    "## Delivery visibility",
+    "Private Markdown report",
+    "",
+    "## Target delivery date",
+    "48h default after payment confirmation and scope acceptance",
+    "",
+    "## Payment network",
+    "Need invoice/discussion first",
+    "",
+    "## Transaction hash",
+    "Pending until scope is accepted and payment is sent.",
+    "",
+    "## Highest concern",
+    "Scanner report attached below. If this prefilled issue body is truncated, paste the copied audit request packet from the scanner page.",
+    "",
+    "## Payment and start terms",
+    "Fixed USD $1,000 Agent/MCP Audit Sprint. Do not send payment until scope is accepted in writing.",
+    "",
+    "## Scanner report excerpt",
+    report.slice(0, 4500),
+    report.length > 4500 ? "\n\n[Report truncated for URL length; paste the copied audit request packet here.]" : "",
+    "",
+    "## Full copied packet status",
+    packet.length > 4500 ? "Copied packet recommended because the scanner report is long." : "Prefilled body includes the scanner report.",
+  ].join("\n");
+}
+
+function updateIssueLink(report, projectUrl = "TBD") {
+  const title = projectUrl === "TBD" ? "Audit request: scanner report" : `Audit request: ${projectUrl.replace(/^https:\/\/github\.com\//, "")}`;
+  const packet = buildAuditRequestPacket(report, projectUrl);
+  const body = compactIssueBody(packet, report, projectUrl);
+  if (auditPacketOutput) {
+    auditPacketOutput.value = packet;
+  }
+  openScanRequests.forEach((link) => {
+    link.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  });
 }
 
 function publicScanUrl(repoUrl) {
@@ -651,6 +707,21 @@ if (localScanForm) {
       }, 1300);
     } catch {
       localScanOutput.select();
+      event.currentTarget.textContent = "Select";
+    }
+  });
+}
+
+if (copyAuditPacket) {
+  copyAuditPacket.addEventListener("click", async (event) => {
+    try {
+      await navigator.clipboard.writeText(auditPacketOutput?.value || "");
+      event.currentTarget.textContent = "Copied";
+      window.setTimeout(() => {
+        event.currentTarget.textContent = "Copy audit request packet";
+      }, 1300);
+    } catch {
+      auditPacketOutput?.select();
       event.currentTarget.textContent = "Select";
     }
   });

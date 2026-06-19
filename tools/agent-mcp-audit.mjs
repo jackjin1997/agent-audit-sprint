@@ -10,6 +10,7 @@ const IGNORE_DIRS = new Set([
   ".next",
   ".turbo",
   "coverage",
+  "private-notes",
   ".venv",
   "venv",
   "__pycache__",
@@ -307,6 +308,12 @@ function renderMarkdown(report) {
       lines.push(`Suggested fix: ${finding.fix}`, "");
     }
   }
+  lines.push("## Paid 48-hour review", "");
+  lines.push("This heuristic output is the starting point for the fixed-price Agent/MCP Audit Sprint.");
+  lines.push("Price: USD $1,000 for one repo or product slice.");
+  lines.push("Request: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml");
+  lines.push("Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html", "");
+  lines.push("Include this report, the repo/product URL, delivery visibility, payment network, and the highest-risk launch concern.");
   return lines.join("\n");
 }
 

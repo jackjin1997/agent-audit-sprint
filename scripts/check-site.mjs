@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { execFileSync } from "node:child_process";
 
 const root = resolve(import.meta.dirname, "..");
 const index = `file://${resolve(root, "index.html")}`;
@@ -38,6 +39,20 @@ for (const file of requiredFiles) {
   }
 }
 
+const markdownOutput = execFileSync(process.execPath, [resolve(root, "tools/agent-mcp-audit.mjs"), root], {
+  encoding: "utf8",
+  maxBuffer: 10 * 1024 * 1024,
+});
+if (!markdownOutput.includes("## Paid 48-hour review")) {
+  throw new Error("Scanner Markdown output is missing paid review CTA");
+}
+if (!markdownOutput.includes("https://jackjin1997.github.io/agent-audit-sprint/terms.html")) {
+  throw new Error("Scanner Markdown output is missing terms URL");
+}
+if (markdownOutput.includes("private-notes")) {
+  throw new Error("Scanner Markdown output should not include private-notes paths");
+}
+
 const browser = await chromium.launch();
 try {
   for (const viewport of [
@@ -58,6 +73,25 @@ try {
     if (horizontalOverflow) throw new Error(`Horizontal overflow detected in ${viewport.name}`);
     const buttons = await page.locator("a.button").count();
     if (buttons < 2) throw new Error(`Expected CTA buttons in ${viewport.name}`);
+
+    await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
+    await page.locator("[name='scope']").fill("Review MCP transport, write tools, and auth gates.");
+    await page.locator("[name='risk']").fill("Remote write tools exposed without clear auth boundaries.");
+    await page.locator("[data-intake-form]").evaluate((form) => form.requestSubmit());
+    const brief = await page.locator("[data-brief-output]").inputValue();
+    if (!brief.includes("https://github.com/example/agent-mcp")) {
+      throw new Error(`Generated brief missing project URL in ${viewport.name}`);
+    }
+    if (!brief.includes("USD $1,000")) {
+      throw new Error(`Generated brief missing price confirmation in ${viewport.name}`);
+    }
+    const prefilledHref = await page.locator("[data-open-brief]").getAttribute("href");
+    if (!prefilledHref?.includes("labels=audit-request")) {
+      throw new Error(`Prefilled issue link missing audit label in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(prefilledHref).includes("Audit request: example/agent-mcp")) {
+      throw new Error(`Prefilled issue link missing project title in ${viewport.name}`);
+    }
     await page.screenshot({ path: resolve(root, `tmp-${viewport.name}.png`), fullPage: true });
 
     await page.goto(report, { waitUntil: "networkidle" });

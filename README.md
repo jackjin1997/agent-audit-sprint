@@ -23,6 +23,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - `reports/douban-mcp-sample-audit.md` - sample report based on a real public repo
 - `.github/ISSUE_TEMPLATE/audit-request.yml` - intake form
+- `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
 - `outreach/qualified-prospects-2026-06-19.md` - public outbound playbook without project-specific claims
 - `templates/invoice.md` - invoice template for accepted audit scopes
@@ -42,6 +43,7 @@ node tools/agent-mcp-audit.mjs /path/to/repo --json
 ```
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, redaction, tests, and CI. It is a triage helper, not a security certification.
+The Markdown output includes paid audit request and terms links so a free scanner artifact can become an audit handoff.
 
 Use it from GitHub Actions:
 

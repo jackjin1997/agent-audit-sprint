@@ -24,6 +24,8 @@ Last updated: 2026-06-19.
 | ETH/SOL QR payment assets | `assets/payments/` | Published |
 | Invoice/receipt templates | `templates/` | Published |
 | Statement of Work terms | `terms.html`, `templates/statement-of-work.md` | Published |
+| Request brief builder | `index.html#request`, `script.js` | Published |
+| Scanner paid-review handoff | `tools/agent-mcp-audit.mjs` Markdown output | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
 | Search metadata | `robots.txt`, `sitemap.xml`, JSON-LD | Published |
 | GitHub Pages static mode | `.nojekyll` | Published |

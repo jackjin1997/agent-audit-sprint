@@ -380,6 +380,77 @@ h3 {
   background: #ece8df;
 }
 
+.request {
+  background: #f7f4ea;
+}
+
+.request-tool {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(23, 26, 31, 0.04);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 760;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfaf7;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+input,
+select {
+  padding: 0 12px;
+}
+
+textarea {
+  min-height: 120px;
+  padding: 12px;
+  resize: vertical;
+}
+
+.brief-output {
+  min-height: 280px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+.request-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button.secondary.dark {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
+}
+
 .payment-steps {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: -4px auto 22px;
@@ -503,6 +574,7 @@ code {
   .proof-strip,
   .deliverable-grid,
   .fit-grid,
+  .field-grid,
   .payment-steps,
   .pay-grid,
   .split {

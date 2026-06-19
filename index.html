@@ -55,6 +55,7 @@
       <nav class="nav">
         <a href="#deliverables">Deliverables</a>
         <a href="#sample">Sample</a>
+        <a href="#request">Request</a>
         <a href="terms.html">Terms</a>
         <a href="#payment">Pay</a>
       </nav>
@@ -74,6 +75,7 @@
           <div class="hero-actions" aria-label="Primary actions">
             <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
             <a class="button secondary" href="reports/douban-mcp-sample-audit.html">Read sample report</a>
+            <a class="button secondary" href="#request">Build request brief</a>
             <a class="button secondary" href="terms.html">Review terms</a>
           </div>
           <dl class="proof-strip" aria-label="Offer facts">
@@ -160,6 +162,58 @@
           <div class="report-row medium"><span>CI</span><strong>uses: jackjin1997/agent-audit-sprint@v1</strong></div>
           <div class="report-row high"><span>Then</span><strong>Book the paid sprint for human review and fix planning</strong></div>
         </div>
+      </section>
+
+      <section class="band request" id="request" aria-labelledby="request-title">
+        <div class="section-head">
+          <p class="eyebrow">Ready to start</p>
+          <h2 id="request-title">Generate a clean audit request brief</h2>
+          <p>
+            Use this local-only builder to prepare the exact scope, delivery preference, and payment network before opening a GitHub request.
+          </p>
+        </div>
+        <form class="request-tool" data-intake-form>
+          <div class="field-grid">
+            <label>
+              <span>Project or repo URL</span>
+              <input name="project" type="url" placeholder="https://github.com/org/repo" autocomplete="url">
+            </label>
+            <label>
+              <span>Delivery visibility</span>
+              <select name="visibility">
+                <option>Private Markdown report</option>
+                <option>Public GitHub issue comment</option>
+                <option>Private first, public summary later</option>
+              </select>
+            </label>
+            <label>
+              <span>Payment network</span>
+              <select name="network">
+                <option>Ethereum</option>
+                <option>Solana</option>
+                <option>Need invoice/discussion first</option>
+              </select>
+            </label>
+            <label>
+              <span>Target delivery date</span>
+              <input name="targetDate" type="text" placeholder="48h default">
+            </label>
+          </div>
+          <label>
+            <span>Scope</span>
+            <textarea name="scope" rows="4" placeholder="MCP server transport, write tools, auth flow, deployment docs, etc."></textarea>
+          </label>
+          <label>
+            <span>Highest concern</span>
+            <textarea name="risk" rows="3" placeholder="Tool injection, exposed remote transport, account mutation, secret leakage, missing tests..."></textarea>
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Generate brief</button>
+            <button class="button secondary dark" type="button" data-copy-brief>Copy brief</button>
+            <a class="button secondary dark" data-open-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open request</a>
+          </div>
+          <textarea class="brief-output" data-brief-output rows="12" readonly aria-label="Generated audit request brief"></textarea>
+        </form>
       </section>
 
       <section class="band payment" id="payment" aria-labelledby="payment-title">

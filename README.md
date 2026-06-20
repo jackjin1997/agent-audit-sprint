@@ -35,6 +35,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` - scheduled goal monitor for open intake issues and ETH/SOL stablecoin/native payment signals
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
@@ -123,6 +124,14 @@ Open `index.html` directly in a browser or serve the directory with any static f
 ## Payment Ops
 
 Use `templates/invoice.md` after accepting scope. Crypto payment can use ETH or ERC-20 USDC/USDT/DAI on Ethereum, or SOL or SPL USDC on Solana. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.
+
+Run the goal monitor manually with:
+
+```bash
+node scripts/check-goal-status.mjs
+```
+
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. Revenue is still counted only after payment is verified against an accepted written scope.
 
 ## npm Publishing
 

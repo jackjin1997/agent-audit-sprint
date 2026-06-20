@@ -12,6 +12,10 @@ const playwrightScanReport = `file://${resolve(root, "reports/playwright-mcp-sec
 const chromeDevtoolsScanReport = `file://${resolve(root, "reports/chrome-devtools-mcp-security-scan.html")}`;
 const githubMcpScanReport = `file://${resolve(root, "reports/github-mcp-server-security-scan.html")}`;
 const browserMcpScanReport = `file://${resolve(root, "reports/browsermcp-mcp-security-scan.html")}`;
+const browserUseAiAgentScanReport = `file://${resolve(root, "reports/browser-use-ai-agent-security-scan.html")}`;
+const openHandsAiAgentScanReport = `file://${resolve(root, "reports/openhands-ai-agent-security-scan.html")}`;
+const smolagentsAiAgentScanReport = `file://${resolve(root, "reports/smolagents-ai-agent-security-scan.html")}`;
+const openAiAgentsPythonScanReport = `file://${resolve(root, "reports/openai-agents-python-security-scan.html")}`;
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
@@ -76,6 +80,10 @@ const requiredFiles = [
   "reports/chrome-devtools-mcp-security-scan.html",
   "reports/github-mcp-server-security-scan.html",
   "reports/browsermcp-mcp-security-scan.html",
+  "reports/browser-use-ai-agent-security-scan.html",
+  "reports/openhands-ai-agent-security-scan.html",
+  "reports/smolagents-ai-agent-security-scan.html",
+  "reports/openai-agents-python-security-scan.html",
   ".github/ISSUE_TEMPLATE/audit-request.yml",
   ".github/ISSUE_TEMPLATE/code-scanning-audit.yml",
   ".github/ISSUE_TEMPLATE/paid-audit-intent.yml",
@@ -113,6 +121,9 @@ if (!llmsText.includes("MCP Security Radar")) {
 }
 if (!llmsText.includes("AI Agent Security Radar")) {
   throw new Error("llms.txt is missing the AI Agent Radar link context");
+}
+if (!llmsText.includes("AI Agent Radar Detail Briefs")) {
+  throw new Error("llms.txt is missing the AI Agent Radar detail brief context");
 }
 if (!llmsText.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
   throw new Error("llms.txt is missing the standalone Action usage");
@@ -522,6 +533,12 @@ try {
     if (!aiAgentRadarText.includes("Start audit from Radar")) {
       throw new Error(`AI Agent Radar missing paid audit handoff in ${viewport.name}`);
     }
+    const aiAgentRadarDetailLinks = await page.locator(
+      "a[href='reports/browser-use-ai-agent-security-scan.html'], a[href='reports/openhands-ai-agent-security-scan.html'], a[href='reports/smolagents-ai-agent-security-scan.html'], a[href='reports/openai-agents-python-security-scan.html']"
+    ).count();
+    if (aiAgentRadarDetailLinks !== 4) {
+      throw new Error(`AI Agent Radar missing detail report links in ${viewport.name}`);
+    }
     const aiAgentRadarCards = await page.locator(".radar-card").count();
     if (aiAgentRadarCards !== 8) {
       throw new Error(`AI Agent Radar expected 8 cards in ${viewport.name}, found ${aiAgentRadarCards}`);
@@ -529,6 +546,35 @@ try {
     const aiAgentRadarOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiAgentRadarOverflow) {
       throw new Error(`AI Agent Radar horizontal overflow detected in ${viewport.name}`);
+    }
+
+    for (const reportPage of [
+      { url: browserUseAiAgentScanReport, title: "browser-use/browser-use AI agent security scan", marker: "62/100 heuristic" },
+      { url: openHandsAiAgentScanReport, title: "OpenHands/OpenHands AI agent security scan", marker: "68/100 heuristic" },
+      { url: smolagentsAiAgentScanReport, title: "huggingface/smolagents AI agent security scan", marker: "62/100 heuristic" },
+      { url: openAiAgentsPythonScanReport, title: "openai/openai-agents-python AI agent security scan", marker: "76/100 heuristic" },
+    ]) {
+      await page.goto(reportPage.url, { waitUntil: "networkidle" });
+      const reportPageTitle = await page.locator("h1").innerText();
+      if (!reportPageTitle.includes(reportPage.title)) {
+        throw new Error(`Unexpected AI Agent Radar detail h1 in ${viewport.name}: ${reportPageTitle}`);
+      }
+      const reportPageText = await page.locator("body").innerText();
+      if (
+        !reportPageText.includes(reportPage.marker) ||
+        !reportPageText.includes("Partial no-execution triage") ||
+        !reportPageText.includes("90 selected public text files") ||
+        !reportPageText.includes("not a commissioned audit") ||
+        !reportPageText.includes("not confirmed vulnerabilities") ||
+        !reportPageText.includes("Start audit from Radar") ||
+        !reportPageText.includes("Pay USD $1,000 only after written scope acceptance")
+      ) {
+        throw new Error(`AI Agent Radar detail page missing score, guardrail, or paid handoff in ${viewport.name}: ${reportPage.title}`);
+      }
+      const reportPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+      if (reportPageOverflow) {
+        throw new Error(`AI Agent Radar detail page horizontal overflow detected in ${viewport.name}: ${reportPage.title}`);
+      }
     }
 
     await page.goto(service, { waitUntil: "networkidle" });

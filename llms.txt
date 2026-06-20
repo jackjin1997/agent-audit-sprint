@@ -63,6 +63,13 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - github/github-mcp-server: https://jackjin1997.github.io/agent-audit-sprint/reports/github-mcp-server-security-scan.html
 - BrowserMCP/mcp: https://jackjin1997.github.io/agent-audit-sprint/reports/browsermcp-mcp-security-scan.html
 
+## AI Agent Radar Detail Briefs
+
+- browser-use/browser-use: https://jackjin1997.github.io/agent-audit-sprint/reports/browser-use-ai-agent-security-scan.html
+- OpenHands/OpenHands: https://jackjin1997.github.io/agent-audit-sprint/reports/openhands-ai-agent-security-scan.html
+- huggingface/smolagents: https://jackjin1997.github.io/agent-audit-sprint/reports/smolagents-ai-agent-security-scan.html
+- openai/openai-agents-python: https://jackjin1997.github.io/agent-audit-sprint/reports/openai-agents-python-security-scan.html
+
 ## AI Agent Radar Snapshot
 
 - browser-use/browser-use: browser automation agent surface

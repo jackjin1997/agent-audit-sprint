@@ -131,21 +131,15 @@ Run the goal monitor manually with:
 node scripts/check-goal-status.mjs
 ```
 
-Install or refresh the local 15-minute macOS launchd loop with:
+Install or refresh the visible local 15-minute macOS launchd loop with:
 
 ```bash
 node scripts/install-goal-monitor-launchd.mjs
 ```
 
-Start a visible always-running background loop with:
-
-```bash
-nohup node scripts/run-goal-monitor-loop.mjs > logs/goal-monitor-loop.nohup.log 2>&1 &
-```
-
 The visible loop writes `private-notes/monitor/goal-monitor-loop.pid` and `private-notes/monitor/goal-monitor-loop-heartbeat.json`, so it can be inspected with `ps -p "$(cat private-notes/monitor/goal-monitor-loop.pid)" -o pid,ppid,etime,command`.
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop runs every 15 minutes as a fallback. The visible loop stays resident, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
 
 ## npm Publishing
 

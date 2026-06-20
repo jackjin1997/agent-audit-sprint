@@ -5,6 +5,8 @@ const ETH_RPC_URL = process.env.ETH_RPC_URL || "https://ethereum.publicnode.com"
 const SOL_RPC_URL = process.env.SOL_RPC_URL || "https://api.mainnet-beta.solana.com";
 const TARGET_USD = Number(process.env.GOAL_USD_TARGET || "1000");
 const ATTENTION_THRESHOLD_USD = Number(process.env.GOAL_ATTENTION_THRESHOLD_USD || "900");
+const ETH_ATTENTION_THRESHOLD = Number(process.env.GOAL_ETH_ATTENTION_THRESHOLD || "0.3");
+const SOL_ATTENTION_THRESHOLD = Number(process.env.GOAL_SOL_ATTENTION_THRESHOLD || "8");
 const ATTENTION_FAIL = process.env.GOAL_ATTENTION_FAIL === "true";
 
 const ETH_ADDRESS = process.env.GOAL_ETH_ADDRESS || DEFAULT_ETH_ADDRESS;
@@ -150,12 +152,23 @@ function computePaymentSignal(ethereum, solana, prices) {
   const nativeEstimateUsd =
     decimalToNumber(ethereum.nativeETH) * (prices.ETH || 0) +
     decimalToNumber(solana.nativeSOL) * (prices.SOL || 0);
+  const nativeFallbackSignal =
+    decimalToNumber(ethereum.nativeETH) >= ETH_ATTENTION_THRESHOLD ||
+    decimalToNumber(solana.nativeSOL) >= SOL_ATTENTION_THRESHOLD;
   const estimatedUsd = stablecoinUsd + nativeEstimateUsd;
   return {
     stablecoinUsd,
     nativeEstimateUsd,
     estimatedUsd,
-    potentialPayment: stablecoinUsd >= ATTENTION_THRESHOLD_USD || estimatedUsd >= ATTENTION_THRESHOLD_USD,
+    nativeFallbackSignal,
+    nativeFallbackThresholds: {
+      ETH: ETH_ATTENTION_THRESHOLD,
+      SOL: SOL_ATTENTION_THRESHOLD,
+    },
+    potentialPayment:
+      stablecoinUsd >= ATTENTION_THRESHOLD_USD ||
+      estimatedUsd >= ATTENTION_THRESHOLD_USD ||
+      nativeFallbackSignal,
     targetUsd: TARGET_USD,
     attentionThresholdUsd: ATTENTION_THRESHOLD_USD,
   };
@@ -192,6 +205,7 @@ function renderSummary(result) {
     `Stablecoin total: approximately $${result.paymentSignal.stablecoinUsd.toFixed(2)}`,
     `Native estimate: approximately $${result.paymentSignal.nativeEstimateUsd.toFixed(2)}`,
     `Estimated total balance: approximately $${result.paymentSignal.estimatedUsd.toFixed(2)}`,
+    `Native fallback thresholds: ${result.paymentSignal.nativeFallbackThresholds.ETH} ETH or ${result.paymentSignal.nativeFallbackThresholds.SOL} SOL`,
     "",
     "## Accounting Rule",
     "",

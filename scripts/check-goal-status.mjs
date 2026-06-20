@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+
 const DEFAULT_REPOSITORY = "jackjin1997/agent-audit-sprint";
 const DEFAULT_ETH_ADDRESS = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
 const DEFAULT_SOL_ADDRESS = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
@@ -12,7 +14,7 @@ const ATTENTION_FAIL = process.env.GOAL_ATTENTION_FAIL === "true";
 const ETH_ADDRESS = process.env.GOAL_ETH_ADDRESS || DEFAULT_ETH_ADDRESS;
 const SOL_ADDRESS = process.env.GOAL_SOL_ADDRESS || DEFAULT_SOL_ADDRESS;
 const REPOSITORY = process.env.GITHUB_REPOSITORY || DEFAULT_REPOSITORY;
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || getLocalGithubToken();
 
 const ERC20_TOKENS = [
   ["USDC", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
@@ -40,6 +42,18 @@ function bigintToDecimal(value, decimals) {
 function decimalToNumber(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function getLocalGithubToken() {
+  try {
+    return execFileSync("gh", ["auth", "token"], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+      timeout: 5000,
+    }).trim();
+  } catch {
+    return "";
+  }
 }
 
 async function fetchJson(url, options = {}) {

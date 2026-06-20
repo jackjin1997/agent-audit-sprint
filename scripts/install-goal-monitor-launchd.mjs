@@ -47,6 +47,8 @@ const plist = `<?xml version="1.0" encoding="UTF-8"?>
   <dict>
     <key>PATH</key>
     <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>${escapePlist(home)}</string>
     <key>GOAL_LOOP_INTERVAL_SECONDS</key>
     <string>900</string>
   </dict>

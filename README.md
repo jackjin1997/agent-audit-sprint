@@ -137,7 +137,7 @@ Install or refresh the local 15-minute macOS launchd loop with:
 node scripts/install-goal-monitor-launchd.mjs
 ```
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. Revenue is still counted only after payment is verified against an accepted written scope.
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop runs every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
 
 ## npm Publishing
 

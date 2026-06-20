@@ -31,6 +31,7 @@ const command = [
   "printf '%s\\n' \"===== goal monitor run started=${started} finished=${finished} status=${rc} =====\" >> logs/goal-monitor-history.log",
   "cat private-notes/monitor/latest-goal-status.txt >> logs/goal-monitor-history.log",
   "printf '\\n' >> logs/goal-monitor-history.log",
+  "if [ \"${rc}\" != \"0\" ]; then /usr/bin/osascript -e 'display notification \"Open issue or payment signal detected. Check latest-goal-status.txt.\" with title \"Agent Audit Goal Monitor\"' || true; fi",
   "exit ${rc}",
 ].join("; ");
 

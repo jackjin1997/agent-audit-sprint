@@ -3,3 +3,4 @@ node_modules/
 *.log
 tmp-*.png
 private-notes/
+standalone-action/

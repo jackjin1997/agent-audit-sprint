@@ -96,6 +96,7 @@ const requiredFiles = [
   "scripts/comment-payment-proof.mjs",
   "scripts/check-goal-status.mjs",
   "scripts/install-goal-monitor-launchd.mjs",
+  "scripts/run-goal-monitor-loop.mjs",
   "docs/mcp-security-audit-service.md",
   "docs/ai-agent-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",

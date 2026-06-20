@@ -35,7 +35,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
-- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` - scheduled and local goal monitors for open intake issues and ETH/SOL stablecoin/native payment signals
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues and ETH/SOL stablecoin/native payment signals
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
@@ -137,7 +137,15 @@ Install or refresh the local 15-minute macOS launchd loop with:
 node scripts/install-goal-monitor-launchd.mjs
 ```
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop runs every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
+Start a visible always-running background loop with:
+
+```bash
+nohup node scripts/run-goal-monitor-loop.mjs > logs/goal-monitor-loop.nohup.log 2>&1 &
+```
+
+The visible loop writes `private-notes/monitor/goal-monitor-loop.pid` and `private-notes/monitor/goal-monitor-loop-heartbeat.json`, so it can be inspected with `ps -p "$(cat private-notes/monitor/goal-monitor-loop.pid)" -o pid,ppid,etime,command`.
+
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop runs every 15 minutes as a fallback. The visible loop stays resident, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
 
 ## npm Publishing
 

@@ -91,6 +91,7 @@ Checked on 2026-06-20:
 | Automated code-scanning audit response | `.github/workflows/respond-code-scanning-audit.yml`, `scripts/comment-code-scanning-audit.mjs` | Added for SARIF/GitHub Security alert audit requests |
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |
 | Automated goal status monitor | `.github/workflows/goal-status-monitor.yml`, `scripts/check-goal-status.mjs`, `scripts/install-goal-monitor-launchd.mjs`, `scripts/run-goal-monitor-loop.mjs` | Added 4-hour GitHub check and visible resident 15-minute macOS launchd loop for open intake issues and ETH/SOL stablecoin/native payment signals; local loop logs snapshots and shows macOS notifications on attention signals; failures are alerts, not revenue recognition |
+| Goal monitor robustness | `scripts/check-goal-status.mjs`, local resident loop | Added authenticated local GitHub token lookup, transient network retries, source-level degraded health reporting, and native ETH/SOL fallback thresholds so API/DNS failures do not masquerade as customer payment signals |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
 | Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |
 | Automated code-scanning audit smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/6 | Passed and closed; non-customer test |

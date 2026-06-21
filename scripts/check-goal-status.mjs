@@ -57,34 +57,53 @@ function getLocalGithubToken() {
 }
 
 async function fetchJson(url, options = {}) {
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      "accept": "application/vnd.github+json",
-      "user-agent": "agent-audit-sprint-goal-monitor",
-      ...(options.headers || {}),
-    },
+  return retry(async () => {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        "accept": "application/vnd.github+json",
+        "user-agent": "agent-audit-sprint-goal-monitor",
+        ...(options.headers || {}),
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`${url} returned ${response.status} ${response.statusText}: ${await response.text()}`);
+    }
+    return response.json();
   });
-  if (!response.ok) {
-    throw new Error(`${url} returned ${response.status} ${response.statusText}: ${await response.text()}`);
-  }
-  return response.json();
 }
 
 async function rpc(url, method, params) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+  return retry(async () => {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    });
+    if (!response.ok) {
+      throw new Error(`${method} returned ${response.status} ${response.statusText}: ${await response.text()}`);
+    }
+    const result = await response.json();
+    if (result.error) {
+      throw new Error(`${method} RPC error: ${JSON.stringify(result.error)}`);
+    }
+    return result.result;
   });
-  if (!response.ok) {
-    throw new Error(`${method} returned ${response.status} ${response.statusText}: ${await response.text()}`);
+}
+
+async function retry(operation, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) {
+        await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+      }
+    }
   }
-  const result = await response.json();
-  if (result.error) {
-    throw new Error(`${method} RPC error: ${JSON.stringify(result.error)}`);
-  }
-  return result.result;
+  throw lastError;
 }
 
 async function getOpenIssues() {
@@ -198,12 +217,16 @@ function renderSummary(result) {
   const priceLine = result.prices.error
     ? `Price lookup failed: ${result.prices.error}`
     : `ETH $${result.prices.ETH ?? "unknown"}, SOL $${result.prices.SOL ?? "unknown"}`;
+  const errorLines = result.checkErrors.length
+    ? result.checkErrors.map((error) => `- ${error.source}: ${error.error}`).join("\n")
+    : "None";
   return [
     "# Goal Status Monitor",
     "",
     `Checked at: ${result.checkedAt}`,
     `Target: verified paid revenue of USD $${result.paymentSignal.targetUsd}`,
     `Result: ${result.attentionRequired ? "attention required" : "no verified payment or open intake issue detected"}`,
+    `Health: ${result.checkErrors.length ? "degraded; retrying next interval" : "ok"}`,
     "",
     "## Open Issues",
     "",
@@ -224,15 +247,28 @@ function renderSummary(result) {
     "## Accounting Rule",
     "",
     "This monitor is an alerting aid only. Count revenue only after a payment is verified against an accepted written scope.",
+    "",
+    "## Check Errors",
+    "",
+    errorLines,
   ].join("\n");
 }
 
-const [openIssues, prices, ethereum, solana] = await Promise.all([
+const [openIssuesResult, pricesResult, ethereumResult, solanaResult] = await Promise.allSettled([
   getOpenIssues(),
   getPrices(),
   getEthereumBalances(),
   getSolanaBalances(),
 ]);
+const checkErrors = [];
+const openIssues = unwrap(openIssuesResult, [], "githubIssues");
+const prices = unwrap(pricesResult, { ETH: null, SOL: null, error: "price lookup unavailable" }, "prices");
+const ethereum = unwrap(
+  ethereumResult,
+  { address: ETH_ADDRESS, nativeETH: "0", erc20: { USDC: "0", USDT: "0", DAI: "0" } },
+  "ethereumBalances"
+);
+const solana = unwrap(solanaResult, { address: SOL_ADDRESS, nativeSOL: "0", splUSDC: "0" }, "solanaBalances");
 const paymentSignal = computePaymentSignal(ethereum, solana, prices);
 const attentionRequired = openIssues.length > 0 || paymentSignal.potentialPayment;
 const result = {
@@ -244,6 +280,7 @@ const result = {
   solana,
   paymentSignal,
   attentionRequired,
+  checkErrors,
 };
 const summary = renderSummary(result);
 
@@ -258,4 +295,12 @@ if (process.env.GITHUB_STEP_SUMMARY) {
 if (ATTENTION_FAIL && attentionRequired) {
   console.error("Attention required: open issue or potential payment detected.");
   process.exit(2);
+}
+
+function unwrap(result, fallback, source) {
+  if (result.status === "fulfilled") {
+    return result.value;
+  }
+  checkErrors.push({ source, error: result.reason?.message || String(result.reason) });
+  return fallback;
 }

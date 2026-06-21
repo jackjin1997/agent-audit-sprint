@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Self-owned dogfood AI agent audit report for jackjin1997/sentinel.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html">
+    <meta property="og:title" content="Dogfood Audit: jackjin1997/sentinel">
+    <meta property="og:description" content="No-execution dogfood audit sample for an autonomous incident-response AI agent.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Dogfood Audit: jackjin1997/sentinel</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      body { background: #fbfaf7; }
+      .report-shell { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 104px 0 80px; }
+      .report-hero { padding: 34px 0 30px; border-bottom: 1px solid var(--line); }
+      .report-hero h1 { max-width: 900px; color: var(--ink); font-size: clamp(38px, 6vw, 66px); }
+      .report-hero p { max-width: 800px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+      .report-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+      .report-meta div, .finding-block, .positive-list, .code-block { border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .report-meta div { padding: 16px; }
+      .report-meta span { display: block; color: var(--muted); font-size: 12px; font-weight: 780; text-transform: uppercase; }
+      .report-meta strong { display: block; margin-top: 8px; font-size: 15px; overflow-wrap: anywhere; }
+      .report-section { padding: 42px 0 0; }
+      .report-section h2 { margin-bottom: 16px; font-size: 32px; }
+      .report-section p, .report-section li, .report-section td, .report-section th { color: #4d5664; font-size: 16px; line-height: 1.62; }
+      .scope-list, .priority-list { padding-left: 22px; }
+      .boundary-table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .boundary-table th, .boundary-table td { padding: 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .boundary-table tr:last-child td { border-bottom: 0; }
+      .finding-block { padding: 20px; margin-top: 16px; }
+      .finding-title { display: flex; gap: 12px; align-items: center; margin: 0 0 10px; font-size: 20px; }
+      .severity { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; height: 28px; border-radius: 999px; color: #fff; font-size: 12px; font-weight: 820; }
+      .severity.high { background: var(--red); }
+      .severity.med { background: var(--amber); }
+      .severity.low { background: var(--teal); }
+      .positive-list { display: grid; gap: 0; padding: 0; list-style: none; }
+      .positive-list li { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+      .positive-list li:last-child { border-bottom: 0; }
+      .code-block { padding: 16px; overflow-x: auto; }
+      .report-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .report-actions .button.secondary { color: var(--ink); background: transparent; border-color: var(--line); }
+      @media (max-width: 880px) {
+        .report-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 760px) {
+        .report-meta { grid-template-columns: 1fr; }
+        .boundary-table { display: block; overflow-x: auto; }
+        .finding-title { align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="../ai-agent-security-audit-service.html">AI Audit</a>
+        <a href="../mcp-security-audit-service.html">MCP Service</a>
+        <a href="../scan.html">Scanner</a>
+        <a href="../samples.html">Samples</a>
+        <a href="../terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-hero">
+        <p class="eyebrow">Self-owned dogfood audit report</p>
+        <h1>jackjin1997/sentinel</h1>
+        <p>
+          No-execution dogfood sample for a public autonomous incident-response agent. The review is based on commit <code>2ebf5a5363db4ee95483ef3ecbae8e0842550131</code>. It is not a commissioned audit, private vulnerability disclosure, or certification.
+        </p>
+        <div class="report-meta">
+          <div><span>Target</span><strong>Sentinel AI incident agent</strong></div>
+          <div><span>Validation</span><strong>Static source review + scanner</strong></div>
+          <div><span>Scanner Score</span><strong>54/100 heuristic score</strong></div>
+          <div><span>Execution</span><strong>No target code run</strong></div>
+        </div>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Start AI agent audit</a>
+          <a class="button secondary" href="../scan.html?repo=https://github.com/jackjin1997/sentinel">Rerun public scan</a>
+          <a class="button secondary" href="sentinel-agent-dogfood-audit.md">Markdown report</a>
+        </div>
+      </section>
+
+      <section class="report-section">
+        <h2>Scope</h2>
+        <ul class="scope-list">
+          <li>Next.js <code>POST /api/agent</code> request and SSE streaming boundary</li>
+          <li>Multi-vendor LLM orchestration in <code>lib/agent.ts</code></li>
+          <li>Agent tool registration and tool output flow</li>
+          <li>Bright Data backed external web tools</li>
+          <li>Model and Bright Data credential configuration</li>
+          <li>Vultr and Cloudflare demo deployment scripts</li>
+          <li>Test, lint, typecheck, and CI readiness</li>
+        </ul>
+        <p>Out of scope: live Sentinel deployments, model provider accounts, Bright Data account behavior, private telemetry, Vultr host state, Cloudflare account state, and unpublished branches.</p>
+      </section>
+
+      <section class="report-section">
+        <h2>Executive Summary</h2>
+        <p>
+          <code>sentinel</code> is a useful dogfood target because it is a real autonomous incident-response agent: a browser UI starts a server-side run, multiple model vendors participate in four phases, tools can query internal mock telemetry and external web data, and results stream back to the operator over SSE.
+        </p>
+        <p>
+          The repo already includes several good defensive choices for a demo-grade agent: request bodies are capped, client disconnects abort provider calls, slow consumers are cut off, tool schemas restrict common inputs, phase output is bounded, and the vendor-status tool uses a fixed vendor allowlist.
+        </p>
+        <p>
+          The main production risk is the missing operator boundary around a cost-bearing, credential-backed agent endpoint. Before Sentinel is reused outside a controlled demo, it needs authentication, rate/concurrency limits, output redaction, deployment hardening, and CI gates that prove those controls do not regress.
+        </p>
+      </section>
+
+      <section class="report-section">
+        <h2>Boundary Map</h2>
+        <table class="boundary-table">
+          <thead>
+            <tr><th>Area</th><th>Evidence</th><th>Risk Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Browser entry</td><td><code>app/page.tsx:119-124</code></td><td>The UI posts <code>{ incidentId }</code> directly to <code>/api/agent</code> and reads streamed events.</td></tr>
+            <tr><td>Agent API</td><td><code>app/api/agent/route.ts:19-73</code></td><td>The route validates body size and JSON, then starts <code>runIncidentAgent</code>. No auth, rate limit, origin policy, or concurrency cap is visible.</td></tr>
+            <tr><td>SSE output</td><td><code>app/api/agent/route.ts:52-56</code>, <code>lib/agent.ts:8-15</code></td><td>Tool calls, tool results, text deltas, errors, and final report objects are serialized to the client.</td></tr>
+            <tr><td>Model credentials</td><td><code>lib/agent.ts:31-55</code>, <code>.env.local.example</code></td><td>Qwen, Anthropic, Google, and Bright Data credentials are environment backed.</td></tr>
+            <tr><td>External web tools</td><td><code>lib/tools/brightdata.ts:83-200</code></td><td>Vendor status is allowlisted; public postmortem search and GitHub commit lookups can still spend quota and return untrusted web content.</td></tr>
+            <tr><td>Deployment</td><td><code>scripts/deploy-vultr.sh:47-88</code></td><td>The demo script copies <code>.env.local</code>, creates a root-managed systemd service, and exposes HTTP <code>:80</code>.</td></tr>
+            <tr><td>Validation gates</td><td><code>package.json</code></td><td><code>dev</code>, <code>build</code>, and <code>start</code> exist, but no <code>test</code>, <code>lint</code>, <code>typecheck</code>, or CI workflow was visible.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="report-section">
+        <h2>Findings</h2>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity high">High</span>Public agent run endpoint needs auth, quota, and concurrency boundaries</h3>
+          <p>Evidence: <code>app/page.tsx:119-124</code> starts a run with a plain POST to <code>/api/agent</code>. <code>app/api/agent/route.ts:19-73</code> accepts any request with a small JSON body and invokes <code>runIncidentAgent</code>, which can call multiple LLM providers and tools across phases.</p>
+          <p>Recommended fix: add an auth gate before <code>runIncidentAgent</code>, then enforce per-IP or per-token rate limits, a global concurrency cap, and a per-run budget ceiling.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>Tool results and errors need centralized redaction before streaming</h3>
+          <p>Evidence: <code>AgentEvent</code> includes <code>tool-result</code> and <code>error</code> payloads with unknown content, and the API route streams <code>JSON.stringify(event)</code> directly to the client.</p>
+          <p>Recommended fix: add a single <code>sanitizeAgentEvent(event)</code> layer before SSE serialization and test redaction for tokens, cookies, signed URLs, query strings, session IDs, and provider error text.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>External web tools need a stricter tool policy for production telemetry</h3>
+          <p>Evidence: <code>fetchVendorStatus</code> uses a vendor enum, while <code>searchPublicPostmortems</code> accepts an LLM-provided query and <code>fetchGithubRecentCommits</code> accepts an LLM-provided public repo name.</p>
+          <p>Recommended fix: mark each tool as internal, external, read-only, write-capable, cost-bearing, and prompt-injection exposed. Include source URL, fetch time, fallback status, and freshness in external tool results.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>Demo deploy scripts need production hardening notes</h3>
+          <p>Evidence: <code>scripts/deploy-vultr.sh:47-88</code> syncs code to <code>/opt/sentinel</code>, copies <code>.env.local</code>, creates a systemd service, and exposes HTTP <code>:80</code>. <code>scripts/add-cf-tunnel.sh</code> can publish a trycloudflare URL.</p>
+          <p>Recommended fix: add demo-only warnings, run as a non-root service user, use a secret manager or locked-down env file, require HTTPS/auth proxy for public deployments, and document log retention.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span>Release gates are too thin for a security-sensitive agent</h3>
+          <p>Evidence: <code>package.json</code> exposes only <code>dev</code>, <code>build</code>, and <code>start</code>; no <code>test</code>, <code>lint</code>, or <code>typecheck</code> scripts were visible.</p>
+          <p>Recommended fix: add CI for install, typecheck, lint, unit tests, build, and scanner output generation.</p>
+        </article>
+      </section>
+
+      <section class="report-section">
+        <h2>Positive Signals</h2>
+        <ul class="positive-list">
+          <li><code>POST /api/agent</code> caps honest and post-read request bodies at 1 KB.</li>
+          <li>Client disconnect aborts the agent run so the server stops spending provider tokens.</li>
+          <li>The SSE route tracks slow consumers and aborts after repeated backpressure misses.</li>
+          <li><code>runIncidentAgent</code> rejects unknown incident IDs before running the model chain.</li>
+          <li>Tool schemas use Zod enums, minimums, maximums, and runtime validation for the GitHub repo shape.</li>
+          <li>The external vendor-status tool uses a fixed vendor allowlist.</li>
+          <li>Phase outputs are locally capped and provider output tokens are bounded.</li>
+          <li><code>.env.local.example</code> uses placeholders rather than committed secrets.</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Priority Fix Plan</h2>
+        <ol class="priority-list">
+          <li>Put <code>/api/agent</code> behind auth and add rate, concurrency, and spend controls.</li>
+          <li>Add centralized SSE event redaction with tests for tool results and provider errors.</li>
+          <li>Add a tool policy table for internal/external, cost-bearing, prompt-exposed, and fallback-capable tools.</li>
+          <li>Harden deploy docs and scripts for non-root service execution, HTTPS, firewall, auth proxy, and secret handling.</li>
+          <li>Add CI with typecheck, lint, unit tests, build, and scanner output generation.</li>
+        </ol>
+      </section>
+
+      <section class="report-section">
+        <h2>Example Validation Commands</h2>
+        <pre class="code-block"><code>node tools/agent-mcp-audit.mjs /path/to/sentinel --json
+node tools/agent-mcp-audit.mjs /path/to/sentinel --sarif &gt; agent-mcp-audit.sarif
+bun run typecheck
+bun run lint
+bun test
+bun run build</code></pre>
+      </section>
+
+      <section class="report-section">
+        <h2>What the Paid Sprint Adds</h2>
+        <p>
+          The paid sprint would go deeper than this public dogfood sample: implementation-ready patches for auth and rate limiting, sanitizer tests, deployment-mode threat table, CI workflow, agent tool policy, and a concise launch handoff for the repo owner.
+        </p>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Open AI agent intake</a>
+          <a class="button secondary" href="../quote.html">View fixed quote</a>
+          <a class="button secondary" href="../terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

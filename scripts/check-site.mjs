@@ -8,6 +8,7 @@ const index = `file://${resolve(root, "index.html")}`;
 const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
 const browserbaseReport = `file://${resolve(root, "reports/browserbase-mcp-sample-audit.html")}`;
+const sentinelDogfoodReport = `file://${resolve(root, "reports/sentinel-agent-dogfood-audit.html")}`;
 const playwrightScanReport = `file://${resolve(root, "reports/playwright-mcp-security-scan.html")}`;
 const chromeDevtoolsScanReport = `file://${resolve(root, "reports/chrome-devtools-mcp-security-scan.html")}`;
 const githubMcpScanReport = `file://${resolve(root, "reports/github-mcp-server-security-scan.html")}`;
@@ -77,6 +78,8 @@ const requiredFiles = [
   "reports/firecrawl-mcp-sample-audit.md",
   "reports/browserbase-mcp-sample-audit.html",
   "reports/browserbase-mcp-sample-audit.md",
+  "reports/sentinel-agent-dogfood-audit.html",
+  "reports/sentinel-agent-dogfood-audit.md",
   "reports/playwright-mcp-security-scan.html",
   "reports/chrome-devtools-mcp-security-scan.html",
   "reports/github-mcp-server-security-scan.html",
@@ -479,6 +482,28 @@ try {
     const browserbaseReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (browserbaseReportOverflow) {
       throw new Error(`Browserbase report horizontal overflow detected in ${viewport.name}`);
+    }
+
+    await page.goto(sentinelDogfoodReport, { waitUntil: "networkidle" });
+    const sentinelReportTitle = await page.locator("h1").innerText();
+    if (!sentinelReportTitle.includes("jackjin1997/sentinel")) {
+      throw new Error(`Unexpected Sentinel dogfood report h1 in ${viewport.name}: ${sentinelReportTitle}`);
+    }
+    const sentinelReportText = await page.locator("body").innerText();
+    if (
+      !sentinelReportText.includes("No-execution dogfood sample") ||
+      !sentinelReportText.includes("54/100 heuristic score") ||
+      !sentinelReportText.includes("Public agent run endpoint needs auth, quota, and concurrency boundaries")
+    ) {
+      throw new Error(`Sentinel dogfood report missing guardrail, score, or finding in ${viewport.name}`);
+    }
+    const sentinelReportCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!sentinelReportCta?.includes("ai-agent-audit.yml")) {
+      throw new Error(`Sentinel dogfood report CTA missing AI agent intake URL in ${viewport.name}`);
+    }
+    const sentinelReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (sentinelReportOverflow) {
+      throw new Error(`Sentinel dogfood report horizontal overflow detected in ${viewport.name}`);
     }
 
     await page.goto(aiAgentService, { waitUntil: "networkidle" });
@@ -1021,7 +1046,8 @@ try {
     if (
       !samplesText.includes("douban-mcp") ||
       !samplesText.includes("firecrawl-mcp-server") ||
-      !samplesText.includes("browserbase/mcp-server-browserbase")
+      !samplesText.includes("browserbase/mcp-server-browserbase") ||
+      !samplesText.includes("jackjin1997/sentinel")
     ) {
       throw new Error(`Samples page missing report names in ${viewport.name}`);
     }

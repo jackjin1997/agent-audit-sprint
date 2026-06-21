@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-20.
+Last updated: 2026-06-21.
 
 ## Paid
 
@@ -12,7 +12,7 @@ Last updated: 2026-06-20.
 
 ## Chain Check
 
-Checked on 2026-06-20:
+Checked on 2026-06-21:
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
@@ -62,6 +62,7 @@ Checked on 2026-06-20:
 | Sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/douban-mcp-sample-audit.html | Published |
 | Firecrawl MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html | Published |
 | Browserbase MCP sample audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html | Added public browser automation MCP sample; install, build, and tests passed locally |
+| Sentinel AI agent dogfood audit report | https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html | Added self-owned no-execution dogfood sample for a Next.js/SSE autonomous incident-response agent; scanner score 54/100 and manual review identified auth, quota, redaction, external tool policy, deploy hardening, and CI gates |
 | Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point and LLM/agent service summary |

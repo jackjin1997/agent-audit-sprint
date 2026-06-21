@@ -40,7 +40,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
 - GitHub Discussion #1 - booking FAQ and pre-intake questions
-- `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` - sample reports based on real public repos
+- `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
 - `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, and payment proof forms
@@ -66,6 +66,7 @@ Browser:
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - AI Agent Radar scan briefs: https://jackjin1997.github.io/agent-audit-sprint/reports/browser-use-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openhands-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/smolagents-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openai-agents-python-security-scan.html
+- Sentinel dogfood AI agent audit sample: https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html
 - AI agent audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
 - MCP server scan entry point: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html

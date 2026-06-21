@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Real public sample audit reports for the $1,000 Agent/MCP Audit Sprint, covering douban-mcp, firecrawl-mcp-server, Browserbase MCP, and Sentinel AI agent dogfood.">
+    <meta name="description" content="Real public sample audit reports for the $1,000 Agent/MCP Audit Sprint, covering douban-mcp, firecrawl-mcp-server, Browserbase MCP, Sentinel AI agent dogfood, and AgentGap config dogfood.">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Zexu Jin">
     <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/samples.html">
@@ -40,7 +40,7 @@
         <p class="eyebrow">Sample evidence</p>
         <h1>Agent/MCP Audit Sample Reports</h1>
         <p>
-          Four public-code samples show the paid sprint format: scoped evidence, boundary map, ranked findings, fix plan, and launch notes. They are independent samples or self-owned dogfood samples, not private vulnerability disclosures.
+          Five public-code samples show the paid sprint format: scoped evidence, boundary map, ranked findings, fix plan, and launch notes. They are independent samples or self-owned dogfood samples, not private vulnerability disclosures.
         </p>
         <div class="service-actions">
           <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit</a>
@@ -52,7 +52,7 @@
 
       <section class="service-band">
         <div class="service-summary">
-          <div><span>Samples</span><strong>4 real public repos</strong></div>
+          <div><span>Samples</span><strong>5 real public repos</strong></div>
           <div><span>Output</span><strong>Boundary map + ranked findings</strong></div>
           <div><span>Automation</span><strong>No-execution intake triage</strong></div>
           <div><span>Paid Sprint</span><strong>USD $1,000 fixed</strong></div>
@@ -136,6 +136,26 @@
           <div><strong>Medium:</strong> Tool results and errors need centralized redaction before streaming.</div>
           <div><strong>Medium:</strong> External web tools need a stricter production tool policy.</div>
           <div><strong>Pass:</strong> Body caps, aborts, backpressure cutoff, Zod schemas, and output caps are already present.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Sample 05</p>
+          <h2>jackjin1997/agentgap</h2>
+          <p>
+            Self-owned agent config and MCP bridge that syncs one bridge.yaml into Claude Code, Cursor, and Codex instruction and MCP config files.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="reports/agentgap-agent-config-dogfood-audit.html">Read HTML report</a>
+            <a class="button secondary dark" href="reports/agentgap-agent-config-dogfood-audit.md">Markdown</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>High:</strong> Default sync writes agent instructions and MCP configs without a preview-first guardrail.</div>
+          <div><strong>Medium:</strong> MCP server definitions need stricter validation before becoming executable agent config.</div>
+          <div><strong>Medium:</strong> Rule names and prompt content need a clearer trust model.</div>
+          <div><strong>Pass:</strong> MCP JSON is written with restrictive permissions and existing server entries are preserved.</div>
         </div>
       </section>
 

@@ -56,6 +56,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - firecrawl sample: https://jackjin1997.github.io/agent-audit-sprint/reports/firecrawl-mcp-sample-audit.html
 - Browserbase sample: https://jackjin1997.github.io/agent-audit-sprint/reports/browserbase-mcp-sample-audit.html
 - Sentinel AI agent dogfood sample: https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html
+- AgentGap agent config/MCP bridge dogfood sample: https://jackjin1997.github.io/agent-audit-sprint/reports/agentgap-agent-config-dogfood-audit.html
 
 ## Radar Detail Briefs
 

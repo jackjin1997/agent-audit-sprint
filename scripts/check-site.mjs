@@ -9,6 +9,7 @@ const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.ht
 const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
 const browserbaseReport = `file://${resolve(root, "reports/browserbase-mcp-sample-audit.html")}`;
 const sentinelDogfoodReport = `file://${resolve(root, "reports/sentinel-agent-dogfood-audit.html")}`;
+const agentgapDogfoodReport = `file://${resolve(root, "reports/agentgap-agent-config-dogfood-audit.html")}`;
 const playwrightScanReport = `file://${resolve(root, "reports/playwright-mcp-security-scan.html")}`;
 const chromeDevtoolsScanReport = `file://${resolve(root, "reports/chrome-devtools-mcp-security-scan.html")}`;
 const githubMcpScanReport = `file://${resolve(root, "reports/github-mcp-server-security-scan.html")}`;
@@ -80,6 +81,8 @@ const requiredFiles = [
   "reports/browserbase-mcp-sample-audit.md",
   "reports/sentinel-agent-dogfood-audit.html",
   "reports/sentinel-agent-dogfood-audit.md",
+  "reports/agentgap-agent-config-dogfood-audit.html",
+  "reports/agentgap-agent-config-dogfood-audit.md",
   "reports/playwright-mcp-security-scan.html",
   "reports/chrome-devtools-mcp-security-scan.html",
   "reports/github-mcp-server-security-scan.html",
@@ -131,6 +134,9 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 }
 if (!llmsText.includes("AI Agent Radar Detail Briefs")) {
   throw new Error("llms.txt is missing the AI Agent Radar detail brief context");
+}
+if (!llmsText.includes("AgentGap agent config/MCP bridge dogfood sample")) {
+  throw new Error("llms.txt is missing the AgentGap dogfood sample link");
 }
 if (!llmsText.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
   throw new Error("llms.txt is missing the standalone Action usage");
@@ -397,7 +403,7 @@ try {
     if (!indexBody.includes("Open the fixed $1,000 quote")) {
       throw new Error(`Index page missing fixed quote link in ${viewport.name}`);
     }
-    if (!indexBody.includes("Compare all three sample reports")) {
+    if (!indexBody.includes("Compare all five sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
     }
     if (!indexBody.includes("browserbase/mcp-server-browserbase")) {
@@ -405,6 +411,9 @@ try {
     }
     if (!indexBody.includes("Open the Browserbase MCP sample report")) {
       throw new Error(`Index page missing Browserbase sample report link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("jackjin1997/agentgap") || !indexBody.includes("Open the AgentGap dogfood report")) {
+      throw new Error(`Index page missing AgentGap dogfood sample link in ${viewport.name}`);
     }
     const heroImageLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!heroImageLoaded) throw new Error(`Hero image failed to load in ${viewport.name}`);
@@ -504,6 +513,28 @@ try {
     const sentinelReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (sentinelReportOverflow) {
       throw new Error(`Sentinel dogfood report horizontal overflow detected in ${viewport.name}`);
+    }
+
+    await page.goto(agentgapDogfoodReport, { waitUntil: "networkidle" });
+    const agentgapReportTitle = await page.locator("h1").innerText();
+    if (!agentgapReportTitle.includes("jackjin1997/agentgap")) {
+      throw new Error(`Unexpected AgentGap dogfood report h1 in ${viewport.name}: ${agentgapReportTitle}`);
+    }
+    const agentgapReportText = await page.locator("body").innerText();
+    if (
+      !agentgapReportText.includes("No-execution dogfood sample") ||
+      !agentgapReportText.includes("42/100 heuristic score") ||
+      !agentgapReportText.includes("Default sync writes agent instructions and MCP configs without a preview-first guardrail")
+    ) {
+      throw new Error(`AgentGap dogfood report missing guardrail, score, or finding in ${viewport.name}`);
+    }
+    const agentgapReportCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!agentgapReportCta?.includes("ai-agent-audit.yml")) {
+      throw new Error(`AgentGap dogfood report CTA missing AI agent intake URL in ${viewport.name}`);
+    }
+    const agentgapReportOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (agentgapReportOverflow) {
+      throw new Error(`AgentGap dogfood report horizontal overflow detected in ${viewport.name}`);
     }
 
     await page.goto(aiAgentService, { waitUntil: "networkidle" });
@@ -1047,9 +1078,13 @@ try {
       !samplesText.includes("douban-mcp") ||
       !samplesText.includes("firecrawl-mcp-server") ||
       !samplesText.includes("browserbase/mcp-server-browserbase") ||
-      !samplesText.includes("jackjin1997/sentinel")
+      !samplesText.includes("jackjin1997/sentinel") ||
+      !samplesText.includes("jackjin1997/agentgap")
     ) {
       throw new Error(`Samples page missing report names in ${viewport.name}`);
+    }
+    if (!samplesText.includes("5 real public repos")) {
+      throw new Error(`Samples page missing updated sample count in ${viewport.name}`);
     }
     if (!samplesText.includes("automated triage clones the public repo")) {
       throw new Error(`Samples page missing automated triage flow in ${viewport.name}`);

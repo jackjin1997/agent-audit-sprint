@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Self-owned dogfood audit report for jackjin1997/agentgap, an agent config and MCP bridge for Claude Code, Cursor, and Codex.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/reports/agentgap-agent-config-dogfood-audit.html">
+    <meta property="og:title" content="Dogfood Audit: jackjin1997/agentgap">
+    <meta property="og:description" content="No-execution dogfood audit sample for an agent config and MCP bridge.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/reports/agentgap-agent-config-dogfood-audit.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Dogfood Audit: jackjin1997/agentgap</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      body { background: #fbfaf7; }
+      .report-shell { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 104px 0 80px; }
+      .report-hero { padding: 34px 0 30px; border-bottom: 1px solid var(--line); }
+      .report-hero h1 { max-width: 900px; color: var(--ink); font-size: clamp(38px, 6vw, 66px); }
+      .report-hero p { max-width: 800px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+      .report-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+      .report-meta div, .finding-block, .positive-list, .code-block { border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .report-meta div { padding: 16px; }
+      .report-meta span { display: block; color: var(--muted); font-size: 12px; font-weight: 780; text-transform: uppercase; }
+      .report-meta strong { display: block; margin-top: 8px; font-size: 15px; overflow-wrap: anywhere; }
+      .report-section { padding: 42px 0 0; }
+      .report-section h2 { margin-bottom: 16px; font-size: 32px; }
+      .report-section p, .report-section li, .report-section td, .report-section th { color: #4d5664; font-size: 16px; line-height: 1.62; }
+      .scope-list, .priority-list { padding-left: 22px; }
+      .boundary-table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+      .boundary-table th, .boundary-table td { padding: 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .boundary-table tr:last-child td { border-bottom: 0; }
+      .finding-block { padding: 20px; margin-top: 16px; }
+      .finding-title { display: flex; gap: 12px; align-items: center; margin: 0 0 10px; font-size: 20px; }
+      .severity { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; height: 28px; border-radius: 999px; color: #fff; font-size: 12px; font-weight: 820; }
+      .severity.high { background: var(--red); }
+      .severity.med { background: var(--amber); }
+      .severity.low { background: var(--teal); }
+      .positive-list { display: grid; gap: 0; padding: 0; list-style: none; }
+      .positive-list li { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+      .positive-list li:last-child { border-bottom: 0; }
+      .code-block { padding: 16px; overflow-x: auto; }
+      .report-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .report-actions .button.secondary { color: var(--ink); background: transparent; border-color: var(--line); }
+      @media (max-width: 880px) {
+        .report-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 760px) {
+        .report-meta { grid-template-columns: 1fr; }
+        .boundary-table { display: block; overflow-x: auto; }
+        .finding-title { align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="../ai-agent-security-audit-service.html">AI Audit</a>
+        <a href="../mcp-security-audit-service.html">MCP Service</a>
+        <a href="../scan.html">Scanner</a>
+        <a href="../samples.html">Samples</a>
+        <a href="../terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-hero">
+        <p class="eyebrow">Self-owned dogfood audit report</p>
+        <h1>jackjin1997/agentgap</h1>
+        <p>
+          No-execution dogfood sample for an agent config and MCP bridge. The review is based on commit <code>ebaf3dfb07ab90b50a2879f3ce06bb37aeac2f65</code>. It is not a commissioned audit, private vulnerability disclosure, or certification.
+        </p>
+        <div class="report-meta">
+          <div><span>Target</span><strong>Agent config and MCP bridge</strong></div>
+          <div><span>Validation</span><strong>Static source review + scanner</strong></div>
+          <div><span>Scanner Score</span><strong>42/100 heuristic score</strong></div>
+          <div><span>Execution</span><strong>No target code run</strong></div>
+        </div>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Start AI agent audit</a>
+          <a class="button secondary" href="../scan.html?repo=https://github.com/jackjin1997/agentgap">Rerun public scan</a>
+          <a class="button secondary" href="agentgap-agent-config-dogfood-audit.md">Markdown report</a>
+        </div>
+      </section>
+
+      <section class="report-section">
+        <h2>Scope</h2>
+        <ul class="scope-list">
+          <li><code>bridge.yaml</code> schema and validation model</li>
+          <li><code>agentgap sync</code>, <code>agentgap diff</code>, and <code>agentgap init</code> command behavior</li>
+          <li>Claude Code, Codex, and Cursor adapter write paths</li>
+          <li>MCP JSON merge and permission handling</li>
+          <li>Example MCP server configuration files</li>
+          <li>Test and CI readiness for a config-writing agent tool</li>
+        </ul>
+        <p>Out of scope: private agent configurations, real user tokens, running configured MCP servers, executing <code>agentgap sync</code> against a live workspace, and unpublished branches.</p>
+      </section>
+
+      <section class="report-section">
+        <h2>Executive Summary</h2>
+        <p>
+          <code>agentgap</code> is a good dogfood target because it turns one <code>bridge.yaml</code> into the files that coding agents read as instructions and MCP server configuration. That is useful tooling, but it means a bad or unreviewed config can change how multiple agents behave and which tools they can launch.
+        </p>
+        <p>
+          The repo is small and easier to reason about than a full agent product. The main risk is configuration supply-chain drift: syncing a project-local file can rewrite <code>CLAUDE.md</code>, <code>AGENTS.md</code>, Cursor rule files, and MCP server maps in one command.
+        </p>
+        <p>
+          Before positioning this as a reusable agent config bridge, it should make the trust boundary explicit: preview first, require an explicit apply path for writes, validate MCP transports and command shapes, normalize rule names, and add regression tests around file output and merge behavior.
+        </p>
+      </section>
+
+      <section class="report-section">
+        <h2>Boundary Map</h2>
+        <table class="boundary-table">
+          <thead>
+            <tr><th>Area</th><th>Evidence</th><th>Risk Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Config source</td><td><code>internal/config/config.go:62-99</code>, <code>bridge.yaml:6-60</code></td><td><code>bridge.yaml</code> controls agent rules, MCP server command/args/env/url fields, and target agents.</td></tr>
+            <tr><td>Sync command</td><td><code>cmd/root.go:125-148</code></td><td><code>agentgap sync</code> calls <code>SyncAll(false)</code>, so the default sync path writes files.</td></tr>
+            <tr><td>Agent instruction writes</td><td><code>claude.go:31-43</code>, <code>codex.go:30-42</code>, <code>cursor.go:30-53</code></td><td>Rule content becomes future Claude, Codex, and Cursor instruction surface.</td></tr>
+            <tr><td>MCP config writes</td><td><code>claude.go:46-69</code>, <code>codex.go:45-68</code>, <code>cursor.go:56-79</code></td><td>The tool merges and writes project MCP JSON for three agent clients.</td></tr>
+            <tr><td>MCP merge behavior</td><td><code>internal/mcpio/mcpio.go:41-69</code></td><td>Existing servers are preserved, but same-name servers from <code>bridge.yaml</code> replace existing entries. MCP JSON files are written <code>0600</code>.</td></tr>
+            <tr><td>MCP server schema</td><td><code>internal/mcpio/mcpio.go:75-96</code></td><td>Supported transports are mapped into JSON, while invalid or incomplete definitions need stronger rejection.</td></tr>
+            <tr><td>Example MCP config</td><td><code>.cursor/mcp.json:21-27</code></td><td>The sample includes <code>my-custom-tool --port 8080</code>; this needs documented bind/auth assumptions.</td></tr>
+            <tr><td>Validation gates</td><td>public tree</td><td>No tests, CI workflow, or README were visible in the public tarball reviewed.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="report-section">
+        <h2>Findings</h2>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity high">High</span>Default sync writes agent instructions and MCP configs without a preview-first guardrail</h3>
+          <p>Evidence: <code>cmd/root.go:125-148</code> makes <code>agentgap sync</code> call <code>SyncAll(false)</code>. The adapters write <code>CLAUDE.md</code>, <code>AGENTS.md</code>, Cursor rule files, and MCP JSON directly.</p>
+          <p>Recommended fix: make diff/preview the default and require an explicit apply flag for writes. Add backups and print same-name MCP server overwrites before applying changes.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>MCP server definitions need stricter validation before they become executable agent config</h3>
+          <p>Evidence: <code>internal/config/config.go:84-91</code> validates only the MCP server name and defaults an empty transport to <code>stdio</code>. <code>internal/mcpio/mcpio.go:80-92</code> maps supported transports but does not surface errors for unknown or incomplete definitions.</p>
+          <p>Recommended fix: reject unknown transports, require <code>command</code> for <code>stdio</code>, require <code>url</code> for remote transports, warn on unpinned package runners, and redact <code>env</code> values in logs and diffs.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>Rule names and prompt content need a clearer trust model</h3>
+          <p>Evidence: <code>internal/config/config.go:74-82</code> requires non-empty rule names and content, while <code>internal/adapter/cursor/cursor.go:40-48</code> uses the rule name to build <code>.cursor/rules/agentgap-&lt;name&gt;.mdc</code>.</p>
+          <p>Recommended fix: normalize rule names to a conservative slug, reject path separators, detect duplicate normalized names, and add generated-file provenance with source path and content hash.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity med">Medium</span>Example port-based MCP config lacks transport exposure notes</h3>
+          <p>Evidence: <code>.cursor/mcp.json:21-27</code> includes a sample <code>my-custom-tool</code> command with <code>--port 8080</code>. The scanner flagged this as a remote listener signal; manual review did not confirm public network exposure from this alone.</p>
+          <p>Recommended fix: replace the sample with a clearly local-only example, or add docs for bind address, auth proxy, TLS, trusted clients, logging, and write-tool policy.</p>
+        </article>
+        <article class="finding-block">
+          <h3 class="finding-title"><span class="severity low">Low</span>Tests and CI are missing for a security-sensitive config writer</h3>
+          <p>Evidence: no test files or <code>.github/workflows</code> entries were visible in the public tarball. The scanner also reported no obvious tests or CI.</p>
+          <p>Recommended fix: add Go tests for config validation, MCP server conversion, merge precedence, permissions, adapter output, and invalid config fixtures. Add CI for <code>go test ./...</code>, <code>go vet ./...</code>, and scanner output generation.</p>
+        </article>
+      </section>
+
+      <section class="report-section">
+        <h2>Positive Signals</h2>
+        <ul class="positive-list">
+          <li>MCP config writers create agent config directories with restrictive permissions.</li>
+          <li>MCP JSON files are written with <code>0600</code>, which is appropriate for token-bearing config.</li>
+          <li>Existing MCP server entries are preserved unless the new config intentionally uses the same name.</li>
+          <li>The project keeps Claude, Codex, and Cursor translation logic in small adapters.</li>
+          <li>The default <code>bridge.yaml</code> uses environment placeholders rather than committed token values.</li>
+          <li>The repo is small enough for fast manual review and targeted tests.</li>
+        </ul>
+      </section>
+
+      <section class="report-section">
+        <h2>Priority Fix Plan</h2>
+        <ol class="priority-list">
+          <li>Make preview/diff the default path and require an explicit apply flag for writes.</li>
+          <li>Add validation for transport, command, URL, duplicate names, and normalized rule slugs.</li>
+          <li>Add backup and same-name overwrite reporting for MCP config merges.</li>
+          <li>Add tests for adapter output, MCP JSON permissions, merge behavior, and invalid configs.</li>
+          <li>Add CI with <code>go test ./...</code>, <code>go vet ./...</code>, and scanner report generation.</li>
+        </ol>
+      </section>
+
+      <section class="report-section">
+        <h2>Example Validation Commands</h2>
+        <pre class="code-block"><code>node tools/agent-mcp-audit.mjs /path/to/agentgap --json
+node tools/agent-mcp-audit.mjs /path/to/agentgap --sarif &gt; agent-mcp-audit.sarif
+go test ./...
+go vet ./...
+agentgap diff
+agentgap sync --check</code></pre>
+      </section>
+
+      <section class="report-section">
+        <h2>What the Paid Sprint Adds</h2>
+        <p>
+          The paid sprint would go deeper than this public dogfood sample: implementation-ready validation patches, fixture tests, CI workflow, safer sync UX, generated-file provenance, and a short operator guide for using <code>bridge.yaml</code> as trusted agent policy.
+        </p>
+        <div class="report-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml">Open AI agent intake</a>
+          <a class="button secondary" href="../quote.html">View fixed quote</a>
+          <a class="button secondary" href="../terms.html">Review terms</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -700,6 +700,7 @@ try {
       !aiJingleQuoteText.includes("USD $399 sonic launch kit") ||
       !aiJingleQuoteText.includes("Payment timing:") ||
       !aiJingleQuoteText.includes("After written brief acceptance only") ||
+      !aiJingleQuoteText.includes("Email brief") ||
       !aiJingleQuoteText.includes("AI-generated music can have copyright-registration limits") ||
       !aiJingleQuoteText.includes("Invoice template") ||
       !aiJingleQuoteText.includes("Delivery note")
@@ -713,6 +714,16 @@ try {
     const aiJingleQuotePaymentProofLinks = await page.locator("a[href*='template=payment-confirmation.yml']").count();
     if (aiJingleQuotePaymentProofLinks < 1) {
       throw new Error(`AI jingle quote page missing payment proof link in ${viewport.name}`);
+    }
+    const aiJingleQuoteEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      aiJingleQuoteEmailLinks.length < 2 ||
+      !aiJingleQuoteEmailLinks.some((href) => href.includes("AI jingle brief")) ||
+      !aiJingleQuoteEmailLinks.some((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI jingle quote page missing email brief link or payment guardrail in ${viewport.name}`);
     }
     const aiJingleQuoteOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiJingleQuoteOverflow) throw new Error(`AI jingle quote horizontal overflow detected in ${viewport.name}`);

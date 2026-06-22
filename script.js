@@ -150,6 +150,7 @@ function compactTitle(value, fallback = "brand") {
 
 function buildJinglePacket(form) {
   const data = new FormData(form);
+  const orderHeading = form.dataset.orderHeading || "AI jingle order";
   const brand = clean(data.get("brand"), "Brand TBD");
   const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
   const usage = clean(data.get("usage"), "30 second social ad");
@@ -169,7 +170,7 @@ function buildJinglePacket(form) {
   ].join("\n");
 
   return [
-    "## AI jingle order",
+    `## ${orderHeading}`,
     "",
     `Package: ${selectedPackage}`,
     `Brand/show: ${brand}`,
@@ -191,6 +192,7 @@ function buildJinglePacket(form) {
     "## Delivery expectations",
     "",
     "- AI-assisted generation with human selection for pronunciation, hook clarity, length fit, and obvious artifacts.",
+    "- Payment timing: after written brief acceptance only.",
     "- Deliver prompt/lyric sheet, selected cut notes, source tool summary, and commercial-use assumptions.",
     "- Do not imitate named artists, clone living voices, or include third-party lyrics unless rights are provided.",
     "- Payment is requested only after the brief and package are accepted in writing.",
@@ -351,11 +353,13 @@ function updateJingleBrief() {
   const emailLink = jingleForm.querySelector("[data-email-jingle-brief]");
   const packet = buildJinglePacket(jingleForm);
   const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
-  const title = `AI jingle order: ${brand}`;
+  const titlePrefix = jingleForm.dataset.orderTitlePrefix || "AI jingle order";
+  const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
+  const title = `${titlePrefix}: ${brand}`;
   output.value = packet;
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
   if (emailLink) {
-    emailLink.href = mailtoHref(`AI jingle brief: ${brand}`, packet);
+    emailLink.href = mailtoHref(`${emailPrefix}: ${brand}`, packet);
   }
   updateSketchDownload(jingleForm);
 }

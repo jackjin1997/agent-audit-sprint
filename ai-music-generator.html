@@ -59,6 +59,7 @@
       </a>
       <nav class="nav">
         <a href="#choose">Choose</a>
+        <a href="#generator">Generator</a>
         <a href="#packages">Packages</a>
         <a href="#samples">Samples</a>
         <a href="#brief">Brief</a>
@@ -78,6 +79,7 @@
             One storefront for short custom music that can become a paid order today: ad hooks, real estate listing beds, wedding highlight music, podcast intros, sponsor cues, and creator intros. Start with a USD $29 Founding Hook Sketch after written brief acceptance.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#generator">Generate music prompt</a>
             <a class="button primary" href="#choose">Choose use case</a>
             <a class="button primary" href="mailto:jackjin1997@gmail.com?subject=AI%20music%20generator%20brief&body=AI%20music%20generator%20brief%0A%0APackage%3A%20USD%20%2429%20Founding%20Hook%20Sketch%0AUse%20case%3A%20local%20ad%20%2F%20real%20estate%20listing%20video%20%2F%20wedding%20highlight%20%2F%20podcast%20intro%20%2F%20sponsor%20segment%20%2F%20YouTube%20intro%20%2F%20other%0ABrand%2C%20show%2C%20property%2C%20couple%2C%20or%20project%20name%3A%0AWebsite%2C%20social%2C%20or%20media%20folder%3A%0ATarget%20length%3A%208-12s%20hook%20%2F%2015s%20teaser%20%2F%2030s%20ad%20%2F%2060s%20cut%20plan%0AAudience%20and%20offer%20or%20story%3A%0ARequired%20line%20or%20tagline%3A%0AMood%3A%20upbeat%2C%20cinematic%2C%20premium%2C%20warm%2C%20local%2C%20romantic%2C%20credible%2C%20or%20other%0ADeadline%3A%0AAvoid%3A%20known-artist%20soundalikes%2C%20celebrity%20voices%2C%20copyrighted%20songs%2C%20third-party%20lyrics%20without%20rights%0ADelivery%3A%20one%20selected%20short%20AI-assisted%20music%20sketch%2C%20production%20prompt%2C%20rough%20cut%20note%2C%20and%20usage%20guardrails%0APayment%20timing%3A%20after%20written%20brief%20acceptance%20only">Email AI music brief</a>
             <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml">Open order form</a>
@@ -127,6 +129,87 @@
             <a class="text-link" href="ai-podcast-intro-generator.html">Open podcast page</a>
           </article>
         </div>
+      </section>
+
+      <section class="band request" id="generator" aria-labelledby="generator-title">
+        <div class="section-head">
+          <p class="eyebrow">Instant brief generator</p>
+          <h2 id="generator-title">Generate an order-ready AI music prompt</h2>
+          <p>
+            Turn a buyer's placement, audience, mood, and required line into a paid-package brief. The browser sketch is a lightweight local draft for direction only; paid delivery uses selected AI-assisted generations, source notes, and usage guardrails.
+          </p>
+        </div>
+        <form
+          class="request-tool music-brief"
+          data-jingle-form
+          data-order-heading="AI music generator brief"
+          data-order-title-prefix="AI music brief"
+          data-email-subject-prefix="AI music generator brief"
+        >
+          <div class="field-grid">
+            <label>
+              <span>Package</span>
+              <select name="package">
+                <option>USD $29 Founding Hook Sketch</option>
+                <option>USD $79 Jingle Hook Pack</option>
+                <option>USD $149 Ad Music Pack</option>
+                <option>USD $399 Sonic Launch Kit</option>
+              </select>
+            </label>
+            <label>
+              <span>Use case</span>
+              <select name="usage">
+                <option>8-12s local ad hook</option>
+                <option>15s real estate listing reel</option>
+                <option>15s wedding highlight teaser</option>
+                <option>8-12s podcast intro hook</option>
+                <option>10s sponsor segment sting</option>
+                <option>8s creator intro tag</option>
+              </select>
+            </label>
+            <label>
+              <span>Brand, show, property, or project</span>
+              <input name="brand" type="text" value="Quick Fit Studio" autocomplete="organization">
+            </label>
+            <label>
+              <span>Delivery target</span>
+              <select name="timing">
+                <option>48h target after accepted brief</option>
+                <option>24h rush requested</option>
+                <option>This week</option>
+                <option>Flexible</option>
+              </select>
+            </label>
+            <label>
+              <span>Mood</span>
+              <input name="mood" type="text" value="upbeat, modern, clear, memorable">
+            </label>
+            <label>
+              <span>Voice or sound style</span>
+              <input name="style" type="text" value="clean musical hook with polished ad bed">
+            </label>
+          </div>
+          <label>
+            <span>Audience and offer or story</span>
+            <textarea name="audience" rows="3">Busy local customers who need a short memorable cue for a paid social video.</textarea>
+          </label>
+          <label>
+            <span>Required line or tagline</span>
+            <input name="tagline" type="text" value="Make the first five seconds count.">
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Generate brief</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-brief>Copy packet</button>
+            <button class="button secondary dark" type="button" data-play-jingle-sketch>Play sketch</button>
+            <a class="button secondary dark" data-download-jingle-sketch href="#" download="ai-music-sketch.wav">Download WAV</a>
+            <a class="button secondary dark" data-email-jingle-brief href="mailto:jackjin1997@gmail.com?subject=AI%20music%20generator%20brief">Email brief</a>
+            <a class="button secondary dark" data-open-jingle-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml">Open order</a>
+          </div>
+          <div class="sketch-status" data-jingle-sketch-status role="status">
+            Browser sketch ready after you choose a use case. This is a lightweight local audio draft, not the paid AI-assisted final.
+          </div>
+          <textarea class="brief-output" data-jingle-output rows="14" readonly aria-label="Generated AI music order packet"></textarea>
+        </form>
       </section>
 
       <section class="band" id="packages" aria-labelledby="packages-title">
@@ -251,5 +334,6 @@ Payment timing: after written brief acceptance only</textarea>
       <a href="llms.txt">LLM summary</a>
       <a href="#top">Top</a>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>

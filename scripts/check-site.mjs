@@ -704,6 +704,7 @@ try {
       !aiMusicGeneratorText.includes("USD $29 Founding Hook Sketch") ||
       !aiMusicGeneratorText.includes("Email AI music brief") ||
       !aiMusicGeneratorText.includes("Open order form") ||
+      !aiMusicGeneratorText.includes("Generate an order-ready AI music prompt") ||
       !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
@@ -727,7 +728,7 @@ try {
     ) {
       throw new Error(`AI music generator sample audio sources missing in ${viewport.name}`);
     }
-    const aiMusicGeneratorBrief = await page.locator("textarea.brief-output").inputValue();
+    const aiMusicGeneratorBrief = await page.locator("textarea[aria-label='AI music generator brief template']").inputValue();
     if (
       !aiMusicGeneratorBrief.includes("Package: USD $29 Founding Hook Sketch") ||
       !aiMusicGeneratorBrief.includes("Use case: local ad") ||
@@ -739,6 +740,38 @@ try {
     const aiMusicGeneratorOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (aiMusicGeneratorOrderLinks < 1) {
       throw new Error(`AI music generator page missing order link in ${viewport.name}`);
+    }
+    await page.locator("[data-jingle-form] [name='brand']").fill("Quick Fit Studio");
+    await page.locator("[data-jingle-form] [name='audience']").fill(
+      "Busy local customers who need a short memorable cue for a paid social video."
+    );
+    await page.locator("[data-jingle-form] [name='tagline']").fill("Make the first five seconds count.");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const aiMusicGeneratedPacket = await page.locator("[data-jingle-output]").inputValue();
+    if (
+      !aiMusicGeneratedPacket.includes("## AI music generator brief") ||
+      !aiMusicGeneratedPacket.includes("Quick Fit Studio") ||
+      !aiMusicGeneratedPacket.includes("USD $29 Founding Hook Sketch") ||
+      !aiMusicGeneratedPacket.includes("## Production prompt") ||
+      !aiMusicGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
+      !aiMusicGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`AI music generator dynamic packet missing brand, prompt, or payment guardrail in ${viewport.name}`);
+    }
+    const aiMusicGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (!aiMusicGeneratedOrderHref?.includes("template=ai-jingle-order.yml")) {
+      throw new Error(`AI music generator dynamic order link missing order template in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(aiMusicGeneratedOrderHref).includes("AI music brief: Quick Fit Studio")) {
+      throw new Error(`AI music generator dynamic order link missing brand title in ${viewport.name}`);
+    }
+    const aiMusicSketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
+    if (!aiMusicSketchStatus.includes("Browser sketch ready") || !aiMusicSketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
+      throw new Error(`AI music generator sketch status missing ready or paid-delivery copy in ${viewport.name}`);
+    }
+    const aiMusicSketchHref = await page.locator("[data-download-jingle-sketch]").getAttribute("href");
+    if (!aiMusicSketchHref?.startsWith("blob:")) {
+      throw new Error(`AI music generator WAV sketch link was not generated in ${viewport.name}`);
     }
     const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
       links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))

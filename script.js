@@ -138,6 +138,11 @@ if (intakeForm) {
 
 const jingleForm = document.querySelector("[data-jingle-form]");
 let currentSketchUrl = "";
+const jingleEmailRecipient = "jackjin1997@gmail.com";
+
+function mailtoHref(subject, body) {
+  return `mailto:${jingleEmailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 function compactTitle(value, fallback = "brand") {
   return clean(value, fallback).replace(/\s+/g, " ").slice(0, 80);
@@ -343,11 +348,15 @@ function updateJingleBrief() {
   if (!jingleForm) return;
   const output = jingleForm.querySelector("[data-jingle-output]");
   const openLink = jingleForm.querySelector("[data-open-jingle-brief]");
+  const emailLink = jingleForm.querySelector("[data-email-jingle-brief]");
   const packet = buildJinglePacket(jingleForm);
   const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
   const title = `AI jingle order: ${brand}`;
   output.value = packet;
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
+  if (emailLink) {
+    emailLink.href = mailtoHref(`AI jingle brief: ${brand}`, packet);
+  }
   updateSketchDownload(jingleForm);
 }
 

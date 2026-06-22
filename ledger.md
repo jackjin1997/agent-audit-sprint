@@ -12,12 +12,12 @@ Last updated: 2026-06-23.
 
 ## Chain Check
 
-Checked on 2026-06-22:
+Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
 | Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH; USDC 0; USDT 0; DAI 0 | Not a verified paid audit package payment |
-| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL; SPL USDC 0 | Not a verified paid audit package payment |
+| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0 SOL; SPL USDC 0 | Not a verified paid audit package payment; Solana balance API degraded during latest check |
 
 ## Submitted / Published Assets
 
@@ -67,6 +67,7 @@ Checked on 2026-06-22:
 | Low-friction paid package ladder | https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html, `.github/ISSUE_TEMPLATE/paid-audit-intent.yml`, `templates/quick-scan.md` | Added USD $99 Quick Scan Report, USD $299 Same-day Focused Review, and USD $1,000 Full Audit Sprint path so cold prospects can buy a smaller review before a full sprint |
 | AI Jingle Generator revenue experiment | https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html, https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html, `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` | Added USD $79/$149/$399 AI-assisted jingle, ad music, podcast intro, and radio ID packages with local brief builder, public sample WAVs, browser audio sketch/WAV download, fixed quote/payment packet, invoice/receipt/delivery templates, commercial-use guardrails, issue autoresponder, and payment-after-brief acceptance path |
 | Podcast sponsor jingle conversion page | https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html | Added a narrow USD $149 sponsor-audio landing page for podcast hosts, media-kit owners, host-read ads, branded segments, and sponsor social clips so the first outreach queue can link to a segment-specific offer instead of the broad generator page |
+| AI Jingle email brief path | `mailto:jackjin1997@gmail.com` links on `ai-jingle-generator.html` and `podcast-sponsor-jingle.html`; dynamic generated packet link in `script.js` | Added a non-GitHub intake route for podcast hosts and local businesses while retaining the written-brief-acceptance-before-payment guardrail |
 | AI Jingle owned distribution | GitHub profile README, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Added AI Jingle / Podcast Sponsor Audio Pack links to the public GitHub profile and added `ai-jingle-generator.md` to the public gist with USD $149 podcast sponsor pack, AI jingle package ladder, order form, quote packet, and rights/payment guardrails |
 | AI Jingle outreach playbook | `outreach/ai-jingle-outreach.md`, `private-notes/ai-jingle-prospect-workflow-2026-06-22.md`, `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md` | Added safe manual outreach workflow, buyer-segment priorities, message templates, research signals, a 12-prospect shortlist, first-five send queue, and daily execution checklist for the USD $149 Ad Music Pack path; no messages sent automatically |
 | High-intent lead finder | `scripts/find-high-intent-leads.mjs`, `private-notes/high-intent-leads-2026-06-22.md`, `private-notes/high-intent-shortlist-2026-06-22.md` | Added authenticated GitHub issue search helper and generated manual shortlist for current MCP/agent security/auth/scanner demand signals; no comments posted automatically |
@@ -133,6 +134,6 @@ Checked on 2026-06-22:
 1. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
 2. Use the USD $99 Quick Scan Report or USD $299 Same-day Focused Review as the first paid ask when a prospect has a narrow public question.
 3. For the AI music experiment, pitch the USD $149 Ad Music Pack first to podcast hosts, local service businesses, YouTube creators, and radio/DJ shows that already run ads or intros.
-4. Work from `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md`: re-open each source page, verify the contact route, then manually send the first 5 personalized AI jingle messages using `podcast-sponsor-jingle.html` for podcast/media-kit prospects.
+4. Work from `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md`: re-open each source page, verify the contact route, then manually send the first 5 personalized AI jingle messages using `podcast-sponsor-jingle.html` and the email brief path for podcast/media-kit prospects.
 5. If an inbound issue appears, qualify the scope or jingle brief, then request payment only after written acceptance.
 6. Count revenue only after payment is confirmed on-chain or in an account statement.

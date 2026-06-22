@@ -10,6 +10,7 @@ Use this playbook to sell the AI Jingle Generator offer without spam, fake scarc
 - Podcast sponsor page: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - Quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
+- Email brief path: jackjin1997@gmail.com for buyers who do not use GitHub
 - First paid ask: USD $149 Ad Music Pack
 - Entry package: USD $79 Jingle Hook Pack
 - Upsell: USD $399 Sonic Launch Kit
@@ -73,7 +74,7 @@ https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 Fixed quote/payment packet:
 https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 
-No need to share private scripts or sponsor terms. A short public show description and required line/tagline is enough for a first brief.
+No need to share private scripts or sponsor terms. A short public show description and required line/tagline is enough for a first brief, and the page has an email brief button if GitHub is inconvenient.
 
 Best,
 Zexu
@@ -93,7 +94,7 @@ The $149 Ad Music Pack gives you three selected short audio directions for one c
 Samples and brief builder:
 https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 
-If useful, send only the business name, audience, offer, and any tagline. Payment is only after the brief is accepted.
+If useful, send only the business name, audience, offer, and any tagline by email to jackjin1997@gmail.com or through the order form. Payment is only after the brief is accepted.
 ```
 
 ### Radio / DJ / Event
@@ -112,6 +113,9 @@ https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html#sample
 
 Order brief:
 https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
+
+Email brief if easier:
+jackjin1997@gmail.com
 ```
 
 ### Agency / Freelancer
@@ -148,4 +152,5 @@ No worries if not relevant.
 2. Pick 10 local businesses with active Reels/TikTok/YouTube Shorts or event promos.
 3. Pick 10 radio/DJ/event shows that already use station IDs, drops, or short promos.
 4. Send 5 highly personalized messages first, not 30 generic ones.
-5. Log outcomes in a private note.
+5. Use the email brief path when the contact is a normal business or podcast inbox rather than a GitHub user.
+6. Log outcomes in a private note.

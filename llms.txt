@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, and media-kit upsells.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -8,6 +8,7 @@ Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
 Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
+AI Jingle email brief: jackjin1997@gmail.com
 Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
 Delivery target: 48 hours after written scope acceptance and payment confirmation
@@ -19,6 +20,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
+- AI Jingle email brief: mailto:jackjin1997@gmail.com
 - Service: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
@@ -40,7 +42,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Deliverables: selected AI-assisted jingle/ad music cuts, prompt or lyric sheet, source tool summary, revision notes, and usage memo.
 - Public sample audio: coffee shop hook, business podcast intro, and radio ID/drop WAV samples are embedded on the AI Jingle Generator page.
 - Static MVP demo: the page can generate a local browser audio sketch and downloadable WAV draft from the order brief. This is a lightweight preview, not the paid AI-assisted final.
-- Order ops: `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` collects the paid brief and `.github/workflows/respond-ai-jingle-order.yml` posts next steps, payment timing, and rights guardrails.
+- Order ops: email brief to jackjin1997@gmail.com for non-GitHub buyers, or `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` for tracked issue intake; `.github/workflows/respond-ai-jingle-order.yml` posts next steps, payment timing, and rights guardrails for issue orders.
 - Monitoring: `scripts/check-goal-status.mjs` treats `ai-jingle-order` issues and USD $79+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
 - Fulfillment templates: `templates/ai-jingle-invoice.md`, `templates/ai-jingle-receipt.md`, and `templates/ai-jingle-delivery-note.md` cover invoice, receipt, and delivery handoff for paid jingle work.
 - Guardrails: avoid known-artist soundalikes, living voice clones, third-party lyrics without rights, and vague ownership claims. AI-generated music may have copyright-registration limits.

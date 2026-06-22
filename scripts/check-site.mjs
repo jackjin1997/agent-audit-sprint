@@ -579,6 +579,7 @@ try {
       !aiJingleText.includes("Business Show Intro") ||
       !aiJingleText.includes("Podcast Sponsor Jingle Pack") ||
       !aiJingleText.includes("Quote/payment packet") ||
+      !aiJingleText.includes("Email AI jingle brief to jackjin1997@gmail.com") ||
       !aiJingleText.includes("Pay after accepted brief") ||
       !aiJingleText.includes("AI-generated music may not be copyright-registerable") ||
       !aiJingleText.includes("Open AI jingle order form")
@@ -617,6 +618,17 @@ try {
     if (!decodeURIComponent(jingleHref).includes("AI jingle order: Bean There Coffee")) {
       throw new Error(`AI jingle prefilled issue link missing brand title in ${viewport.name}`);
     }
+    const jingleEmailHref = await page.locator("[data-email-jingle-brief]").getAttribute("href");
+    if (!jingleEmailHref?.startsWith("mailto:jackjin1997@gmail.com")) {
+      throw new Error(`AI jingle generated email link missing recipient in ${viewport.name}`);
+    }
+    const decodedJingleEmailHref = decodeURIComponent(jingleEmailHref);
+    if (
+      !decodedJingleEmailHref.includes("AI jingle brief: Bean There Coffee") ||
+      !decodedJingleEmailHref.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`AI jingle generated email link missing subject or payment guardrail in ${viewport.name}`);
+    }
     const sketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
     if (!sketchStatus.includes("Browser sketch ready") || !sketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
       throw new Error(`AI jingle sketch status missing ready or paid-delivery copy in ${viewport.name}`);
@@ -638,6 +650,8 @@ try {
       !podcastSponsorText.includes("USD $149 AI-assisted ad music pack") ||
       !podcastSponsorText.includes("host-read ads") ||
       !podcastSponsorText.includes("media-kit owners") ||
+      !podcastSponsorText.includes("Email sponsor brief") ||
+      !podcastSponsorText.includes("jackjin1997@gmail.com") ||
       !podcastSponsorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !podcastSponsorText.includes("Acast 2026 podcast advertising guide") ||
       !podcastSponsorText.includes("Open order form")
@@ -660,6 +674,16 @@ try {
     const podcastSponsorOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (podcastSponsorOrderLinks < 1) {
       throw new Error(`Podcast sponsor jingle page missing order link in ${viewport.name}`);
+    }
+    const podcastSponsorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      podcastSponsorEmailLinks.length < 2 ||
+      !podcastSponsorEmailLinks.some((href) => href.includes("Podcast sponsor jingle brief")) ||
+      !podcastSponsorEmailLinks.some((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`Podcast sponsor jingle page missing email brief link or payment guardrail in ${viewport.name}`);
     }
     const podcastSponsorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (podcastSponsorOverflow) throw new Error(`Podcast sponsor jingle horizontal overflow detected in ${viewport.name}`);

@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, and media-kit upsells.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -17,6 +17,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Service: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
@@ -32,6 +33,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 ## AI Music Offer
 
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html for podcast hosts and media-kit owners selling sponsor inventory, host-read ads, branded segments, and sponsor social clips.
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Paid packages: USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, USD $399 Sonic Launch Kit.
 - Best-fit buyers: small businesses, podcast hosts, YouTube/TikTok creators, radio/DJ shows, and local ad campaigns that need 15/30/60 second branded audio.

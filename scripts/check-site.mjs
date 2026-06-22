@@ -29,6 +29,7 @@ const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action
 const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
+const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
@@ -47,6 +48,7 @@ const requiredFiles = [
   "scan.html",
   "quick-scan.html",
   "ai-jingle-generator.html",
+  "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
   "quote.html",
   "trading-mcp-security-audit.html",
@@ -156,6 +158,9 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 }
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
+}
+if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
+  throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
 }
 if (!llmsText.includes("AI Jingle quote/payment packet")) {
   throw new Error("llms.txt is missing the AI Jingle quote context");
@@ -572,6 +577,7 @@ try {
       !aiJingleText.includes("USD $149 Ad Music Pack") ||
       !aiJingleText.includes("Coffee Shop 30s Hook") ||
       !aiJingleText.includes("Business Show Intro") ||
+      !aiJingleText.includes("Podcast Sponsor Jingle Pack") ||
       !aiJingleText.includes("Quote/payment packet") ||
       !aiJingleText.includes("Pay after accepted brief") ||
       !aiJingleText.includes("AI-generated music may not be copyright-registerable") ||
@@ -621,6 +627,42 @@ try {
     }
     const aiJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiJingleOverflow) throw new Error(`AI jingle horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(podcastSponsorJingle, { waitUntil: "networkidle" });
+    const podcastSponsorTitle = await page.locator("h1").innerText();
+    if (!podcastSponsorTitle.includes("Podcast Sponsor Jingle Pack")) {
+      throw new Error(`Unexpected podcast sponsor jingle h1 in ${viewport.name}: ${podcastSponsorTitle}`);
+    }
+    const podcastSponsorText = await page.locator("body").innerText();
+    if (
+      !podcastSponsorText.includes("USD $149 AI-assisted ad music pack") ||
+      !podcastSponsorText.includes("host-read ads") ||
+      !podcastSponsorText.includes("media-kit owners") ||
+      !podcastSponsorText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !podcastSponsorText.includes("Acast 2026 podcast advertising guide") ||
+      !podcastSponsorText.includes("Open order form")
+    ) {
+      throw new Error(`Podcast sponsor jingle page missing package, market, payment, or CTA copy in ${viewport.name}`);
+    }
+    const podcastSponsorHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!podcastSponsorHeroLoaded) throw new Error(`Podcast sponsor jingle hero image failed to load in ${viewport.name}`);
+    const podcastSponsorAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      podcastSponsorAudioSources.length !== 3 ||
+      !podcastSponsorAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !podcastSponsorAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !podcastSponsorAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`Podcast sponsor jingle sample audio sources missing in ${viewport.name}`);
+    }
+    const podcastSponsorOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (podcastSponsorOrderLinks < 1) {
+      throw new Error(`Podcast sponsor jingle page missing order link in ${viewport.name}`);
+    }
+    const podcastSponsorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (podcastSponsorOverflow) throw new Error(`Podcast sponsor jingle horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiJingleQuote, { waitUntil: "networkidle" });
     const aiJingleQuoteTitle = await page.locator("h1").innerText();

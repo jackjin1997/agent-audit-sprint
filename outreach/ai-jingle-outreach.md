@@ -7,6 +7,7 @@ Use this playbook to sell the AI Jingle Generator offer without spam, fake scarc
 ## Offer
 
 - Page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- Podcast sponsor page: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - Quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
 - First paid ask: USD $149 Ad Music Pack
@@ -38,7 +39,7 @@ The site should not compete as a generic song toy. Pitch a short, finished campa
 
 | Priority | Segment | Buy Trigger | First Ask |
 |---:|---|---|---|
-| 1 | Podcasts with sponsors or stale intros | They already publish audio and need recognizable show identity. | USD $149 Ad Music Pack |
+| 1 | Podcasts with sponsors or stale intros | They already publish audio, sell sponsor inventory, and need recognizable show or sponsor segment identity. | USD $149 Ad Music Pack |
 | 2 | Local businesses running short ads | They need hooks for Reels, TikTok, YouTube Shorts, radio, or events. | USD $79 or $149 |
 | 3 | Radio/DJ/event shows | They buy IDs, drops, sweepers, and short promos. | USD $149 |
 | 4 | YouTube/TikTok creators | They need intro/sting identity and repeatable sponsor reads. | USD $79 |
@@ -64,10 +65,10 @@ Hi <name/team>,
 
 I make short AI-assisted jingles and podcast intro/outro packs with human selection and usage notes. <Show> looks like a fit because <specific show angle, sponsor slot, segment, or intro observation>.
 
-The first package I would suggest is the $149 Ad Music Pack: three selected directions for one campaign/show, 15/30/60 second cut plan, one revision pass, prompt/lyric sheet, source tool summary, and usage memo.
+The first package I would suggest is the $149 Ad Music Pack: three selected sponsor-safe directions for one campaign/show, 15/30/60 second cut plan, one revision pass, prompt/lyric sheet, source tool summary, and usage memo.
 
-Samples and brief builder:
-https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+Podcast sponsor version:
+https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 
 Fixed quote/payment packet:
 https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html

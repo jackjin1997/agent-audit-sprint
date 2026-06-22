@@ -26,6 +26,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with local brief builder, sample deliverables, public WAV samples, browser audio sketch, and WAV download
+- `podcast-sponsor-jingle.html` - narrow $149 podcast sponsor audio hook landing page for host-read ads, branded segments, media-kit upsells, and social promo clips
 - `ai-jingle-quote.html` / `templates/ai-jingle-quote.md` - fixed quote, acceptance text, and payment packet for the AI jingle package ladder
 - `templates/ai-jingle-invoice.md` / `templates/ai-jingle-receipt.md` / `templates/ai-jingle-delivery-note.md` - invoice, receipt, and delivery handoff templates for paid AI jingle work
 - `quote.html` / `templates/quote.md` - fixed quote, acceptance text, and copyable payment packet
@@ -75,6 +76,7 @@ Browser:
 
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
 - AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- Podcast sponsor jingle pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html

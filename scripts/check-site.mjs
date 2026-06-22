@@ -124,7 +124,7 @@ for (const file of requiredFiles) {
 }
 
 const llmsText = readFileSync(resolve(root, "llms.txt"), "utf8");
-if (!llmsText.includes("USD $99 quick scan") || !llmsText.includes("USD $299 focused review")) {
+if (!llmsText.includes("USD $99 Quick Scan Report") || !llmsText.includes("USD $299 Same-day Focused Review")) {
   throw new Error("llms.txt is missing the package ladder summary");
 }
 if (!llmsText.includes("payment only after written scope acceptance")) {

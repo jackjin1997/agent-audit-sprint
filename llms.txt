@@ -1,12 +1,12 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 quick scan, USD $299 focused review, or USD $1,000 async full sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
-Prices: USD $99 quick scan, USD $299 same-day focused review, or USD $1,000 full sprint for one accepted audit scope
+Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
 Delivery target: 48 hours after written scope acceptance and payment confirmation
@@ -22,7 +22,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short paid-slot intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Code Scanning audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
-- Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
+- paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Booking FAQ: https://github.com/jackjin1997/agent-audit-sprint/discussions/1
 
 ## Free Triage

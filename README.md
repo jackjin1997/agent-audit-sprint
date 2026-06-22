@@ -12,6 +12,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
+- AI music revenue experiment: USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the static page includes public sample audio, a local browser audio sketch demo, downloadable WAV draft, and issue autoresponder
 
 ## Files
 
@@ -24,6 +25,9 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
+- `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with local brief builder, sample deliverables, public WAV samples, browser audio sketch, and WAV download
+- `ai-jingle-quote.html` / `templates/ai-jingle-quote.md` - fixed quote, acceptance text, and payment packet for the AI jingle package ladder
+- `templates/ai-jingle-invoice.md` / `templates/ai-jingle-receipt.md` / `templates/ai-jingle-delivery-note.md` - invoice, receipt, and delivery handoff templates for paid AI jingle work
 - `quote.html` / `templates/quote.md` - fixed quote, acceptance text, and copyable payment packet
 - `trading-mcp-security-audit.html` / `workspace-mcp-security-audit.html` / `cloud-database-mcp-security-audit.html` / `browser-automation-mcp-security-audit.html` - vertical landing pages for high-risk MCP buyer segments
 - `samples.html` - public sample report index and conversion page
@@ -34,9 +38,10 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
+- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle package orders
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
-- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues and ETH/SOL stablecoin/native payment signals
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI jingle orders, and ETH/SOL stablecoin/native payment signals
 - `scripts/find-high-intent-leads.mjs` - GitHub issue search helper for current agent/MCP security, auth, scanner, and transport discussions; writes private lead shortlists without auto-posting
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
@@ -51,12 +56,16 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `script.js` - local-only request brief builder and payment address copy actions
 - `outreach/prospect-list.md` - initial outbound list and message
 - `outreach/scanner-led-outreach.md` - safe scanner-led outreach workflow and templates
+- `outreach/ai-jingle-outreach.md` - safe AI jingle outreach workflow and templates for podcasts, local businesses, radio/DJ shows, creators, and agencies
 - `outreach/qualified-prospects-2026-06-19.md` - public outbound playbook without project-specific claims
 - `templates/invoice.md` - invoice template for accepted audit scopes
 - `templates/receipt.md` - receipt template after payment confirmation
+- `templates/ai-jingle-invoice.md` / `templates/ai-jingle-receipt.md` / `templates/ai-jingle-delivery-note.md` - AI music payment and delivery templates
 - `tools/agent-mcp-audit.mjs` - local heuristic scanner for agent/MCP review signals
 - `assets/audit-dashboard.html` - source for the hero bitmap
 - `assets/audit-dashboard.png` - generated hero bitmap
+- `assets/ai-jingle-studio.svg` / `assets/ai-jingle-studio.png` - generated visual asset for the AI music offer
+- `assets/audio/*.wav` / `scripts/render-jingle-samples.mjs` - reproducible public sample audio for the AI jingle package cards
 
 ## Heuristic Scanner
 
@@ -65,6 +74,8 @@ Run a quick local triage pass against an agent or MCP repo:
 Browser:
 
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
+- AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
@@ -131,7 +142,7 @@ Open `index.html` directly in a browser or serve the directory with any static f
 
 ## Payment Ops
 
-Use `templates/invoice.md` after accepting scope. Crypto payment can use ETH or ERC-20 USDC/USDT/DAI on Ethereum, or SOL or SPL USDC on Solana. Use `templates/receipt.md` after the buyer provides a verifiable transaction hash.
+Use `templates/invoice.md` after accepting audit scope, or `templates/ai-jingle-invoice.md` after accepting an AI jingle brief. Crypto payment can use ETH or ERC-20 USDC/USDT/DAI on Ethereum, or SOL or SPL USDC on Solana. Use `templates/receipt.md` for audit receipts and `templates/ai-jingle-receipt.md` for AI jingle receipts after the buyer provides a verifiable transaction hash.
 
 Run the goal monitor manually with:
 
@@ -147,7 +158,7 @@ node scripts/install-goal-monitor-launchd.mjs
 
 The visible loop writes `private-notes/monitor/goal-monitor-loop.pid` and `private-notes/monitor/goal-monitor-loop-heartbeat.json`, so it can be inspected with `ps -p "$(cat private-notes/monitor/goal-monitor-loop.pid)" -o pid,ppid,etime,command`.
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. Revenue is still counted only after payment is verified against an accepted written scope.
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. The monitor treats USD $79+ as a small-package payment signal so AI jingle orders are not missed, while the revenue goal remains USD $1,000. Revenue is still counted only after payment is verified against an accepted written scope or accepted jingle brief.
 
 ## npm Publishing
 

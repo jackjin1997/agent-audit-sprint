@@ -28,6 +28,8 @@ const mcpSecurityRadar = `file://${resolve(root, "mcp-security-radar.html")}`;
 const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
+const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
+const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
 const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
@@ -44,6 +46,8 @@ const requiredFiles = [
   "mcp-code-scanning-github-action.html",
   "scan.html",
   "quick-scan.html",
+  "ai-jingle-generator.html",
+  "ai-jingle-quote.html",
   "quote.html",
   "trading-mcp-security-audit.html",
   "workspace-mcp-security-audit.html",
@@ -64,15 +68,22 @@ const requiredFiles = [
   ".github/FUNDING.yml",
   ".github/workflows/goal-status-monitor.yml",
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
+  ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
+  ".github/workflows/respond-ai-jingle-order.yml",
   ".github/workflows/respond-code-scanning-audit.yml",
   ".github/workflows/respond-payment-proof.yml",
   ".github/workflows/smoke-action-v1.yml",
   "examples/github-action.yml",
   "examples/github-code-scanning.yml",
   "assets/audit-dashboard.png",
+  "assets/ai-jingle-studio.png",
+  "assets/ai-jingle-studio.svg",
+  "assets/audio/coffee-shop-30s-hook.wav",
+  "assets/audio/business-show-intro.wav",
+  "assets/audio/radio-id-drop.wav",
   "assets/payments/eth-address.svg",
   "assets/payments/sol-address.svg",
   "reports/douban-mcp-sample-audit.html",
@@ -100,9 +111,11 @@ const requiredFiles = [
   "tools/agent-mcp-audit.mjs",
   "scripts/comment-audit-triage.mjs",
   "scripts/comment-audit-intent.mjs",
+  "scripts/comment-ai-jingle-order.mjs",
   "scripts/comment-code-scanning-audit.mjs",
   "scripts/comment-payment-proof.mjs",
   "scripts/find-high-intent-leads.mjs",
+  "scripts/render-jingle-samples.mjs",
   "scripts/check-goal-status.mjs",
   "scripts/install-goal-monitor-launchd.mjs",
   "scripts/run-goal-monitor-loop.mjs",
@@ -111,9 +124,14 @@ const requiredFiles = [
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
   "templates/quick-scan.md",
+  "templates/ai-jingle-quote.md",
+  "templates/ai-jingle-invoice.md",
+  "templates/ai-jingle-receipt.md",
+  "templates/ai-jingle-delivery-note.md",
   "templates/quote.md",
   "templates/receipt.md",
   "templates/statement-of-work.md",
+  "outreach/ai-jingle-outreach.md",
   "outreach/qualified-prospects-2026-06-19.md",
 ];
 
@@ -135,6 +153,12 @@ if (!llmsText.includes("MCP Security Radar")) {
 }
 if (!llmsText.includes("AI Agent Security Radar")) {
   throw new Error("llms.txt is missing the AI Agent Radar link context");
+}
+if (!llmsText.includes("AI Jingle Generator")) {
+  throw new Error("llms.txt is missing the AI Jingle Generator offer context");
+}
+if (!llmsText.includes("AI Jingle quote/payment packet")) {
+  throw new Error("llms.txt is missing the AI Jingle quote context");
 }
 if (!llmsText.includes("AI Agent Radar Detail Briefs")) {
   throw new Error("llms.txt is missing the AI Agent Radar detail brief context");
@@ -274,6 +298,69 @@ if (!intentOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2F
   throw new Error("Intent dry-run output is missing shareable scanner link");
 }
 
+const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $149 Ad Music Pack",
+      "",
+      "### Brand, podcast, channel, or product name",
+      "",
+      "Bean There Coffee",
+      "",
+      "### Website or social link",
+      "",
+      "https://example.com",
+      "",
+      "### Primary use",
+      "",
+      "30 second ad cut",
+      "",
+      "### Brand brief",
+      "",
+      "Warm local coffee shop jingle for morning commuters with a clean ending.",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum ERC-20 USDC/USDT/DAI after brief acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!jingleOrderOutput.includes("AI jingle order received")) {
+  throw new Error("AI jingle order dry-run output is missing heading");
+}
+if (!jingleOrderOutput.includes("Bean There Coffee") || !jingleOrderOutput.includes("USD $149 equivalent")) {
+  throw new Error("AI jingle order dry-run output is missing brand or package price");
+}
+if (!jingleOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")) {
+  throw new Error("AI jingle order dry-run output is missing payment guardrail");
+}
+if (
+  !jingleOrderOutput.includes("payment-confirmation.yml") ||
+  !jingleOrderOutput.includes("ai-jingle-generator.html") ||
+  !jingleOrderOutput.includes("ai-jingle-quote.html") ||
+  !jingleOrderOutput.includes("templates/ai-jingle-invoice.md") ||
+  !jingleOrderOutput.includes("templates/ai-jingle-delivery-note.md")
+) {
+  throw new Error("AI jingle order dry-run output is missing payment proof, service, or quote link");
+}
+if (!jingleOrderOutput.includes("AI-generated music can have copyright-registration limits")) {
+  throw new Error("AI jingle order dry-run output is missing rights guardrail");
+}
+
 const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {
   encoding: "utf8",
   env: {
@@ -305,11 +392,18 @@ if (!paymentProofOutput.includes("Payment proof received")) {
 if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-sprint/issues/123")) {
   throw new Error("Payment proof dry-run output is missing scope issue");
 }
-if (!paymentProofOutput.includes("USD $1,000 equivalent")) {
-  throw new Error("Payment proof dry-run output is missing amount verification rule");
+if (
+  !paymentProofOutput.includes("USD $79/$149/$399 AI jingle work") ||
+  !paymentProofOutput.includes("USD $99/$299 audit entry work") ||
+  !paymentProofOutput.includes("USD $1,000 full audit sprint")
+) {
+  throw new Error("Payment proof dry-run output is missing package amount verification rule");
 }
 if (!paymentProofOutput.includes("ERC-20 USDC/USDT/DAI") || !paymentProofOutput.includes("SPL USDC")) {
   throw new Error("Payment proof dry-run output is missing stablecoin asset options");
+}
+if (!paymentProofOutput.includes("AI jingle receipt template")) {
+  throw new Error("Payment proof dry-run output is missing AI jingle receipt template");
 }
 
 const codeScanningAuditOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-code-scanning-audit.mjs")], {
@@ -383,6 +477,9 @@ try {
     }
     if (!indexBody.includes("$99 quick scan") || !indexBody.includes("$299 same-day review")) {
       throw new Error(`Index page missing package ladder in ${viewport.name}`);
+    }
+    if (!indexBody.includes("AI jingle generator")) {
+      throw new Error(`Index page missing AI jingle generator entry in ${viewport.name}`);
     }
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
@@ -464,6 +561,95 @@ try {
       throw new Error(`Prefilled issue link missing project title in ${viewport.name}`);
     }
     await page.screenshot({ path: resolve(root, `tmp-${viewport.name}.png`), fullPage: true });
+
+    await page.goto(aiJingle, { waitUntil: "networkidle" });
+    const aiJingleTitle = await page.locator("h1").innerText();
+    if (!aiJingleTitle.includes("AI Jingle Generator for Ads and Podcasts")) {
+      throw new Error(`Unexpected AI jingle h1 in ${viewport.name}: ${aiJingleTitle}`);
+    }
+    const aiJingleText = await page.locator("body").innerText();
+    if (
+      !aiJingleText.includes("USD $149 Ad Music Pack") ||
+      !aiJingleText.includes("Coffee Shop 30s Hook") ||
+      !aiJingleText.includes("Business Show Intro") ||
+      !aiJingleText.includes("Quote/payment packet") ||
+      !aiJingleText.includes("Pay after accepted brief") ||
+      !aiJingleText.includes("AI-generated music may not be copyright-registerable") ||
+      !aiJingleText.includes("Open AI jingle order form")
+    ) {
+      throw new Error(`AI jingle page missing package, payment, rights, or order copy in ${viewport.name}`);
+    }
+    const aiJingleHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!aiJingleHeroLoaded) throw new Error(`AI jingle hero image failed to load in ${viewport.name}`);
+    const sampleAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      sampleAudioSources.length !== 3 ||
+      !sampleAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !sampleAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !sampleAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI jingle sample audio sources missing in ${viewport.name}`);
+    }
+    await page.locator("[name='brand']").fill("Bean There Coffee");
+    await page.locator("[name='audience']").fill("Morning commuters who need fast coffee and pastries near the station.");
+    await page.locator("[name='tagline']").fill("Wake up with us.");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const jinglePacket = await page.locator("[data-jingle-output]").inputValue();
+    if (
+      !jinglePacket.includes("Bean There Coffee") ||
+      !jinglePacket.includes("## Production prompt") ||
+      !jinglePacket.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`AI jingle generated packet missing brand, prompt, or payment guardrail in ${viewport.name}`);
+    }
+    const jingleHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (!jingleHref?.includes("template=ai-jingle-order.yml")) {
+      throw new Error(`AI jingle prefilled issue link missing order template in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(jingleHref).includes("AI jingle order: Bean There Coffee")) {
+      throw new Error(`AI jingle prefilled issue link missing brand title in ${viewport.name}`);
+    }
+    const sketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
+    if (!sketchStatus.includes("Browser sketch ready") || !sketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
+      throw new Error(`AI jingle sketch status missing ready or paid-delivery copy in ${viewport.name}`);
+    }
+    const sketchHref = await page.locator("[data-download-jingle-sketch]").getAttribute("href");
+    if (!sketchHref?.startsWith("blob:")) {
+      throw new Error(`AI jingle sketch WAV link was not generated in ${viewport.name}`);
+    }
+    const aiJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiJingleOverflow) throw new Error(`AI jingle horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiJingleQuote, { waitUntil: "networkidle" });
+    const aiJingleQuoteTitle = await page.locator("h1").innerText();
+    if (!aiJingleQuoteTitle.includes("AI Jingle Package Quotes")) {
+      throw new Error(`Unexpected AI jingle quote h1 in ${viewport.name}: ${aiJingleQuoteTitle}`);
+    }
+    const aiJingleQuoteText = await page.locator("body").innerText();
+    if (
+      !aiJingleQuoteText.includes("USD $79 hook pack") ||
+      !aiJingleQuoteText.includes("USD $149 ad music pack") ||
+      !aiJingleQuoteText.includes("USD $399 sonic launch kit") ||
+      !aiJingleQuoteText.includes("Payment timing:") ||
+      !aiJingleQuoteText.includes("After written brief acceptance only") ||
+      !aiJingleQuoteText.includes("AI-generated music can have copyright-registration limits") ||
+      !aiJingleQuoteText.includes("Invoice template") ||
+      !aiJingleQuoteText.includes("Delivery note")
+    ) {
+      throw new Error(`AI jingle quote page missing package, payment, or rights copy in ${viewport.name}`);
+    }
+    const jinglePaymentPacketTarget = await page.locator("[data-copy-target='#jingle-payment-packet']").getAttribute("data-copy-target");
+    if (jinglePaymentPacketTarget !== "#jingle-payment-packet") {
+      throw new Error(`AI jingle quote payment packet copy target missing in ${viewport.name}`);
+    }
+    const aiJingleQuotePaymentProofLinks = await page.locator("a[href*='template=payment-confirmation.yml']").count();
+    if (aiJingleQuotePaymentProofLinks < 1) {
+      throw new Error(`AI jingle quote page missing payment proof link in ${viewport.name}`);
+    }
+    const aiJingleQuoteOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiJingleQuoteOverflow) throw new Error(`AI jingle quote horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(doubanReport, { waitUntil: "networkidle" });
     const reportTitle = await page.locator("h1").innerText();

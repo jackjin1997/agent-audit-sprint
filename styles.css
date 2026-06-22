@@ -385,6 +385,111 @@ h3 {
   background: #f7f4ea;
 }
 
+.music-page {
+  background: #fbfaf7;
+}
+
+.music-hero .hero-bg {
+  opacity: 0.95;
+}
+
+.music-hero .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(14, 17, 22, 0.82) 0%, rgba(14, 17, 22, 0.68) 42%, rgba(14, 17, 22, 0.18) 100%),
+    rgba(17, 19, 23, 0.18);
+}
+
+.music-hero .proof-strip {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(23, 26, 31, 0.04);
+}
+
+.sample-card {
+  min-height: 250px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(23, 26, 31, 0.04);
+}
+
+.sample-card p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.sample-card strong {
+  color: var(--ink);
+}
+
+.sample-card audio {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.offer-card.featured {
+  background: var(--graphite);
+  color: #fff;
+}
+
+.offer-card p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.offer-card.featured p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.offer-card .button {
+  margin-top: auto;
+}
+
+.price {
+  display: block;
+  margin: 4px 0 12px;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.music-brief .brief-output {
+  min-height: 360px;
+}
+
+.sketch-status {
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f7f4;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
 .request-tool {
   display: grid;
   gap: 16px;
@@ -873,17 +978,20 @@ pre code {
   }
 
   .proof-strip,
+  .music-hero .proof-strip,
   .deliverable-grid,
-  .fit-grid,
-  .radar-grid,
-  .field-grid,
-  .payment-steps,
+    .fit-grid,
+    .sample-grid,
+    .offer-grid,
+    .radar-grid,
+    .field-grid,
+    .payment-steps,
   .pay-grid,
   .checklist-grid,
   .service-summary,
   .service-split,
   .service-flow ol,
-  .split {
+    .split {
     grid-template-columns: 1fr;
   }
 
@@ -926,6 +1034,8 @@ pre code {
   .proof-strip div,
   .tile,
   .fit-item,
+  .sample-card,
+  .offer-card,
   .pay-box {
     padding: 16px;
   }

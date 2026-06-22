@@ -3,6 +3,7 @@
 const MARKER = "<!-- agent-mcp-payment-proof -->";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const RECEIPT_TEMPLATE_URL = "https://github.com/jackjin1997/agent-audit-sprint/blob/main/templates/receipt.md";
+const JINGLE_RECEIPT_TEMPLATE_URL = "https://github.com/jackjin1997/agent-audit-sprint/blob/main/templates/ai-jingle-receipt.md";
 const ETH_ADDRESS = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
 const SOL_ADDRESS = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
 
@@ -26,19 +27,19 @@ Payment evidence has been recorded for manual verification.
 
 | Field | Value |
 |---|---|
-| Accepted scope issue | ${scopeIssue} |
+| Accepted scope/brief issue | ${scopeIssue} |
 | Network | ${network} |
 | Transaction / settlement reference | \`${txHash}\` |
 | Reported amount | ${amount} |
 
 ### Verification checklist
 
-Before the audit starts, I will verify:
+Before work starts, I will verify:
 
-1. Scope was accepted in writing before payment.
+1. Scope or brief was accepted in writing before payment.
 2. The transaction or settlement reference is valid.
 3. The recipient matches the agreed address or invoice path.
-4. The amount is USD $1,000 equivalent unless another written agreement exists.
+4. The amount matches the accepted package quote, for example USD $79/$149/$399 AI jingle work, USD $99/$299 audit entry work, or the USD $1,000 full audit sprint, unless another written agreement exists.
 
 Accepted payment addresses and assets:
 
@@ -46,7 +47,8 @@ Accepted payment addresses and assets:
 - Solana: \`${SOL_ADDRESS}\` for SOL or SPL USDC
 
 Terms: ${TERMS_URL}  
-Receipt template: ${RECEIPT_TEMPLATE_URL}
+Audit receipt template: ${RECEIPT_TEMPLATE_URL}  
+AI jingle receipt template: ${JINGLE_RECEIPT_TEMPLATE_URL}
 `;
 }
 

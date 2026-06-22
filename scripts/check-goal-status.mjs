@@ -7,6 +7,7 @@ const ETH_RPC_URL = process.env.ETH_RPC_URL || "https://ethereum.publicnode.com"
 const SOL_RPC_URL = process.env.SOL_RPC_URL || "https://api.mainnet-beta.solana.com";
 const TARGET_USD = Number(process.env.GOAL_USD_TARGET || "1000");
 const ATTENTION_THRESHOLD_USD = Number(process.env.GOAL_ATTENTION_THRESHOLD_USD || "900");
+const REVENUE_PACKAGE_ATTENTION_USD = Number(process.env.GOAL_REVENUE_PACKAGE_ATTENTION_USD || "79");
 const ETH_ATTENTION_THRESHOLD = Number(process.env.GOAL_ETH_ATTENTION_THRESHOLD || "0.3");
 const SOL_ATTENTION_THRESHOLD = Number(process.env.GOAL_SOL_ATTENTION_THRESHOLD || "8");
 const ATTENTION_FAIL = process.env.GOAL_ATTENTION_FAIL === "true";
@@ -28,6 +29,7 @@ const INTAKE_LABELS = new Set([
   "payment-proof",
   "code-scanning-audit",
   "ai-agent-audit",
+  "ai-jingle-order",
 ]);
 
 function bigintToDecimal(value, decimals) {
@@ -193,12 +195,15 @@ function computePaymentSignal(ethereum, solana, prices) {
     stablecoinUsd,
     nativeEstimateUsd,
     estimatedUsd,
+    revenuePackageAttentionUsd: REVENUE_PACKAGE_ATTENTION_USD,
     nativeFallbackSignal,
     nativeFallbackThresholds: {
       ETH: ETH_ATTENTION_THRESHOLD,
       SOL: SOL_ATTENTION_THRESHOLD,
     },
     potentialPayment:
+      stablecoinUsd >= REVENUE_PACKAGE_ATTENTION_USD ||
+      estimatedUsd >= REVENUE_PACKAGE_ATTENTION_USD ||
       stablecoinUsd >= ATTENTION_THRESHOLD_USD ||
       estimatedUsd >= ATTENTION_THRESHOLD_USD ||
       nativeFallbackSignal,
@@ -225,6 +230,7 @@ function renderSummary(result) {
     "",
     `Checked at: ${result.checkedAt}`,
     `Target: verified paid revenue of USD $${result.paymentSignal.targetUsd}`,
+    `Revenue package alert threshold: USD $${result.paymentSignal.revenuePackageAttentionUsd}`,
     `Result: ${result.attentionRequired ? "attention required" : "no verified payment or open intake issue detected"}`,
     `Health: ${result.checkErrors.length ? "degraded; retrying next interval" : "ok"}`,
     "",
@@ -242,11 +248,12 @@ function renderSummary(result) {
     `Stablecoin total: approximately $${result.paymentSignal.stablecoinUsd.toFixed(2)}`,
     `Native estimate: approximately $${result.paymentSignal.nativeEstimateUsd.toFixed(2)}`,
     `Estimated total balance: approximately $${result.paymentSignal.estimatedUsd.toFixed(2)}`,
+    `Revenue package alert threshold: $${result.paymentSignal.revenuePackageAttentionUsd.toFixed(2)} for small AI jingle or audit entry packages`,
     `Native fallback thresholds: ${result.paymentSignal.nativeFallbackThresholds.ETH} ETH or ${result.paymentSignal.nativeFallbackThresholds.SOL} SOL`,
     "",
     "## Accounting Rule",
     "",
-    "This monitor is an alerting aid only. Count revenue only after a payment is verified against an accepted written scope.",
+    "This monitor is an alerting aid only. Count revenue only after a payment is verified against an accepted written scope or accepted jingle brief.",
     "",
     "## Check Errors",
     "",

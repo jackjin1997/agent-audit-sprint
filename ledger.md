@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-22.
+Last updated: 2026-06-23.
 
 ## Paid
 
@@ -67,6 +67,7 @@ Checked on 2026-06-22:
 | Low-friction paid package ladder | https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html, `.github/ISSUE_TEMPLATE/paid-audit-intent.yml`, `templates/quick-scan.md` | Added USD $99 Quick Scan Report, USD $299 Same-day Focused Review, and USD $1,000 Full Audit Sprint path so cold prospects can buy a smaller review before a full sprint |
 | AI Jingle Generator revenue experiment | https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html, https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html, `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` | Added USD $79/$149/$399 AI-assisted jingle, ad music, podcast intro, and radio ID packages with local brief builder, public sample WAVs, browser audio sketch/WAV download, fixed quote/payment packet, invoice/receipt/delivery templates, commercial-use guardrails, issue autoresponder, and payment-after-brief acceptance path |
 | Podcast sponsor jingle conversion page | https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html | Added a narrow USD $149 sponsor-audio landing page for podcast hosts, media-kit owners, host-read ads, branded segments, and sponsor social clips so the first outreach queue can link to a segment-specific offer instead of the broad generator page |
+| AI Jingle owned distribution | GitHub profile README, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Added AI Jingle / Podcast Sponsor Audio Pack links to the public GitHub profile and added `ai-jingle-generator.md` to the public gist with USD $149 podcast sponsor pack, AI jingle package ladder, order form, quote packet, and rights/payment guardrails |
 | AI Jingle outreach playbook | `outreach/ai-jingle-outreach.md`, `private-notes/ai-jingle-prospect-workflow-2026-06-22.md`, `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md` | Added safe manual outreach workflow, buyer-segment priorities, message templates, research signals, a 12-prospect shortlist, first-five send queue, and daily execution checklist for the USD $149 Ad Music Pack path; no messages sent automatically |
 | High-intent lead finder | `scripts/find-high-intent-leads.mjs`, `private-notes/high-intent-leads-2026-06-22.md`, `private-notes/high-intent-shortlist-2026-06-22.md` | Added authenticated GitHub issue search helper and generated manual shortlist for current MCP/agent security/auth/scanner demand signals; no comments posted automatically |
 | Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |

@@ -200,15 +200,19 @@
           <div class="request-actions">
             <button class="button primary" type="submit">Generate brief</button>
             <button class="button secondary dark" type="button" data-copy-jingle-brief>Copy packet</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-acceptance>Copy acceptance packet</button>
             <button class="button secondary dark" type="button" data-play-jingle-sketch>Play sketch</button>
             <a class="button secondary dark" data-download-jingle-sketch href="#" download="ai-music-sketch.wav">Download WAV</a>
             <a class="button secondary dark" data-email-jingle-brief href="mailto:jackjin1997@gmail.com?subject=AI%20music%20generator%20brief">Email brief</a>
             <a class="button secondary dark" data-open-jingle-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml">Open order</a>
+            <a class="button secondary dark" href="ai-jingle-quote.html">Quote/payment packet</a>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Payment proof</a>
           </div>
           <div class="sketch-status" data-jingle-sketch-status role="status">
             Browser sketch ready after you choose a use case. This is a lightweight local audio draft, not the paid AI-assisted final.
           </div>
           <textarea class="brief-output" data-jingle-output rows="14" readonly aria-label="Generated AI music order packet"></textarea>
+          <textarea class="brief-output" data-jingle-acceptance-output rows="12" readonly aria-label="Generated AI music acceptance and payment packet"></textarea>
         </form>
       </section>
 

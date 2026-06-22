@@ -139,6 +139,9 @@ if (intakeForm) {
 const jingleForm = document.querySelector("[data-jingle-form]");
 let currentSketchUrl = "";
 const jingleEmailRecipient = "jackjin1997@gmail.com";
+const ethereumPaymentAddress = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
+const solanaPaymentAddress = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
+const paymentProofUrl = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
 
 function mailtoHref(subject, body) {
   return `mailto:${jingleEmailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -146,6 +149,11 @@ function mailtoHref(subject, body) {
 
 function compactTitle(value, fallback = "brand") {
   return clean(value, fallback).replace(/\s+/g, " ").slice(0, 80);
+}
+
+function packageAmount(value) {
+  const match = String(value || "").match(/USD\s+\$(\d+)/i);
+  return match ? `USD $${match[1]}` : "USD $29";
 }
 
 function buildJinglePacket(form) {
@@ -197,6 +205,43 @@ function buildJinglePacket(form) {
     "- Do not imitate named artists, clone living voices, or include third-party lyrics unless rights are provided.",
     "- Payment is requested only after the brief and package are accepted in writing.",
     "- AI-generated music may have copyright-registration limits; this is not legal clearance.",
+  ].join("\n");
+}
+
+function buildJingleAcceptancePacket(form) {
+  const data = new FormData(form);
+  const brand = clean(data.get("brand"), "Brand TBD");
+  const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
+  const usage = clean(data.get("usage"), "8-12s local ad hook");
+  const timing = clean(data.get("timing"), "48h target after accepted brief");
+  const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const amount = packageAmount(selectedPackage);
+
+  return [
+    "## Acceptance and payment handoff",
+    "",
+    "Use this only after the written brief and selected package are accepted.",
+    "",
+    `Package: ${selectedPackage}`,
+    `Amount: ${amount} equivalent`,
+    `Brand/show/project: ${brand}`,
+    `Scope: ${usage}`,
+    `Required line or tagline: ${tagline}`,
+    `Delivery target: ${timing} and payment confirmation`,
+    "",
+    "Acceptance reply:",
+    `I accept the ${selectedPackage} for ${brand}. Scope: ${usage}. Required line/tagline: ${tagline}. Payment timing: after written brief acceptance only. I will not request known-artist soundalikes, living voice clones, or third-party lyrics without rights.`,
+    "",
+    "Payment paths after acceptance:",
+    `Ethereum address for ETH or ERC-20 USDC/USDT/DAI: ${ethereumPaymentAddress}`,
+    `Solana address for SOL or SPL USDC: ${solanaPaymentAddress}`,
+    `Payment proof form: ${paymentProofUrl}`,
+    "",
+    "Start rule:",
+    "The delivery target starts after written brief acceptance and verifiable payment confirmation.",
+    "",
+    "Usage guardrails:",
+    "AI-generated music can have copyright-registration limits; delivery includes usage notes, not legal clearance.",
   ].join("\n");
 }
 
@@ -349,6 +394,7 @@ async function playJingleSketch(form) {
 function updateJingleBrief() {
   if (!jingleForm) return;
   const output = jingleForm.querySelector("[data-jingle-output]");
+  const acceptanceOutput = jingleForm.querySelector("[data-jingle-acceptance-output]");
   const openLink = jingleForm.querySelector("[data-open-jingle-brief]");
   const emailLink = jingleForm.querySelector("[data-email-jingle-brief]");
   const packet = buildJinglePacket(jingleForm);
@@ -357,6 +403,9 @@ function updateJingleBrief() {
   const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
   const title = `${titlePrefix}: ${brand}`;
   output.value = packet;
+  if (acceptanceOutput) {
+    acceptanceOutput.value = buildJingleAcceptancePacket(jingleForm);
+  }
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
   if (emailLink) {
     emailLink.href = mailtoHref(`${emailPrefix}: ${brand}`, packet);
@@ -385,6 +434,21 @@ if (jingleForm) {
       setButtonText(event.currentTarget, "Select");
     }
   });
+
+  const copyAcceptanceButton = jingleForm.querySelector("[data-copy-jingle-acceptance]");
+  if (copyAcceptanceButton) {
+    copyAcceptanceButton.addEventListener("click", async (event) => {
+      updateJingleBrief();
+      const output = jingleForm.querySelector("[data-jingle-acceptance-output]");
+      try {
+        await navigator.clipboard.writeText(output.value);
+        setButtonText(event.currentTarget, "Copied");
+      } catch {
+        output.select();
+        setButtonText(event.currentTarget, "Select");
+      }
+    });
+  }
 
   jingleForm.querySelector("[data-play-jingle-sketch]").addEventListener("click", async () => {
     await playJingleSketch(jingleForm);

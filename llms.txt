@@ -46,7 +46,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## AI Music Offer
 
-- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, dynamic email brief, and order-form link.
+- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, dynamic email brief, generated acceptance/payment handoff, payment proof link, and order-form link.
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html for cold buyers who need one 8-12 second branded hook direction, production prompt, rough cut note, usage guardrails, and email-first intake before any payment request.
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html for small businesses, local services, and agencies that need one 8-12 second local ad hook, radio ID, social promo cue, or 15/30/60 second audio ad direction.
@@ -60,7 +60,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Deliverables: selected AI-assisted jingle/ad music cuts, prompt or lyric sheet, source tool summary, revision notes, and usage memo.
 - Public sample audio: coffee shop hook, business podcast intro, and radio ID/drop WAV samples are embedded on the AI Jingle Generator page.
 - Static MVP demo: the AI Jingle page and AI Music Generator storefront can generate local browser audio sketches and downloadable WAV drafts from the order brief. This is a lightweight preview, not the paid AI-assisted final.
-- Order ops: email brief to jackjin1997@gmail.com for non-GitHub buyers, or `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` for tracked issue intake; `.github/workflows/respond-ai-jingle-order.yml` posts next steps, payment timing, and rights guardrails for issue orders.
+- Order ops: email brief to jackjin1997@gmail.com for non-GitHub buyers, generated acceptance/payment handoff after selected package acceptance, or `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` for tracked issue intake; `.github/workflows/respond-ai-jingle-order.yml` posts next steps, payment timing, and rights guardrails for issue orders.
 - Monitoring: `scripts/check-goal-status.mjs` treats `ai-jingle-order` issues and USD $29+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
 - Fulfillment templates: `templates/ai-jingle-invoice.md`, `templates/ai-jingle-receipt.md`, and `templates/ai-jingle-delivery-note.md` cover invoice, receipt, and delivery handoff for paid jingle work.
 - Guardrails: avoid known-artist soundalikes, living voice clones, third-party lyrics without rights, and vague ownership claims. AI-generated music may have copyright-registration limits.

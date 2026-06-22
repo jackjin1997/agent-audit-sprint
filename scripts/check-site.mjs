@@ -765,6 +765,19 @@ try {
     if (!decodeURIComponent(aiMusicGeneratedOrderHref).includes("AI music brief: Quick Fit Studio")) {
       throw new Error(`AI music generator dynamic order link missing brand title in ${viewport.name}`);
     }
+    const aiMusicAcceptancePacket = await page.locator("[data-jingle-acceptance-output]").inputValue();
+    if (
+      !aiMusicAcceptancePacket.includes("## Acceptance and payment handoff") ||
+      !aiMusicAcceptancePacket.includes("Use this only after the written brief and selected package are accepted") ||
+      !aiMusicAcceptancePacket.includes("Amount: USD $29 equivalent") ||
+      !aiMusicAcceptancePacket.includes("I accept the USD $29 Founding Hook Sketch for Quick Fit Studio") ||
+      !aiMusicAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
+      !aiMusicAcceptancePacket.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
+      !aiMusicAcceptancePacket.includes("5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM") ||
+      !aiMusicAcceptancePacket.includes("payment-confirmation.yml")
+    ) {
+      throw new Error(`AI music generator acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
+    }
     const aiMusicSketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
     if (!aiMusicSketchStatus.includes("Browser sketch ready") || !aiMusicSketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
       throw new Error(`AI music generator sketch status missing ready or paid-delivery copy in ${viewport.name}`);

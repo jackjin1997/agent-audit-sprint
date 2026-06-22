@@ -519,6 +519,14 @@ try {
     if (!indexBody.includes("AI jingle generator")) {
       throw new Error(`Index page missing AI jingle generator entry in ${viewport.name}`);
     }
+    if (
+      !indexBody.includes("AI Music Generator storefront for a $29 first order") ||
+      !indexBody.includes("Open the AI Music Generator storefront") ||
+      !indexBody.includes("Copy the $29 AI music brief") ||
+      !indexBody.includes("Payment after written brief acceptance only")
+    ) {
+      throw new Error(`Index page missing AI music storefront promotion in ${viewport.name}`);
+    }
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
     }
@@ -579,6 +587,10 @@ try {
     if (buttons < 2) throw new Error(`Expected CTA buttons in ${viewport.name}`);
     const discussionLinks = await page.locator("a[href='https://github.com/jackjin1997/agent-audit-sprint/discussions/1']").count();
     if (discussionLinks < 1) throw new Error(`Expected booking FAQ link in ${viewport.name}`);
+    const indexAiMusicLinks = await page.locator("a[href='ai-music-generator.html'], a[href='ai-music-generator.html#brief']").count();
+    if (indexAiMusicLinks < 3) {
+      throw new Error(`Index page missing AI music storefront links in ${viewport.name}`);
+    }
 
     await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
     await page.locator("[name='scope']").fill("Review MCP transport, write tools, and auth gates.");

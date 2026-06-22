@@ -30,6 +30,7 @@ const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
+const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
 const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
@@ -50,6 +51,7 @@ const requiredFiles = [
   "quick-scan.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
+  "ai-podcast-intro-generator.html",
   "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
   "quote.html",
@@ -166,6 +168,9 @@ if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
 }
 if (!llmsText.includes("AI Jingle $29 hook sketch")) {
   throw new Error("llms.txt is missing the AI Jingle $29 hook sketch page");
+}
+if (!llmsText.includes("AI Podcast Intro Generator")) {
+  throw new Error("llms.txt is missing the AI Podcast Intro Generator page");
 }
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
@@ -711,6 +716,65 @@ try {
     }
     const hookSketchOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (hookSketchOverflow) throw new Error(`AI jingle hook sketch horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiPodcastIntro, { waitUntil: "networkidle" });
+    const podcastIntroTitle = await page.locator("h1").innerText();
+    if (!podcastIntroTitle.includes("AI Podcast Intro Generator")) {
+      throw new Error(`Unexpected AI podcast intro h1 in ${viewport.name}: ${podcastIntroTitle}`);
+    }
+    const podcastIntroText = await page.locator("body").innerText();
+    if (
+      !podcastIntroText.includes("USD $29 Founding Hook Sketch") ||
+      !podcastIntroText.includes("Email intro brief") ||
+      !podcastIntroText.includes("Open order form") ||
+      !podcastIntroText.includes("Copy the short brief before asking for payment") ||
+      !podcastIntroText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !podcastIntroText.includes("Spotify podcast ads overview") ||
+      !podcastIntroText.includes("ElevenLabs Music commercial-use note") ||
+      !podcastIntroText.includes("Suno ownership and copyright help note") ||
+      !podcastIntroText.includes("Podcast sponsor pack")
+    ) {
+      throw new Error(`AI podcast intro page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const podcastIntroHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!podcastIntroHeroLoaded) throw new Error(`AI podcast intro hero image failed to load in ${viewport.name}`);
+    const podcastIntroAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      podcastIntroAudioSources.length !== 3 ||
+      !podcastIntroAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !podcastIntroAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !podcastIntroAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI podcast intro sample audio sources missing in ${viewport.name}`);
+    }
+    const podcastIntroBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !podcastIntroBrief.includes("Package: USD $29 Founding Hook Sketch") ||
+      !podcastIntroBrief.includes("Primary use: 8-12s intro hook") ||
+      !podcastIntroBrief.includes("Delivery: one selected 8-12 second podcast intro hook sketch") ||
+      !podcastIntroBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI podcast intro brief missing package, delivery, or payment copy in ${viewport.name}`);
+    }
+    const podcastIntroOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (podcastIntroOrderLinks < 1) {
+      throw new Error(`AI podcast intro page missing order link in ${viewport.name}`);
+    }
+    const podcastIntroEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      podcastIntroEmailLinks.length < 2 ||
+      !podcastIntroEmailLinks.every((href) => href.includes("AI podcast intro brief")) ||
+      !podcastIntroEmailLinks.every((href) => href.includes("USD $29 Founding Hook Sketch")) ||
+      !podcastIntroEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI podcast intro page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const podcastIntroOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (podcastIntroOverflow) throw new Error(`AI podcast intro horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(podcastSponsorJingle, { waitUntil: "networkidle" });
     const podcastSponsorTitle = await page.locator("h1").innerText();

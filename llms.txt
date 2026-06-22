@@ -9,6 +9,7 @@ GitHub: https://github.com/jackjin1997
 Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
 AI Jingle $29 hook sketch page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
+AI Podcast Intro Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html
 AI Jingle email brief: jackjin1997@gmail.com
 Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
@@ -20,6 +21,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
+- AI Podcast Intro Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html
 - Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI Jingle email brief: mailto:jackjin1997@gmail.com
@@ -38,10 +40,11 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html for cold buyers who need one 8-12 second branded hook direction, production prompt, rough cut note, usage guardrails, and email-first intake before any payment request.
+- AI Podcast Intro Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html for podcast hosts and creators who need one 8-12 second intro hook, outro bump, segment sting, or sponsor transition before a full sponsor audio pack.
 - Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html for podcast hosts and media-kit owners selling sponsor inventory, host-read ads, branded segments, and sponsor social clips.
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Paid packages: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, USD $399 Sonic Launch Kit.
-- Best-fit buyers: small businesses, podcast hosts, YouTube/TikTok creators, radio/DJ shows, and local ad campaigns that need 15/30/60 second branded audio.
+- Best-fit buyers: small businesses, podcast hosts, YouTube/TikTok creators, radio/DJ shows, and local ad campaigns that need 8-12 second hooks or 15/30/60 second branded audio.
 - Deliverables: selected AI-assisted jingle/ad music cuts, prompt or lyric sheet, source tool summary, revision notes, and usage memo.
 - Public sample audio: coffee shop hook, business podcast intro, and radio ID/drop WAV samples are embedded on the AI Jingle Generator page.
 - Static MVP demo: the page can generate a local browser audio sketch and downloadable WAV draft from the order brief. This is a lightweight preview, not the paid AI-assisted final.

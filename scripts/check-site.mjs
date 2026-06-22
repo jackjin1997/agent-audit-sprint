@@ -32,6 +32,7 @@ const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
 const aiRealEstateListingMusic = `file://${resolve(root, "ai-real-estate-listing-music.html")}`;
+const aiWeddingVideoMusic = `file://${resolve(root, "ai-wedding-video-music.html")}`;
 const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
 const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
@@ -55,6 +56,7 @@ const requiredFiles = [
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
   "ai-real-estate-listing-music.html",
+  "ai-wedding-video-music.html",
   "ai-podcast-intro-generator.html",
   "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
@@ -181,6 +183,9 @@ if (!llmsText.includes("AI Commercial Jingle Generator")) {
 }
 if (!llmsText.includes("AI Real Estate Listing Music Generator")) {
   throw new Error("llms.txt is missing the AI Real Estate Listing Music Generator page");
+}
+if (!llmsText.includes("AI Wedding Video Music Generator")) {
+  throw new Error("llms.txt is missing the AI Wedding Video Music Generator page");
 }
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
@@ -845,6 +850,66 @@ try {
     }
     const realEstateListingMusicOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (realEstateListingMusicOverflow) throw new Error(`AI real estate listing music horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiWeddingVideoMusic, { waitUntil: "networkidle" });
+    const weddingVideoMusicTitle = await page.locator("h1").innerText();
+    if (!weddingVideoMusicTitle.includes("AI Wedding Video Music Generator")) {
+      throw new Error(`Unexpected AI wedding video music h1 in ${viewport.name}: ${weddingVideoMusicTitle}`);
+    }
+    const weddingVideoMusicText = await page.locator("body").innerText();
+    if (
+      !weddingVideoMusicText.includes("USD $29 Wedding Highlight Soundtrack Sketch") ||
+      !weddingVideoMusicText.includes("Email wedding brief") ||
+      !weddingVideoMusicText.includes("Open order form") ||
+      !weddingVideoMusicText.includes("Copy the wedding music brief before asking for payment") ||
+      !weddingVideoMusicText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !weddingVideoMusicText.includes("The Knot wedding videographer cost guide") ||
+      !weddingVideoMusicText.includes("Musicbed wedding video music licensing guide") ||
+      !weddingVideoMusicText.includes("Musicbed wedding single-song license note") ||
+      !weddingVideoMusicText.includes("Soundstripe wedding video songs guide") ||
+      !weddingVideoMusicText.includes("Listing video music")
+    ) {
+      throw new Error(`AI wedding video music page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const weddingVideoMusicHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!weddingVideoMusicHeroLoaded) throw new Error(`AI wedding video music hero image failed to load in ${viewport.name}`);
+    const weddingVideoMusicAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      weddingVideoMusicAudioSources.length !== 3 ||
+      !weddingVideoMusicAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !weddingVideoMusicAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !weddingVideoMusicAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI wedding video music sample audio sources missing in ${viewport.name}`);
+    }
+    const weddingVideoMusicBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !weddingVideoMusicBrief.includes("Package: USD $29 Wedding Highlight Soundtrack Sketch") ||
+      !weddingVideoMusicBrief.includes("Primary use: 15s teaser") ||
+      !weddingVideoMusicBrief.includes("Delivery: one selected 15-30 second wedding highlight soundtrack sketch") ||
+      !weddingVideoMusicBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI wedding video music brief missing package, delivery, or payment copy in ${viewport.name}`);
+    }
+    const weddingVideoMusicOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (weddingVideoMusicOrderLinks < 1) {
+      throw new Error(`AI wedding video music page missing order link in ${viewport.name}`);
+    }
+    const weddingVideoMusicEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      weddingVideoMusicEmailLinks.length < 2 ||
+      !weddingVideoMusicEmailLinks.every((href) => href.includes("AI wedding video music brief")) ||
+      !weddingVideoMusicEmailLinks.every((href) => href.includes("USD $29 Wedding Highlight Soundtrack Sketch")) ||
+      !weddingVideoMusicEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI wedding video music page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const weddingVideoMusicOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (weddingVideoMusicOverflow) throw new Error(`AI wedding video music horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiPodcastIntro, { waitUntil: "networkidle" });
     const podcastIntroTitle = await page.locator("h1").innerText();

@@ -12,7 +12,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the focused $29 hook sketch page, commercial jingle page, real estate listing music page, podcast intro page, broad generator, public sample audio, local browser sketch demo, downloadable WAV draft, email brief path, and issue autoresponder are live
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the focused $29 hook sketch page, commercial jingle page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, local browser sketch demo, downloadable WAV draft, email brief path, and issue autoresponder are live
 
 ## Files
 
@@ -29,6 +29,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
 - `ai-real-estate-listing-music.html` - real-estate USD $29 listing video soundtrack page for property reels, walkthroughs, open-house teasers, and agent media teams
+- `ai-wedding-video-music.html` - wedding USD $29 highlight soundtrack page for wedding videographers, teaser reels, social cuts, and filmmaker briefs
 - `ai-podcast-intro-generator.html` - creator-facing USD $29 podcast intro hook page for show openers, outro bumps, segment stings, and podcast channels that are not ready for sponsor packs
 - `podcast-sponsor-jingle.html` - narrow $149 podcast sponsor audio hook landing page for host-read ads, branded segments, media-kit upsells, social promo clips, and non-GitHub email brief intake
 - `ai-jingle-quote.html` / `templates/ai-jingle-quote.md` - fixed quote, acceptance text, and payment packet for the AI jingle package ladder
@@ -83,6 +84,7 @@ Browser:
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
 - AI real estate listing music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
+- AI wedding video music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-wedding-video-music.html
 - AI podcast intro generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html
 - Podcast sponsor jingle pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html

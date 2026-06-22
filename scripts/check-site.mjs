@@ -31,6 +31,7 @@ const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
+const aiRealEstateListingMusic = `file://${resolve(root, "ai-real-estate-listing-music.html")}`;
 const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
 const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
@@ -53,6 +54,7 @@ const requiredFiles = [
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
+  "ai-real-estate-listing-music.html",
   "ai-podcast-intro-generator.html",
   "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
@@ -176,6 +178,9 @@ if (!llmsText.includes("AI Podcast Intro Generator")) {
 }
 if (!llmsText.includes("AI Commercial Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Commercial Jingle Generator page");
+}
+if (!llmsText.includes("AI Real Estate Listing Music Generator")) {
+  throw new Error("llms.txt is missing the AI Real Estate Listing Music Generator page");
 }
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
@@ -780,6 +785,66 @@ try {
     }
     const commercialJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (commercialJingleOverflow) throw new Error(`AI commercial jingle horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiRealEstateListingMusic, { waitUntil: "networkidle" });
+    const realEstateListingMusicTitle = await page.locator("h1").innerText();
+    if (!realEstateListingMusicTitle.includes("AI Real Estate Listing Music Generator")) {
+      throw new Error(`Unexpected AI real estate listing music h1 in ${viewport.name}: ${realEstateListingMusicTitle}`);
+    }
+    const realEstateListingMusicText = await page.locator("body").innerText();
+    if (
+      !realEstateListingMusicText.includes("USD $29 Listing Video Soundtrack Sketch") ||
+      !realEstateListingMusicText.includes("Email listing brief") ||
+      !realEstateListingMusicText.includes("Open order form") ||
+      !realEstateListingMusicText.includes("Copy the listing music brief before asking for payment") ||
+      !realEstateListingMusicText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !realEstateListingMusicText.includes("NAR REALTOR Technology Survey") ||
+      !realEstateListingMusicText.includes("Zillow real estate social media video guide") ||
+      !realEstateListingMusicText.includes("Zillow Media Experts listing media packages") ||
+      !realEstateListingMusicText.includes("Soundstripe music for real estate videos guide") ||
+      !realEstateListingMusicText.includes("Commercial jingle")
+    ) {
+      throw new Error(`AI real estate listing music page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const realEstateListingMusicHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!realEstateListingMusicHeroLoaded) throw new Error(`AI real estate listing music hero image failed to load in ${viewport.name}`);
+    const realEstateListingMusicAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      realEstateListingMusicAudioSources.length !== 3 ||
+      !realEstateListingMusicAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !realEstateListingMusicAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !realEstateListingMusicAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI real estate listing music sample audio sources missing in ${viewport.name}`);
+    }
+    const realEstateListingMusicBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !realEstateListingMusicBrief.includes("Package: USD $29 Listing Video Soundtrack Sketch") ||
+      !realEstateListingMusicBrief.includes("Primary use: 15s vertical reel") ||
+      !realEstateListingMusicBrief.includes("Delivery: one selected 15-30 second listing video soundtrack sketch") ||
+      !realEstateListingMusicBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI real estate listing music brief missing package, delivery, or payment copy in ${viewport.name}`);
+    }
+    const realEstateListingMusicOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (realEstateListingMusicOrderLinks < 1) {
+      throw new Error(`AI real estate listing music page missing order link in ${viewport.name}`);
+    }
+    const realEstateListingMusicEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      realEstateListingMusicEmailLinks.length < 2 ||
+      !realEstateListingMusicEmailLinks.every((href) => href.includes("AI real estate listing music brief")) ||
+      !realEstateListingMusicEmailLinks.every((href) => href.includes("USD $29 Listing Video Soundtrack Sketch")) ||
+      !realEstateListingMusicEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI real estate listing music page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const realEstateListingMusicOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (realEstateListingMusicOverflow) throw new Error(`AI real estate listing music horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiPodcastIntro, { waitUntil: "networkidle" });
     const podcastIntroTitle = await page.locator("h1").innerText();

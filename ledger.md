@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-21.
+Last updated: 2026-06-22.
 
 ## Paid
 
@@ -12,12 +12,12 @@ Last updated: 2026-06-21.
 
 ## Chain Check
 
-Checked on 2026-06-21:
+Checked on 2026-06-22:
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
-| Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH | Not a $1,000 audit payment |
-| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL | Not a $1,000 audit payment |
+| Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH; USDC 0; USDT 0; DAI 0 | Not a verified paid audit package payment |
+| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL; SPL USDC 0 | Not a verified paid audit package payment |
 
 ## Submitted / Published Assets
 
@@ -107,7 +107,7 @@ Checked on 2026-06-21:
 | Request brief builder | `index.html#request`, `script.js` | Published |
 | Scanner paid-review handoff | `tools/agent-mcp-audit.mjs` Markdown output | Published |
 | GitHub Funding link | `.github/FUNDING.yml` | Published |
-| Search metadata | `llms.txt`, `robots.txt`, `sitemap.xml`, JSON-LD | Added machine-readable LLM/agent service summary for the fixed $1,000 Agent/MCP audit offer and distributed it via profile README and public gist |
+| Search metadata | `llms.txt`, `robots.txt`, `sitemap.xml`, JSON-LD | Added machine-readable LLM/agent service summary for the USD $99/$299/$1,000 Agent/MCP audit package ladder and distributed it via profile README and public gist |
 | GitHub Pages static mode | `.nojekyll` | Published |
 | npm package preparation | `agent-mcp-audit` | Prepared for npmjs.org; npm not logged in, not published |
 | CI validation workflow | `.github/workflows/validate.yml` | Published |
@@ -126,7 +126,7 @@ Checked on 2026-06-21:
 
 ## Next Actions
 
-1. Review and send the prepared scanner-led email drafts in `private-notes/email-drafts-2026-06-19.md`.
-2. Use `private-notes/qualified-prospects-2026-06-19.md` for the remaining contact-form/discussion targets.
-3. If an inbound issue appears, qualify the scope, then request payment before beginning private work.
+1. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
+2. Use the USD $99 Quick Scan Report or USD $299 Same-day Focused Review as the first paid ask when a prospect has a narrow public question.
+3. If an inbound issue appears, qualify the scope, then request payment only after written acceptance.
 4. Count revenue only after payment is confirmed on-chain or in an account statement.

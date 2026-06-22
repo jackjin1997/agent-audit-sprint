@@ -28,6 +28,7 @@ const mcpSecurityRadar = `file://${resolve(root, "mcp-security-radar.html")}`;
 const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
+const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -52,6 +53,7 @@ const requiredFiles = [
   "mcp-code-scanning-github-action.html",
   "scan.html",
   "quick-scan.html",
+  "ai-music-generator.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -168,6 +170,9 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 }
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
+}
+if (!llmsText.includes("AI Music Generator for Videos, Ads, and Podcasts")) {
+  throw new Error("llms.txt is missing the AI Music Generator storefront context");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -612,7 +617,8 @@ try {
       !aiJingleText.includes("Email AI jingle brief to jackjin1997@gmail.com") ||
       !aiJingleText.includes("Pay after accepted brief") ||
       !aiJingleText.includes("AI-generated music may not be copyright-registerable") ||
-      !aiJingleText.includes("Open AI jingle order form")
+      !aiJingleText.includes("Open AI jingle order form") ||
+      !aiJingleText.includes("AI music storefront")
     ) {
       throw new Error(`AI jingle page missing package, payment, rights, or order copy in ${viewport.name}`);
     }
@@ -676,6 +682,66 @@ try {
     const aiJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiJingleOverflow) throw new Error(`AI jingle horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(aiMusicGenerator, { waitUntil: "networkidle" });
+    const aiMusicGeneratorTitle = await page.locator("h1").innerText();
+    if (!aiMusicGeneratorTitle.includes("AI Music Generator for Videos, Ads, and Podcasts")) {
+      throw new Error(`Unexpected AI music generator h1 in ${viewport.name}: ${aiMusicGeneratorTitle}`);
+    }
+    const aiMusicGeneratorText = await page.locator("body").innerText();
+    if (
+      !aiMusicGeneratorText.includes("USD $29 Founding Hook Sketch") ||
+      !aiMusicGeneratorText.includes("Email AI music brief") ||
+      !aiMusicGeneratorText.includes("Open order form") ||
+      !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
+      !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
+      !aiMusicGeneratorText.includes("Real Estate Listing Music") ||
+      !aiMusicGeneratorText.includes("Wedding Video Music") ||
+      !aiMusicGeneratorText.includes("Podcast Intro") ||
+      !aiMusicGeneratorText.includes("Podcast sponsor pack")
+    ) {
+      throw new Error(`AI music generator page missing package, router, payment, or CTA copy in ${viewport.name}`);
+    }
+    const aiMusicGeneratorHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!aiMusicGeneratorHeroLoaded) throw new Error(`AI music generator hero image failed to load in ${viewport.name}`);
+    const aiMusicGeneratorAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      aiMusicGeneratorAudioSources.length !== 3 ||
+      !aiMusicGeneratorAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !aiMusicGeneratorAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !aiMusicGeneratorAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI music generator sample audio sources missing in ${viewport.name}`);
+    }
+    const aiMusicGeneratorBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !aiMusicGeneratorBrief.includes("Package: USD $29 Founding Hook Sketch") ||
+      !aiMusicGeneratorBrief.includes("Use case: local ad") ||
+      !aiMusicGeneratorBrief.includes("Delivery: one selected short AI-assisted music sketch") ||
+      !aiMusicGeneratorBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music generator brief missing package, delivery, use-case, or payment copy in ${viewport.name}`);
+    }
+    const aiMusicGeneratorOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (aiMusicGeneratorOrderLinks < 1) {
+      throw new Error(`AI music generator page missing order link in ${viewport.name}`);
+    }
+    const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      aiMusicGeneratorEmailLinks.length < 2 ||
+      !aiMusicGeneratorEmailLinks.every((href) => href.includes("AI music generator brief")) ||
+      !aiMusicGeneratorEmailLinks.every((href) => href.includes("USD $29 Founding Hook Sketch")) ||
+      !aiMusicGeneratorEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI music generator page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(aiJingleHookSketch, { waitUntil: "networkidle" });
     const hookSketchTitle = await page.locator("h1").innerText();
     if (!hookSketchTitle.includes("$29 AI Jingle Hook Sketch")) {
@@ -689,7 +755,8 @@ try {
       !hookSketchText.includes("One selected 8-12 second branded hook sketch") ||
       !hookSketchText.includes("Payment is requested only after the written brief and package are accepted") ||
       !hookSketchText.includes("No known-artist soundalikes") ||
-      !hookSketchText.includes("General AI jingle page")
+      !hookSketchText.includes("General AI jingle page") ||
+      !hookSketchText.includes("AI music storefront")
     ) {
       throw new Error(`AI jingle hook sketch page missing package, payment, rights, or CTA copy in ${viewport.name}`);
     }
@@ -747,7 +814,8 @@ try {
       !commercialJingleText.includes("AudioGo small business audio advertising guide") ||
       !commercialJingleText.includes("SiriusXM small business audio marketing guide") ||
       !commercialJingleText.includes("SBA local radio advertising note") ||
-      !commercialJingleText.includes("General AI jingle page")
+      !commercialJingleText.includes("General AI jingle page") ||
+      !commercialJingleText.includes("AI music storefront")
     ) {
       throw new Error(`AI commercial jingle page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
     }
@@ -807,7 +875,8 @@ try {
       !realEstateListingMusicText.includes("Zillow real estate social media video guide") ||
       !realEstateListingMusicText.includes("Zillow Media Experts listing media packages") ||
       !realEstateListingMusicText.includes("Soundstripe music for real estate videos guide") ||
-      !realEstateListingMusicText.includes("Commercial jingle")
+      !realEstateListingMusicText.includes("Commercial jingle") ||
+      !realEstateListingMusicText.includes("AI music storefront")
     ) {
       throw new Error(`AI real estate listing music page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
     }
@@ -867,7 +936,8 @@ try {
       !weddingVideoMusicText.includes("Musicbed wedding video music licensing guide") ||
       !weddingVideoMusicText.includes("Musicbed wedding single-song license note") ||
       !weddingVideoMusicText.includes("Soundstripe wedding video songs guide") ||
-      !weddingVideoMusicText.includes("Listing video music")
+      !weddingVideoMusicText.includes("Listing video music") ||
+      !weddingVideoMusicText.includes("AI music storefront")
     ) {
       throw new Error(`AI wedding video music page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
     }
@@ -926,7 +996,8 @@ try {
       !podcastIntroText.includes("Spotify podcast ads overview") ||
       !podcastIntroText.includes("ElevenLabs Music commercial-use note") ||
       !podcastIntroText.includes("Suno ownership and copyright help note") ||
-      !podcastIntroText.includes("Podcast sponsor pack")
+      !podcastIntroText.includes("Podcast sponsor pack") ||
+      !podcastIntroText.includes("AI music storefront")
     ) {
       throw new Error(`AI podcast intro page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
     }
@@ -984,7 +1055,8 @@ try {
       !podcastSponsorText.includes("jackjin1997@gmail.com") ||
       !podcastSponsorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !podcastSponsorText.includes("Acast 2026 podcast advertising guide") ||
-      !podcastSponsorText.includes("Open order form")
+      !podcastSponsorText.includes("Open order form") ||
+      !podcastSponsorText.includes("AI music storefront")
     ) {
       throw new Error(`Podcast sponsor jingle page missing package, market, payment, or CTA copy in ${viewport.name}`);
     }
@@ -1034,7 +1106,8 @@ try {
       !aiJingleQuoteText.includes("Email brief") ||
       !aiJingleQuoteText.includes("AI-generated music can have copyright-registration limits") ||
       !aiJingleQuoteText.includes("Invoice template") ||
-      !aiJingleQuoteText.includes("Delivery note")
+      !aiJingleQuoteText.includes("Delivery note") ||
+      !aiJingleQuoteText.includes("AI music storefront")
     ) {
       throw new Error(`AI jingle quote page missing package, payment, or rights copy in ${viewport.name}`);
     }

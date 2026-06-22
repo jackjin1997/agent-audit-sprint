@@ -12,7 +12,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the focused $29 hook sketch page, commercial jingle page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, local browser sketch demo, downloadable WAV draft, email brief path, and issue autoresponder are live
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront, focused $29 hook sketch page, commercial jingle page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, local browser sketch demo, downloadable WAV draft, email brief path, and issue autoresponder are live
 
 ## Files
 
@@ -25,6 +25,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
+- `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
@@ -80,6 +81,7 @@ Run a quick local triage pass against an agent or MCP repo:
 Browser:
 
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
+- AI music generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 - AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html

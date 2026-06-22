@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -8,6 +8,7 @@ Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
 Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
+AI Music Generator storefront page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 AI Jingle $29 hook sketch page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 AI Commercial Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
 AI Real Estate Listing Music Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
@@ -22,6 +23,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
+- AI Music Generator for Videos, Ads, and Podcasts: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
@@ -44,6 +46,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## AI Music Offer
 
+- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros.
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html for cold buyers who need one 8-12 second branded hook direction, production prompt, rough cut note, usage guardrails, and email-first intake before any payment request.
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html for small businesses, local services, and agencies that need one 8-12 second local ad hook, radio ID, social promo cue, or 15/30/60 second audio ad direction.

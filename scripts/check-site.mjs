@@ -30,6 +30,7 @@ const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
+const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
 const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
 const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
@@ -51,6 +52,7 @@ const requiredFiles = [
   "quick-scan.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
+  "ai-commercial-jingle-generator.html",
   "ai-podcast-intro-generator.html",
   "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
@@ -171,6 +173,9 @@ if (!llmsText.includes("AI Jingle $29 hook sketch")) {
 }
 if (!llmsText.includes("AI Podcast Intro Generator")) {
   throw new Error("llms.txt is missing the AI Podcast Intro Generator page");
+}
+if (!llmsText.includes("AI Commercial Jingle Generator")) {
+  throw new Error("llms.txt is missing the AI Commercial Jingle Generator page");
 }
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
@@ -716,6 +721,65 @@ try {
     }
     const hookSketchOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (hookSketchOverflow) throw new Error(`AI jingle hook sketch horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiCommercialJingle, { waitUntil: "networkidle" });
+    const commercialJingleTitle = await page.locator("h1").innerText();
+    if (!commercialJingleTitle.includes("AI Commercial Jingle Generator")) {
+      throw new Error(`Unexpected AI commercial jingle h1 in ${viewport.name}: ${commercialJingleTitle}`);
+    }
+    const commercialJingleText = await page.locator("body").innerText();
+    if (
+      !commercialJingleText.includes("USD $29 Local Ad Hook Sketch") ||
+      !commercialJingleText.includes("Email local ad brief") ||
+      !commercialJingleText.includes("Open order form") ||
+      !commercialJingleText.includes("Copy the local ad brief before asking for payment") ||
+      !commercialJingleText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !commercialJingleText.includes("AudioGo small business audio advertising guide") ||
+      !commercialJingleText.includes("SiriusXM small business audio marketing guide") ||
+      !commercialJingleText.includes("SBA local radio advertising note") ||
+      !commercialJingleText.includes("General AI jingle page")
+    ) {
+      throw new Error(`AI commercial jingle page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const commercialJingleHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!commercialJingleHeroLoaded) throw new Error(`AI commercial jingle hero image failed to load in ${viewport.name}`);
+    const commercialJingleAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      commercialJingleAudioSources.length !== 3 ||
+      !commercialJingleAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !commercialJingleAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !commercialJingleAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI commercial jingle sample audio sources missing in ${viewport.name}`);
+    }
+    const commercialJingleBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !commercialJingleBrief.includes("Package: USD $29 Local Ad Hook Sketch") ||
+      !commercialJingleBrief.includes("Primary use: 8-12s local ad hook") ||
+      !commercialJingleBrief.includes("Delivery: one selected 8-12 second local ad hook sketch") ||
+      !commercialJingleBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI commercial jingle brief missing package, delivery, or payment copy in ${viewport.name}`);
+    }
+    const commercialJingleOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (commercialJingleOrderLinks < 1) {
+      throw new Error(`AI commercial jingle page missing order link in ${viewport.name}`);
+    }
+    const commercialJingleEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      commercialJingleEmailLinks.length < 2 ||
+      !commercialJingleEmailLinks.every((href) => href.includes("AI commercial jingle brief")) ||
+      !commercialJingleEmailLinks.every((href) => href.includes("USD $29 Local Ad Hook Sketch")) ||
+      !commercialJingleEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI commercial jingle page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const commercialJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (commercialJingleOverflow) throw new Error(`AI commercial jingle horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiPodcastIntro, { waitUntil: "networkidle" });
     const podcastIntroTitle = await page.locator("h1").innerText();

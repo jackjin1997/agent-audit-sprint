@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-Static landing page and sales assets for a $1,000 fixed-price engineering audit service.
+Static landing page and sales assets for paid Agent/MCP security review packages.
 
 Live target after GitHub Pages is enabled:
 
@@ -8,10 +8,10 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 ## Offer
 
-- 48-hour async audit for one agent, MCP server, or tool-using product slice
+- USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
-- Payment-ready via ETH or SOL addresses, with invoice-first discussion available before work starts
+- Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
 
 ## Files
 
@@ -23,7 +23,8 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
-- `quote.html` / `templates/quote.md` - fixed $1,000 quote, acceptance text, and copyable payment packet
+- `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
+- `quote.html` / `templates/quote.md` - fixed quote, acceptance text, and copyable payment packet
 - `trading-mcp-security-audit.html` / `workspace-mcp-security-audit.html` / `cloud-database-mcp-security-audit.html` / `browser-automation-mcp-security-audit.html` - vertical landing pages for high-risk MCP buyer segments
 - `samples.html` - public sample report index and conversion page
 - `checklist.html` / `docs/mcp-security-audit-checklist.md` - MCP security audit checklist content page
@@ -36,6 +37,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
 - `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues and ETH/SOL stablecoin/native payment signals
+- `scripts/find-high-intent-leads.mjs` - GitHub issue search helper for current agent/MCP security, auth, scanner, and transport discussions; writes private lead shortlists without auto-posting
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
 - `.github/FUNDING.yml` - GitHub funding link pointing to the audit sprint offer
@@ -65,6 +67,7 @@ Browser:
 - LLM/agent summary: https://jackjin1997.github.io/agent-audit-sprint/llms.txt
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
+- Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Agent Radar scan briefs: https://jackjin1997.github.io/agent-audit-sprint/reports/browser-use-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openhands-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/smolagents-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openai-agents-python-security-scan.html
 - Sentinel dogfood AI agent audit sample: https://jackjin1997.github.io/agent-audit-sprint/reports/sentinel-agent-dogfood-audit.html
 - AgentGap dogfood agent config/MCP bridge audit sample: https://jackjin1997.github.io/agent-audit-sprint/reports/agentgap-agent-config-dogfood-audit.html
@@ -76,6 +79,7 @@ Browser:
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
 - Audit request packet: generated after each browser scan for copy/paste into a paid audit intake
+- Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
 
@@ -85,10 +89,12 @@ npm run audit:repo -- /path/to/repo
 npm --silent run audit:repo -- /path/to/repo --json
 node tools/agent-mcp-audit.mjs /path/to/repo --sarif > agent-mcp-audit.sarif
 node tools/agent-mcp-audit.mjs /path/to/repo --json
+node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 ```
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, redaction, tests, and CI. It is a triage helper, not a security certification.
 The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence.
+The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 
 Use it from GitHub Actions:
 

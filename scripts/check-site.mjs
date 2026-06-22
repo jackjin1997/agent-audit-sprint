@@ -27,6 +27,7 @@ const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`
 const mcpSecurityRadar = `file://${resolve(root, "mcp-security-radar.html")}`;
 const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action.html")}`;
 const scan = `file://${resolve(root, "scan.html")}`;
+const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
 const samples = `file://${resolve(root, "samples.html")}`;
 const trading = `file://${resolve(root, "trading-mcp-security-audit.html")}`;
@@ -42,6 +43,7 @@ const requiredFiles = [
   "mcp-security-radar.html",
   "mcp-code-scanning-github-action.html",
   "scan.html",
+  "quick-scan.html",
   "quote.html",
   "trading-mcp-security-audit.html",
   "workspace-mcp-security-audit.html",
@@ -100,6 +102,7 @@ const requiredFiles = [
   "scripts/comment-audit-intent.mjs",
   "scripts/comment-code-scanning-audit.mjs",
   "scripts/comment-payment-proof.mjs",
+  "scripts/find-high-intent-leads.mjs",
   "scripts/check-goal-status.mjs",
   "scripts/install-goal-monitor-launchd.mjs",
   "scripts/run-goal-monitor-loop.mjs",
@@ -107,6 +110,7 @@ const requiredFiles = [
   "docs/ai-agent-security-audit-service.md",
   "docs/mcp-security-audit-checklist.md",
   "templates/invoice.md",
+  "templates/quick-scan.md",
   "templates/quote.md",
   "templates/receipt.md",
   "templates/statement-of-work.md",
@@ -120,8 +124,8 @@ for (const file of requiredFiles) {
 }
 
 const llmsText = readFileSync(resolve(root, "llms.txt"), "utf8");
-if (!llmsText.includes("Fixed USD $1,000 async security audit")) {
-  throw new Error("llms.txt is missing the fixed-price service summary");
+if (!llmsText.includes("USD $99 quick scan") || !llmsText.includes("USD $299 focused review")) {
+  throw new Error("llms.txt is missing the package ladder summary");
 }
 if (!llmsText.includes("payment only after written scope acceptance")) {
   throw new Error("llms.txt is missing the payment timing guardrail");
@@ -219,6 +223,10 @@ const intentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comm
     ...process.env,
     INTENT_DRY_RUN: "true",
     ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $99 Quick Scan Report",
+      "",
       "### Project or repo URL",
       "",
       "https://github.com/example/agent-mcp",
@@ -238,11 +246,14 @@ const intentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comm
   },
   maxBuffer: 1024 * 1024,
 });
-if (!intentOutput.includes("Audit slot received")) {
+if (!intentOutput.includes("Audit package request received")) {
   throw new Error("Intent dry-run output is missing heading");
 }
 if (!intentOutput.includes("Do not send payment until scope is accepted")) {
   throw new Error("Intent dry-run output is missing payment guardrail");
+}
+if (!intentOutput.includes("USD $99 Quick Scan Report") || !intentOutput.includes("USD $99 equivalent")) {
+  throw new Error("Intent dry-run output is missing requested package price");
 }
 if (!intentOutput.includes("https://github.com/example/agent-mcp")) {
   throw new Error("Intent dry-run output is missing project URL");
@@ -255,6 +266,9 @@ if (!intentOutput.includes("audit-request.yml")) {
 }
 if (!intentOutput.includes("quote.html")) {
   throw new Error("Intent dry-run output is missing fixed quote link");
+}
+if (!intentOutput.includes("quick-scan.html")) {
+  throw new Error("Intent dry-run output is missing package ladder link");
 }
 if (!intentOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
   throw new Error("Intent dry-run output is missing shareable scanner link");
@@ -359,13 +373,16 @@ try {
     const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
     await page.goto(index, { waitUntil: "networkidle" });
     const title = await page.locator("h1").innerText();
-    if (!title.includes("$1,000")) throw new Error(`Unexpected h1 in ${viewport.name}: ${title}`);
+    if (!title.includes("Agent/MCP Security Review Packages")) throw new Error(`Unexpected h1 in ${viewport.name}: ${title}`);
     const indexBody = await page.locator("body").innerText();
     if (!indexBody.includes("invoice-first")) {
       throw new Error(`Index page missing invoice-first payment path in ${viewport.name}`);
     }
     if (!indexBody.includes("ERC-20 USDC/USDT/DAI") || !indexBody.includes("SPL USDC")) {
       throw new Error(`Index page missing stablecoin payment options in ${viewport.name}`);
+    }
+    if (!indexBody.includes("$99 quick scan") || !indexBody.includes("$299 same-day review")) {
+      throw new Error(`Index page missing package ladder in ${viewport.name}`);
     }
     if (!indexBody.includes("automated no-execution scanner triage")) {
       throw new Error(`Index page missing automated triage copy in ${viewport.name}`);
@@ -400,8 +417,8 @@ try {
     if (!indexBody.includes("Reserve audit slot")) {
       throw new Error(`Index page missing short slot reservation CTA in ${viewport.name}`);
     }
-    if (!indexBody.includes("Open the fixed $1,000 quote")) {
-      throw new Error(`Index page missing fixed quote link in ${viewport.name}`);
+    if (!indexBody.includes("Buy quick scan")) {
+      throw new Error(`Index page missing quick scan CTA in ${viewport.name}`);
     }
     if (!indexBody.includes("Compare all five sample reports")) {
       throw new Error(`Index page missing sample index link in ${viewport.name}`);
@@ -1003,9 +1020,31 @@ try {
     const scanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (scanOverflow) throw new Error(`Scanner horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(quickScan, { waitUntil: "networkidle" });
+    const quickScanTitle = await page.locator("h1").innerText();
+    if (!quickScanTitle.includes("Agent/MCP Quick Scan Packages")) {
+      throw new Error(`Unexpected quick scan h1 in ${viewport.name}: ${quickScanTitle}`);
+    }
+    const quickScanText = await page.locator("body").innerText();
+    if (
+      !quickScanText.includes("USD $99 Quick Scan Report") ||
+      !quickScanText.includes("USD $299 Same-day Focused Review") ||
+      !quickScanText.includes("USD $1,000 Full Audit Sprint") ||
+      !quickScanText.includes("Pay after scope acceptance") ||
+      !quickScanText.includes("Copy payment packet")
+    ) {
+      throw new Error(`Quick scan page missing package ladder or payment guardrail in ${viewport.name}`);
+    }
+    const quickScanCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!quickScanCta?.includes("paid-audit-intent.yml")) {
+      throw new Error(`Quick scan primary CTA missing package intake URL in ${viewport.name}`);
+    }
+    const quickScanOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (quickScanOverflow) throw new Error(`Quick scan horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(quote, { waitUntil: "networkidle" });
     const quoteTitle = await page.locator("h1").innerText();
-    if (!quoteTitle.includes("$1,000 Agent/MCP Audit Sprint Quote")) {
+    if (!quoteTitle.includes("Agent/MCP Security Review Quotes")) {
       throw new Error(`Unexpected quote h1 in ${viewport.name}: ${quoteTitle}`);
     }
     const quoteText = await page.locator("body").innerText();
@@ -1020,6 +1059,9 @@ try {
     }
     if (!quoteText.includes("Copy payment packet")) {
       throw new Error(`Quote page missing copyable payment packet action in ${viewport.name}`);
+    }
+    if (!quoteText.includes("USD $99 Quick Scan Report") || !quoteText.includes("USD $299 Same-day Focused Review")) {
+      throw new Error(`Quote page missing package ladder in ${viewport.name}`);
     }
     if (!quoteText.includes("Payment timing: after written scope acceptance only.")) {
       throw new Error(`Quote page missing payment packet timing guardrail in ${viewport.name}`);

@@ -3,20 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Fixed USD $1,000 quote and acceptance steps for the Agent/MCP Audit Sprint.">
+    <meta name="description" content="Fixed quote and acceptance steps for Agent/MCP security review packages: $99, $299, and $1,000.">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Zexu Jin">
     <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/quote.html">
-    <meta property="og:title" content="$1,000 Agent/MCP Audit Sprint Quote">
-    <meta property="og:description" content="Fixed quote, acceptance text, payment path, and delivery terms for one Agent/MCP audit sprint.">
+    <meta property="og:title" content="Agent/MCP Security Review Quotes">
+    <meta property="og:description" content="Quote, acceptance text, payment path, and delivery terms for $99, $299, and $1,000 Agent/MCP review packages.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/quote.html">
     <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="$1,000 Agent/MCP Audit Sprint Quote">
-    <meta name="twitter:description" content="Fixed quote, acceptance text, payment path, and delivery terms for one Agent/MCP audit sprint.">
+    <meta name="twitter:title" content="Agent/MCP Security Review Quotes">
+    <meta name="twitter:description" content="Quote, acceptance text, payment path, and delivery terms for $99, $299, and $1,000 Agent/MCP review packages.">
     <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
-    <title>$1,000 Agent/MCP Audit Sprint Quote</title>
+    <title>Agent/MCP Security Review Quotes</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -28,6 +28,7 @@
       <nav class="nav">
         <a href="mcp-security-audit-service.html">Service</a>
         <a href="scan.html">Scanner</a>
+        <a href="quick-scan.html">Quick Scan</a>
         <a href="quote.html">Quote</a>
         <a href="terms.html">Terms</a>
         <a href="index.html#payment">Pay</a>
@@ -36,13 +37,14 @@
 
     <main class="service-page">
       <section class="service-hero">
-        <p class="eyebrow">Fixed quote</p>
-        <h1>$1,000 Agent/MCP Audit Sprint Quote</h1>
+        <p class="eyebrow">Fixed quotes</p>
+        <h1>Agent/MCP Security Review Quotes</h1>
         <p>
-          This quote covers one MCP server, agent tool surface, or tool-using product slice. It is designed for teams that need a concise acceptance path before payment and delivery.
+          Choose the smallest paid package that answers the current decision: $99 quick scan, $299 focused review, or the $1,000 full sprint. Each package covers one MCP server, agent tool surface, or tool-using product slice.
         </p>
         <div class="service-actions">
-          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml">Reserve audit slot</a>
+          <a class="button primary" href="quick-scan.html">Compare packages</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml">Buy a package</a>
           <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Open full intake</a>
           <a class="button secondary dark" href="templates/quote.md">Markdown quote</a>
           <a class="button secondary dark" href="terms.html">Review terms</a>
@@ -51,10 +53,25 @@
 
       <section class="service-band">
         <div class="service-summary">
-          <div><span>Price</span><strong>USD $1,000 fixed</strong></div>
+          <div><span>Entry</span><strong>USD $99 quick scan</strong></div>
+          <div><span>Focused</span><strong>USD $299 review</strong></div>
           <div><span>Scope</span><strong>One repo or product slice</strong></div>
-          <div><span>Target</span><strong>48h after scope + payment</strong></div>
-          <div><span>Output</span><strong>Markdown report + fix plan</strong></div>
+          <div><span>Full</span><strong>USD $1,000 sprint</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Package ladder</p>
+          <h2>Start small, upgrade when risk justifies it</h2>
+          <p>
+            The $99 package is designed to get the first paid decision unstuck. The $299 package focuses on one risky flow. The $1,000 sprint is still the full review for a launch-critical repo or product slice.
+          </p>
+        </div>
+        <div class="service-list">
+          <div><strong>USD $99 Quick Scan Report:</strong> scanner result, boundary notes, top risks, and upgrade recommendation.</div>
+          <div><strong>USD $299 Same-day Focused Review:</strong> one risky flow with ranked findings, evidence, fix plan, and validation checklist.</div>
+          <div><strong>USD $1,000 Full Audit Sprint:</strong> full boundary map, ranked findings, test plan, launch notes, and practical fix plan.</div>
         </div>
       </section>
 

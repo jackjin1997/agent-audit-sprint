@@ -1,12 +1,23 @@
-name: Reserve audit slot
-description: Short buying-intent form for the $1,000 Agent/MCP Audit Sprint
-title: "Audit slot: <project name>"
+name: Buy audit package
+description: Short buying-intent form for $99, $299, or $1,000 Agent/MCP security review work
+title: "Audit package: <project name>"
 labels: ["audit-intent"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this shorter form when you want to reserve a $1,000 Agent/MCP Audit Sprint slot before writing a full scope. Do not paste secrets, private keys, cookies, customer data, or production logs with sensitive values.
+        Use this shorter form when you want a paid Agent/MCP security review without writing a full scope first. Do not paste secrets, private keys, cookies, customer data, or production logs with sensitive values.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: Pick the smallest package that answers the current decision.
+      options:
+        - USD $99 Quick Scan Report
+        - USD $299 Same-day Focused Review
+        - USD $1,000 Full Audit Sprint
+    validations:
+      required: true
   - type: input
     id: project
     attributes:
@@ -29,6 +40,7 @@ body:
       label: Timing
       description: When do you want the review to start after scope/payment confirmation?
       options:
+        - Same day if available
         - 48h target
         - This week
         - Date to discuss
@@ -60,5 +72,5 @@ body:
       options:
         - label: I will not include secrets, credentials, cookies, private keys, or sensitive customer data in this issue.
           required: true
-        - label: I understand this reserves discussion for a $1,000 fixed-price audit for one repo or product slice.
+        - label: I understand payment is only requested after written scope acceptance for the selected package.
           required: true

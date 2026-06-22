@@ -10,6 +10,7 @@ const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/iss
 const DISCUSSION_URL = "https://github.com/jackjin1997/agent-audit-sprint/discussions/1";
 const ETH_ADDRESS = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
 const SOL_ADDRESS = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
+const PACKAGE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html";
 
 function extractField(body = "", label) {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -30,33 +31,64 @@ function scannerLinkFor(project) {
   return `${SCANNER_URL}?repo=${encodeURIComponent(repoUrl)}`;
 }
 
+function packageDetails(rawChoice = "") {
+  const choice = rawChoice.trim();
+  if (choice.includes("$99") || /quick scan/i.test(choice)) {
+    return {
+      name: "USD $99 Quick Scan Report",
+      price: "USD $99",
+      target: "same day when available",
+      deliverable: "one Markdown triage report with scanner output, boundary notes, top risks, and upgrade recommendation",
+    };
+  }
+  if (choice.includes("$299") || /focused/i.test(choice)) {
+    return {
+      name: "USD $299 Same-day Focused Review",
+      price: "USD $299",
+      target: "same day when available",
+      deliverable: "focused review of one risky flow with evidence, ranked findings, and concrete fix plan",
+    };
+  }
+  return {
+    name: "USD $1,000 Full Audit Sprint",
+    price: "USD $1,000",
+    target: "48h after scope and payment confirmation",
+    deliverable: "full Agent/MCP audit sprint for one repo or product slice",
+  };
+}
+
 function renderIntentComment(issueBody = "") {
+  const requestedPackage = extractField(issueBody, "Requested package");
+  const packageInfo = packageDetails(requestedPackage);
   const project = extractField(issueBody, "Project or repo URL") || "the project";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || "48h target";
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
 
   return `${MARKER}
-## Audit slot received
+## Audit package request received
 
-Thanks for reserving a $1,000 Agent/MCP Audit Sprint slot for **${project}**.
+Thanks for requesting **${packageInfo.name}** for **${project}**.
 
 ### Next step
 
 Please reply in this issue with either:
 
-1. A full scope using the intake form: ${FULL_INTAKE_URL}
-2. A short scope note here covering the exact repo/product slice, delivery visibility, and highest concern
+1. A short scope note here covering the exact repo/product slice, delivery visibility, and highest concern
+2. A full scope using the intake form if this should become the full sprint: ${FULL_INTAKE_URL}
 
-Preferred contact recorded from the form: **${contact}**  
-Requested timing: **${timing}**  
+Preferred contact recorded from the form: **${contact}**
+Requested package: **${packageInfo.name}**
+Requested timing: **${timing}**
 Payment path: **${paymentPath}**
+Expected deliverable: ${packageInfo.deliverable}
 
-Fixed quote and copyable payment packet: ${QUOTE_URL}
+Package ladder and copyable payment packets: ${PACKAGE_URL}
+Full sprint quote: ${QUOTE_URL}
 
 ### Payment/start rule
 
-Do not send payment until scope is accepted in writing. After scope is accepted, pay USD $1,000 equivalent through the agreed path and submit the transaction hash or invoice settlement evidence here:
+Do not send payment until scope is accepted in writing. After scope is accepted, pay **${packageInfo.price} equivalent** through the agreed path and submit the transaction hash or invoice settlement evidence here:
 
 ${PAYMENT_PROOF_URL}
 
@@ -74,6 +106,7 @@ It does not upload code, install dependencies, or execute target code.
 
 Questions before booking can go here: ${DISCUSSION_URL}
 Service details: ${SERVICE_URL}
+Target delivery for this package: ${packageInfo.target}
 `;
 }
 

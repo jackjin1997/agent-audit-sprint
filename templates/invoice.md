@@ -1,4 +1,4 @@
-# Invoice: Agent/MCP Audit Sprint
+# Invoice: Agent/MCP Security Review
 
 Invoice date: `YYYY-MM-DD`
 Invoice ID: `AAS-YYYYMMDD-CLIENT`
@@ -9,7 +9,7 @@ Zexu Jin
 
 - GitHub: https://github.com/jackjin1997
 - Site: https://jzxwiki.com
-- Offer: https://jackjin1997.github.io/agent-audit-sprint/
+- Offer: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 
 ## Buyer
 
@@ -19,7 +19,7 @@ Zexu Jin
 
 ## Scope
 
-One fixed-price Agent/MCP Audit Sprint for one repo or product slice.
+One selected Agent/MCP security review package for one repo or product slice.
 
 Included:
 
@@ -40,8 +40,8 @@ Not included unless separately agreed:
 
 | Item | Amount |
 |---|---:|
-| Agent/MCP Audit Sprint | USD $1,000 |
-| Total due | USD $1,000 |
+| Agent/MCP security review package | USD $99 / USD $299 / USD $1,000 |
+| Total due | Confirmed package amount |
 
 ## Payment
 
@@ -78,6 +78,6 @@ https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-co
 
 ## Delivery
 
-Target turnaround: 48 hours after payment confirmation and scope acceptance.
+Target turnaround: same day when available for the $99/$299 packages, or 48 hours for the $1,000 full sprint, after payment confirmation and scope acceptance.
 
 Delivery artifact: private or public Markdown report, as agreed in the intake issue.

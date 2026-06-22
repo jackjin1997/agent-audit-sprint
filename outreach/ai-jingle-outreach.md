@@ -11,8 +11,9 @@ Use this playbook to sell the AI Jingle Generator offer without spam, fake scarc
 - Quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
 - Email brief path: jackjin1997@gmail.com for buyers who do not use GitHub
-- First paid ask: USD $149 Ad Music Pack
+- Fastest first paid ask: USD $29 Founding Hook Sketch
 - Entry package: USD $79 Jingle Hook Pack
+- Core package: USD $149 Ad Music Pack
 - Upsell: USD $399 Sonic Launch Kit
 
 ## Why This Wedge
@@ -40,10 +41,10 @@ The site should not compete as a generic song toy. Pitch a short, finished campa
 
 | Priority | Segment | Buy Trigger | First Ask |
 |---:|---|---|---|
-| 1 | Podcasts with sponsors or stale intros | They already publish audio, sell sponsor inventory, and need recognizable show or sponsor segment identity. | USD $149 Ad Music Pack |
-| 2 | Local businesses running short ads | They need hooks for Reels, TikTok, YouTube Shorts, radio, or events. | USD $79 or $149 |
+| 1 | Podcasts with sponsors or stale intros | They already publish audio, sell sponsor inventory, and need recognizable show or sponsor segment identity. | USD $29 hook sketch, then USD $149 Ad Music Pack |
+| 2 | Local businesses running short ads | They need hooks for Reels, TikTok, YouTube Shorts, radio, or events. | USD $29 or $79 |
 | 3 | Radio/DJ/event shows | They buy IDs, drops, sweepers, and short promos. | USD $149 |
-| 4 | YouTube/TikTok creators | They need intro/sting identity and repeatable sponsor reads. | USD $79 |
+| 4 | YouTube/TikTok creators | They need intro/sting identity and repeatable sponsor reads. | USD $29 or $79 |
 | 5 | Small agencies/freelancers | They need fast first-pass audio for client approval. | USD $149 or $399 |
 
 ## Qualification Checklist
@@ -66,7 +67,7 @@ Hi <name/team>,
 
 I make short AI-assisted jingles and podcast intro/outro packs with human selection and usage notes. <Show> looks like a fit because <specific show angle, sponsor slot, segment, or intro observation>.
 
-The first package I would suggest is the $149 Ad Music Pack: three selected sponsor-safe directions for one campaign/show, 15/30/60 second cut plan, one revision pass, prompt/lyric sheet, source tool summary, and usage memo.
+The fastest first test is the $29 Founding Hook Sketch: one selected 8-12 second branded hook sketch, production prompt, rough cut note, and usage guardrails. If you want a full campaign asset after that, the $149 Ad Music Pack covers three selected sponsor-safe directions, a 15/30/60 second cut plan, one revision pass, prompt/lyric sheet, source tool summary, and usage memo.
 
 Podcast sponsor version:
 https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
@@ -89,7 +90,7 @@ Hi <name/team>,
 
 I am testing a fixed-price AI-assisted jingle package for local businesses that run short ads. <Business> looks like a fit because <specific product, location, event, promotion, or social channel>.
 
-The $149 Ad Music Pack gives you three selected short audio directions for one campaign, with a 15/30/60 second cut plan and usage notes. The smaller $79 hook pack is enough if you only want one rough direction first.
+The $29 Founding Hook Sketch is enough if you only want one rough direction first. The $149 Ad Music Pack gives three selected short audio directions for one campaign, with a 15/30/60 second cut plan and usage notes.
 
 Samples and brief builder:
 https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html

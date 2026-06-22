@@ -7,7 +7,7 @@ const ETH_RPC_URL = process.env.ETH_RPC_URL || "https://ethereum.publicnode.com"
 const SOL_RPC_URL = process.env.SOL_RPC_URL || "https://api.mainnet-beta.solana.com";
 const TARGET_USD = Number(process.env.GOAL_USD_TARGET || "1000");
 const ATTENTION_THRESHOLD_USD = Number(process.env.GOAL_ATTENTION_THRESHOLD_USD || "900");
-const REVENUE_PACKAGE_ATTENTION_USD = Number(process.env.GOAL_REVENUE_PACKAGE_ATTENTION_USD || "79");
+const REVENUE_PACKAGE_ATTENTION_USD = Number(process.env.GOAL_REVENUE_PACKAGE_ATTENTION_USD || "29");
 const ETH_ATTENTION_THRESHOLD = Number(process.env.GOAL_ETH_ATTENTION_THRESHOLD || "0.3");
 const SOL_ATTENTION_THRESHOLD = Number(process.env.GOAL_SOL_ATTENTION_THRESHOLD || "8");
 const ATTENTION_FAIL = process.env.GOAL_ATTENTION_FAIL === "true";

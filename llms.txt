@@ -1,13 +1,13 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
 Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
-AI Jingle Generator prices: USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
+AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
 AI Jingle email brief: jackjin1997@gmail.com
 Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
@@ -37,13 +37,13 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - Podcast Sponsor Jingle Pack: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html for podcast hosts and media-kit owners selling sponsor inventory, host-read ads, branded segments, and sponsor social clips.
 - AI Jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
-- Paid packages: USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, USD $399 Sonic Launch Kit.
+- Paid packages: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, USD $399 Sonic Launch Kit.
 - Best-fit buyers: small businesses, podcast hosts, YouTube/TikTok creators, radio/DJ shows, and local ad campaigns that need 15/30/60 second branded audio.
 - Deliverables: selected AI-assisted jingle/ad music cuts, prompt or lyric sheet, source tool summary, revision notes, and usage memo.
 - Public sample audio: coffee shop hook, business podcast intro, and radio ID/drop WAV samples are embedded on the AI Jingle Generator page.
 - Static MVP demo: the page can generate a local browser audio sketch and downloadable WAV draft from the order brief. This is a lightweight preview, not the paid AI-assisted final.
 - Order ops: email brief to jackjin1997@gmail.com for non-GitHub buyers, or `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` for tracked issue intake; `.github/workflows/respond-ai-jingle-order.yml` posts next steps, payment timing, and rights guardrails for issue orders.
-- Monitoring: `scripts/check-goal-status.mjs` treats `ai-jingle-order` issues and USD $79+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
+- Monitoring: `scripts/check-goal-status.mjs` treats `ai-jingle-order` issues and USD $29+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
 - Fulfillment templates: `templates/ai-jingle-invoice.md`, `templates/ai-jingle-receipt.md`, and `templates/ai-jingle-delivery-note.md` cover invoice, receipt, and delivery handoff for paid jingle work.
 - Guardrails: avoid known-artist soundalikes, living voice clones, third-party lyrics without rights, and vague ownership claims. AI-generated music may have copyright-registration limits.
 - Payment rule: payment only after written brief acceptance for the selected jingle package.

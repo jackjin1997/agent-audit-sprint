@@ -1,7 +1,7 @@
 # AI Jingle Delivery Note
 
 Delivery date: `YYYY-MM-DD`
-Package: `USD $79 Jingle Hook Pack / USD $149 Ad Music Pack / USD $399 Sonic Launch Kit`
+Package: `USD $29 Founding Hook Sketch / USD $79 Jingle Hook Pack / USD $149 Ad Music Pack / USD $399 Sonic Launch Kit`
 Brand/show: `<brand, podcast, channel, or product name>`
 Accepted order issue: `<GitHub issue URL>`
 

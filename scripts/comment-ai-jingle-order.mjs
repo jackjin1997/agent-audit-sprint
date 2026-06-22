@@ -19,6 +19,14 @@ function extractField(body = "", label) {
 
 function packageDetails(rawChoice = "") {
   const choice = rawChoice.trim();
+  if (choice.includes("$29") || /founding|sketch/i.test(choice)) {
+    return {
+      name: "USD $29 Founding Hook Sketch",
+      price: "USD $29",
+      target: "24h after brief and payment confirmation when available",
+      deliverable: "one selected 8-12 second branded hook sketch, production prompt, rough cut note, and usage guardrails",
+    };
+  }
   if (choice.includes("$79") || /hook/i.test(choice)) {
     return {
       name: "USD $79 Jingle Hook Pack",

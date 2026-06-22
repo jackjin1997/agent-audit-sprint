@@ -159,6 +159,9 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
 }
+if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
+  throw new Error("llms.txt is missing the AI jingle first-sale package");
+}
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
 }
@@ -311,7 +314,7 @@ const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts
     ISSUE_BODY: [
       "### Requested package",
       "",
-      "USD $149 Ad Music Pack",
+      "USD $29 Founding Hook Sketch",
       "",
       "### Brand, podcast, channel, or product name",
       "",
@@ -347,7 +350,7 @@ const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts
 if (!jingleOrderOutput.includes("AI jingle order received")) {
   throw new Error("AI jingle order dry-run output is missing heading");
 }
-if (!jingleOrderOutput.includes("Bean There Coffee") || !jingleOrderOutput.includes("USD $149 equivalent")) {
+if (!jingleOrderOutput.includes("Bean There Coffee") || !jingleOrderOutput.includes("USD $29 equivalent")) {
   throw new Error("AI jingle order dry-run output is missing brand or package price");
 }
 if (!jingleOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")) {
@@ -398,7 +401,7 @@ if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-spr
   throw new Error("Payment proof dry-run output is missing scope issue");
 }
 if (
-  !paymentProofOutput.includes("USD $79/$149/$399 AI jingle work") ||
+  !paymentProofOutput.includes("USD $29/$79/$149/$399 AI jingle work") ||
   !paymentProofOutput.includes("USD $99/$299 audit entry work") ||
   !paymentProofOutput.includes("USD $1,000 full audit sprint")
 ) {
@@ -575,6 +578,8 @@ try {
     const aiJingleText = await page.locator("body").innerText();
     if (
       !aiJingleText.includes("USD $149 Ad Music Pack") ||
+      !aiJingleText.includes("USD $29 Founding Hook Sketch") ||
+      !aiJingleText.includes("Founding Hook Sketch") ||
       !aiJingleText.includes("Coffee Shop 30s Hook") ||
       !aiJingleText.includes("Business Show Intro") ||
       !aiJingleText.includes("Podcast Sponsor Jingle Pack") ||
@@ -606,6 +611,7 @@ try {
     const jinglePacket = await page.locator("[data-jingle-output]").inputValue();
     if (
       !jinglePacket.includes("Bean There Coffee") ||
+      !jinglePacket.includes("USD $29 Founding Hook Sketch") ||
       !jinglePacket.includes("## Production prompt") ||
       !jinglePacket.includes("Payment is requested only after the brief and package are accepted in writing")
     ) {
@@ -625,6 +631,7 @@ try {
     const decodedJingleEmailHref = decodeURIComponent(jingleEmailHref);
     if (
       !decodedJingleEmailHref.includes("AI jingle brief: Bean There Coffee") ||
+      !decodedJingleEmailHref.includes("USD $29 Founding Hook Sketch") ||
       !decodedJingleEmailHref.includes("Payment is requested only after the brief and package are accepted in writing")
     ) {
       throw new Error(`AI jingle generated email link missing subject or payment guardrail in ${viewport.name}`);
@@ -696,6 +703,7 @@ try {
     const aiJingleQuoteText = await page.locator("body").innerText();
     if (
       !aiJingleQuoteText.includes("USD $79 hook pack") ||
+      !aiJingleQuoteText.includes("USD $29 hook sketch") ||
       !aiJingleQuoteText.includes("USD $149 ad music pack") ||
       !aiJingleQuoteText.includes("USD $399 sonic launch kit") ||
       !aiJingleQuoteText.includes("Payment timing:") ||

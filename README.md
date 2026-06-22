@@ -12,7 +12,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the static page includes public sample audio, a local browser audio sketch demo, downloadable WAV draft, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the static page includes public sample audio, a local browser audio sketch demo, downloadable WAV draft, email brief path, and issue autoresponder
 
 ## Files
 
@@ -25,7 +25,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
-- `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
+- `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
 - `podcast-sponsor-jingle.html` - narrow $149 podcast sponsor audio hook landing page for host-read ads, branded segments, media-kit upsells, social promo clips, and non-GitHub email brief intake
 - `ai-jingle-quote.html` / `templates/ai-jingle-quote.md` - fixed quote, acceptance text, and payment packet for the AI jingle package ladder
 - `templates/ai-jingle-invoice.md` / `templates/ai-jingle-receipt.md` / `templates/ai-jingle-delivery-note.md` - invoice, receipt, and delivery handoff templates for paid AI jingle work
@@ -161,7 +161,7 @@ node scripts/install-goal-monitor-launchd.mjs
 
 The visible loop writes `private-notes/monitor/goal-monitor-loop.pid` and `private-notes/monitor/goal-monitor-loop-heartbeat.json`, so it can be inspected with `ps -p "$(cat private-notes/monitor/goal-monitor-loop.pid)" -o pid,ppid,etime,command`.
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. The monitor treats USD $79+ as a small-package payment signal so AI jingle orders are not missed, while the revenue goal remains USD $1,000. Revenue is still counted only after payment is verified against an accepted written scope or accepted jingle brief.
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. The monitor treats USD $29+ as a small-package payment signal so first AI jingle orders are not missed, while the revenue goal remains USD $1,000. Revenue is still counted only after payment is verified against an accepted written scope or accepted jingle brief.
 
 ## npm Publishing
 

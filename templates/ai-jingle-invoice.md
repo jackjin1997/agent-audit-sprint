@@ -42,7 +42,7 @@ Required line/tagline:
 
 | Item | Amount |
 |---|---:|
-| AI jingle package | USD $79 / USD $149 / USD $399 |
+| AI jingle package | USD $29 / USD $79 / USD $149 / USD $399 |
 | Total due | Confirmed package amount |
 
 ## Payment

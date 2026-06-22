@@ -23,5 +23,5 @@ jobs:
           GOAL_ATTENTION_FAIL: "false"
           GOAL_USD_TARGET: "1000"
           GOAL_ATTENTION_THRESHOLD_USD: "900"
-          GOAL_REVENUE_PACKAGE_ATTENTION_USD: "79"
+          GOAL_REVENUE_PACKAGE_ATTENTION_USD: "29"
         run: node scripts/check-goal-status.mjs

@@ -7,7 +7,7 @@ Receipt ID: `AIJ-R-YYYYMMDD-CLIENT`
 
 | Field | Value |
 |---|---|
-| Amount | USD $79 / USD $149 / USD $399 equivalent |
+| Amount | USD $29 / USD $79 / USD $149 / USD $399 equivalent |
 | Network / asset | `<Ethereum ETH/ERC-20 stablecoin or Solana SOL/SPL USDC>` |
 | Transaction hash | `<tx hash>` |
 | Payer wallet | `<wallet address>` |

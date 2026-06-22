@@ -151,7 +151,7 @@ function compactTitle(value, fallback = "brand") {
 function buildJinglePacket(form) {
   const data = new FormData(form);
   const brand = clean(data.get("brand"), "Brand TBD");
-  const selectedPackage = clean(data.get("package"), "USD $149 Ad Music Pack");
+  const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
   const usage = clean(data.get("usage"), "30 second social ad");
   const timing = clean(data.get("timing"), "48h target");
   const mood = clean(data.get("mood"), "catchy, brand-safe, memorable");

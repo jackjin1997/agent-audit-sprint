@@ -39,7 +39,7 @@ Before work starts, I will verify:
 1. Scope or brief was accepted in writing before payment.
 2. The transaction or settlement reference is valid.
 3. The recipient matches the agreed address or invoice path.
-4. The amount matches the accepted package quote, for example USD $79/$149/$399 AI jingle work, USD $99/$299 audit entry work, or the USD $1,000 full audit sprint, unless another written agreement exists.
+4. The amount matches the accepted package quote, for example USD $29/$79/$149/$399 AI jingle work, USD $99/$299 audit entry work, or the USD $1,000 full audit sprint, unless another written agreement exists.
 
 Accepted payment addresses and assets:
 

@@ -6,6 +6,7 @@ Use this only after the jingle brief/package is accepted in writing.
 
 | Package | Price | Deliverable |
 |---|---:|---|
+| Founding Hook Sketch | USD $29 | One selected 8-12 second branded hook sketch, production prompt, rough cut note, and usage guardrails |
 | Jingle Hook Pack | USD $79 | Two short jingle directions, one selected rough cut, prompt/lyric sheet, and usage memo |
 | Ad Music Pack | USD $149 | Three selected variants for one campaign, 15/30/60 second cut plan, one revision pass, and commercial-use notes |
 | Sonic Launch Kit | USD $399 | Jingle, podcast intro/outro, five social stings, brand sound direction, prompt history, and two revision passes |
@@ -13,11 +14,11 @@ Use this only after the jingle brief/package is accepted in writing.
 ## Acceptance Text
 
 ```text
-I accept the [USD $79 / USD $149 / USD $399] AI Jingle package for [brand/show].
+I accept the [USD $29 / USD $79 / USD $149 / USD $399] AI Jingle package for [brand/show].
 
 Scope: [jingle/ad/podcast/radio use case]
 Required line: [tagline or none]
-Delivery: selected AI-assisted cuts, prompt/lyric sheet, source tool summary, revision notes, and usage memo.
+Delivery: selected AI-assisted cuts or cut notes, prompt/lyric sheet, source tool summary, revision notes if included, and usage memo.
 Payment path: [Ethereum ETH/ERC-20 stablecoin, Solana SOL/SPL USDC, or invoice-first]
 
 I will not provide third-party lyrics, known-artist soundalike requests, private campaign data, or sensitive customer data.

@@ -29,6 +29,7 @@ const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action
 const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
+const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const podcastSponsorJingle = `file://${resolve(root, "podcast-sponsor-jingle.html")}`;
 const aiJingleQuote = `file://${resolve(root, "ai-jingle-quote.html")}`;
 const quote = `file://${resolve(root, "quote.html")}`;
@@ -48,6 +49,7 @@ const requiredFiles = [
   "scan.html",
   "quick-scan.html",
   "ai-jingle-generator.html",
+  "ai-jingle-hook-sketch.html",
   "podcast-sponsor-jingle.html",
   "ai-jingle-quote.html",
   "quote.html",
@@ -161,6 +163,9 @@ if (!llmsText.includes("AI Jingle Generator")) {
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
+}
+if (!llmsText.includes("AI Jingle $29 hook sketch")) {
+  throw new Error("llms.txt is missing the AI Jingle $29 hook sketch page");
 }
 if (!llmsText.includes("Podcast Sponsor Jingle Pack")) {
   throw new Error("llms.txt is missing the Podcast Sponsor Jingle Pack context");
@@ -644,8 +649,68 @@ try {
     if (!sketchHref?.startsWith("blob:")) {
       throw new Error(`AI jingle sketch WAV link was not generated in ${viewport.name}`);
     }
+    const aiJingleHookPageLinks = await page.locator("a[href='ai-jingle-hook-sketch.html']").count();
+    if (aiJingleHookPageLinks < 2) {
+      throw new Error(`AI jingle page missing focused $29 hook sketch links in ${viewport.name}`);
+    }
     const aiJingleOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiJingleOverflow) throw new Error(`AI jingle horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiJingleHookSketch, { waitUntil: "networkidle" });
+    const hookSketchTitle = await page.locator("h1").innerText();
+    if (!hookSketchTitle.includes("$29 AI Jingle Hook Sketch")) {
+      throw new Error(`Unexpected AI jingle hook sketch h1 in ${viewport.name}: ${hookSketchTitle}`);
+    }
+    const hookSketchText = await page.locator("body").innerText();
+    if (
+      !hookSketchText.includes("USD $29 Founding Hook Sketch") ||
+      !hookSketchText.includes("Email $29 brief") ||
+      !hookSketchText.includes("Open order form") ||
+      !hookSketchText.includes("One selected 8-12 second branded hook sketch") ||
+      !hookSketchText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !hookSketchText.includes("No known-artist soundalikes") ||
+      !hookSketchText.includes("General AI jingle page")
+    ) {
+      throw new Error(`AI jingle hook sketch page missing package, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const hookSketchHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!hookSketchHeroLoaded) throw new Error(`AI jingle hook sketch hero image failed to load in ${viewport.name}`);
+    const hookSketchAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      hookSketchAudioSources.length !== 3 ||
+      !hookSketchAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !hookSketchAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !hookSketchAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI jingle hook sketch sample audio sources missing in ${viewport.name}`);
+    }
+    const hookSketchBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !hookSketchBrief.includes("Package: USD $29 Founding Hook Sketch") ||
+      !hookSketchBrief.includes("Delivery: one selected 8-12 second branded hook sketch") ||
+      !hookSketchBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI jingle hook sketch brief missing package, delivery, or payment copy in ${viewport.name}`);
+    }
+    const hookSketchOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (hookSketchOrderLinks < 2) {
+      throw new Error(`AI jingle hook sketch page missing order links in ${viewport.name}`);
+    }
+    const hookSketchEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      hookSketchEmailLinks.length < 3 ||
+      !hookSketchEmailLinks.every((href) => href.includes("USD $29 Founding Hook Sketch")) ||
+      !hookSketchEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only")) ||
+      !hookSketchEmailLinks.some((href) => href.includes("one selected 8-12 second branded hook sketch"))
+    ) {
+      throw new Error(`AI jingle hook sketch page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const hookSketchOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (hookSketchOverflow) throw new Error(`AI jingle hook sketch horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(podcastSponsorJingle, { waitUntil: "networkidle" });
     const podcastSponsorTitle = await page.locator("h1").innerText();

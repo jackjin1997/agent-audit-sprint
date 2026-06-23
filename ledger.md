@@ -12,12 +12,12 @@ Last updated: 2026-06-23.
 
 ## Chain Check
 
-Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
+Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
 | Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH; USDC 0; USDT 0; DAI 0 | Not a verified paid audit package payment |
-| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0 SOL; SPL USDC 0 | Not a verified paid audit package payment; Solana balance API degraded during latest check |
+| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL; SPL USDC 0 | Not a verified paid audit package payment; SPL USDC token-account RPC degraded during latest check |
 
 ## Submitted / Published Assets
 
@@ -97,6 +97,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
 | Agent Auth focused review conversion page | https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html | Added a USD $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation; links to public checklist examples and paid package intake |
 | Agent Auth focused review intake | `.github/ISSUE_TEMPLATE/agent-auth-review.yml`, `scripts/comment-audit-intent.mjs`, https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml | Added a dedicated USD $299 Agent Auth intake form and tailored autoresponder fields for auth flow type, boundary, and highest-risk decision; Agent Auth page now links directly to this form while preserving the after-written-scope payment guardrail |
 | Agent Auth owned distribution refresh | GitHub profile README commit `c9d9d1d`, public gist commit `e6e0785` | Added the USD $299 Agent Auth and Cookie Vault Security Review link to owned profile and MCP audit gist distribution surfaces |
+| Agent Auth direct intake distribution refresh | GitHub profile README commit `1350136`, public gist commit `48f1773`, homepage hero CTA, https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml | Added direct links from owned profile, public MCP audit gist docs, and homepage hero to the USD $299 Agent Auth focused-review intake so token broker, cookie-vault, site_login, and OAuth/HITL buyers can open a scoped request in one click; payment remains after written scope acceptance |
 | Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point and LLM/agent service summary |
@@ -158,7 +159,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
 
 ## Next Actions
 
-1. Watch `vinicius-ssantos/vos-studio-mcp#195`, `vinicius-ssantos/vos-studio-mcp#179`, and `zoharbabin/web-researcher-mcp#241` for maintainer replies, then qualify any requested outside pass before asking for payment.
+1. Watch `vinicius-ssantos/vos-studio-mcp#195`, `vinicius-ssantos/vos-studio-mcp#179`, `zoharbabin/web-researcher-mcp#241`, `kagenti/kagenti#1435`, and `paul007ex/agentgateway#30` for maintainer replies, then qualify any requested outside pass before asking for payment.
 2. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
 3. For the AI music experiment, pitch the USD $29 Founding Hook Sketch first when a buyer is cold or skeptical, then move serious podcast/media-kit buyers toward the USD $149 Ad Music Pack.
 4. Work from `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md`: re-open each source page, verify the contact route, then manually send the first 5 personalized AI jingle messages using `podcast-sponsor-jingle.html` and the email brief path for podcast/media-kit prospects.

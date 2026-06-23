@@ -84,6 +84,7 @@ const requiredFiles = [
   ".github/FUNDING.yml",
   ".github/workflows/goal-status-monitor.yml",
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
+  ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
@@ -175,6 +176,9 @@ if (!llmsText.includes("Agent Auth and Cookie Vault Security Review")) {
 }
 if (!llmsText.includes("USD $299 Agent Auth Focused Review")) {
   throw new Error("llms.txt is missing the Agent Auth focused review package price");
+}
+if (!llmsText.includes("agent-auth-review.yml")) {
+  throw new Error("llms.txt is missing the Agent Auth focused review intake link");
 }
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
@@ -342,6 +346,69 @@ if (!intentOutput.includes("quick-scan.html")) {
 }
 if (!intentOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2Fexample%2Fagent-mcp")) {
   throw new Error("Intent dry-run output is missing shareable scanner link");
+}
+
+const agentAuthIntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $299 Agent Auth Focused Review",
+      "",
+      "### Project or repo URL",
+      "",
+      "https://github.com/example/agent-auth-mcp",
+      "",
+      "### Auth flow type",
+      "",
+      "Token broker / RFC 8693 token exchange",
+      "",
+      "### Boundary to review",
+      "",
+      "gatewayExchange from MCP client to STS",
+      "",
+      "### Highest risk or decision",
+      "",
+      "subject/actor separation and metadata binding",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "Same day if available",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum ERC-20 USDC/USDT/DAI after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!agentAuthIntentOutput.includes("USD $299 Agent Auth Focused Review")) {
+  throw new Error("Agent Auth intent dry-run output is missing package name");
+}
+if (!agentAuthIntentOutput.includes("Token broker / RFC 8693 token exchange")) {
+  throw new Error("Agent Auth intent dry-run output is missing auth flow type");
+}
+if (!agentAuthIntentOutput.includes("gatewayExchange from MCP client to STS")) {
+  throw new Error("Agent Auth intent dry-run output is missing boundary");
+}
+if (!agentAuthIntentOutput.includes("subject/actor separation and metadata binding")) {
+  throw new Error("Agent Auth intent dry-run output is missing highest-risk field");
+}
+if (!agentAuthIntentOutput.includes("agent-auth-security-review.html")) {
+  throw new Error("Agent Auth intent dry-run output is missing Agent Auth service link");
+}
+if (!agentAuthIntentOutput.includes("Do not send payment until scope is accepted")) {
+  throw new Error("Agent Auth intent dry-run output is missing payment guardrail");
+}
+if (!agentAuthIntentOutput.includes("payment-confirmation.yml")) {
+  throw new Error("Agent Auth intent dry-run output is missing payment proof link");
 }
 
 const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
@@ -1350,8 +1417,8 @@ try {
       throw new Error(`Agent Auth review page missing package, auth scope, or payment guardrail in ${viewport.name}`);
     }
     const agentAuthCta = await page.locator("a.button.primary").first().getAttribute("href");
-    if (!agentAuthCta?.includes("paid-audit-intent.yml")) {
-      throw new Error(`Agent Auth review CTA missing paid intent URL in ${viewport.name}`);
+    if (!agentAuthCta?.includes("agent-auth-review.yml")) {
+      throw new Error(`Agent Auth review CTA missing dedicated Agent Auth intake URL in ${viewport.name}`);
     }
     const agentAuthCopyTarget = await page.locator("[data-copy-target='#auth-payment-packet']").getAttribute("data-copy-target");
     if (agentAuthCopyTarget !== "#auth-payment-packet") {

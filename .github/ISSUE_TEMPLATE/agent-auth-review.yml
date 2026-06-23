@@ -1,0 +1,99 @@
+name: Agent Auth focused review
+description: Buy a USD $299 focused review for token broker, cookie vault, site_login, OAuth/HITL, or authenticated browser flow risk
+title: "Agent Auth review: <project name>"
+labels: ["audit-intent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the USD $299 Agent Auth Focused Review. Do not paste secrets, private keys, cookies, bearer tokens, OAuth codes, customer data, or production logs with sensitive values.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: This form is for one focused auth boundary review.
+      options:
+        - USD $299 Agent Auth Focused Review
+    validations:
+      required: true
+  - type: input
+    id: project
+    attributes:
+      label: Project or repo URL
+      description: Public repo, docs, package, demo, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: auth-flow
+    attributes:
+      label: Auth flow type
+      description: Pick the closest boundary for this focused review.
+      options:
+        - Token broker / RFC 8693 token exchange
+        - Cookie vault / browser session storage
+        - site_login / site_logout authenticated scraping
+        - OAuth / CIBA / AAuth / delegated access
+        - HITL consent / step-up / reauth flow
+        - MCP gateway / protected-resource metadata / challenge flow
+        - Other focused agent auth boundary
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Boundary to review
+      description: Name the one auth boundary, route, broker, vault, or flow to review. Keep it sanitized.
+      placeholder: Review the token broker route from MCP client to gatewayExchange to STS; no secrets included.
+    validations:
+      required: true
+  - type: textarea
+    id: highest-risk
+    attributes:
+      label: Highest risk or decision
+      description: What decision should this review help you make?
+      placeholder: Whether session cache keys, subject/actor separation, metadata binding, or redaction gates are ready for launch.
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Timing
+      description: When do you want the review to start after scope/payment confirmation?
+      options:
+        - Same day if available
+        - 48h target
+        - This week
+        - Date to discuss
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose network and asset if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum ETH after scope acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after scope acceptance
+        - Solana SOL after scope acceptance
+        - Solana SPL USDC after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, OAuth codes, cookies, bearer tokens, private keys, or sensitive customer data in this issue.
+          required: true
+        - label: I understand payment is only requested after written scope acceptance for the selected package.
+          required: true

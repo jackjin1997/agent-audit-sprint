@@ -38,6 +38,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - AI agent intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
+- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short paid-slot intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Code Scanning audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
@@ -86,6 +87,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
 - Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, SSRF with cookies, redaction, and cache key isolation.
+- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, or authenticated browser boundary.
 - Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.
 
 ## High-Intent Verticals

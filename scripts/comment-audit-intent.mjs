@@ -2,6 +2,7 @@
 
 const MARKER = "<!-- agent-mcp-audit-intent -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html";
+const AGENT_AUTH_URL = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
@@ -42,6 +43,15 @@ function packageDetails(rawChoice = "") {
     };
   }
   if (choice.includes("$299") || /focused/i.test(choice)) {
+    if (/agent auth|cookie vault|token broker|site_login|oauth|hitl/i.test(choice)) {
+      return {
+        name: "USD $299 Agent Auth Focused Review",
+        price: "USD $299",
+        target: "same day when available",
+        deliverable:
+          "focused review of one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, or authenticated browser boundary with ranked risks and regression-test checklist",
+      };
+    }
     return {
       name: "USD $299 Same-day Focused Review",
       price: "USD $299",
@@ -64,6 +74,18 @@ function renderIntentComment(issueBody = "") {
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || "48h target";
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
+  const authFlow = extractField(issueBody, "Auth flow type");
+  const authBoundary = extractField(issueBody, "Boundary to review");
+  const highestRisk = extractField(issueBody, "Highest risk or decision");
+  const authContext = authFlow || authBoundary || highestRisk;
+  const serviceDetailsUrl = packageInfo.name.includes("Agent Auth") || authContext ? AGENT_AUTH_URL : SERVICE_URL;
+  const authDetails = authContext
+    ? `
+Auth flow type: **${authFlow || "not specified"}**
+Boundary to review: **${authBoundary || "not specified"}**
+Highest risk or decision: **${highestRisk || "not specified"}**
+`
+    : "";
 
   return `${MARKER}
 ## Audit package request received
@@ -82,6 +104,7 @@ Requested package: **${packageInfo.name}**
 Requested timing: **${timing}**
 Payment path: **${paymentPath}**
 Expected deliverable: ${packageInfo.deliverable}
+${authDetails}
 
 Package ladder and copyable payment packets: ${PACKAGE_URL}
 Full sprint quote: ${QUOTE_URL}
@@ -105,7 +128,7 @@ ${scannerLinkFor(project)}
 It does not upload code, install dependencies, or execute target code.
 
 Questions before booking can go here: ${DISCUSSION_URL}
-Service details: ${SERVICE_URL}
+Service details: ${serviceDetailsUrl}
 Target delivery for this package: ${packageInfo.target}
 `;
 }

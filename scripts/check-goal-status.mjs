@@ -11,7 +11,12 @@ const LEAD_WATCHLIST_PATH = process.env.GOAL_LEAD_WATCHLIST_PATH
   ? resolve(process.env.GOAL_LEAD_WATCHLIST_PATH)
   : DEFAULT_LEAD_WATCHLIST_PATH;
 const ETH_RPC_URL = process.env.ETH_RPC_URL || "https://ethereum.publicnode.com";
-const SOL_RPC_URL = process.env.SOL_RPC_URL || "https://api.mainnet-beta.solana.com";
+const SOL_RPC_URLS = uniqueList([
+  ...(process.env.SOL_RPC_URLS || process.env.SOL_RPC_URL || "").split(/[,\s]+/),
+  "https://api.mainnet-beta.solana.com",
+  "https://solana-rpc.publicnode.com",
+]);
+const FETCH_TIMEOUT_MS = Number(process.env.GOAL_FETCH_TIMEOUT_MS || "6000");
 const TARGET_USD = Number(process.env.GOAL_USD_TARGET || "1000");
 const ATTENTION_THRESHOLD_USD = Number(process.env.GOAL_ATTENTION_THRESHOLD_USD || "900");
 const REVENUE_PACKAGE_ATTENTION_USD = Number(process.env.GOAL_REVENUE_PACKAGE_ATTENTION_USD || "29");
@@ -65,10 +70,15 @@ function getLocalGithubToken() {
   }
 }
 
+function uniqueList(values) {
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
+}
+
 async function fetchJson(url, options = {}) {
   return retry(async () => {
     const response = await fetch(url, {
       ...options,
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       headers: {
         "accept": "application/vnd.github+json",
         "user-agent": "agent-audit-sprint-goal-monitor",
@@ -82,10 +92,11 @@ async function fetchJson(url, options = {}) {
   });
 }
 
-async function rpc(url, method, params) {
+async function rpc(url, method, params, attempts = 3) {
   return retry(async () => {
     const response = await fetch(url, {
       method: "POST",
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
     });
@@ -97,7 +108,19 @@ async function rpc(url, method, params) {
       throw new Error(`${method} RPC error: ${JSON.stringify(result.error)}`);
     }
     return result.result;
-  });
+  }, attempts);
+}
+
+async function rpcWithFallback(urls, method, params) {
+  const errors = [];
+  for (const url of urls) {
+    try {
+      return await rpc(url, method, params, 1);
+    } catch (error) {
+      errors.push(`${url}: ${error.message}`);
+    }
+  }
+  throw new Error(`${method} failed on all RPC URLs: ${errors.join(" | ")}`);
 }
 
 async function retry(operation, attempts = 3) {
@@ -213,21 +236,38 @@ async function getEthereumBalances() {
 }
 
 async function getSolanaBalances() {
-  const native = await rpc(SOL_RPC_URL, "getBalance", [SOL_ADDRESS]);
-  const tokenAccounts = await rpc(SOL_RPC_URL, "getTokenAccountsByOwner", [
-    SOL_ADDRESS,
-    { mint: SOL_USDC_MINT },
-    { encoding: "jsonParsed" },
-  ]);
-  let usdcRaw = 0n;
-  for (const account of tokenAccounts.value || []) {
-    const amount = account.account?.data?.parsed?.info?.tokenAmount?.amount;
-    if (amount) usdcRaw += BigInt(amount);
+  const checkErrors = [];
+  let nativeSOL = "0";
+  let splUSDC = "0";
+  try {
+    const native = await rpcWithFallback(SOL_RPC_URLS, "getBalance", [SOL_ADDRESS]);
+    nativeSOL = bigintToDecimal(native.value, 9);
+  } catch (error) {
+    checkErrors.push({ source: "solanaNativeSOL", error: error.message });
+  }
+  try {
+    const tokenAccounts = await rpcWithFallback(SOL_RPC_URLS, "getTokenAccountsByOwner", [
+      SOL_ADDRESS,
+      { mint: SOL_USDC_MINT },
+      { encoding: "jsonParsed" },
+    ]);
+    let usdcRaw = 0n;
+    for (const account of tokenAccounts.value || []) {
+      const amount = account.account?.data?.parsed?.info?.tokenAmount?.amount;
+      if (amount) usdcRaw += BigInt(amount);
+    }
+    splUSDC = bigintToDecimal(usdcRaw, 6);
+  } catch (error) {
+    checkErrors.push({ source: "solanaSplUSDC", error: error.message });
+  }
+  if (checkErrors.length >= 2) {
+    throw new Error(checkErrors.map((error) => `${error.source}: ${error.error}`).join("; "));
   }
   return {
     address: SOL_ADDRESS,
-    nativeSOL: bigintToDecimal(native.value, 9),
-    splUSDC: bigintToDecimal(usdcRaw, 6),
+    nativeSOL,
+    splUSDC,
+    checkErrors,
   };
 }
 
@@ -346,6 +386,10 @@ const ethereum = unwrap(
   "ethereumBalances"
 );
 const solana = unwrap(solanaResult, { address: SOL_ADDRESS, nativeSOL: "0", splUSDC: "0" }, "solanaBalances");
+if (Array.isArray(solana.checkErrors) && solana.checkErrors.length) {
+  checkErrors.push(...solana.checkErrors);
+}
+delete solana.checkErrors;
 const paymentSignal = computePaymentSignal(ethereum, solana, prices);
 const attentionRequired = openIssues.length > 0 || leadReplies.length > 0 || paymentSignal.potentialPayment;
 const result = {

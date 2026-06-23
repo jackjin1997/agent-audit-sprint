@@ -50,6 +50,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 | Scanner package release asset | https://github.com/jackjin1997/agent-audit-sprint/releases/download/audit-sprint-2026-06-19/agent-mcp-audit-1.0.0.tgz | Uploaded |
 | Standalone GitHub Action repo | https://github.com/jackjin1997/agent-mcp-code-scan-action | Published for cleaner Action discovery and Code Scanning usage; description/topics now include AI agent security |
 | Standalone GitHub Action distribution | GitHub profile README, public gist, launch release, scanner discussion comment https://github.com/jackjin1997/agent-audit-sprint/discussions/3#discussioncomment-17367911 | Updated with `jackjin1997/agent-mcp-code-scan-action@v1` and paid audit intake links |
+| Standalone GitHub Action Agent Auth handoff | https://github.com/jackjin1997/agent-mcp-code-scan-action/commit/a483e4195de58c57ea05f0c7dd88a7df556ac0b2, `jackjin1997/agent-mcp-code-scan-action@v1`, https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/runs/28015730080 | Synced the Action scanner with auth-heavy Agent Auth focused-review routing, updated README and Marketplace copy to route token/cookie/session/OAuth/Bearer/API-key/credential-boundary findings to the USD $299 Agent Auth intake, moved the stable `v1` tag to the new commit, and verified the Smoke Action v1 workflow passed |
 | Fixed quote and acceptance page | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Published |
 | Copyable quote payment packet | https://jackjin1997.github.io/agent-audit-sprint/quote.html | Added for accepted-scope payment handoff |
 | Trading MCP security audit page | https://jackjin1997.github.io/agent-audit-sprint/trading-mcp-security-audit.html | Published |
@@ -116,7 +117,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 | GitHub profile placement | https://github.com/jackjin1997 | Published with MCP server scan entry point and LLM/agent service summary |
 | Heuristic scanner | https://github.com/jackjin1997/agent-audit-sprint#heuristic-scanner | Published |
 | Reusable GitHub Action | https://github.com/jackjin1997/agent-audit-sprint/blob/main/action.yml | Published with stable `v1` usage |
-| Standalone GitHub Action stable tags | `jackjin1997/agent-mcp-code-scan-action@v1`, `v1.0.0`, `v1.0.1` | `v1` points to the current discovery-copy release; `v1.0.0` retained |
+| Standalone GitHub Action stable tags | `jackjin1997/agent-mcp-code-scan-action@v1`, `v1.0.0`, `v1.0.1` | `v1` now points to commit `a483e4195de58c57ea05f0c7dd88a7df556ac0b2` with Agent Auth focused-review scanner routing; `v1.0.0` and `v1.0.1` retained |
 | Standalone GitHub Action v1.0.1 release | https://github.com/jackjin1997/agent-mcp-code-scan-action/releases/tag/v1.0.1 | Published with MCP security, AI agent security, SARIF, Code Scanning, browser automation, and Browserbase sample copy refresh |
 | Standalone GitHub Action smoke workflow | https://github.com/jackjin1997/agent-mcp-code-scan-action/actions/runs/27843474370 | Passed; verifies `@v1` Markdown and SARIF outputs |
 | Standalone GitHub Action support funnel | https://github.com/jackjin1997/agent-mcp-code-scan-action/issues/new/choose, `.github/FUNDING.yml` | Added scanner bug form plus paid audit, browser scanner, and terms contact links |

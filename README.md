@@ -25,7 +25,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
 - `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
-- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, and paid audit handoff
+- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth-heavy Agent Auth focused-review routing, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
 - `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, dynamic email brief, generated acceptance/payment packet, dynamic acceptance email, payment proof link, and order link
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
@@ -108,7 +108,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
-- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation and direct intake link
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -123,7 +123,7 @@ node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-inte
 ```
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, redaction, tests, and CI. It is a triage helper, not a security certification.
-The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence.
+The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner also routes to the USD $299 Agent Auth focused-review intake.
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 
 Use it from GitHub Actions:

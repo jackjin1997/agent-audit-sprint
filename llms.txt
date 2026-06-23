@@ -79,6 +79,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Standalone GitHub Action: https://github.com/jackjin1997/agent-mcp-code-scan-action
 - GitHub Action usage: jackjin1997/agent-mcp-code-scan-action@v1
 - Local CLI via GitHub: npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
+- Auth-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, and credential-boundary signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - Lead finder: node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 
 ## Audit Fit

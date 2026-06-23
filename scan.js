@@ -95,6 +95,11 @@ const scanSignals = [
     pattern: /\b(auth|authorize|permission|scope|role|login|session|cookie|csrf|jwt|token|requireAuth|requiresAuth)\b/i,
   },
   {
+    id: "agent_auth_focus",
+    label: "Agent auth or credential boundary",
+    pattern: /\b(site_login|site_logout|oauth|ciba|hitl|cookie|session|jwt|bearer|authorization|api[_-]?key|credential|token broker|token|refresh_token|access_token)\b/i,
+  },
+  {
     id: "redaction",
     label: "Redaction or secret handling",
     pattern: /\b(redact|redaction|censor|mask|sanitize|scrub|REDACTED|redacted)\b/i,
@@ -155,6 +160,26 @@ function score(findings) {
     if (finding.severity === "Low") value -= 4;
   }
   return Math.max(0, value);
+}
+
+const fullAuditIntakeUrl = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml";
+const agentAuthIntakeUrl = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml";
+const agentAuthReviewUrl = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
+
+function hasAgentAuthFocus(result) {
+  return (result.signals?.agent_auth_focus?.files?.length || 0) > 0;
+}
+
+function agentAuthFocusSummary(result) {
+  if (!hasAgentAuthFocus(result)) return [];
+  const files = compactEvidence(result.signals.agent_auth_focus.files, 4);
+  return [
+    "Auth-heavy focused path: this scan saw token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals.",
+    `Best fit: USD $299 Agent Auth Focused Review for one token broker, cookie vault, site_login/site_logout flow, OAuth/HITL consent boundary, authenticated scraping path, or MCP gateway auth split.`,
+    `Focused intake: ${agentAuthIntakeUrl}`,
+    `Review page: ${agentAuthReviewUrl}`,
+    `Evidence examples: ${files.map((file) => `\`${file}\``).join(", ") || "scanner signal match"}`,
+  ];
 }
 
 function compactEvidence(files, max = 5) {
@@ -360,9 +385,13 @@ function renderReport(result) {
     "",
     "## Paid 48-hour review",
     "",
-    "The scanner is triage, not a security certification. For one repo or product slice, the $1,000 Agent/MCP Audit Sprint adds human review, evidence, fix planning, tests, and launch notes.",
+    "The scanner is triage, not a security certification.",
     "",
-    "Start an audit: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml",
+    ...agentAuthFocusSummary(result),
+    hasAgentAuthFocus(result) ? "" : "",
+    "For one repo or product slice, the $1,000 Agent/MCP Audit Sprint adds human review, evidence, fix planning, tests, and launch notes.",
+    "",
+    `Start a full audit: ${fullAuditIntakeUrl}`,
     "Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html",
   ].join("\n");
 }
@@ -376,17 +405,27 @@ function updateSummary(result) {
       const label = finding.severity === "High" ? "High" : finding.severity === "Medium" ? "Med" : finding.severity;
       return `<div class="report-row ${className}"><span>${label}</span><strong>${finding.title}</strong></div>`;
     }),
-    `<div class="report-row medium"><span>Next</span><strong>Book the paid sprint for human review and issue-ready fixes.</strong></div>`,
+    `<div class="report-row medium"><span>Next</span><strong>${hasAgentAuthFocus(result) ? "Use the $299 Agent Auth focused intake or full sprint for human review." : "Book the paid sprint for human review and issue-ready fixes."}</strong></div>`,
   ];
   localScanSummary.innerHTML = rows.join("");
 }
 
-function buildAuditRequestPacket(report, projectUrl = "TBD") {
+function buildAuditRequestPacket(report, projectUrl = "TBD", result = null) {
   const target = projectUrl === "TBD" ? "Private or local repo; access details to be shared after scope acceptance." : projectUrl;
+  const focusedPath = result && hasAgentAuthFocus(result)
+    ? [
+        "## Recommended paid path",
+        "USD $299 Agent Auth Focused Review for one token broker, cookie vault, site_login/site_logout flow, OAuth/HITL consent boundary, authenticated scraping path, or MCP gateway auth split.",
+        `Focused intake: ${agentAuthIntakeUrl}`,
+        `Review page: ${agentAuthReviewUrl}`,
+        "",
+      ]
+    : [];
   return [
     "## Project or repo URL",
     target,
     "",
+    ...focusedPath,
     "## Scope",
     "Review the repo or product slice represented by this scanner report.",
     "",
@@ -417,12 +456,21 @@ function buildAuditRequestPacket(report, projectUrl = "TBD") {
   ].join("\n");
 }
 
-function compactIssueBody(packet, report, projectUrl) {
+function compactIssueBody(packet, report, projectUrl, result = null) {
   const target = projectUrl === "TBD" ? "Private/local repo" : projectUrl;
+  const focusedLines = result && hasAgentAuthFocus(result)
+    ? [
+        "## Recommended paid path",
+        "USD $299 Agent Auth Focused Review for one auth-heavy flow.",
+        `Focused intake: ${agentAuthIntakeUrl}`,
+        "",
+      ]
+    : [];
   return [
     "## Project or repo URL",
     target,
     "",
+    ...focusedLines,
     "## Scope",
     "Review the repo or product slice represented by the scanner report.",
     "",
@@ -453,15 +501,20 @@ function compactIssueBody(packet, report, projectUrl) {
   ].join("\n");
 }
 
-function updateIssueLink(report, projectUrl = "TBD") {
-  const title = projectUrl === "TBD" ? "Audit request: scanner report" : `Audit request: ${projectUrl.replace(/^https:\/\/github\.com\//, "")}`;
-  const packet = buildAuditRequestPacket(report, projectUrl);
-  const body = compactIssueBody(packet, report, projectUrl);
+function updateIssueLink(report, projectUrl = "TBD", result = null) {
+  const focused = result && hasAgentAuthFocus(result);
+  const titlePrefix = focused ? "Agent Auth focused review" : "Audit request";
+  const title = projectUrl === "TBD" ? `${titlePrefix}: scanner report` : `${titlePrefix}: ${projectUrl.replace(/^https:\/\/github\.com\//, "")}`;
+  const packet = buildAuditRequestPacket(report, projectUrl, result);
+  const body = compactIssueBody(packet, report, projectUrl, result);
   if (auditPacketOutput) {
     auditPacketOutput.value = packet;
   }
+  const requestUrl = focused
+    ? `${agentAuthIntakeUrl}&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`
+    : `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
   openScanRequests.forEach((link) => {
-    link.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?labels=audit-request&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+    link.href = requestUrl;
   });
 }
 
@@ -633,7 +686,7 @@ async function runPublicScan() {
     const report = renderReport(result);
     localScanOutput.value = report;
     updateSummary(result);
-    updateIssueLink(report, htmlUrl);
+    updateIssueLink(report, htmlUrl, result);
   } catch (error) {
     localScanOutput.value = [
       `Could not scan ${repo.fullName}.`,
@@ -655,7 +708,7 @@ async function runLocalScan() {
   const report = renderReport(result);
   localScanOutput.value = report;
   updateSummary(result);
-  updateIssueLink(report);
+  updateIssueLink(report, "TBD", result);
 }
 
 if (publicScanForm) {

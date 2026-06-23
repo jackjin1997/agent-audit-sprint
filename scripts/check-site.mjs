@@ -234,6 +234,9 @@ const markdownOutput = execFileSync(process.execPath, [resolve(root, "tools/agen
 if (!markdownOutput.includes("## Paid 48-hour review")) {
   throw new Error("Scanner Markdown output is missing paid review CTA");
 }
+if (!markdownOutput.includes("Agent Auth Focused Review") || !markdownOutput.includes("agent-auth-review.yml")) {
+  throw new Error("Scanner Markdown output is missing Agent Auth focused-review handoff");
+}
 if (!markdownOutput.includes("https://jackjin1997.github.io/agent-audit-sprint/terms.html")) {
   throw new Error("Scanner Markdown output is missing terms URL");
 }
@@ -1850,13 +1853,19 @@ try {
     if (!scanOutput.includes("Paid 48-hour review")) {
       throw new Error(`Scanner output missing paid review handoff in ${viewport.name}`);
     }
+    if (!scanOutput.includes("Agent Auth Focused Review") || !scanOutput.includes("agent-auth-review.yml")) {
+      throw new Error(`Scanner output missing Agent Auth focused-review handoff in ${viewport.name}`);
+    }
     const scanHref = await page.locator("[data-open-scan-request]").first().getAttribute("href");
-    if (!scanHref?.includes("labels=audit-request")) {
-      throw new Error(`Scanner request link missing audit label in ${viewport.name}`);
+    if (!scanHref?.includes("agent-auth-review.yml")) {
+      throw new Error(`Scanner request link missing Agent Auth focused-review template in ${viewport.name}`);
     }
     const localAuditPacket = await page.locator("[data-audit-packet-output]").inputValue();
     if (!localAuditPacket.includes("Private or local repo; access details to be shared after scope acceptance.")) {
       throw new Error(`Local scanner audit packet missing private repo handoff in ${viewport.name}`);
+    }
+    if (!localAuditPacket.includes("USD $299 Agent Auth Focused Review") || !localAuditPacket.includes("agent-auth-review.yml")) {
+      throw new Error(`Local scanner audit packet missing Agent Auth focused-review path in ${viewport.name}`);
     }
     if (!localAuditPacket.includes("Payment timing: after written scope acceptance only.")) {
       throw new Error(`Local scanner audit packet missing payment guardrail in ${viewport.name}`);

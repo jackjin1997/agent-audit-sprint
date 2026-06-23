@@ -1,8 +1,15 @@
 import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const DEFAULT_REPOSITORY = "jackjin1997/agent-audit-sprint";
 const DEFAULT_ETH_ADDRESS = "0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF";
 const DEFAULT_SOL_ADDRESS = "5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM";
+const REPO_ROOT = resolve(import.meta.dirname, "..");
+const DEFAULT_LEAD_WATCHLIST_PATH = resolve(REPO_ROOT, "private-notes", "lead-watchlist.json");
+const LEAD_WATCHLIST_PATH = process.env.GOAL_LEAD_WATCHLIST_PATH
+  ? resolve(process.env.GOAL_LEAD_WATCHLIST_PATH)
+  : DEFAULT_LEAD_WATCHLIST_PATH;
 const ETH_RPC_URL = process.env.ETH_RPC_URL || "https://ethereum.publicnode.com";
 const SOL_RPC_URL = process.env.SOL_RPC_URL || "https://api.mainnet-beta.solana.com";
 const TARGET_USD = Number(process.env.GOAL_USD_TARGET || "1000");
@@ -126,6 +133,52 @@ async function getOpenIssues() {
     });
 }
 
+function readLeadWatchlist() {
+  if (!existsSync(LEAD_WATCHLIST_PATH)) return [];
+  const parsed = JSON.parse(readFileSync(LEAD_WATCHLIST_PATH, "utf8"));
+  if (!Array.isArray(parsed)) {
+    throw new Error(`${LEAD_WATCHLIST_PATH} must contain a JSON array`);
+  }
+  return parsed
+    .filter((entry) => entry && entry.repo && entry.issue)
+    .map((entry) => ({
+      repo: String(entry.repo),
+      issue: Number(entry.issue),
+      self: String(entry.self || "jackjin1997"),
+      watchAfter: entry.watchAfter ? new Date(entry.watchAfter) : new Date(0),
+      url: entry.url ? String(entry.url) : `https://github.com/${entry.repo}/issues/${entry.issue}`,
+      reason: entry.reason ? String(entry.reason) : "watched lead",
+    }))
+    .filter((entry) => Number.isInteger(entry.issue) && !Number.isNaN(entry.watchAfter.getTime()));
+}
+
+async function getLeadReplies() {
+  const watchlist = readLeadWatchlist();
+  if (!watchlist.length) return [];
+  const headers = GITHUB_TOKEN ? { authorization: `Bearer ${GITHUB_TOKEN}` } : {};
+  const replies = [];
+  for (const lead of watchlist) {
+    const comments = await fetchJson(`https://api.github.com/repos/${lead.repo}/issues/${lead.issue}/comments?per_page=100`, {
+      headers,
+    });
+    for (const comment of comments) {
+      const createdAt = new Date(comment.created_at);
+      if (comment.user?.login !== lead.self && createdAt > lead.watchAfter) {
+        replies.push({
+          repo: lead.repo,
+          issue: lead.issue,
+          issueUrl: lead.url,
+          reason: lead.reason,
+          author: comment.user?.login || "unknown",
+          createdAt: comment.created_at,
+          url: comment.html_url,
+        });
+      }
+    }
+  }
+  return replies;
+}
+
 async function getPrices() {
   try {
     const prices = await fetchJson(
@@ -225,6 +278,15 @@ function renderSummary(result) {
   const errorLines = result.checkErrors.length
     ? result.checkErrors.map((error) => `- ${error.source}: ${error.error}`).join("\n")
     : "None";
+  const leadRows = result.leadReplies.length
+    ? result.leadReplies
+        .slice(0, 20)
+        .map(
+          (reply) =>
+            `| ${reply.repo}#${reply.issue} | ${reply.author} | ${reply.createdAt} | ${reply.reason.replaceAll("|", "\\|")} | ${reply.url} |`
+        )
+        .join("\n")
+    : "| None | - | - | - | - |";
   return [
     "# Goal Status Monitor",
     "",
@@ -239,6 +301,12 @@ function renderSummary(result) {
     "| Issue | Title | Labels | URL |",
     "|---|---|---|---|",
     issueRows,
+    "",
+    "## Watched Lead Replies",
+    "",
+    "| Lead | Author | Created | Reason | URL |",
+    "|---|---|---|---|---|",
+    leadRows,
     "",
     "## Wallet Snapshot",
     "",
@@ -261,14 +329,16 @@ function renderSummary(result) {
   ].join("\n");
 }
 
-const [openIssuesResult, pricesResult, ethereumResult, solanaResult] = await Promise.allSettled([
+const [openIssuesResult, leadRepliesResult, pricesResult, ethereumResult, solanaResult] = await Promise.allSettled([
   getOpenIssues(),
+  getLeadReplies(),
   getPrices(),
   getEthereumBalances(),
   getSolanaBalances(),
 ]);
 const checkErrors = [];
 const openIssues = unwrap(openIssuesResult, [], "githubIssues");
+const leadReplies = unwrap(leadRepliesResult, [], "leadReplies");
 const prices = unwrap(pricesResult, { ETH: null, SOL: null, error: "price lookup unavailable" }, "prices");
 const ethereum = unwrap(
   ethereumResult,
@@ -277,11 +347,12 @@ const ethereum = unwrap(
 );
 const solana = unwrap(solanaResult, { address: SOL_ADDRESS, nativeSOL: "0", splUSDC: "0" }, "solanaBalances");
 const paymentSignal = computePaymentSignal(ethereum, solana, prices);
-const attentionRequired = openIssues.length > 0 || paymentSignal.potentialPayment;
+const attentionRequired = openIssues.length > 0 || leadReplies.length > 0 || paymentSignal.potentialPayment;
 const result = {
   checkedAt: new Date().toISOString(),
   repository: REPOSITORY,
   openIssues,
+  leadReplies,
   prices,
   ethereum,
   solana,

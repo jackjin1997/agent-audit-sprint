@@ -13,6 +13,11 @@ const DEFAULT_QUERIES = [
   '"agent" "tool" "security" is:issue is:open updated:>=2026-01-01',
   '"AI agent" "security audit" is:issue is:open updated:>=2026-01-01',
   '"MCP" "OAuth" "security" is:issue is:open updated:>=2026-01-01',
+  '"Token Broker" "agent" is:issue is:open updated:>=2026-01-01',
+  '"HITL" "auth" "agent" is:issue is:open updated:>=2026-01-01',
+  '"cookie vault" "MCP" is:issue is:open updated:>=2026-01-01',
+  '"site_login" "MCP" is:issue is:open updated:>=2026-01-01',
+  '"credential injection" "agent" is:issue is:open updated:>=2026-01-01',
 ];
 
 const BLOCKED_REPOS = new Set([
@@ -23,10 +28,23 @@ const BLOCKED_REPOS = new Set([
 const NOISE_PATTERNS = [
   /daily .*report/i,
   /daily .*digest/i,
+  /weekly report/i,
   /ecosystem digest/i,
   /community.*digest/i,
   /briefing request/i,
   /dependency dashboard/i,
+  /daily code review dashboard/i,
+  /renovate dashboard/i,
+  /pull request dashboard/i,
+  /status report/i,
+  /open source trends/i,
+  /cli tools digest/i,
+  /upstream update/i,
+  /taxonomy-drift/i,
+  /active vulnerability tracker/i,
+  /nightly .*agent/i,
+  /learning log/i,
+  /每日信息流/,
   /autohealing report/i,
   /engagement-ledger/i,
   /生态日报/,
@@ -36,9 +54,18 @@ const NOISE_PATTERNS = [
 const NOISE_REPOS = [
   /agents-radar/i,
   /big_model_radar/i,
+  /os-feed/i,
+  /diixtra-forge/i,
   /update_ai_analysis/i,
   /pulse-mind/i,
 ];
+
+const FETCH_TIMEOUT_MS = Number(process.env.GITHUB_FETCH_TIMEOUT_MS || 15000);
+const FETCH_ATTEMPTS = Number(process.env.GITHUB_FETCH_ATTEMPTS || 3);
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 function argValue(name, fallback = "") {
   const index = process.argv.indexOf(name);
@@ -57,20 +84,34 @@ function hostApi(path) {
 
 async function githubGet(path) {
   const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || localGhToken();
-  const response = await fetch(hostApi(path), {
-    headers: {
-      Accept: "application/vnd.github+json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  });
+  let lastError;
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`GitHub API ${response.status}: ${text.slice(0, 300)}`);
+  for (let attempt = 1; attempt <= FETCH_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetch(hostApi(path), {
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+        headers: {
+          Accept: "application/vnd.github+json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`GitHub API ${response.status}: ${text.slice(0, 300)}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt < FETCH_ATTEMPTS) {
+        await sleep(1200 * attempt);
+      }
+    }
   }
 
-  return response.json();
+  throw lastError;
 }
 
 function localGhToken() {
@@ -107,6 +148,7 @@ function scoreIssue(item) {
     [/audit|review|scanner|scan|checklist/, 8, "review or scanner intent"],
     [/paid|budget|commercial|enterprise|customer|launch/, 12, "possible buyer context"],
     [/help|support|how do|request|proposal|rfc|initiative/, 5, "active discussion/request"],
+    [/token broker|cookie vault|site_login|hitl|human-in-the-loop|ciba|aauth|delegated access|credential injection/, 18, "agent auth/token broker angle"],
   ];
 
   for (const [pattern, points, reason] of checks) {
@@ -131,6 +173,9 @@ function sanitize(text = "") {
 
 function suggestedMove(item, reasons) {
   const title = item.title || "this issue";
+  if (reasons.includes("agent auth/token broker angle")) {
+    return `Reply only with a concrete auth/session boundary checklist for "${sanitize(title)}"; mention the $299 Agent Auth review only after the technical content.`;
+  }
   if (reasons.includes("GitHub security workflow angle")) {
     return `Offer a concrete no-execution SARIF/Code Scanning check for "${sanitize(title)}"; mention $99 quick scan only if they ask for outside review.`;
   }
@@ -143,7 +188,7 @@ function suggestedMove(item, reasons) {
   return "Keep as watchlist unless there is a direct request for review, scanner, or implementation guidance.";
 }
 
-function renderMarkdown(leads, queries) {
+function renderMarkdown(leads, queries, failures = []) {
   const now = new Date().toISOString();
   const lines = [
     "# High-Intent Agent/MCP Security Leads",
@@ -161,6 +206,7 @@ function renderMarkdown(leads, queries) {
     "",
     "- USD $99 Quick Scan Report: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html",
     "- USD $299 Same-day Focused Review: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html",
+    "- USD $299 Agent Auth Focused Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html",
     "- USD $1,000 Full Audit Sprint: https://jackjin1997.github.io/agent-audit-sprint/quote.html",
     "",
     "## Queries",
@@ -176,6 +222,15 @@ function renderMarkdown(leads, queries) {
   for (const lead of leads) {
     lines.push(
       `| ${lead.score} | ${sanitize(lead.repo)} | ${sanitize(lead.title)} | ${lead.updatedAt.slice(0, 10)} | ${sanitize(lead.reasons.join(", "))} | ${sanitize(lead.suggestedMove)} | ${lead.url} |`
+    );
+  }
+
+  if (failures.length) {
+    lines.push(
+      "",
+      "## Query Failures",
+      "",
+      ...failures.map((failure) => `- \`${failure.query}\`: ${sanitize(failure.error)}`)
     );
   }
 
@@ -202,6 +257,7 @@ async function main() {
   const minScore = Number(argValue("--min-score", "34"));
   const queries = hasFlag("--default") || !argValue("--query") ? DEFAULT_QUERIES : [argValue("--query")];
   const seen = new Map();
+  const failures = [];
 
   for (const query of queries) {
     const params = new URLSearchParams({
@@ -210,7 +266,13 @@ async function main() {
       order: "desc",
       per_page: "20",
     });
-    const data = await githubGet(`/search/issues?${params.toString()}`);
+    let data;
+    try {
+      data = await githubGet(`/search/issues?${params.toString()}`);
+    } catch (error) {
+      failures.push({ query, error: error.message });
+      continue;
+    }
     for (const item of data.items || []) {
       const repo = item.repository_url?.split("/repos/")[1] || "";
       const { score, reasons } = scoreIssue(item);
@@ -235,7 +297,7 @@ async function main() {
     .sort((a, b) => b.score - a.score || b.updatedAt.localeCompare(a.updatedAt))
     .slice(0, limit);
 
-  const markdown = renderMarkdown(leads, queries);
+  const markdown = renderMarkdown(leads, queries, failures);
   if (outPath) {
     const resolved = resolve(outPath);
     mkdirSync(dirname(resolved), { recursive: true });

@@ -88,6 +88,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
 | AI Music Generator storefront owned distribution refresh | GitHub profile README commit `c5b98b8`, public gist commit `1bf461f` | Added direct links from owned profile and gist distribution surfaces to the buyer-routing AI Music Generator storefront |
 | AI Jingle outreach playbook | `outreach/ai-jingle-outreach.md`, `private-notes/ai-jingle-prospect-workflow-2026-06-22.md`, `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md` | Added safe manual outreach workflow, buyer-segment priorities, message templates, research signals, a 12-prospect shortlist, first-five send queue, and daily execution checklist for the USD $149 Ad Music Pack path; no messages sent automatically |
 | High-intent lead finder | `scripts/find-high-intent-leads.mjs`, `private-notes/high-intent-leads-2026-06-22.md`, `private-notes/high-intent-shortlist-2026-06-22.md` | Added authenticated GitHub issue search helper and generated manual shortlist for current MCP/agent security/auth/scanner demand signals; no comments posted automatically |
+| Public high-intent MCP threat-model reply | https://github.com/vinicius-ssantos/vos-studio-mcp/issues/195#issuecomment-4775493943 | Posted a concrete VOS threat model matrix and future-feature checklist on an open MCP/security issue, with a lightweight $99/$299 review link after the technical content; no PR opened |
 | Browserbase sample distribution | Profile README, public gist, launch release, booking FAQ discussion, homepage sample section, browser automation vertical page | Updated with Browserbase sample report link |
 | MCP security audit checklist | `checklist.html`, `docs/mcp-security-audit-checklist.md` | Published |
 | Public GitHub Gist distribution | https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 | Published with MCP server scan entry point and LLM/agent service summary |
@@ -148,8 +149,8 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-22T16:23:50Z):
 
 ## Next Actions
 
-1. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
-2. Use the USD $99 Quick Scan Report or USD $299 Same-day Focused Review as the first paid ask when a prospect has a narrow public question.
+1. Watch `vinicius-ssantos/vos-studio-mcp#195` for a maintainer reply, then qualify any requested outside pass before asking for payment.
+2. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
 3. For the AI music experiment, pitch the USD $29 Founding Hook Sketch first when a buyer is cold or skeptical, then move serious podcast/media-kit buyers toward the USD $149 Ad Music Pack.
 4. Work from `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md`: re-open each source page, verify the contact route, then manually send the first 5 personalized AI jingle messages using `podcast-sponsor-jingle.html` and the email brief path for podcast/media-kit prospects.
 5. If an inbound issue appears, qualify the scope or jingle brief, then request payment only after written acceptance.

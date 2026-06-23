@@ -1,12 +1,12 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
-Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
+Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
 AI Music Generator storefront page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 AI Jingle $29 hook sketch page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
@@ -22,6 +22,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 ## Primary Pages
 
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Music Generator for Videos, Ads, and Podcasts: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
@@ -84,6 +85,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI agents with tool calls, function calling, LangGraph flows, browser automation, RAG, memory/state, workspace integrations, cloud/API access, or irreversible write actions.
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
+- Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, SSRF with cookies, redaction, and cache key isolation.
 - Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.
 
 ## High-Intent Verticals

@@ -21,6 +21,7 @@ const openAiAgentsPythonScanReport = `file://${resolve(root, "reports/openai-age
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
+const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const aiAgentSecurityRadar = `file://${resolve(root, "ai-agent-security-radar.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
@@ -46,6 +47,7 @@ const browserAutomation = `file://${resolve(root, "browser-automation-mcp-securi
 const requiredFiles = [
   "index.html",
   "ai-agent-security-audit-service.html",
+  "agent-auth-security-review.html",
   "ai-agent-security-radar.html",
   "mcp-security-audit-service.html",
   "mcp-server-security-scan.html",
@@ -167,6 +169,12 @@ if (!llmsText.includes("MCP Security Radar")) {
 }
 if (!llmsText.includes("AI Agent Security Radar")) {
   throw new Error("llms.txt is missing the AI Agent Radar link context");
+}
+if (!llmsText.includes("Agent Auth and Cookie Vault Security Review")) {
+  throw new Error("llms.txt is missing the Agent Auth focused review context");
+}
+if (!llmsText.includes("USD $299 Agent Auth Focused Review")) {
+  throw new Error("llms.txt is missing the Agent Auth focused review package price");
 }
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
@@ -541,6 +549,9 @@ try {
     }
     if (!indexBody.includes("Open the AI agent security audit page")) {
       throw new Error(`Index page missing AI agent security audit link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Agent auth review") || !indexBody.includes("Agent auth and cookie vault reviews")) {
+      throw new Error(`Index page missing Agent Auth focused review entry in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the AI Agent Security Radar")) {
       throw new Error(`Index page missing AI Agent Security Radar link in ${viewport.name}`);
@@ -1320,6 +1331,34 @@ try {
     }
     const aiAgentServiceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiAgentServiceOverflow) throw new Error(`AI agent service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(agentAuthReview, { waitUntil: "networkidle" });
+    const agentAuthTitle = await page.locator("h1").innerText();
+    if (!agentAuthTitle.includes("Agent Auth and Cookie Vault Security Review")) {
+      throw new Error(`Unexpected Agent Auth review h1 in ${viewport.name}: ${agentAuthTitle}`);
+    }
+    const agentAuthText = await page.locator("body").innerText();
+    if (
+      !agentAuthText.includes("USD $299 Agent Auth Focused Review") ||
+      !agentAuthText.includes("site_login") ||
+      !agentAuthText.includes("token broker") ||
+      !agentAuthText.includes("cache key") ||
+      !agentAuthText.includes("SSRF with cookies") ||
+      !agentAuthText.includes("Payment only after written scope acceptance") ||
+      !agentAuthText.includes("Payment timing: after written scope acceptance only.")
+    ) {
+      throw new Error(`Agent Auth review page missing package, auth scope, or payment guardrail in ${viewport.name}`);
+    }
+    const agentAuthCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!agentAuthCta?.includes("paid-audit-intent.yml")) {
+      throw new Error(`Agent Auth review CTA missing paid intent URL in ${viewport.name}`);
+    }
+    const agentAuthCopyTarget = await page.locator("[data-copy-target='#auth-payment-packet']").getAttribute("data-copy-target");
+    if (agentAuthCopyTarget !== "#auth-payment-packet") {
+      throw new Error(`Agent Auth payment packet copy target missing in ${viewport.name}`);
+    }
+    const agentAuthOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (agentAuthOverflow) throw new Error(`Agent Auth review horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiAgentSecurityRadar, { waitUntil: "networkidle" });
     const aiAgentRadarTitle = await page.locator("h1").innerText();

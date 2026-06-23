@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fixed-price Agent Auth and Cookie Vault security review for token brokers, site_login flows, OAuth, HITL auth, authenticated scraping, SSRF with cookies, redaction, consent, and cache isolation.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html">
+    <meta property="og:title" content="Agent Auth and Cookie Vault Security Review">
+    <meta property="og:description" content="USD $299 focused review for agent auth boundaries, cookie vaults, token brokers, site_login, OAuth/HITL flows, and authenticated browser automation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agent Auth and Cookie Vault Security Review">
+    <meta name="twitter:description" content="USD $299 focused review for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, and cache isolation.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>Agent Auth and Cookie Vault Security Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Agent Auth and Cookie Vault Security Review",
+        "description": "Fixed-price focused review for AI agent auth boundaries, cookie vaults, token brokers, site_login flows, OAuth, HITL auth, authenticated scraping, SSRF with cookies, redaction, consent, and cache isolation.",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "areaServed": "Worldwide",
+        "serviceType": "AI agent auth and cookie vault security review",
+        "offers": {
+          "@type": "Offer",
+          "price": "299",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="agent-auth-security-review.html">Agent Auth</a>
+        <a href="quick-scan.html">Quick Scan</a>
+        <a href="ai-agent-security-audit-service.html">AI Audit</a>
+        <a href="scan.html">Scanner</a>
+        <a href="samples.html">Samples</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Focused review for agent auth boundaries</p>
+        <h1>Agent Auth and Cookie Vault Security Review</h1>
+        <p>
+          A USD $299 focused security review for one agent auth flow: token broker, cookie vault, `site_login`, OAuth, CIBA/AAuth, HITL consent, authenticated scraping, or browser-session handoff. The output is a boundary map, ranked risks, and tests that show where auth state can leak, be replayed, or get applied to the wrong user.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml">Request auth review</a>
+          <a class="button secondary dark" href="quick-scan.html">Quick scan packages</a>
+          <a class="button secondary dark" href="scan.html">Run free scanner</a>
+          <a class="button secondary dark" href="quote.html">View full sprint quote</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Entry</span><strong>USD $99 Quick Scan</strong></div>
+          <div><span>Focused</span><strong>USD $299 Agent Auth Focused Review</strong></div>
+          <div><span>Full</span><strong>USD $1,000 Full Audit Sprint</strong></div>
+          <div><span>Start Rule</span><strong>Payment only after written scope acceptance</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">When to use it</p>
+          <h2>Use this when auth becomes an agent tool</h2>
+          <p>
+            This page is for teams turning login, browser sessions, delegated auth, or user credentials into agent-readable state. It is narrower than the full audit sprint and deeper than a scanner pass.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>site_login / site_logout:</strong> agents that log into third-party websites, preserve sessions, or expose login state to tools.</div>
+          <div><strong>Cookie vault:</strong> encrypted cookie storage, browser profile reuse, consent capture, vault export, and cleanup logic.</div>
+          <div><strong>Token broker:</strong> OAuth, CIBA, AAuth, device flow, token exchange, refresh, rotation, expiry, and provider scoping.</div>
+          <div><strong>Authenticated scraping:</strong> tools that crawl user-visible pages, download files, or summarize private web content.</div>
+          <div><strong>Workspace connectors:</strong> email, docs, calendar, CRM, tickets, drive, and admin APIs with user or tenant authority.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Review checklist</p>
+          <h2>What I check in the auth boundary</h2>
+          <p>
+            The review follows the data path from user consent to agent action, cache writes, logs, and revocation. It looks for practical defects that are easy to miss when auth is added late.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>eTLD+1, path, SameSite, Secure, expiry, redirect, and domain-injection behavior for cookies.</div>
+          <div>SSRF and private-network fetch paths that can accidentally carry user cookies or bearer tokens.</div>
+          <div>User, tenant, workspace, browser-profile, and session isolation in cache key design.</div>
+          <div>Prompt/tool injection paths from authenticated pages, downloaded files, logs, memory, and RAG content.</div>
+          <div>Token replay, refresh-token rotation, provider scope drift, logout, revocation, and account-switch handling.</div>
+          <div>HITL consent gates for STDIO/local display, browser takeover, file download, form submit, and write actions.</div>
+          <div>Redaction for cookies, headers, bearer tokens, URLs, screenshots, traces, errors, and audit logs.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">USD $299 output</p>
+          <h2>Focused review deliverables</h2>
+          <p>
+            The focused package reviews one agreed flow. It is designed for maintainers who need a decision-ready outside pass before shipping the auth feature or before funding a full sprint.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml">Request $299 auth review</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Boundary map:</strong> users, tenants, sessions, tokens, cookies, vault entries, tools, and external providers.</div>
+          <div><strong>Ranked risks:</strong> concise findings with evidence, impact, and lowest-risk fix path.</div>
+          <div><strong>Test checklist:</strong> negative tests for wrong-user state, cache bleed, SSRF with cookies, token expiry, replay, and redaction.</div>
+          <div><strong>Operator guardrails:</strong> acceptance criteria for consent, logging, storage, cleanup, and launch gates.</div>
+          <div><strong>Upgrade path:</strong> if the auth review expands into broader agent/tool risk, the full USD $1,000 sprint can be scoped separately.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Public checklist examples</p>
+          <h2>Useful technical context before buying</h2>
+          <p>
+            These are public issue comments with review checklists, not paid customer work. They show the kind of boundary thinking this focused package turns into a scoped deliverable.
+          </p>
+        </div>
+        <div class="report-preview" aria-label="Public checklist examples">
+          <div class="report-row high"><span>Auth</span><strong><a href="https://github.com/zoharbabin/web-researcher-mcp/issues/241#issuecomment-4775580500">site_login and cookie-vault checklist</a></strong></div>
+          <div class="report-row medium"><span>Model</span><strong><a href="https://github.com/vinicius-ssantos/vos-studio-mcp/issues/195#issuecomment-4775493943">MCP threat-model matrix example</a></strong></div>
+          <div class="report-row medium"><span>Secrets</span><strong><a href="https://github.com/vinicius-ssantos/vos-studio-mcp/issues/179#issuecomment-4775557808">Secrets lifecycle and redaction checklist</a></strong></div>
+          <div class="report-row pass"><span>Free</span><strong><a href="scan.html">Run the no-execution scanner before opening a paid scope</a></strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Payment packet</p>
+          <h2>Copy after scope acceptance</h2>
+          <p>
+            Do not send secrets, private cookies, access tokens, private keys, or customer data in public GitHub issues. Payment is requested only after the written scope is accepted.
+          </p>
+          <div class="service-actions">
+            <button class="button primary" type="button" data-copy-target="#auth-payment-packet">Copy payment packet</button>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Submit payment proof</a>
+            <a class="button secondary dark" href="terms.html">Review terms</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div>
+            <strong>Copyable packet</strong>
+            <code id="auth-payment-packet">I accept the Agent Auth and Cookie Vault Security Review package.
+
+Package: USD $299 Agent Auth Focused Review
+Scope: [one token broker, cookie vault, site_login, OAuth/HITL, or authenticated browser flow]
+Delivery: [public issue comment or private Markdown report]
+Payment timing: after written scope acceptance only.
+
+Ethereum address (ETH or ERC-20 USDC/USDT/DAI):
+0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
+
+Solana address (SOL or SPL USDC):
+5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
+
+Payment proof form:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml</code>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

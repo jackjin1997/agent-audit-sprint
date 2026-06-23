@@ -9,6 +9,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Offer
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
+- USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, and cache isolation
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
@@ -18,6 +19,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
+- `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
 - `ai-agent-security-radar.html` - public no-execution radar snapshot of popular AI agent repo scan signals
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
@@ -92,6 +94,7 @@ Browser:
 - AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI jingle email brief: jackjin1997@gmail.com after copying the short brief template; payment is still after written brief acceptance only
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Agent Radar scan briefs: https://jackjin1997.github.io/agent-audit-sprint/reports/browser-use-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openhands-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/smolagents-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openai-agents-python-security-scan.html

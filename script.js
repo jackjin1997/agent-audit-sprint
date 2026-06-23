@@ -397,18 +397,23 @@ function updateJingleBrief() {
   const acceptanceOutput = jingleForm.querySelector("[data-jingle-acceptance-output]");
   const openLink = jingleForm.querySelector("[data-open-jingle-brief]");
   const emailLink = jingleForm.querySelector("[data-email-jingle-brief]");
+  const acceptanceEmailLink = jingleForm.querySelector("[data-email-jingle-acceptance]");
   const packet = buildJinglePacket(jingleForm);
+  const acceptancePacket = buildJingleAcceptancePacket(jingleForm);
   const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
   const titlePrefix = jingleForm.dataset.orderTitlePrefix || "AI jingle order";
   const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
   const title = `${titlePrefix}: ${brand}`;
   output.value = packet;
   if (acceptanceOutput) {
-    acceptanceOutput.value = buildJingleAcceptancePacket(jingleForm);
+    acceptanceOutput.value = acceptancePacket;
   }
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
   if (emailLink) {
     emailLink.href = mailtoHref(`${emailPrefix}: ${brand}`, packet);
+  }
+  if (acceptanceEmailLink) {
+    acceptanceEmailLink.href = mailtoHref(`${emailPrefix} accepted package: ${brand}`, acceptancePacket);
   }
   updateSketchDownload(jingleForm);
 }

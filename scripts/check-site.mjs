@@ -778,6 +778,19 @@ try {
     ) {
       throw new Error(`AI music generator acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
     }
+    const aiMusicAcceptanceEmailHref = decodeURIComponent(
+      (await page.locator("[data-email-jingle-acceptance]").getAttribute("href")) || ""
+    );
+    if (
+      !aiMusicAcceptanceEmailHref.includes("AI music generator brief accepted package: Quick Fit Studio") ||
+      !aiMusicAcceptanceEmailHref.includes("## Acceptance and payment handoff") ||
+      !aiMusicAcceptanceEmailHref.includes("Amount: USD $29 equivalent") ||
+      !aiMusicAcceptanceEmailHref.includes("Payment timing: after written brief acceptance only") ||
+      !aiMusicAcceptanceEmailHref.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
+      !aiMusicAcceptanceEmailHref.includes("payment-confirmation.yml")
+    ) {
+      throw new Error(`AI music generator acceptance email missing subject, amount, payment, or guardrail copy in ${viewport.name}`);
+    }
     const aiMusicSketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
     if (!aiMusicSketchStatus.includes("Browser sketch ready") || !aiMusicSketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
       throw new Error(`AI music generator sketch status missing ready or paid-delivery copy in ${viewport.name}`);
@@ -786,7 +799,7 @@ try {
     if (!aiMusicSketchHref?.startsWith("blob:")) {
       throw new Error(`AI music generator WAV sketch link was not generated in ${viewport.name}`);
     }
-    const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+    const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']:not([data-email-jingle-acceptance])").evaluateAll((links) =>
       links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
     );
     if (

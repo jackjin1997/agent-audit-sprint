@@ -188,6 +188,26 @@
               <span>Voice or sound style</span>
               <input name="style" type="text" value="clean musical hook with polished ad bed">
             </label>
+            <label>
+              <span>Publishing channel</span>
+              <select name="channel">
+                <option>Paid social ad or pre-roll</option>
+                <option>YouTube or creator monetized video</option>
+                <option>Podcast intro or sponsor segment</option>
+                <option>Real estate listing video</option>
+                <option>Wedding highlight or client film</option>
+                <option>Internal client pitch</option>
+              </select>
+            </label>
+            <label>
+              <span>Source material rights</span>
+              <select name="rightsSource">
+                <option>Original prompt only; no third-party lyrics or melodies</option>
+                <option>Buyer-owned tagline only</option>
+                <option>Buyer-owned vocal or audio reference cleared for use</option>
+                <option>Needs rights review before generation</option>
+              </select>
+            </label>
           </div>
           <label>
             <span>Audience and offer or story</span>
@@ -201,10 +221,12 @@
             <button class="button primary" type="submit">Generate brief</button>
             <button class="button secondary dark" type="button" data-copy-jingle-brief>Copy packet</button>
             <button class="button secondary dark" type="button" data-copy-jingle-acceptance>Copy acceptance packet</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-commercial-memo>Copy usage memo</button>
             <button class="button secondary dark" type="button" data-play-jingle-sketch>Play sketch</button>
             <a class="button secondary dark" data-download-jingle-sketch href="#" download="ai-music-sketch.wav">Download WAV</a>
             <a class="button secondary dark" data-email-jingle-brief href="mailto:jackjin1997@gmail.com?subject=AI%20music%20generator%20brief">Email brief</a>
             <a class="button secondary dark" data-email-jingle-acceptance href="mailto:jackjin1997@gmail.com?subject=AI%20music%20accepted%20package">Email acceptance</a>
+            <a class="button secondary dark" data-email-jingle-commercial-memo href="mailto:jackjin1997@gmail.com?subject=AI%20music%20commercial-use%20memo">Email usage memo</a>
             <a class="button secondary dark" data-open-jingle-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml">Open order</a>
             <a class="button secondary dark" href="ai-jingle-quote.html">Quote/payment packet</a>
             <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Payment proof</a>
@@ -214,6 +236,7 @@
           </div>
           <textarea class="brief-output" data-jingle-output rows="14" readonly aria-label="Generated AI music order packet"></textarea>
           <textarea class="brief-output" data-jingle-acceptance-output rows="12" readonly aria-label="Generated AI music acceptance and payment packet"></textarea>
+          <textarea class="brief-output" data-jingle-commercial-output rows="12" readonly aria-label="Generated AI music commercial-use memo"></textarea>
         </form>
       </section>
 

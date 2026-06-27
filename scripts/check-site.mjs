@@ -787,6 +787,9 @@ try {
       !aiMusicGeneratorText.includes("Open order form") ||
       !aiMusicGeneratorText.includes("Generate an order-ready AI music prompt") ||
       !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
+      !aiMusicGeneratorText.includes("Publishing channel") ||
+      !aiMusicGeneratorText.includes("Source material rights") ||
+      !aiMusicGeneratorText.includes("Copy usage memo") ||
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
       !aiMusicGeneratorText.includes("Real Estate Listing Music") ||
@@ -833,6 +836,8 @@ try {
       !aiMusicGeneratedPacket.includes("## AI music generator brief") ||
       !aiMusicGeneratedPacket.includes("Quick Fit Studio") ||
       !aiMusicGeneratedPacket.includes("USD $29 Founding Hook Sketch") ||
+      !aiMusicGeneratedPacket.includes("Publishing channel: Paid social ad or pre-roll") ||
+      !aiMusicGeneratedPacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !aiMusicGeneratedPacket.includes("## Production prompt") ||
       !aiMusicGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
       !aiMusicGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
@@ -852,6 +857,8 @@ try {
       !aiMusicAcceptancePacket.includes("Use this only after the written brief and selected package are accepted") ||
       !aiMusicAcceptancePacket.includes("Amount: USD $29 equivalent") ||
       !aiMusicAcceptancePacket.includes("I accept the USD $29 Founding Hook Sketch for Quick Fit Studio") ||
+      !aiMusicAcceptancePacket.includes("Publishing channel: Paid social ad or pre-roll") ||
+      !aiMusicAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !aiMusicAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
       !aiMusicAcceptancePacket.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
       !aiMusicAcceptancePacket.includes("5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM") ||
@@ -872,6 +879,30 @@ try {
     ) {
       throw new Error(`AI music generator acceptance email missing subject, amount, payment, or guardrail copy in ${viewport.name}`);
     }
+    const aiMusicCommercialMemo = await page.locator("[data-jingle-commercial-output]").inputValue();
+    if (
+      !aiMusicCommercialMemo.includes("## Commercial-use music memo") ||
+      !aiMusicCommercialMemo.includes("This is an order memo and usage record, not legal clearance") ||
+      !aiMusicCommercialMemo.includes("Publishing channel: Paid social ad or pre-roll") ||
+      !aiMusicCommercialMemo.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !aiMusicCommercialMemo.includes("Source tool and plan/tier note recorded") ||
+      !aiMusicCommercialMemo.includes("No claim that fully AI-generated music is copyright-registerable") ||
+      !aiMusicCommercialMemo.includes("Paid delivery starts only after the written brief")
+    ) {
+      throw new Error(`AI music generator commercial-use memo missing channel, source, legal, or start-rule copy in ${viewport.name}`);
+    }
+    const aiMusicCommercialMemoEmailHref = decodeURIComponent(
+      (await page.locator("[data-email-jingle-commercial-memo]").getAttribute("href")) || ""
+    );
+    if (
+      !aiMusicCommercialMemoEmailHref.includes("AI music generator brief commercial-use memo: Quick Fit Studio") ||
+      !aiMusicCommercialMemoEmailHref.includes("## Commercial-use music memo") ||
+      !aiMusicCommercialMemoEmailHref.includes("Publishing channel: Paid social ad or pre-roll") ||
+      !aiMusicCommercialMemoEmailHref.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !aiMusicCommercialMemoEmailHref.includes("not legal clearance")
+    ) {
+      throw new Error(`AI music generator commercial-use memo email missing subject, channel, source, or legal copy in ${viewport.name}`);
+    }
     const aiMusicSketchStatus = await page.locator("[data-jingle-sketch-status]").innerText();
     if (!aiMusicSketchStatus.includes("Browser sketch ready") || !aiMusicSketchStatus.includes("Paid delivery uses selected AI-assisted generations")) {
       throw new Error(`AI music generator sketch status missing ready or paid-delivery copy in ${viewport.name}`);
@@ -880,7 +911,7 @@ try {
     if (!aiMusicSketchHref?.startsWith("blob:")) {
       throw new Error(`AI music generator WAV sketch link was not generated in ${viewport.name}`);
     }
-    const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']:not([data-email-jingle-acceptance])").evaluateAll((links) =>
+    const aiMusicGeneratorEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']:not([data-email-jingle-acceptance]):not([data-email-jingle-commercial-memo])").evaluateAll((links) =>
       links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
     );
     if (

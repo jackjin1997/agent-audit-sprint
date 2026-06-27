@@ -167,6 +167,8 @@ function buildJinglePacket(form) {
   const style = clean(data.get("style"), "clear vocal hook with polished ad music bed");
   const audience = clean(data.get("audience"), "Audience and offer TBD");
   const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const channel = data.has("channel") ? clean(data.get("channel"), "Publishing channel TBD") : "";
+  const rightsSource = data.has("rightsSource") ? clean(data.get("rightsSource"), "Source material rights TBD") : "";
 
   const productionPrompt = [
     `Create a ${usage.toLowerCase()} for "${brand}".`,
@@ -174,6 +176,8 @@ function buildJinglePacket(form) {
     `Voice or style: ${style}.`,
     `Audience and offer: ${audience}.`,
     `Required line or tagline: ${tagline}.`,
+    ...(channel ? [`Publishing channel: ${channel}.`] : []),
+    ...(rightsSource ? [`Source material rights: ${rightsSource}.`] : []),
     "Keep the hook simple, pronounce the brand clearly, avoid known-artist soundalikes, avoid third-party lyrics, and end cleanly for ad placement.",
   ].join("\n");
 
@@ -184,6 +188,8 @@ function buildJinglePacket(form) {
     `Brand/show: ${brand}`,
     `Primary use: ${usage}`,
     `Timing: ${timing}`,
+    ...(channel ? [`Publishing channel: ${channel}`] : []),
+    ...(rightsSource ? [`Source material rights: ${rightsSource}`] : []),
     "",
     "## Brand brief",
     "",
@@ -215,6 +221,8 @@ function buildJingleAcceptancePacket(form) {
   const usage = clean(data.get("usage"), "8-12s local ad hook");
   const timing = clean(data.get("timing"), "48h target after accepted brief");
   const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const channel = data.has("channel") ? clean(data.get("channel"), "Publishing channel TBD") : "";
+  const rightsSource = data.has("rightsSource") ? clean(data.get("rightsSource"), "Source material rights TBD") : "";
   const amount = packageAmount(selectedPackage);
 
   return [
@@ -226,11 +234,13 @@ function buildJingleAcceptancePacket(form) {
     `Amount: ${amount} equivalent`,
     `Brand/show/project: ${brand}`,
     `Scope: ${usage}`,
+    ...(channel ? [`Publishing channel: ${channel}`] : []),
+    ...(rightsSource ? [`Source material rights: ${rightsSource}`] : []),
     `Required line or tagline: ${tagline}`,
     `Delivery target: ${timing} and payment confirmation`,
     "",
     "Acceptance reply:",
-    `I accept the ${selectedPackage} for ${brand}. Scope: ${usage}. Required line/tagline: ${tagline}. Payment timing: after written brief acceptance only. I will not request known-artist soundalikes, living voice clones, or third-party lyrics without rights.`,
+    `I accept the ${selectedPackage} for ${brand}. Scope: ${usage}. ${channel ? `Publishing channel: ${channel}. ` : ""}${rightsSource ? `Source material rights: ${rightsSource}. ` : ""}Required line/tagline: ${tagline}. Payment timing: after written brief acceptance only. I will not request known-artist soundalikes, living voice clones, or third-party lyrics without rights.`,
     "",
     "Payment paths after acceptance:",
     `Ethereum address for ETH or ERC-20 USDC/USDT/DAI: ${ethereumPaymentAddress}`,
@@ -242,6 +252,43 @@ function buildJingleAcceptancePacket(form) {
     "",
     "Usage guardrails:",
     "AI-generated music can have copyright-registration limits; delivery includes usage notes, not legal clearance.",
+  ].join("\n");
+}
+
+function buildJingleCommercialMemo(form) {
+  const data = new FormData(form);
+  const brand = clean(data.get("brand"), "Brand TBD");
+  const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
+  const usage = clean(data.get("usage"), "8-12s local ad hook");
+  const channel = clean(data.get("channel"), "Publishing channel TBD");
+  const rightsSource = clean(data.get("rightsSource"), "Original prompt only; no third-party lyrics or melodies");
+  const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const amount = packageAmount(selectedPackage);
+
+  return [
+    "## Commercial-use music memo",
+    "",
+    "This is an order memo and usage record, not legal clearance.",
+    "",
+    `Project: ${brand}`,
+    `Package: ${selectedPackage}`,
+    `Amount: ${amount} equivalent`,
+    `Primary use: ${usage}`,
+    `Publishing channel: ${channel}`,
+    `Source material rights: ${rightsSource}`,
+    `Required line or tagline: ${tagline}`,
+    "",
+    "Included delivery record:",
+    "- Selected AI-assisted music direction after human review for pronunciation, hook clarity, placement fit, and obvious artifacts.",
+    "- Source tool and plan/tier note recorded for the selected cut when applicable.",
+    "- Prompt or lyric sheet, rough cut note, revision scope if included, and usage memo.",
+    "",
+    "Excluded requests:",
+    "- No known-artist soundalikes, living voice clones, copyrighted songs, or third-party lyrics without rights.",
+    "- No claim that fully AI-generated music is copyright-registerable in every jurisdiction.",
+    "",
+    "Start rule:",
+    "Paid delivery starts only after the written brief, selected package, publishing channel, and payment path are accepted.",
   ].join("\n");
 }
 
@@ -395,11 +442,14 @@ function updateJingleBrief() {
   if (!jingleForm) return;
   const output = jingleForm.querySelector("[data-jingle-output]");
   const acceptanceOutput = jingleForm.querySelector("[data-jingle-acceptance-output]");
+  const commercialOutput = jingleForm.querySelector("[data-jingle-commercial-output]");
   const openLink = jingleForm.querySelector("[data-open-jingle-brief]");
   const emailLink = jingleForm.querySelector("[data-email-jingle-brief]");
   const acceptanceEmailLink = jingleForm.querySelector("[data-email-jingle-acceptance]");
+  const commercialEmailLink = jingleForm.querySelector("[data-email-jingle-commercial-memo]");
   const packet = buildJinglePacket(jingleForm);
   const acceptancePacket = buildJingleAcceptancePacket(jingleForm);
+  const commercialMemo = buildJingleCommercialMemo(jingleForm);
   const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
   const titlePrefix = jingleForm.dataset.orderTitlePrefix || "AI jingle order";
   const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
@@ -408,12 +458,18 @@ function updateJingleBrief() {
   if (acceptanceOutput) {
     acceptanceOutput.value = acceptancePacket;
   }
+  if (commercialOutput) {
+    commercialOutput.value = commercialMemo;
+  }
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
   if (emailLink) {
     emailLink.href = mailtoHref(`${emailPrefix}: ${brand}`, packet);
   }
   if (acceptanceEmailLink) {
     acceptanceEmailLink.href = mailtoHref(`${emailPrefix} accepted package: ${brand}`, acceptancePacket);
+  }
+  if (commercialEmailLink) {
+    commercialEmailLink.href = mailtoHref(`${emailPrefix} commercial-use memo: ${brand}`, commercialMemo);
   }
   updateSketchDownload(jingleForm);
 }
@@ -445,6 +501,21 @@ if (jingleForm) {
     copyAcceptanceButton.addEventListener("click", async (event) => {
       updateJingleBrief();
       const output = jingleForm.querySelector("[data-jingle-acceptance-output]");
+      try {
+        await navigator.clipboard.writeText(output.value);
+        setButtonText(event.currentTarget, "Copied");
+      } catch {
+        output.select();
+        setButtonText(event.currentTarget, "Select");
+      }
+    });
+  }
+
+  const copyCommercialMemoButton = jingleForm.querySelector("[data-copy-jingle-commercial-memo]");
+  if (copyCommercialMemoButton) {
+    copyCommercialMemoButton.addEventListener("click", async (event) => {
+      updateJingleBrief();
+      const output = jingleForm.querySelector("[data-jingle-commercial-output]");
       try {
         await navigator.clipboard.writeText(output.value);
         setButtonText(event.currentTarget, "Copied");

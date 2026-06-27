@@ -180,6 +180,9 @@ if (!llmsText.includes("USD $299 Agent Auth Focused Review")) {
 if (!llmsText.includes("agent-auth-review.yml")) {
   throw new Error("llms.txt is missing the Agent Auth focused review intake link");
 }
+if (!llmsText.includes("dynamic URL fetch") || !llmsText.includes("MCP SSRF")) {
+  throw new Error("llms.txt is missing the MCP SSRF/dynamic URL fetch scanner context");
+}
 if (!llmsText.includes("AI Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Jingle Generator offer context");
 }
@@ -236,6 +239,9 @@ if (!markdownOutput.includes("## Paid 48-hour review")) {
 }
 if (!markdownOutput.includes("Agent Auth Focused Review") || !markdownOutput.includes("agent-auth-review.yml")) {
   throw new Error("Scanner Markdown output is missing Agent Auth focused-review handoff");
+}
+if (!markdownOutput.includes("Dynamic URL fetch or SSRF surface") || !markdownOutput.includes("MCP SSRF/dynamic fetch boundary")) {
+  throw new Error("Scanner Markdown output is missing MCP SSRF/dynamic URL fetch handoff");
 }
 if (!markdownOutput.includes("https://jackjin1997.github.io/agent-audit-sprint/terms.html")) {
   throw new Error("Scanner Markdown output is missing terms URL");
@@ -816,10 +822,12 @@ try {
     if (
       !aiMusicGeneratorBrief.includes("Package: USD $29 Founding Hook Sketch") ||
       !aiMusicGeneratorBrief.includes("Use case: local ad") ||
-      !aiMusicGeneratorBrief.includes("Delivery: one selected short AI-assisted music sketch") ||
+      !aiMusicGeneratorBrief.includes("Publishing channel: paid social / YouTube monetized video") ||
+      !aiMusicGeneratorBrief.includes("Source material rights: original prompt only / buyer-owned tagline") ||
+      !aiMusicGeneratorBrief.includes("Delivery: one selected short AI-assisted music sketch, production prompt, rough cut note, source/tool note, commercial-use memo") ||
       !aiMusicGeneratorBrief.includes("Payment timing: after written brief acceptance only")
     ) {
-      throw new Error(`AI music generator brief missing package, delivery, use-case, or payment copy in ${viewport.name}`);
+      throw new Error(`AI music generator brief missing package, delivery, use-case, rights, channel, or payment copy in ${viewport.name}`);
     }
     const aiMusicGeneratorOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (aiMusicGeneratorOrderLinks < 1) {
@@ -918,9 +926,11 @@ try {
       aiMusicGeneratorEmailLinks.length < 2 ||
       !aiMusicGeneratorEmailLinks.every((href) => href.includes("AI music generator brief")) ||
       !aiMusicGeneratorEmailLinks.every((href) => href.includes("USD $29 Founding Hook Sketch")) ||
+      !aiMusicGeneratorEmailLinks.every((href) => href.includes("Publishing channel")) ||
+      !aiMusicGeneratorEmailLinks.every((href) => href.includes("Source material rights")) ||
       !aiMusicGeneratorEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
     ) {
-      throw new Error(`AI music generator page missing email brief link or payment guardrail in ${viewport.name}`);
+      throw new Error(`AI music generator page missing email brief link, channel/source rights, or payment guardrail in ${viewport.name}`);
     }
     const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
@@ -1887,6 +1897,9 @@ try {
     if (!scanOutput.includes("Agent Auth Focused Review") || !scanOutput.includes("agent-auth-review.yml")) {
       throw new Error(`Scanner output missing Agent Auth focused-review handoff in ${viewport.name}`);
     }
+    if (!scanOutput.includes("Dynamic URL fetch or SSRF surface") || !scanOutput.includes("Dynamic URL fetch can become SSRF with credentials")) {
+      throw new Error(`Scanner output missing MCP SSRF/dynamic URL fetch finding in ${viewport.name}`);
+    }
     const scanHref = await page.locator("[data-open-scan-request]").first().getAttribute("href");
     if (!scanHref?.includes("agent-auth-review.yml")) {
       throw new Error(`Scanner request link missing Agent Auth focused-review template in ${viewport.name}`);
@@ -1897,6 +1910,9 @@ try {
     }
     if (!localAuditPacket.includes("USD $299 Agent Auth Focused Review") || !localAuditPacket.includes("agent-auth-review.yml")) {
       throw new Error(`Local scanner audit packet missing Agent Auth focused-review path in ${viewport.name}`);
+    }
+    if (!localAuditPacket.includes("MCP SSRF/dynamic fetch boundary")) {
+      throw new Error(`Local scanner audit packet missing MCP SSRF focused-review boundary in ${viewport.name}`);
     }
     if (!localAuditPacket.includes("Payment timing: after written scope acceptance only.")) {
       throw new Error(`Local scanner audit packet missing payment guardrail in ${viewport.name}`);

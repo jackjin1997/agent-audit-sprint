@@ -100,6 +100,11 @@ const scanSignals = [
     pattern: /\b(site_login|site_logout|oauth|ciba|hitl|cookie|session|jwt|bearer|authorization|api[_-]?key|credential|token broker|token|refresh_token|access_token)\b/i,
   },
   {
+    id: "dynamic_url_fetch",
+    label: "Dynamic URL fetch or SSRF surface",
+    pattern: /\b(fetch_pagination_url|pagination_url|next_url|callback_url|redirect_url|webhook_url|proxy_url|target_url|input_url|request_url|url_to_fetch|urlToFetch|fetchUrl|targetUrl|requestUrl|callbackUrl|redirectUrl|webhookUrl|proxyUrl)\b|(?:\b(fetch|axios\.(?:get|request)|got|request|superagent|undici|httpx\.(?:get|request)|requests\.(?:get|request)|urllib\.request|aiohttp\.ClientSession|reqwest::Client)\s*\([^)]*\b(url|uri|href|endpoint|target|next|pagination|callback|redirect|webhook|proxy)\b)|(?:\b(url|uri|href|endpoint|target|next|pagination|callback|redirect|webhook|proxy)\b[^;\n]{0,140}\b(fetch|axios\.(?:get|request)|httpx\.(?:get|request)|requests\.(?:get|request)|urllib\.request|reqwest)\b)/i,
+  },
+  {
     id: "redaction",
     label: "Redaction or secret handling",
     pattern: /\b(redact|redaction|censor|mask|sanitize|scrub|REDACTED|redacted)\b/i,
@@ -167,19 +172,33 @@ const agentAuthIntakeUrl = "https://github.com/jackjin1997/agent-audit-sprint/is
 const agentAuthReviewUrl = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
 
 function hasAgentAuthFocus(result) {
-  return (result.signals?.agent_auth_focus?.files?.length || 0) > 0;
+  return (result.signals?.agent_auth_focus?.files?.length || 0) > 0 ||
+    (result.signals?.dynamic_url_fetch?.files?.length || 0) > 0;
 }
 
 function agentAuthFocusSummary(result) {
   if (!hasAgentAuthFocus(result)) return [];
-  const files = compactEvidence(result.signals.agent_auth_focus.files, 4);
+  const authFiles = result.signals?.agent_auth_focus?.files || [];
+  const dynamicUrlFiles = result.signals?.dynamic_url_fetch?.files || [];
+  const files = compactEvidence(uniqueFiles(authFiles, dynamicUrlFiles), 4);
+  const signalNotes = [];
+  if (authFiles.length) {
+    signalNotes.push("token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals");
+  }
+  if (dynamicUrlFiles.length) {
+    signalNotes.push("dynamic URL fetching, pagination URL, callback URL, redirect URL, webhook, or proxy-fetch signals");
+  }
   return [
-    "Auth-heavy focused path: this scan saw token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals.",
-    `Best fit: USD $299 Agent Auth Focused Review for one token broker, cookie vault, site_login/site_logout flow, OAuth/HITL consent boundary, authenticated scraping path, or MCP gateway auth split.`,
+    `Auth/SSRF focused path: this scan saw ${signalNotes.join("; ")}.`,
+    `Best fit: USD $299 Agent Auth Focused Review for one token broker, cookie vault, site_login/site_logout flow, OAuth/HITL consent boundary, authenticated scraping path, MCP gateway auth split, or MCP SSRF/dynamic fetch boundary.`,
     `Focused intake: ${agentAuthIntakeUrl}`,
     `Review page: ${agentAuthReviewUrl}`,
     `Evidence examples: ${files.map((file) => `\`${file}\``).join(", ") || "scanner signal match"}`,
   ];
+}
+
+function uniqueFiles(...groups) {
+  return Array.from(new Set(groups.flat().filter(Boolean)));
 }
 
 function compactEvidence(files, max = 5) {
@@ -218,6 +237,7 @@ async function analyzeBrowserFiles(files) {
   const hasWrite = signals.write_action.files.length > 0;
   const hasSecrets = signals.secret_env.files.length > 0;
   const hasAuth = signals.auth_gate.files.length > 0;
+  const hasDynamicUrlFetch = signals.dynamic_url_fetch.files.length > 0;
   const hasRedaction = signals.redaction.files.length > 0;
   const hasAnnotations = signals.tool_annotations.files.length > 0;
   const hasTests = signals.tests.files.length > 0 || candidates.some((file) => /(^|\/)(__tests__|tests?|spec)\//i.test(pathForFile(file)));
@@ -271,6 +291,26 @@ async function analyzeBrowserFiles(files) {
       compactEvidence(signals.write_action.files),
       "Write paths exist and annotations or gating signals are present. The next risk is proving those gates stay in place across CLI, MCP, and remote transports.",
       "Add tests for disabled-by-default write tools, auth failures, dry-run behavior, and lockout."
+    );
+  }
+
+  if (hasDynamicUrlFetch && (hasSecrets || hasAuth)) {
+    addFinding(
+      findings,
+      "High",
+      "Dynamic URL fetch can become SSRF with credentials",
+      compactEvidence(uniqueFiles(signals.dynamic_url_fetch.files, signals.agent_auth_focus.files, signals.secret_env.files)),
+      "Tool-callable URL fetch paths can turn attacker-controlled pagination, callback, redirect, webhook, or proxy URLs into SSRF. If auth state exists nearby, the blast radius can include bearer forwarding, cookies, internal services, and metadata endpoints.",
+      "Validate scheme and hostname against an allowlist, resolve final redirect targets before sending credentials, block localhost/link-local/RFC1918/metadata IPs, strip credentials from dynamic fetches, and test unsafe redirects, metadata IPs, non-HTTP schemes, and sibling domains."
+    );
+  } else if (hasDynamicUrlFetch) {
+    addFinding(
+      findings,
+      "Medium",
+      "Dynamic URL fetch needs destination allowlist and redirect tests",
+      compactEvidence(signals.dynamic_url_fetch.files),
+      "Agent and MCP tools that fetch user-provided URLs can be steered toward private networks or untrusted destinations even when the tool is read-only.",
+      "Add explicit destination policy, scheme checks, DNS/final-target validation, redirect handling, and regression tests for localhost, metadata IPs, private ranges, and unsafe host lookalikes."
     );
   }
 
@@ -549,6 +589,7 @@ function remoteFilePriority(path) {
   if (normalized === "package.json") value += 100;
   if (normalized.startsWith(".github/workflows/")) value += 90;
   if (/(mcp|agent|tool|server|transport|auth|permission|secret|credential|route|api)/.test(normalized)) value += 60;
+  if (/(ssrf|fetch|url|pagination|callback|redirect|proxy|webhook)/.test(normalized)) value += 45;
   if (/(src|lib|app|packages|server|tools)\//.test(normalized)) value += 25;
   if (/(test|spec|__tests__)/.test(normalized)) value += 12;
   return value;

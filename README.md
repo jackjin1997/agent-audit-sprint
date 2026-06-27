@@ -9,11 +9,11 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Offer
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
-- USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, and cache isolation
+- USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, commercial jingle page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, commercial jingle page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
 
 ## Files
 
@@ -25,9 +25,9 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
 - `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
-- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth-heavy Agent Auth focused-review routing, and paid audit handoff
+- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth/SSRF-heavy Agent Auth focused-review routing, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
-- `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, dynamic email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
+- `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, source-rights email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
@@ -108,7 +108,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
-- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation and direct intake link
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth/SSRF-heavy scans add a USD $299 Agent Auth focused-review recommendation and direct intake link
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -122,8 +122,8 @@ node tools/agent-mcp-audit.mjs /path/to/repo --json
 node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 ```
 
-The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, redaction, tests, and CI. It is a triage helper, not a security certification.
-The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner also routes to the USD $299 Agent Auth focused-review intake.
+The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, dynamic URL fetch/SSRF surfaces, redaction, tests, and CI. It is a triage helper, not a security certification.
+The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, credential-boundary, pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, the scanner also routes to the USD $299 Agent Auth focused-review intake.
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 
 Use it from GitHub Actions:

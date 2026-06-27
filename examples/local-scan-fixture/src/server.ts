@@ -16,5 +16,15 @@ server.registerTool("publish_note", {
   return { content: [{ type: "text", text: "published" }] };
 });
 
+server.registerTool("fetch_pagination_url", {
+  description: "Fetch the next page URL returned by a remote API",
+  inputSchema: {},
+}, async ({ paginationUrl }) => {
+  const response = await fetch(paginationUrl, {
+    headers: { authorization: `Bearer ${apiKey}` },
+  });
+  return { content: [{ type: "text", text: await response.text() }] };
+});
+
 const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
 await server.connect(transport);

@@ -48,7 +48,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## AI Music Offer
 
-- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, dynamic email brief, generated acceptance/payment handoff, commercial-use memo generator, dynamic acceptance and usage-memo email links, payment proof link, and order-form link.
+- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, static and dynamic source-rights email briefs, generated acceptance/payment handoff, commercial-use memo generator, dynamic acceptance and usage-memo email links, payment proof link, and order-form link.
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html for cold buyers who need one 8-12 second branded hook direction, production prompt, rough cut note, usage guardrails, and email-first intake before any payment request.
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html for small businesses, local services, and agencies that need one 8-12 second local ad hook, radio ID, social promo cue, or 15/30/60 second audio ad direction.
@@ -79,7 +79,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Standalone GitHub Action: https://github.com/jackjin1997/agent-mcp-code-scan-action
 - GitHub Action usage: jackjin1997/agent-mcp-code-scan-action@v1
 - Local CLI via GitHub: npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
-- Auth-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, and credential-boundary signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
+- Auth/SSRF-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, credential-boundary, dynamic URL fetch, pagination URL, callback URL, redirect URL, webhook, proxy fetch, and MCP SSRF signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - Lead finder: node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 
 ## Audit Fit
@@ -87,8 +87,8 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI agents with tool calls, function calling, LangGraph flows, browser automation, RAG, memory/state, workspace integrations, cloud/API access, or irreversible write actions.
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
-- Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, SSRF with cookies, redaction, and cache key isolation.
-- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, or authenticated browser boundary.
+- Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, dynamic URL fetch, SSRF with cookies, redaction, and cache key isolation.
+- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, authenticated browser boundary, or MCP SSRF/dynamic URL fetch boundary.
 - Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.
 
 ## High-Intent Verticals

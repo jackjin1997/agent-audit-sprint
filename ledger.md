@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-23.
+Last updated: 2026-06-27.
 
 ## Paid
 
@@ -12,12 +12,12 @@ Last updated: 2026-06-23.
 
 ## Chain Check
 
-Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
+Checked on 2026-06-27 (monitor timestamp 2026-06-27T14:43:59Z):
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
 | Ethereum | `0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF` | 0.000964771234780828 ETH; USDC 0; USDT 0; DAI 0 | Not a verified paid audit package payment |
-| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL; SPL USDC 0 | Not a verified paid audit package payment; SPL USDC token-account RPC degraded during latest check |
+| Solana | `5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM` | 0.069368296 SOL; SPL USDC 0 | Not a verified paid audit package payment |
 
 ## Submitted / Published Assets
 
@@ -92,8 +92,11 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 | Public high-intent MCP threat-model reply | https://github.com/vinicius-ssantos/vos-studio-mcp/issues/195#issuecomment-4775493943 | Posted a concrete VOS threat model matrix and future-feature checklist on an open MCP/security issue, with a lightweight $99/$299 review link after the technical content; no PR opened |
 | Public high-intent secrets lifecycle reply | https://github.com/vinicius-ssantos/vos-studio-mcp/issues/179#issuecomment-4775557808 | Posted a concrete redaction, rotation, healthcheck, and safe-error test checklist on an open P0 secrets/token lifecycle issue; no PR opened |
 | Public high-intent cookie-vault security reply | https://github.com/zoharbabin/web-researcher-mcp/issues/241#issuecomment-4775580500 | Posted a concrete `site_login`/cookie-vault boundary checklist covering eTLD+1 scoping, secure-cookie behavior, redirects, SSRF, consent gating, export safety, browser cleanup, and auth-cache interaction; no PR opened |
+| Public cookie-vault release-gate follow-up | https://github.com/zoharbabin/web-researcher-mcp/issues/241#issuecomment-4798990839 | Followed up after the maintainer incorporated the first pass and posted a 29-gap adversarial audit; framed CV-001, SL-01/SL-04, F5/CV-009, PV-001/PV-002, and F-007/RACE-007 as a release gate, with a restrained fixed-scope USD $299 Agent Auth review offer; no accepted scope or payment yet |
 | Public high-intent HITL auth/token-broker reply | https://github.com/kagenti/kagenti/issues/1435#issuecomment-4776103573 | Posted a concrete Token Broker/HITL auth threat-model and regression-test checklist covering session graph binding, cache key shape, OAuth callback safety, route policy, multi-hop downscoping, pending-auth DoS, redaction, and wait/repeat policy; linked the $299 Agent Auth review page after the technical content; no PR opened |
+| Kagenti link-safety remediation | https://github.com/kagenti/kagenti/issues/1435#issuecomment-4798994702 | Maintainer raised a security concern about the previous linked comment; confirmed the linked comment was no longer present from this account and committed not to repost links in that issue; treated as reputation/safety handling, not revenue |
 | Public high-intent MCP Zero Trust gatewayExchange reply | https://github.com/paul007ex/agentgateway/issues/30#issuecomment-4776421737 | Posted a concrete MintAI/agentgateway release-gate checklist covering effectiveExchangePlan as sole STS authority, fail-closed deny/challenge/error states, route authority narrowing, RFC 9728 metadata binding, subject/actor separation, challenge redaction, token cache defaults, and evidence correlation; linked the $299 Agent Auth review page after the technical content; no PR opened |
+| Agentgateway receipt-layer reply qualification | https://github.com/paul007ex/agentgateway/issues/30#issuecomment-4786629168 | Reviewed a third-party runtime receipt/audit-trail reply; it was technical discussion rather than buyer intent, so no sales follow-up was posted and no revenue was counted |
 | Public high-intent Kubernaut multi-cluster auth reply | https://github.com/jordigilh/kubernaut/issues/54#issuecomment-4776920156 | Posted a concrete MCP Gateway / Keycloak / Authorino / OPA / AAP production release-gate checklist covering cluster identity binding, read/write token separation, stale MCPServerRegistration invalidation, prompt-injection containment, gateway hairpin spoofing, and audit correlation; linked the $299 Agent Auth focused-review intake after the technical content; no PR opened |
 | Agent Auth lead finder refresh | `scripts/find-high-intent-leads.mjs`, `private-notes/high-intent-auth-leads-2026-06-23.md` | Added token broker, HITL auth, cookie vault, site_login, and credential-injection searches; added API timeout/retry and per-query failure handling; tightened automated report/dashboard noise filters; regenerated a private high-intent auth lead report |
 | Agent Auth focused review conversion page | https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html | Added a USD $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation; links to public checklist examples and paid package intake |
@@ -132,6 +135,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 | Automated payment-proof response | `.github/workflows/respond-payment-proof.yml`, `scripts/comment-payment-proof.mjs` | Published |
 | Automated goal status monitor | `.github/workflows/goal-status-monitor.yml`, `scripts/check-goal-status.mjs`, `scripts/install-goal-monitor-launchd.mjs`, `scripts/run-goal-monitor-loop.mjs` | Added 4-hour GitHub check and visible resident 15-minute macOS launchd loop for open intake issues, AI jingle orders, and ETH/SOL stablecoin/native payment signals; local loop logs snapshots and shows macOS notifications on attention signals; USD $29+ is treated as a small-package alert so first jingle orders are not missed; failures are alerts, not revenue recognition |
 | Goal monitor Solana fallback and lead watch reliability | `scripts/check-goal-status.mjs`, `private-notes/lead-watchlist.json` | Added watched external lead reply alerts plus Solana RPC fallback/timeout handling so native SOL balance is preserved when the default RPC fails; SPL USDC lookup remains degraded if all token-account endpoints fail |
+| Goal monitor stale lead cleanup | `scripts/check-goal-status.mjs`, `private-notes/lead-watchlist.json` | Added per-lead 404/410 tolerance for watched external issues, removed stale private `vos-studio-mcp` watch entries after the repo became unavailable, and advanced handled reply timestamps for `web-researcher-mcp#241`, `kagenti#1435`, and `agentgateway#30` so the loop alerts only on new non-self comments |
 | Goal monitor robustness | `scripts/check-goal-status.mjs`, local resident loop | Added authenticated local GitHub token lookup, transient network retries, source-level degraded health reporting, and native ETH/SOL fallback thresholds so API/DNS failures do not masquerade as customer payment signals |
 | Automated intake triage smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/2 | Passed and closed; non-customer test |
 | Automated paid-intent smoke test | https://github.com/jackjin1997/agent-audit-sprint/issues/4 | Passed and closed; non-customer test |
@@ -163,7 +167,7 @@ Checked on 2026-06-23 (monitor timestamp 2026-06-23T07:16:56Z):
 
 ## Next Actions
 
-1. Watch `vinicius-ssantos/vos-studio-mcp#195`, `vinicius-ssantos/vos-studio-mcp#179`, `zoharbabin/web-researcher-mcp#241`, `kagenti/kagenti#1435`, `paul007ex/agentgateway#30`, and `jordigilh/kubernaut#54` for maintainer replies, then qualify any requested outside pass before asking for payment.
+1. Watch `zoharbabin/web-researcher-mcp#241`, `kagenti/kagenti#1435`, `paul007ex/agentgateway#30`, and `jordigilh/kubernaut#54` for new maintainer replies, then qualify any requested outside pass before asking for payment.
 2. Work from `private-notes/high-intent-shortlist-2026-06-22.md`, starting with explicit MCP/security/auth requests rather than generic promotion.
 3. For the AI music experiment, pitch the USD $29 Founding Hook Sketch first when a buyer is cold or skeptical, then move serious podcast/media-kit buyers toward the USD $149 Ad Music Pack.
 4. Work from `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md`: re-open each source page, verify the contact route, then manually send the first 5 personalized AI jingle messages using `podcast-sponsor-jingle.html` and the email brief path for podcast/media-kit prospects.

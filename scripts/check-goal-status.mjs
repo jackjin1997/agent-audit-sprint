@@ -181,9 +181,17 @@ async function getLeadReplies() {
   const headers = GITHUB_TOKEN ? { authorization: `Bearer ${GITHUB_TOKEN}` } : {};
   const replies = [];
   for (const lead of watchlist) {
-    const comments = await fetchJson(`https://api.github.com/repos/${lead.repo}/issues/${lead.issue}/comments?per_page=100`, {
-      headers,
-    });
+    let comments;
+    try {
+      comments = await fetchJson(`https://api.github.com/repos/${lead.repo}/issues/${lead.issue}/comments?per_page=100`, {
+        headers,
+      });
+    } catch (error) {
+      if (/ returned (404|410) /.test(error.message)) {
+        continue;
+      }
+      throw error;
+    }
     for (const comment of comments) {
       const createdAt = new Date(comment.created_at);
       if (comment.user?.login !== lead.self && createdAt > lead.watchAfter) {

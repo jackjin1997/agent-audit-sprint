@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -11,6 +11,7 @@ AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pa
 AI Music Generator storefront page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 AI Jingle $29 hook sketch page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 AI Commercial Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
+AI Short-Form Ad Music Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
 AI Real Estate Listing Music Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
 AI Wedding Video Music Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-wedding-video-music.html
 AI Podcast Intro Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html
@@ -28,6 +29,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
+- AI Short-Form Ad Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
 - AI Real Estate Listing Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
 - AI Wedding Video Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-wedding-video-music.html
 - AI Podcast Intro Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html
@@ -48,10 +50,11 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 ## AI Music Offer
 
-- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, static and dynamic source-rights email briefs, generated acceptance/payment handoff, commercial-use memo generator, dynamic acceptance and usage-memo email links, payment proof link, and order-form link.
+- AI Music Generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html for routing buyers to local ads, short-form ad hooks, real estate listing videos, wedding highlights, podcasts, sponsor segments, and creator intros. Includes an on-page AI music prompt/brief generator, browser sketch playback, WAV download, static and dynamic source-rights email briefs, generated acceptance/payment handoff, commercial-use memo generator, dynamic acceptance and usage-memo email links, payment proof link, and order-form link.
 - AI Jingle Generator page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI Jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html for cold buyers who need one 8-12 second branded hook direction, production prompt, rough cut note, usage guardrails, and email-first intake before any payment request.
 - AI Commercial Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html for small businesses, local services, and agencies that need one 8-12 second local ad hook, radio ID, social promo cue, or 15/30/60 second audio ad direction.
+- AI Short-Form Ad Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html for TikTok, Instagram Reels, YouTube Shorts, UGC ads, creator tags, product demo openers, paid-social hooks, and buyers who need source-rights intake plus a commercial-use memo before the $29 or $149 package.
 - AI Real Estate Listing Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html for agents, listing coordinators, brokerages, photographers, and media vendors who need one 15-30 second listing video soundtrack sketch, open-house teaser cue, property reel bed, or 15/30/60 second walkthrough direction.
 - AI Wedding Video Music Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-wedding-video-music.html for wedding videographers, filmmakers, planners, creators, and couples who need one 15-30 second wedding highlight soundtrack sketch, teaser reel cue, social cut bed, or 15/30/60 second film direction.
 - AI Podcast Intro Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html for podcast hosts and creators who need one 8-12 second intro hook, outro bump, segment sting, or sponsor transition before a full sponsor audio pack.

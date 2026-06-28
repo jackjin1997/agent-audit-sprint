@@ -33,6 +33,7 @@ const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
+const aiShortFormAdMusic = `file://${resolve(root, "ai-short-form-ad-music.html")}`;
 const aiRealEstateListingMusic = `file://${resolve(root, "ai-real-estate-listing-music.html")}`;
 const aiWeddingVideoMusic = `file://${resolve(root, "ai-wedding-video-music.html")}`;
 const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
@@ -59,6 +60,7 @@ const requiredFiles = [
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
+  "ai-short-form-ad-music.html",
   "ai-real-estate-listing-music.html",
   "ai-wedding-video-music.html",
   "ai-podcast-intro-generator.html",
@@ -607,6 +609,8 @@ try {
       !indexBody.includes("AI Music Generator storefront for a $29 first order") ||
       !indexBody.includes("Open the AI Music Generator storefront") ||
       !indexBody.includes("Copy the $29 AI music brief") ||
+      !indexBody.includes("Open short-form ad music page") ||
+      !indexBody.includes("Ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
     ) {
       throw new Error(`Index page missing AI music storefront promotion in ${viewport.name}`);
@@ -677,6 +681,10 @@ try {
     const indexAiMusicLinks = await page.locator("a[href='ai-music-generator.html'], a[href='ai-music-generator.html#brief']").count();
     if (indexAiMusicLinks < 3) {
       throw new Error(`Index page missing AI music storefront links in ${viewport.name}`);
+    }
+    const indexShortFormAdMusicLinks = await page.locator("a[href='ai-short-form-ad-music.html']").count();
+    if (indexShortFormAdMusicLinks < 1) {
+      throw new Error(`Index page missing short-form ad music page link in ${viewport.name}`);
     }
 
     await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
@@ -798,6 +806,8 @@ try {
       !aiMusicGeneratorText.includes("Copy usage memo") ||
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
+      !aiMusicGeneratorText.includes("Reels, Shorts, And UGC Ads") ||
+      !aiMusicGeneratorText.includes("Short-form ad music") ||
       !aiMusicGeneratorText.includes("Real Estate Listing Music") ||
       !aiMusicGeneratorText.includes("Wedding Video Music") ||
       !aiMusicGeneratorText.includes("Podcast Intro") ||
@@ -934,6 +944,75 @@ try {
     }
     const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiShortFormAdMusic, { waitUntil: "networkidle" });
+    const shortFormAdMusicTitle = await page.locator("h1").innerText();
+    if (!shortFormAdMusicTitle.includes("AI Short-Form Ad Music Generator")) {
+      throw new Error(`Unexpected AI short-form ad music h1 in ${viewport.name}: ${shortFormAdMusicTitle}`);
+    }
+    const shortFormAdMusicText = await page.locator("body").innerText();
+    if (
+      !shortFormAdMusicText.includes("USD $29 Short-Form Ad Hook Sketch") ||
+      !shortFormAdMusicText.includes("Email short-form brief") ||
+      !shortFormAdMusicText.includes("Open order form") ||
+      !shortFormAdMusicText.includes("TikTok") ||
+      !shortFormAdMusicText.includes("Instagram Reels") ||
+      !shortFormAdMusicText.includes("YouTube Shorts") ||
+      !shortFormAdMusicText.includes("UGC ads") ||
+      !shortFormAdMusicText.includes("publishing channel") ||
+      !shortFormAdMusicText.includes("source material rights") ||
+      !shortFormAdMusicText.includes("commercial-use memo") ||
+      !shortFormAdMusicText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !shortFormAdMusicText.includes("No known-artist soundalikes") ||
+      !shortFormAdMusicText.includes("TikTok Commercial Music Library") ||
+      !shortFormAdMusicText.includes("AI music storefront")
+    ) {
+      throw new Error(`AI short-form ad music page missing package, market, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const shortFormAdMusicHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!shortFormAdMusicHeroLoaded) throw new Error(`AI short-form ad music hero image failed to load in ${viewport.name}`);
+    const shortFormAdMusicAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      shortFormAdMusicAudioSources.length !== 3 ||
+      !shortFormAdMusicAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !shortFormAdMusicAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !shortFormAdMusicAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI short-form ad music sample audio sources missing in ${viewport.name}`);
+    }
+    const shortFormAdMusicBrief = await page.locator("textarea.brief-output").inputValue();
+    if (
+      !shortFormAdMusicBrief.includes("Package: USD $29 Short-Form Ad Hook Sketch") ||
+      !shortFormAdMusicBrief.includes("Primary use: 6-10s TikTok/Reels/Shorts hook") ||
+      !shortFormAdMusicBrief.includes("Publishing channel: TikTok / Instagram Reels / YouTube Shorts") ||
+      !shortFormAdMusicBrief.includes("Source material rights: original prompt only / buyer-owned tagline") ||
+      !shortFormAdMusicBrief.includes("Delivery: one selected 6-15 second short-form ad music hook sketch") ||
+      !shortFormAdMusicBrief.includes("commercial-use memo") ||
+      !shortFormAdMusicBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI short-form ad music brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+    }
+    const shortFormAdMusicOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (shortFormAdMusicOrderLinks < 1) {
+      throw new Error(`AI short-form ad music page missing order link in ${viewport.name}`);
+    }
+    const shortFormAdMusicEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      shortFormAdMusicEmailLinks.length < 3 ||
+      !shortFormAdMusicEmailLinks.every((href) => href.includes("AI short-form ad music brief")) ||
+      !shortFormAdMusicEmailLinks.every((href) => href.includes("USD $29 Short-Form Ad Hook Sketch")) ||
+      !shortFormAdMusicEmailLinks.every((href) => href.includes("Publishing channel")) ||
+      !shortFormAdMusicEmailLinks.every((href) => href.includes("Source material rights")) ||
+      !shortFormAdMusicEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI short-form ad music page missing email brief link, channel/source rights, or payment guardrail in ${viewport.name}`);
+    }
+    const shortFormAdMusicOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (shortFormAdMusicOverflow) throw new Error(`AI short-form ad music horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiJingleHookSketch, { waitUntil: "networkidle" });
     const hookSketchTitle = await page.locator("h1").innerText();

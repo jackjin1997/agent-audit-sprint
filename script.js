@@ -246,6 +246,7 @@ function buildJingleAcceptancePacket(form) {
     `Ethereum address for ETH or ERC-20 USDC/USDT/DAI: ${ethereumPaymentAddress}`,
     `Solana address for SOL or SPL USDC: ${solanaPaymentAddress}`,
     `Payment proof form: ${paymentProofUrl}`,
+    `Payment proof service field: ${selectedPackage}`,
     "",
     "Start rule:",
     "The delivery target starts after written brief acceptance and verifiable payment confirmation.",

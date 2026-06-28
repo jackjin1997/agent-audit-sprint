@@ -1,18 +1,34 @@
 name: Payment confirmation
-description: Submit transaction evidence after an audit scope or AI jingle brief is accepted
+description: Submit transaction evidence after an audit scope, focused review, or AI music brief is accepted
 title: "Payment proof: <project or brand name>"
 labels: ["payment-proof"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this only after the audit scope or AI jingle brief is accepted in writing. Do not paste private keys, seed phrases, exchange account screenshots, or unrelated sensitive data.
+        Use this only after the audit scope, focused review, or AI music brief is accepted in writing. Do not paste private keys, seed phrases, exchange account screenshots, or unrelated sensitive data.
   - type: input
     id: scope_issue
     attributes:
       label: Accepted scope issue URL
-      description: Link the audit request, audit slot, or AI jingle order issue where scope/brief was accepted.
+      description: Link the audit request, focused review, AI music order, or email-to-issue trail where scope/brief was accepted.
       placeholder: https://github.com/jackjin1997/agent-audit-sprint/issues/123
+    validations:
+      required: true
+  - type: dropdown
+    id: accepted_service
+    attributes:
+      label: Accepted package or service
+      description: Select the package that was accepted before payment. If the written agreement differs, choose the final option and explain it in payer details.
+      options:
+        - USD $29 AI short-form or UGC hook sketch
+        - USD $79 AI jingle hook pack
+        - USD $149 AI ad music or agency pack
+        - USD $399 Sonic Launch Kit
+        - USD $99 Quick Scan Report
+        - USD $299 Agent Auth / MCP SSRF / focused review
+        - USD $1,000 Full Agent/MCP Audit Sprint
+        - Other accepted written scope
     validations:
       required: true
   - type: dropdown
@@ -35,6 +51,12 @@ body:
       placeholder: tx hash / signature / invoice reference
     validations:
       required: true
+  - type: input
+    id: evidence_url
+    attributes:
+      label: Explorer or invoice URL
+      description: Optional block explorer URL, Solana explorer URL, or invoice settlement URL that matches the transaction/reference above.
+      placeholder: https://etherscan.io/tx/... or https://solscan.io/tx/...
   - type: input
     id: amount
     attributes:

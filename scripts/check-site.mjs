@@ -34,6 +34,7 @@ const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
+const aiProductVideoMusic = `file://${resolve(root, "ai-product-video-music.html")}`;
 const aiShortFormAdMusic = `file://${resolve(root, "ai-short-form-ad-music.html")}`;
 const ugcAgencyAiMusicHooks = `file://${resolve(root, "ugc-agency-ai-music-hooks.html")}`;
 const aiRealEstateListingMusic = `file://${resolve(root, "ai-real-estate-listing-music.html")}`;
@@ -63,6 +64,7 @@ const requiredFiles = [
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
+  "ai-product-video-music.html",
   "ai-short-form-ad-music.html",
   "ugc-agency-ai-music-hooks.html",
   "ai-real-estate-listing-music.html",
@@ -93,6 +95,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
+  ".github/ISSUE_TEMPLATE/ai-product-video-music-order.yml",
   ".github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
@@ -217,6 +220,12 @@ if (!llmsText.includes("AI Podcast Intro Generator")) {
 }
 if (!llmsText.includes("AI Commercial Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Commercial Jingle Generator page");
+}
+if (!llmsText.includes("AI Product Video Music Generator")) {
+  throw new Error("llms.txt is missing the AI Product Video Music Generator page");
+}
+if (!llmsText.includes("ai-product-video-music-order.yml")) {
+  throw new Error("llms.txt is missing the AI product video music order intake");
 }
 if (!llmsText.includes("AI Short-Form Ad Music Generator")) {
   throw new Error("llms.txt is missing the AI Short-Form Ad Music Generator page");
@@ -652,6 +661,82 @@ if (
   throw new Error("UGC agency order dry-run output is missing service, payment proof, or payment guardrail");
 }
 
+const productVideoOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $29 Product Video Music Hook Sketch",
+      "",
+      "### Product or store name",
+      "",
+      "BrightBottle Launch",
+      "",
+      "### Store, product page, or creative brief link",
+      "",
+      "https://example.com/products/bottle",
+      "",
+      "### Primary use",
+      "",
+      "Shopify product page video",
+      "",
+      "### Publishing channel",
+      "",
+      "Shopify product page",
+      "",
+      "### Source material rights",
+      "",
+      "Original prompt only; no third-party lyrics or melodies",
+      "",
+      "### Product offer and target buyer",
+      "",
+      "Hydration bottle buyers watching a fast product demo and launch-week bundle offer.",
+      "",
+      "### Required CTA or product claim",
+      "",
+      "Hydrate smarter before the next refill.",
+      "",
+      "### Visual pacing",
+      "",
+      "Product demo",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Solana SPL USDC after brief acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!productVideoOrderOutput.includes("USD $29 Product Video Music Hook Sketch")) {
+  throw new Error("Product video order dry-run output is missing package name");
+}
+if (
+  !productVideoOrderOutput.includes("BrightBottle Launch") ||
+  !productVideoOrderOutput.includes("Publishing channel: **Shopify product page**") ||
+  !productVideoOrderOutput.includes("Source material rights: **Original prompt only; no third-party lyrics or melodies**") ||
+  !productVideoOrderOutput.includes("Required CTA or product claim: **Hydrate smarter before the next refill.**")
+) {
+  throw new Error("Product video order dry-run output is missing product, channel, rights, or CTA details");
+}
+if (
+  !productVideoOrderOutput.includes("ai-product-video-music.html") ||
+  !productVideoOrderOutput.includes("payment-confirmation.yml") ||
+  !productVideoOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")
+) {
+  throw new Error("Product video order dry-run output is missing service, payment proof, or payment guardrail");
+}
+
 const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {
   encoding: "utf8",
   env: {
@@ -662,6 +747,10 @@ const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "script
       "",
       "https://github.com/jackjin1997/agent-audit-sprint/issues/123",
       "",
+      "### Accepted package or service",
+      "",
+      "USD $29 AI short-form or UGC hook sketch",
+      "",
       "### Payment network",
       "",
       "Ethereum",
@@ -670,9 +759,13 @@ const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "script
       "",
       "0xabc123",
       "",
+      "### Explorer or invoice URL",
+      "",
+      "https://etherscan.io/tx/0xabc123",
+      "",
       "### Amount sent",
       "",
-      "USD 1,000 equivalent",
+      "USD 29 equivalent",
     ].join("\n"),
   },
   maxBuffer: 1024 * 1024,
@@ -684,17 +777,19 @@ if (!paymentProofOutput.includes("https://github.com/jackjin1997/agent-audit-spr
   throw new Error("Payment proof dry-run output is missing scope issue");
 }
 if (
-  !paymentProofOutput.includes("USD $29/$79/$149/$399 AI jingle work") ||
+  !paymentProofOutput.includes("USD $29 AI short-form or UGC hook sketch") ||
+  !paymentProofOutput.includes("https://etherscan.io/tx/0xabc123") ||
+  !paymentProofOutput.includes("USD $29/$79/$149/$399 AI music or jingle work") ||
   !paymentProofOutput.includes("USD $99/$299 audit entry work") ||
   !paymentProofOutput.includes("USD $1,000 full audit sprint")
 ) {
-  throw new Error("Payment proof dry-run output is missing package amount verification rule");
+  throw new Error("Payment proof dry-run output is missing service, evidence URL, or package amount verification rule");
 }
 if (!paymentProofOutput.includes("ERC-20 USDC/USDT/DAI") || !paymentProofOutput.includes("SPL USDC")) {
   throw new Error("Payment proof dry-run output is missing stablecoin asset options");
 }
-if (!paymentProofOutput.includes("AI jingle receipt template")) {
-  throw new Error("Payment proof dry-run output is missing AI jingle receipt template");
+if (!paymentProofOutput.includes("AI music/jingle receipt template") || !paymentProofOutput.includes("AI music/jingle delivery note template")) {
+  throw new Error("Payment proof dry-run output is missing AI music receipt or delivery templates");
 }
 
 const codeScanningAuditOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-code-scanning-audit.mjs")], {
@@ -776,9 +871,10 @@ try {
       !indexBody.includes("AI Music Generator storefront for a $29 first order") ||
       !indexBody.includes("Open the AI Music Generator storefront") ||
       !indexBody.includes("Copy the $29 AI music brief") ||
+      !indexBody.includes("Open product video music page") ||
       !indexBody.includes("Open short-form ad music page") ||
       !indexBody.includes("Open UGC agency music hook page") ||
-      !indexBody.includes("Ads, Reels, Shorts, UGC videos") ||
+      !indexBody.includes("Product videos, ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
     ) {
       throw new Error(`Index page missing AI music storefront promotion in ${viewport.name}`);
@@ -859,6 +955,10 @@ try {
     const indexShortFormAdMusicLinks = await page.locator("a[href='ai-short-form-ad-music.html']").count();
     if (indexShortFormAdMusicLinks < 1) {
       throw new Error(`Index page missing short-form ad music page link in ${viewport.name}`);
+    }
+    const indexProductVideoMusicLinks = await page.locator("a[href='ai-product-video-music.html']").count();
+    if (indexProductVideoMusicLinks < 1) {
+      throw new Error(`Index page missing product video music page link in ${viewport.name}`);
     }
     const indexUgcAgencyMusicLinks = await page.locator("a[href='ugc-agency-ai-music-hooks.html']").count();
     if (indexUgcAgencyMusicLinks < 1) {
@@ -984,6 +1084,7 @@ try {
       !aiMusicGeneratorText.includes("Copy usage memo") ||
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
+      !aiMusicGeneratorText.includes("Product video music") ||
       !aiMusicGeneratorText.includes("Reels, Shorts, And UGC Ads") ||
       !aiMusicGeneratorText.includes("UGC Agency Client Approval Hooks") ||
       !aiMusicGeneratorText.includes("Short-form ad music") ||
@@ -1124,6 +1225,134 @@ try {
     const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(aiProductVideoMusic, { waitUntil: "networkidle" });
+    const productVideoTitle = await page.locator("h1").innerText();
+    if (!productVideoTitle.includes("AI Product Video Music Generator")) {
+      throw new Error(`Unexpected AI product video music h1 in ${viewport.name}: ${productVideoTitle}`);
+    }
+    const productVideoText = await page.locator("body").innerText();
+    if (
+      !productVideoText.includes("USD $29 Product Video Music Hook Sketch") ||
+      !productVideoText.includes("Email product brief") ||
+      !productVideoText.includes("Open product video order") ||
+      !productVideoText.includes("Generate a product video music order packet") ||
+      !productVideoText.includes("Generate product packet") ||
+      !productVideoText.includes("Shopify") ||
+      !productVideoText.includes("TikTok Shop") ||
+      !productVideoText.includes("Meta ad creative") ||
+      !productVideoText.includes("Amazon listing video") ||
+      !productVideoText.includes("Source material rights") ||
+      !productVideoText.includes("commercial-use memo") ||
+      !productVideoText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !productVideoText.includes("source/tool note") ||
+      !productVideoText.includes("AI music storefront")
+    ) {
+      throw new Error(`AI product video music page missing package, ecommerce fit, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const productVideoHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!productVideoHeroLoaded) throw new Error(`AI product video music hero image failed to load in ${viewport.name}`);
+    const productVideoAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      productVideoAudioSources.length !== 3 ||
+      !productVideoAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !productVideoAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !productVideoAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI product video music sample audio sources missing in ${viewport.name}`);
+    }
+    await page.locator("[data-jingle-form] [name='brand']").fill("BrightBottle Launch");
+    await page.locator("[data-jingle-form] [name='audience']").fill(
+      "Hydration bottle buyers watching a fast product demo and launch-week bundle offer."
+    );
+    await page.locator("[data-jingle-form] [name='tagline']").fill("Hydrate smarter before the next refill.");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const productVideoGeneratedPacket = await page.locator("[data-jingle-output]").inputValue();
+    if (
+      !productVideoGeneratedPacket.includes("## AI product video music brief") ||
+      !productVideoGeneratedPacket.includes("BrightBottle Launch") ||
+      !productVideoGeneratedPacket.includes("USD $29 Product Video Music Hook Sketch") ||
+      !productVideoGeneratedPacket.includes("Primary use: Shopify product page video") ||
+      !productVideoGeneratedPacket.includes("Publishing channel: Shopify product page") ||
+      !productVideoGeneratedPacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !productVideoGeneratedPacket.includes("## Production prompt") ||
+      !productVideoGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
+      !productVideoGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`AI product video music dynamic packet missing product, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
+    }
+    const productVideoGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (!productVideoGeneratedOrderHref?.includes("template=ai-product-video-music-order.yml")) {
+      throw new Error(`AI product video music dynamic order link missing product order template in ${viewport.name}`);
+    }
+    if (!productVideoGeneratedOrderHref.includes("labels=ai-jingle-order%2Cai-product-video-music-order")) {
+      throw new Error(`AI product video music dynamic order link missing product order labels in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(productVideoGeneratedOrderHref).includes("AI product video music order: BrightBottle Launch")) {
+      throw new Error(`AI product video music dynamic order link missing project title in ${viewport.name}`);
+    }
+    const productVideoAcceptancePacket = await page.locator("[data-jingle-acceptance-output]").inputValue();
+    if (
+      !productVideoAcceptancePacket.includes("## Acceptance and payment handoff") ||
+      !productVideoAcceptancePacket.includes("Amount: USD $29 equivalent") ||
+      !productVideoAcceptancePacket.includes("I accept the USD $29 Product Video Music Hook Sketch for BrightBottle Launch") ||
+      !productVideoAcceptancePacket.includes("Publishing channel: Shopify product page") ||
+      !productVideoAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !productVideoAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
+      !productVideoAcceptancePacket.includes("Payment proof service field: USD $29 Product Video Music Hook Sketch") ||
+      !productVideoAcceptancePacket.includes("payment-confirmation.yml")
+    ) {
+      throw new Error(`AI product video music acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
+    }
+    const productVideoCommercialMemo = await page.locator("[data-jingle-commercial-output]").inputValue();
+    if (
+      !productVideoCommercialMemo.includes("## Commercial-use music memo") ||
+      !productVideoCommercialMemo.includes("Project: BrightBottle Launch") ||
+      !productVideoCommercialMemo.includes("This is an order memo and usage record, not legal clearance") ||
+      !productVideoCommercialMemo.includes("Publishing channel: Shopify product page") ||
+      !productVideoCommercialMemo.includes("Source tool and plan/tier note recorded") ||
+      !productVideoCommercialMemo.includes("Paid delivery starts only after the written brief")
+    ) {
+      throw new Error(`AI product video music usage memo missing project, channel, source note, legal, or start-rule copy in ${viewport.name}`);
+    }
+    const productVideoSketchHref = await page.locator("[data-download-jingle-sketch]").getAttribute("href");
+    if (!productVideoSketchHref?.startsWith("blob:")) {
+      throw new Error(`AI product video music WAV sketch link was not generated in ${viewport.name}`);
+    }
+    const productVideoBrief = await page.locator("textarea[aria-label='AI product video music brief template']").inputValue();
+    if (
+      !productVideoBrief.includes("Package: USD $29 Product Video Music Hook Sketch") ||
+      !productVideoBrief.includes("Primary use: Shopify product page video") ||
+      !productVideoBrief.includes("Publishing channel: product page") ||
+      !productVideoBrief.includes("Source material rights: original prompt only") ||
+      !productVideoBrief.includes("Delivery: one selected 6-15 second product video music hook sketch") ||
+      !productVideoBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI product video music brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+    }
+    const productVideoOrderLinks = await page.locator("a[href*='template=ai-product-video-music-order.yml']").count();
+    if (productVideoOrderLinks < 2) {
+      throw new Error(`AI product video music page missing dedicated product order links in ${viewport.name}`);
+    }
+    const productVideoPaymentProofLinks = await page.locator("a[href*='template=payment-confirmation.yml']").count();
+    if (productVideoPaymentProofLinks < 2) {
+      throw new Error(`AI product video music page missing payment proof links in ${viewport.name}`);
+    }
+    const productVideoEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      productVideoEmailLinks.length < 3 ||
+      !productVideoEmailLinks.every((href) => href.includes("AI product video music brief")) ||
+      !productVideoEmailLinks.every((href) => href.includes("USD $29 Product Video Music Hook Sketch")) ||
+      !productVideoEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI product video music page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const productVideoOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (productVideoOverflow) throw new Error(`AI product video music horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(ugcAgencyAiMusicHooks, { waitUntil: "networkidle" });
     const ugcAgencyTitle = await page.locator("h1").innerText();
     if (!ugcAgencyTitle.includes("AI UGC Agency Music Hook Pack")) {
@@ -1197,6 +1426,7 @@ try {
       !ugcAgencyAcceptancePacket.includes("Publishing channel: Client approval only") ||
       !ugcAgencyAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !ugcAgencyAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
+      !ugcAgencyAcceptancePacket.includes("Payment proof service field: USD $29 UGC Agency Audio Hook Sketch") ||
       !ugcAgencyAcceptancePacket.includes("payment-confirmation.yml")
     ) {
       throw new Error(`UGC agency music hook acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
@@ -1322,6 +1552,7 @@ try {
       !shortFormAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !shortFormAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
       !shortFormAcceptancePacket.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
+      !shortFormAcceptancePacket.includes("Payment proof service field: USD $29 Short-Form Ad Hook Sketch") ||
       !shortFormAcceptancePacket.includes("payment-confirmation.yml")
     ) {
       throw new Error(`AI short-form ad music acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);

@@ -14,7 +14,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for ecommerce product videos, small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, product video music page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
 
 ## Files
 
@@ -33,6 +33,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
+- `ai-product-video-music.html` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` - ecommerce USD $29 product video music hook page and dedicated order form for Shopify product videos, TikTok Shop ads, Meta ad creative, marketplace listing videos, and $149 ecommerce ad music pack upsell
 - `ai-short-form-ad-music.html` - USD $29 short-form ad music generator page for TikTok, Instagram Reels, YouTube Shorts, UGC ads, creator tags, product demo openers, dynamic order packet, email handoff, acceptance/payment packet, browser WAV sketch, source-rights intake, and commercial-use memo delivery
 - `ugc-agency-ai-music-hooks.html` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` - USD $29 UGC agency audio hook page and dedicated order form for paid-social teams that need client approval packets, source-rights memos, dynamic order packets, and $149 agency ad music pack upsell
 - `ai-real-estate-listing-music.html` - real-estate USD $29 listing video soundtrack page for property reels, walkthroughs, open-house teasers, and agent media teams
@@ -51,10 +52,10 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
-- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle and UGC agency music hook package orders
+- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle, product video music, and UGC agency music hook package orders
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
-- `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
-- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI jingle orders, and ETH/SOL stablecoin/native payment signals
+- `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment with accepted service, amount, transaction evidence, and receipt/delivery template routing
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI music orders, and ETH/SOL stablecoin/native payment signals
 - `scripts/find-high-intent-leads.mjs` - GitHub issue search helper for current agent/MCP security, auth, scanner, and transport discussions; writes private lead shortlists without auto-posting
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
@@ -63,7 +64,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` / `reports/agentgap-agent-config-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, UGC agency music hook order, and payment proof forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, product video music order, UGC agency music hook order, and payment proof forms
 - `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
@@ -91,6 +92,7 @@ Browser:
 - AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
+- AI product video music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html
 - AI short-form ad music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
 - AI UGC agency music hook pack: https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html
 - AI real estate listing music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
@@ -185,7 +187,7 @@ node scripts/install-goal-monitor-launchd.mjs
 
 The visible loop writes `private-notes/monitor/goal-monitor-loop.pid` and `private-notes/monitor/goal-monitor-loop-heartbeat.json`, so it can be inspected with `ps -p "$(cat private-notes/monitor/goal-monitor-loop.pid)" -o pid,ppid,etime,command`.
 
-The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. The monitor treats USD $29+ as a small-package payment signal so first AI jingle orders are not missed, while the revenue goal remains USD $1,000. Revenue is still counted only after payment is verified against an accepted written scope or accepted jingle brief.
+The scheduled GitHub Action runs every 4 hours and fails only when an open issue or likely payment signal needs attention. The local launchd loop stays resident, checks every 15 minutes, writes `private-notes/monitor/latest-goal-status.txt`, appends `logs/goal-monitor-history.log`, and shows a macOS notification when attention is required. The monitor treats USD $29+ as a small-package payment signal so first AI music orders are not missed, while the revenue goal remains USD $1,000. Revenue is still counted only after payment is verified against an accepted written scope or accepted music brief.
 
 ## npm Publishing
 

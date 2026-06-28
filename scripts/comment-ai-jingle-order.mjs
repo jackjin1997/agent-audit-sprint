@@ -3,6 +3,7 @@
 const MARKER = "<!-- ai-jingle-order-response -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html";
 const UGC_AGENCY_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html";
+const PRODUCT_VIDEO_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -20,6 +21,15 @@ function extractField(body = "", label) {
 
 function packageDetails(rawChoice = "") {
   const choice = rawChoice.trim();
+  if (/Product Video Music Hook/i.test(choice)) {
+    return {
+      name: "USD $29 Product Video Music Hook Sketch",
+      price: "USD $29",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "one selected 6-15 second product video music hook sketch, production prompt, rough cut note, source/tool note, commercial-use memo, and usage guardrails",
+      serviceUrl: PRODUCT_VIDEO_SERVICE_URL,
+    };
+  }
   if (/UGC Agency Audio Hook/i.test(choice)) {
     return {
       name: "USD $29 UGC Agency Audio Hook Sketch",
@@ -65,6 +75,15 @@ function packageDetails(rawChoice = "") {
       serviceUrl: UGC_AGENCY_SERVICE_URL,
     };
   }
+  if (/Ecommerce Ad Music/i.test(choice)) {
+    return {
+      name: "USD $149 Ecommerce Ad Music Pack",
+      price: "USD $149",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "three selected ecommerce product-video music variants for one product campaign, 15/30/60 second cut plan, one revision pass, source/tool note, and commercial-use notes",
+      serviceUrl: PRODUCT_VIDEO_SERVICE_URL,
+    };
+  }
   return {
     name: "USD $149 Ad Music Pack",
     price: "USD $149",
@@ -79,19 +98,23 @@ function renderJingleOrderComment(issueBody = "") {
   const brand =
     extractField(issueBody, "Brand, podcast, channel, or product name") ||
     extractField(issueBody, "Agency or client project") ||
+    extractField(issueBody, "Product or store name") ||
     "the brand/show";
   const website =
     extractField(issueBody, "Website or social link") ||
     extractField(issueBody, "Website, store, or creative brief link") ||
+    extractField(issueBody, "Store, product page, or creative brief link") ||
     "not provided";
   const usage = extractField(issueBody, "Primary use") || "short branded audio";
   const channel = extractField(issueBody, "Publishing channel");
   const rightsSource = extractField(issueBody, "Source material rights");
   const targetViewer = extractField(issueBody, "Target viewer and offer");
+  const productOffer = extractField(issueBody, "Product offer and target buyer");
   const requiredLine = extractField(issueBody, "Required line or CTA");
+  const productClaim = extractField(issueBody, "Required CTA or product claim");
   const visualPacing = extractField(issueBody, "Visual pacing");
   const approvalNeed = extractField(issueBody, "Client approval need");
-  const brief = extractField(issueBody, "Brand brief") || targetViewer || "brief to confirm";
+  const brief = extractField(issueBody, "Brand brief") || targetViewer || productOffer || "brief to confirm";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
@@ -101,6 +124,7 @@ function renderJingleOrderComment(issueBody = "") {
     visualPacing ? `- Visual pacing: **${visualPacing}**` : "",
     approvalNeed ? `- Client approval need: **${approvalNeed}**` : "",
     requiredLine ? `- Required line or CTA: **${requiredLine}**` : "",
+    productClaim ? `- Required CTA or product claim: **${productClaim}**` : "",
   ].filter(Boolean);
 
   return `${MARKER}

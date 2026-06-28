@@ -93,6 +93,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
+  ".github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
   ".github/workflows/respond-audit-intent.yml",
@@ -222,6 +223,9 @@ if (!llmsText.includes("AI Short-Form Ad Music Generator")) {
 }
 if (!llmsText.includes("AI UGC Agency Music Hook Pack")) {
   throw new Error("llms.txt is missing the AI UGC Agency Music Hook Pack page");
+}
+if (!llmsText.includes("ugc-agency-music-hook-order.yml")) {
+  throw new Error("llms.txt is missing the UGC agency music hook order intake");
 }
 if (!llmsText.includes("AI Real Estate Listing Music Generator")) {
   throw new Error("llms.txt is missing the AI Real Estate Listing Music Generator page");
@@ -566,6 +570,86 @@ if (
 }
 if (!jingleOrderOutput.includes("AI-generated music can have copyright-registration limits")) {
   throw new Error("AI jingle order dry-run output is missing rights guardrail");
+}
+
+const ugcAgencyOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $29 UGC Agency Audio Hook Sketch",
+      "",
+      "### Agency or client project",
+      "",
+      "Launch Reel Client Test",
+      "",
+      "### Website, store, or creative brief link",
+      "",
+      "https://example.com",
+      "",
+      "### Primary use",
+      "",
+      "Client approval audio hook",
+      "",
+      "### Publishing channel",
+      "",
+      "Client approval only",
+      "",
+      "### Source material rights",
+      "",
+      "Original prompt only; no third-party lyrics or melodies",
+      "",
+      "### Target viewer and offer",
+      "",
+      "Ecommerce skincare buyers seeing a creator-led product demo and launch-week offer.",
+      "",
+      "### Required line or CTA",
+      "",
+      "Three steps, one brighter routine.",
+      "",
+      "### Visual pacing",
+      "",
+      "Product demo",
+      "",
+      "### Client approval need",
+      "",
+      "One direction",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Need invoice/discussion first",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!ugcAgencyOrderOutput.includes("USD $29 UGC Agency Audio Hook Sketch")) {
+  throw new Error("UGC agency order dry-run output is missing package name");
+}
+if (
+  !ugcAgencyOrderOutput.includes("Launch Reel Client Test") ||
+  !ugcAgencyOrderOutput.includes("Publishing channel: **Client approval only**") ||
+  !ugcAgencyOrderOutput.includes("Source material rights: **Original prompt only; no third-party lyrics or melodies**") ||
+  !ugcAgencyOrderOutput.includes("Client approval need: **One direction**")
+) {
+  throw new Error("UGC agency order dry-run output is missing agency project, channel, rights, or approval details");
+}
+if (
+  !ugcAgencyOrderOutput.includes("ugc-agency-ai-music-hooks.html") ||
+  !ugcAgencyOrderOutput.includes("payment-confirmation.yml") ||
+  !ugcAgencyOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")
+) {
+  throw new Error("UGC agency order dry-run output is missing service, payment proof, or payment guardrail");
 }
 
 const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {
@@ -1049,7 +1133,7 @@ try {
     if (
       !ugcAgencyText.includes("USD $29 UGC Agency Audio Hook Sketch") ||
       !ugcAgencyText.includes("Email agency brief") ||
-      !ugcAgencyText.includes("Open order form") ||
+      !ugcAgencyText.includes("Open agency order form") ||
       !ugcAgencyText.includes("Generate a client approval music hook packet") ||
       !ugcAgencyText.includes("Generate agency packet") ||
       !ugcAgencyText.includes("Client Approval") ||
@@ -1096,8 +1180,11 @@ try {
       throw new Error(`UGC agency music hook dynamic packet missing brand, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
     }
     const ugcAgencyGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
-    if (!ugcAgencyGeneratedOrderHref?.includes("template=ai-jingle-order.yml")) {
-      throw new Error(`UGC agency music hook dynamic order link missing order template in ${viewport.name}`);
+    if (!ugcAgencyGeneratedOrderHref?.includes("template=ugc-agency-music-hook-order.yml")) {
+      throw new Error(`UGC agency music hook dynamic order link missing agency order template in ${viewport.name}`);
+    }
+    if (!ugcAgencyGeneratedOrderHref.includes("labels=ai-jingle-order%2Cugc-agency-music-hook-order")) {
+      throw new Error(`UGC agency music hook dynamic order link missing agency order labels in ${viewport.name}`);
     }
     if (!decodeURIComponent(ugcAgencyGeneratedOrderHref).includes("AI UGC agency music hook order: Launch Reel Client Test")) {
       throw new Error(`UGC agency music hook dynamic order link missing project title in ${viewport.name}`);
@@ -1139,6 +1226,10 @@ try {
       !ugcAgencyBrief.includes("Payment timing: after written brief acceptance only")
     ) {
       throw new Error(`UGC agency music hook brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+    }
+    const ugcAgencyOrderLinks = await page.locator("a[href*='template=ugc-agency-music-hook-order.yml']").count();
+    if (ugcAgencyOrderLinks < 2) {
+      throw new Error(`UGC agency music hook page missing dedicated agency order links in ${viewport.name}`);
     }
     const ugcAgencyEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
       links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))

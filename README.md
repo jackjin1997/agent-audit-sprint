@@ -34,7 +34,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
 - `ai-short-form-ad-music.html` - USD $29 short-form ad music generator page for TikTok, Instagram Reels, YouTube Shorts, UGC ads, creator tags, product demo openers, dynamic order packet, email handoff, acceptance/payment packet, browser WAV sketch, source-rights intake, and commercial-use memo delivery
-- `ugc-agency-ai-music-hooks.html` - USD $29 UGC agency audio hook page for paid-social teams that need client approval packets, source-rights memos, dynamic order packets, and $149 agency ad music pack upsell
+- `ugc-agency-ai-music-hooks.html` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` - USD $29 UGC agency audio hook page and dedicated order form for paid-social teams that need client approval packets, source-rights memos, dynamic order packets, and $149 agency ad music pack upsell
 - `ai-real-estate-listing-music.html` - real-estate USD $29 listing video soundtrack page for property reels, walkthroughs, open-house teasers, and agent media teams
 - `ai-wedding-video-music.html` - wedding USD $29 highlight soundtrack page for wedding videographers, teaser reels, social cuts, and filmmaker briefs
 - `ai-podcast-intro-generator.html` - creator-facing USD $29 podcast intro hook page for show openers, outro bumps, segment stings, and podcast channels that are not ready for sponsor packs
@@ -51,7 +51,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
-- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle package orders
+- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle and UGC agency music hook package orders
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment
 - `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI jingle orders, and ETH/SOL stablecoin/native payment signals
@@ -63,7 +63,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` / `reports/agentgap-agent-config-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, and payment proof forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, UGC agency music hook order, and payment proof forms
 - `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions

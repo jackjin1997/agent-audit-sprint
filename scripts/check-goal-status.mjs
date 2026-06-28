@@ -42,6 +42,7 @@ const INTAKE_LABELS = new Set([
   "code-scanning-audit",
   "ai-agent-audit",
   "ai-jingle-order",
+  "ugc-agency-music-hook-order",
 ]);
 
 function bigintToDecimal(value, decimals) {

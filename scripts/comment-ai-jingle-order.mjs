@@ -2,6 +2,7 @@
 
 const MARKER = "<!-- ai-jingle-order-response -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html";
+const UGC_AGENCY_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -19,12 +20,22 @@ function extractField(body = "", label) {
 
 function packageDetails(rawChoice = "") {
   const choice = rawChoice.trim();
+  if (/UGC Agency Audio Hook/i.test(choice)) {
+    return {
+      name: "USD $29 UGC Agency Audio Hook Sketch",
+      price: "USD $29",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "one selected 6-15 second agency audio hook sketch, production prompt, rough cut note, source/tool note, client-ready usage memo, and guardrails",
+      serviceUrl: UGC_AGENCY_SERVICE_URL,
+    };
+  }
   if (choice.includes("$29") || /founding|sketch/i.test(choice)) {
     return {
       name: "USD $29 Founding Hook Sketch",
       price: "USD $29",
       target: "24h after brief and payment confirmation when available",
       deliverable: "one selected 8-12 second branded hook sketch, production prompt, rough cut note, and usage guardrails",
+      serviceUrl: SERVICE_URL,
     };
   }
   if (choice.includes("$79") || /hook/i.test(choice)) {
@@ -33,6 +44,7 @@ function packageDetails(rawChoice = "") {
       price: "USD $79",
       target: "24-48h after brief and payment confirmation",
       deliverable: "two short jingle directions, one selected rough cut, prompt/lyric sheet, and usage memo",
+      serviceUrl: SERVICE_URL,
     };
   }
   if (choice.includes("$399") || /sonic launch/i.test(choice)) {
@@ -41,6 +53,16 @@ function packageDetails(rawChoice = "") {
       price: "USD $399",
       target: "48h after brief and payment confirmation",
       deliverable: "jingle, podcast intro/outro, five social stings, brand sound direction, prompt history, and two revision passes",
+      serviceUrl: SERVICE_URL,
+    };
+  }
+  if (/Agency Ad Music/i.test(choice)) {
+    return {
+      name: "USD $149 Agency Ad Music Pack",
+      price: "USD $149",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "three selected agency audio directions for one client concept, 15/30/60 second cut plan, one revision pass, and commercial-use notes",
+      serviceUrl: UGC_AGENCY_SERVICE_URL,
     };
   }
   return {
@@ -48,18 +70,38 @@ function packageDetails(rawChoice = "") {
     price: "USD $149",
     target: "24-48h after brief and payment confirmation",
     deliverable: "three selected variants for one campaign, 15/30/60 second cut plan, one revision pass, and commercial-use notes",
+    serviceUrl: choice.includes("Agency") ? UGC_AGENCY_SERVICE_URL : SERVICE_URL,
   };
 }
 
 function renderJingleOrderComment(issueBody = "") {
   const packageInfo = packageDetails(extractField(issueBody, "Requested package"));
-  const brand = extractField(issueBody, "Brand, podcast, channel, or product name") || "the brand/show";
-  const website = extractField(issueBody, "Website or social link") || "not provided";
+  const brand =
+    extractField(issueBody, "Brand, podcast, channel, or product name") ||
+    extractField(issueBody, "Agency or client project") ||
+    "the brand/show";
+  const website =
+    extractField(issueBody, "Website or social link") ||
+    extractField(issueBody, "Website, store, or creative brief link") ||
+    "not provided";
   const usage = extractField(issueBody, "Primary use") || "short branded audio";
-  const brief = extractField(issueBody, "Brand brief") || "brief to confirm";
+  const channel = extractField(issueBody, "Publishing channel");
+  const rightsSource = extractField(issueBody, "Source material rights");
+  const targetViewer = extractField(issueBody, "Target viewer and offer");
+  const requiredLine = extractField(issueBody, "Required line or CTA");
+  const visualPacing = extractField(issueBody, "Visual pacing");
+  const approvalNeed = extractField(issueBody, "Client approval need");
+  const brief = extractField(issueBody, "Brand brief") || targetViewer || "brief to confirm";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
+  const agencyDetails = [
+    channel ? `- Publishing channel: **${channel}**` : "",
+    rightsSource ? `- Source material rights: **${rightsSource}**` : "",
+    visualPacing ? `- Visual pacing: **${visualPacing}**` : "",
+    approvalNeed ? `- Client approval need: **${approvalNeed}**` : "",
+    requiredLine ? `- Required line or CTA: **${requiredLine}**` : "",
+  ].filter(Boolean);
 
   return `${MARKER}
 ## AI jingle order received
@@ -75,6 +117,7 @@ Thanks for requesting **${packageInfo.name}** for **${brand}**.
 - Requested timing: **${timing}**
 - Payment path: **${paymentPath}**
 - Expected deliverable: ${packageInfo.deliverable}
+${agencyDetails.length ? `\nAgency/client approval details:\n\n${agencyDetails.join("\n")}\n` : ""}
 
 Brief summary:
 
@@ -90,7 +133,7 @@ ${PAYMENT_PROOF_URL}
 
 - Ethereum: \`${ETH_ADDRESS}\`
 - Solana: \`${SOL_ADDRESS}\`
-- Service page and browser sketch demo: ${SERVICE_URL}
+- Service page and browser sketch demo: ${packageInfo.serviceUrl}
 - Fixed jingle quote and payment packet: ${QUOTE_URL}
 - Invoice template: ${INVOICE_TEMPLATE_URL}
 - Delivery note template: ${DELIVERY_NOTE_TEMPLATE_URL}

@@ -454,6 +454,8 @@ function updateJingleBrief() {
   const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
   const titlePrefix = jingleForm.dataset.orderTitlePrefix || "AI jingle order";
   const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
+  const orderTemplate = jingleForm.dataset.orderTemplate || "ai-jingle-order.yml";
+  const orderLabels = jingleForm.dataset.orderLabels || "ai-jingle-order";
   const title = `${titlePrefix}: ${brand}`;
   output.value = packet;
   if (acceptanceOutput) {
@@ -462,7 +464,7 @@ function updateJingleBrief() {
   if (commercialOutput) {
     commercialOutput.value = commercialMemo;
   }
-  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml&labels=ai-jingle-order&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(orderTemplate)}&labels=${encodeURIComponent(orderLabels)}&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
   if (emailLink) {
     emailLink.href = mailtoHref(`${emailPrefix}: ${brand}`, packet);
   }

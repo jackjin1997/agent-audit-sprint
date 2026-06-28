@@ -2,7 +2,7 @@
 
 Goal: earn $1,000.
 
-Last updated: 2026-06-27.
+Last updated: 2026-06-28.
 
 ## Paid
 
@@ -12,7 +12,7 @@ Last updated: 2026-06-27.
 
 ## Chain Check
 
-Checked on 2026-06-27 (monitor timestamp 2026-06-27T15:49:11Z):
+Checked on 2026-06-28 (monitor timestamp 2026-06-28T03:06:54Z):
 
 | Network | Address | Observed balance | Result |
 |---|---|---:|---|
@@ -94,6 +94,7 @@ Checked on 2026-06-27 (monitor timestamp 2026-06-27T15:49:11Z):
 | Short-form ad music and SSRF scanner owned distribution refresh | GitHub profile README, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07, booking FAQ discussion #1, scanner discussion #3 | Added the USD $29 AI Short-Form Ad Music page to owned profile/gist surfaces and updated owned scanner/audit discussions to explain that browser/CLI/standalone `@v1` scanner outputs now flag dynamic URL fetch and SSRF-with-credentials evidence and route those cases to the USD $299 Agent Auth focused-review intake |
 | AI Short-Form Ad Music packet generator distribution | GitHub profile README commit `09f5bf6`, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07, discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/7 | Added owned profile, gist, and discussion links for the USD $29 TikTok/Reels/Shorts/UGC hook packet generator, including email handoff, order link, acceptance/payment text, WAV sketch, source-rights brief, and commercial-use memo |
 | AI Jingle outreach playbook | `outreach/ai-jingle-outreach.md`, `private-notes/ai-jingle-prospect-workflow-2026-06-22.md`, `private-notes/ai-jingle-prospect-shortlist-2026-06-22.md` | Added safe manual outreach workflow, buyer-segment priorities, message templates, research signals, a 12-prospect shortlist, first-five send queue, and daily execution checklist for the USD $149 Ad Music Pack path; no messages sent automatically |
+| AI Short-Form Ad Music outreach queue | `outreach/ai-jingle-outreach.md`, `private-notes/short-form-ad-music-prospect-shortlist-2026-06-28.md` | Added a UGC/paid-social agency segment, short-form ad music outreach template, and private 10-prospect manual send queue for TikTok/Reels/Shorts/UGC ad music outreach; no messages sent automatically |
 | High-intent lead finder | `scripts/find-high-intent-leads.mjs`, `private-notes/high-intent-leads-2026-06-22.md`, `private-notes/high-intent-shortlist-2026-06-22.md` | Added authenticated GitHub issue search helper and generated manual shortlist for current MCP/agent security/auth/scanner demand signals; no comments posted automatically |
 | Public high-intent MCP threat-model reply | https://github.com/vinicius-ssantos/vos-studio-mcp/issues/195#issuecomment-4775493943 | Posted a concrete VOS threat model matrix and future-feature checklist on an open MCP/security issue, with a lightweight $99/$299 review link after the technical content; no PR opened |
 | Public high-intent secrets lifecycle reply | https://github.com/vinicius-ssantos/vos-studio-mcp/issues/179#issuecomment-4775557808 | Posted a concrete redaction, rotation, healthcheck, and safe-error test checklist on an open P0 secrets/token lifecycle issue; no PR opened |

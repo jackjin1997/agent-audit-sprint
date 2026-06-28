@@ -7,6 +7,7 @@ Use this playbook to sell the AI Jingle Generator offer without spam, fake scarc
 ## Offer
 
 - Page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
+- Short-form ad music page: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
 - Podcast sponsor page: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - Quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
@@ -43,9 +44,10 @@ The site should not compete as a generic song toy. Pitch a short, finished campa
 |---:|---|---|---|
 | 1 | Podcasts with sponsors or stale intros | They already publish audio, sell sponsor inventory, and need recognizable show or sponsor segment identity. | USD $29 hook sketch, then USD $149 Ad Music Pack |
 | 2 | Local businesses running short ads | They need hooks for Reels, TikTok, YouTube Shorts, radio, or events. | USD $29 or $79 |
-| 3 | Radio/DJ/event shows | They buy IDs, drops, sweepers, and short promos. | USD $149 |
-| 4 | YouTube/TikTok creators | They need intro/sting identity and repeatable sponsor reads. | USD $29 or $79 |
-| 5 | Small agencies/freelancers | They need fast first-pass audio for client approval. | USD $149 or $399 |
+| 3 | UGC and paid-social agencies | They already sell TikTok/Reels/Shorts creative and need fast audio hook directions for client concepts. | USD $29 hook sketch, then USD $149 Ad Music Pack |
+| 4 | Radio/DJ/event shows | They buy IDs, drops, sweepers, and short promos. | USD $149 |
+| 5 | YouTube/TikTok creators | They need intro/sting identity and repeatable sponsor reads. | USD $29 or $79 |
+| 6 | Small agencies/freelancers | They need fast first-pass audio for client approval. | USD $149 or $399 |
 
 ## Qualification Checklist
 
@@ -96,6 +98,26 @@ Samples and brief builder:
 https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 
 If useful, send only the business name, audience, offer, and any tagline by email to jackjin1997@gmail.com or through the order form. Payment is only after the brief is accepted.
+```
+
+### UGC / Paid-Social Agency
+
+```text
+Subject: Audio hook option for UGC ad concepts
+
+Hi <name/team>,
+
+I make fixed-price AI-assisted short-form ad music hooks for TikTok, Reels, Shorts, UGC ads, and product demo openers. <Agency> looks relevant because <specific UGC, paid-social, ecommerce, TikTok, creator, or product-video service>.
+
+The $29 Short-Form Ad Hook Sketch is a small first test: one selected 8-12 second paid-social opener, production prompt, rough cut note, browser WAV sketch, source/tool summary, and usage memo. If a client concept needs more coverage, the $149 Ad Music Pack gives three selected short audio directions with a 15/30/60 second cut plan and one revision pass.
+
+Short-form packet generator:
+https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html#generator
+
+No private client data is needed for a first brief. A public product/category, target viewer, platform, required line/tagline, publishing channel, and source-material rights note are enough. Payment is only after the written brief is accepted.
+
+Best,
+Zexu
 ```
 
 ### Radio / DJ / Event
@@ -151,7 +173,8 @@ No worries if not relevant.
 
 1. Pick 10 podcasts with sponsors, stale intros, or clear segment branding.
 2. Pick 10 local businesses with active Reels/TikTok/YouTube Shorts or event promos.
-3. Pick 10 radio/DJ/event shows that already use station IDs, drops, or short promos.
-4. Send 5 highly personalized messages first, not 30 generic ones.
-5. Use the email brief path when the contact is a normal business or podcast inbox rather than a GitHub user.
-6. Log outcomes in a private note.
+3. Pick 10 UGC or paid-social agencies with ecommerce, TikTok, creator, product-demo, or short-form ad services.
+4. Pick 10 radio/DJ/event shows that already use station IDs, drops, or short promos.
+5. Send 5 highly personalized messages first, not 30 generic ones.
+6. Use the email brief path when the contact is a normal business, agency, or podcast inbox rather than a GitHub user.
+7. Log outcomes in a private note.

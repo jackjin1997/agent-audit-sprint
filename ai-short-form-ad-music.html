@@ -18,6 +18,7 @@
     <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/ai-jingle-studio.png">
     <title>AI Short-Form Ad Music Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -58,6 +59,7 @@
       </a>
       <nav class="nav">
         <a href="#fit">Fit</a>
+        <a href="#generator">Generator</a>
         <a href="#samples">Samples</a>
         <a href="#brief">Brief</a>
         <a href="ai-music-generator.html">Storefront</a>
@@ -141,6 +143,112 @@
           <div class="report-row medium"><span>$149</span><strong>Ad Music Pack with three selected variants, 15/30/60 second cut plan, one revision pass, and commercial-use notes.</strong></div>
           <div class="report-row high"><span>Avoid</span><strong>No known-artist soundalikes, celebrity clones, copyrighted songs, or third-party lyrics without rights.</strong></div>
         </div>
+      </section>
+
+      <section class="band request" id="generator" aria-labelledby="generator-title">
+        <div class="section-head">
+          <p class="eyebrow">Paid-social generator</p>
+          <h2 id="generator-title">Build a ready-to-send short-form ad music packet</h2>
+          <p>
+            Fill in the campaign and platform details once. The page generates the order packet, email handoff, GitHub order link, acceptance text, commercial-use memo, and browser WAV sketch.
+          </p>
+        </div>
+        <form
+          class="request-tool"
+          data-jingle-form
+          data-order-heading="AI short-form ad music brief"
+          data-order-title-prefix="AI short-form ad music order"
+          data-email-subject-prefix="AI short-form ad music brief"
+        >
+          <div class="input-grid">
+            <label>
+              <span>Brand, creator, or campaign</span>
+              <input name="brand" type="text" value="Glow Kit Launch">
+            </label>
+            <label>
+              <span>Package</span>
+              <select name="package">
+                <option>USD $29 Short-Form Ad Hook Sketch</option>
+                <option>USD $79 Jingle Hook Pack</option>
+                <option>USD $149 Ad Music Pack</option>
+                <option>USD $399 Sonic Launch Kit</option>
+              </select>
+            </label>
+            <label>
+              <span>Primary use</span>
+              <select name="usage">
+                <option>6-10s TikTok/Reels/Shorts hook</option>
+                <option>15s UGC ad opener</option>
+                <option>Product demo bed</option>
+                <option>Creator tag or end-card sound mark</option>
+                <option>15/30/60s paid-social cut plan</option>
+              </select>
+            </label>
+            <label>
+              <span>Delivery target</span>
+              <select name="timing">
+                <option>48h target after accepted brief</option>
+                <option>24h rush requested</option>
+                <option>This week</option>
+                <option>Flexible</option>
+              </select>
+            </label>
+            <label>
+              <span>Mood</span>
+              <input name="mood" type="text" value="catchy, scroll-stopping, clean, upbeat">
+            </label>
+            <label>
+              <span>Visual pacing or sound style</span>
+              <input name="style" type="text" value="fast product reveal, caption-friendly beat, clean brand tag">
+            </label>
+            <label>
+              <span>Publishing channel</span>
+              <select name="channel">
+                <option>TikTok organic or paid ad</option>
+                <option>Instagram Reels organic or paid ad</option>
+                <option>YouTube Shorts organic or paid ad</option>
+                <option>Paid social across TikTok, Reels, and Shorts</option>
+                <option>Marketplace product listing video</option>
+              </select>
+            </label>
+            <label>
+              <span>Source material rights</span>
+              <select name="rightsSource">
+                <option>Original prompt only; no third-party lyrics or melodies</option>
+                <option>Buyer-owned tagline only</option>
+                <option>Cleared buyer-owned voiceover or video reference</option>
+                <option>Needs rights review before generation</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            <span>Audience and offer</span>
+            <textarea name="audience" rows="3">Skincare buyers seeing a fast before-after product demo for a limited launch offer.</textarea>
+          </label>
+          <label>
+            <span>Required line or on-screen CTA</span>
+            <input name="tagline" type="text" value="Glow in three steps.">
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Generate short-form packet</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-brief>Copy packet</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-acceptance>Copy acceptance packet</button>
+            <button class="button secondary dark" type="button" data-copy-jingle-commercial-memo>Copy usage memo</button>
+            <button class="button secondary dark" type="button" data-play-jingle-sketch>Play sketch</button>
+            <a class="button secondary dark" data-download-jingle-sketch href="#" download="short-form-ad-music-sketch.wav">Download WAV</a>
+            <a class="button secondary dark" data-email-jingle-brief href="mailto:jackjin1997@gmail.com?subject=AI%20short-form%20ad%20music%20brief">Email brief</a>
+            <a class="button secondary dark" data-email-jingle-acceptance href="mailto:jackjin1997@gmail.com?subject=AI%20short-form%20ad%20music%20accepted%20package">Email acceptance</a>
+            <a class="button secondary dark" data-email-jingle-commercial-memo href="mailto:jackjin1997@gmail.com?subject=AI%20short-form%20ad%20music%20commercial-use%20memo">Email usage memo</a>
+            <a class="button secondary dark" data-open-jingle-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml">Open order</a>
+            <a class="button secondary dark" href="ai-jingle-quote.html">Quote/payment packet</a>
+          </div>
+          <div class="sketch-status" data-jingle-sketch-status role="status">
+            Browser sketch ready after you choose a platform and use case. This is a lightweight local draft, not the paid AI-assisted final.
+          </div>
+          <textarea class="brief-output" data-jingle-output rows="14" readonly aria-label="Generated short-form ad music order packet"></textarea>
+          <textarea class="brief-output" data-jingle-acceptance-output rows="12" readonly aria-label="Generated short-form ad music acceptance and payment packet"></textarea>
+          <textarea class="brief-output" data-jingle-commercial-output rows="12" readonly aria-label="Generated short-form ad music commercial-use memo"></textarea>
+        </form>
       </section>
 
       <section class="band compact" id="samples" aria-labelledby="samples-title">

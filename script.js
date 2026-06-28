@@ -277,6 +277,7 @@ function buildJingleCommercialMemo(form) {
     `Publishing channel: ${channel}`,
     `Source material rights: ${rightsSource}`,
     `Required line or tagline: ${tagline}`,
+    "Payment timing: after written brief acceptance only",
     "",
     "Included delivery record:",
     "- Selected AI-assisted music direction after human review for pronunciation, hook clarity, placement fit, and obvious artifacts.",

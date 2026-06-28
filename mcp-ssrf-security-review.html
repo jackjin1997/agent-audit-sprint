@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fixed-price MCP SSRF and dynamic URL fetch security review for fetch_pagination_url, callback URLs, redirect URLs, webhook URLs, proxy fetches, and credential-bearing agent tools.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html">
+    <meta property="og:title" content="MCP SSRF and Dynamic URL Fetch Review">
+    <meta property="og:description" content="USD $299 focused review for one MCP or agent dynamic URL fetch boundary, including SSRF-with-credentials risk.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MCP SSRF and Dynamic URL Fetch Review">
+    <meta name="twitter:description" content="USD $299 focused review for MCP SSRF, redirect, callback, webhook, proxy, and pagination URL fetch boundaries.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>MCP SSRF and Dynamic URL Fetch Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "MCP SSRF and Dynamic URL Fetch Review",
+        "description": "Fixed-price focused review for one MCP or agent dynamic URL fetch boundary, including pagination, callback, redirect, webhook, proxy, and SSRF-with-credentials risk.",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "areaServed": "Worldwide",
+        "serviceType": "MCP SSRF and dynamic URL fetch security review",
+        "offers": {
+          "@type": "Offer",
+          "price": "299",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="mcp-ssrf-security-review.html">MCP SSRF</a>
+        <a href="agent-auth-security-review.html">Agent Auth</a>
+        <a href="mcp-server-security-scan.html">MCP Scan</a>
+        <a href="scan.html">Scanner</a>
+        <a href="quick-scan.html">Quick Scan</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Focused review for tool-callable URL fetches</p>
+        <h1>MCP SSRF and Dynamic URL Fetch Review</h1>
+        <p>
+          A USD $299 focused security review for one MCP or agent URL-fetch boundary: <code>fetch_pagination_url</code>, callback URL, redirect URL, webhook URL, proxy URL, download URL, or any tool path where an attacker-controlled URL can be fetched with nearby cookies, bearer tokens, API keys, or internal network reach.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml">Request SSRF review</a>
+          <a class="button secondary dark" href="scan.html">Run free scanner</a>
+          <a class="button secondary dark" href="agent-auth-security-review.html">Agent auth review</a>
+          <a class="button secondary dark" href="quick-scan.html">Quick scan packages</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Entry</span><strong>USD $99 Quick Scan</strong></div>
+          <div><span>Focused</span><strong>USD $299 MCP SSRF Focused Review</strong></div>
+          <div><span>Full</span><strong>USD $1,000 Full Audit Sprint</strong></div>
+          <div><span>Start Rule</span><strong>Payment only after written scope acceptance</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">When to use it</p>
+          <h2>Use this when URLs become agent inputs</h2>
+          <p>
+            This package is for teams that already know the risky seam: a tool accepts a URL, follows a URL from a provider response, proxies a URL for the user, or mixes dynamic fetch behavior with logged-in browser state.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>Pagination:</strong> <code>next_url</code>, <code>pagination_url</code>, or <code>fetch_pagination_url</code> returned by an API or page.</div>
+          <div><strong>Callback/redirect:</strong> OAuth, webhooks, redirect handlers, or user-provided callback URLs that trigger server-side fetches.</div>
+          <div><strong>Proxy/download:</strong> fetch tools that retrieve arbitrary URLs, files, screenshots, documents, or remote page content.</div>
+          <div><strong>Credentials nearby:</strong> bearer tokens, cookies, API keys, auth sessions, browser profiles, or workspace connectors near the fetch path.</div>
+          <div><strong>Hosted MCP:</strong> remote transports where an external client can influence the URL target.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Review checklist</p>
+          <h2>What I check in the fetch boundary</h2>
+          <p>
+            The review follows a dynamic URL from tool input or provider response to DNS, redirects, credential attachment, logs, cache writes, and error output.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Scheme, host, port, eTLD+1, redirect, and final-target validation before any credential-bearing request.</div>
+          <div>Blocks for localhost, link-local, RFC1918 ranges, metadata IPs, non-HTTP schemes, IPv6 edge cases, and DNS rebinding assumptions.</div>
+          <div>Credential stripping for attacker-influenced URLs and separation between user-authenticated fetches and public fetch tools.</div>
+          <div>Tests for unsafe redirects, sibling domains, mixed-case schemes, encoded hosts, metadata endpoints, and private network targets.</div>
+          <div>Redaction for URLs, Authorization headers, cookies, request configs, response configs, traces, screenshots, and tool output.</div>
+          <div>Operator-facing launch gates for hosted MCP transports, proxy modes, and user-provided URL features.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">USD $299 output</p>
+          <h2>Focused review deliverables</h2>
+          <p>
+            This is narrower than a full audit: one dynamic URL fetch boundary, one evidence path, and a concrete test checklist that a maintainer can add before shipping.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml">Request $299 SSRF review</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Boundary map:</strong> URL source, validation point, redirect policy, credential source, network reach, cache/log sinks, and tool output.</div>
+          <div><strong>Ranked risks:</strong> concise findings with evidence, impact, and lowest-risk fix path.</div>
+          <div><strong>Regression checklist:</strong> SSRF cases for metadata IPs, local/private ranges, unsafe redirects, non-HTTP schemes, sibling domains, and credential forwarding.</div>
+          <div><strong>Launch guardrails:</strong> allowlist policy, no-credential fetch mode, redaction expectations, and hosted transport acceptance criteria.</div>
+          <div><strong>Upgrade path:</strong> if the boundary expands into broader auth, browser, or write-tool risk, the full USD $1,000 sprint can be scoped separately.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Scanner evidence</p>
+          <h2>Start from a free scan or SARIF alert</h2>
+          <p>
+            The browser scanner and CLI scanner both flag dynamic URL fetch and SSRF-with-credentials evidence. Attach that output to the focused review so the paid scope starts with a concrete path.
+          </p>
+        </div>
+        <div class="report-preview" aria-label="SSRF scanner handoff">
+          <div class="report-row high"><span>Signal</span><strong>Dynamic URL fetch can become SSRF with credentials</strong></div>
+          <div class="report-row medium"><span>Free</span><strong><a href="scan.html">Run the no-execution browser scanner</a></strong></div>
+          <div class="report-row medium"><span>SARIF</span><strong><a href="mcp-code-scanning-github-action.html">Use GitHub Code Scanning output as evidence</a></strong></div>
+          <div class="report-row pass"><span>Example</span><strong><a href="https://github.com/gomarble-ai/facebook-ads-mcp-server/issues/29#issuecomment-4818530688">Public fetch_pagination_url checklist example</a></strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Payment packet</p>
+          <h2>Copy after scope acceptance</h2>
+          <p>
+            Do not send private tokens, cookies, production URLs with secrets, or customer data in public GitHub issues. Payment is requested only after the written scope is accepted.
+          </p>
+          <div class="service-actions">
+            <button class="button primary" type="button" data-copy-target="#ssrf-payment-packet">Copy payment packet</button>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Submit payment proof</a>
+            <a class="button secondary dark" href="terms.html">Review terms</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div>
+            <strong>Copyable packet</strong>
+            <code id="ssrf-payment-packet">I accept the MCP SSRF and Dynamic URL Fetch Review package.
+
+Package: USD $299 MCP SSRF Focused Review
+Scope: [one pagination, callback, redirect, webhook, proxy, or dynamic URL fetch boundary]
+Delivery: [public issue comment or private Markdown report]
+Payment timing: after written scope acceptance only.
+
+Ethereum address (ETH or ERC-20 USDC/USDT/DAI):
+0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
+
+Solana address (SOL or SPL USDC):
+5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
+
+Payment proof form:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml</code>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

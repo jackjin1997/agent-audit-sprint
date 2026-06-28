@@ -15,6 +15,7 @@ body:
       options:
         - USD $99 Quick Scan Report
         - USD $299 Same-day Focused Review
+        - USD $299 MCP SSRF Focused Review
         - USD $1,000 Full Audit Sprint
     validations:
       required: true

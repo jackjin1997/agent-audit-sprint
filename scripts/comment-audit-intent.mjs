@@ -3,6 +3,7 @@
 const MARKER = "<!-- agent-mcp-audit-intent -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html";
 const AGENT_AUTH_URL = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
+const MCP_SSRF_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
@@ -43,6 +44,15 @@ function packageDetails(rawChoice = "") {
     };
   }
   if (choice.includes("$299") || /focused/i.test(choice)) {
+    if (/mcp ssrf|ssrf|dynamic url|url fetch|fetch_pagination|pagination_url|callback_url|redirect_url|webhook_url|proxy_url/i.test(choice)) {
+      return {
+        name: "USD $299 MCP SSRF Focused Review",
+        price: "USD $299",
+        target: "same day when available",
+        deliverable:
+          "focused review of one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary with ranked risks and regression-test checklist",
+      };
+    }
     if (/agent auth|cookie vault|token broker|site_login|oauth|hitl/i.test(choice)) {
       return {
         name: "USD $299 Agent Auth Focused Review",
@@ -76,13 +86,27 @@ function renderIntentComment(issueBody = "") {
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
   const authFlow = extractField(issueBody, "Auth flow type");
   const authBoundary = extractField(issueBody, "Boundary to review");
+  const fetchBoundary = extractField(issueBody, "URL fetch boundary");
+  const credentialContext = extractField(issueBody, "Credential or network context");
   const highestRisk = extractField(issueBody, "Highest risk or decision");
-  const authContext = authFlow || authBoundary || highestRisk;
-  const serviceDetailsUrl = packageInfo.name.includes("Agent Auth") || authContext ? AGENT_AUTH_URL : SERVICE_URL;
+  const authContext = authFlow || authBoundary || packageInfo.name.includes("Agent Auth");
+  const ssrfContext = fetchBoundary || credentialContext;
+  const serviceDetailsUrl = packageInfo.name.includes("MCP SSRF") || ssrfContext
+    ? MCP_SSRF_URL
+    : packageInfo.name.includes("Agent Auth") || authContext
+      ? AGENT_AUTH_URL
+      : SERVICE_URL;
   const authDetails = authContext
     ? `
 Auth flow type: **${authFlow || "not specified"}**
 Boundary to review: **${authBoundary || "not specified"}**
+Highest risk or decision: **${highestRisk || "not specified"}**
+`
+    : "";
+  const ssrfDetails = ssrfContext
+    ? `
+URL fetch boundary: **${fetchBoundary || "not specified"}**
+Credential or network context: **${credentialContext || "not specified"}**
 Highest risk or decision: **${highestRisk || "not specified"}**
 `
     : "";
@@ -105,6 +129,7 @@ Requested timing: **${timing}**
 Payment path: **${paymentPath}**
 Expected deliverable: ${packageInfo.deliverable}
 ${authDetails}
+${ssrfDetails}
 
 Package ladder and copyable payment packets: ${PACKAGE_URL}
 Full sprint quote: ${QUOTE_URL}

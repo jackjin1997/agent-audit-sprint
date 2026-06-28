@@ -1,0 +1,99 @@
+name: MCP SSRF focused review
+description: Buy a USD $299 focused review for one MCP dynamic URL fetch or SSRF-with-credentials boundary
+title: "MCP SSRF review: <project name>"
+labels: ["audit-intent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the USD $299 MCP SSRF Focused Review. Do not paste secrets, private keys, cookies, bearer tokens, OAuth codes, customer data, production logs with sensitive values, or private URLs that embed credentials.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: This form is for one focused dynamic URL fetch or SSRF boundary review.
+      options:
+        - USD $299 MCP SSRF Focused Review
+    validations:
+      required: true
+  - type: input
+    id: project
+    attributes:
+      label: Project or repo URL
+      description: Public repo, docs, package, demo, scanner output, SARIF alert, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: fetch-boundary
+    attributes:
+      label: URL fetch boundary
+      description: Pick the closest URL fetch path for this focused review.
+      options:
+        - fetch_pagination_url / next_url
+        - callback_url / redirect_url
+        - webhook_url / proxy_url
+        - user-provided URL fetch tool
+        - authenticated browser download or page fetch
+        - hosted MCP transport with URL fetch tools
+        - Other dynamic URL fetch boundary
+    validations:
+      required: true
+  - type: textarea
+    id: credential-context
+    attributes:
+      label: Credential or network context
+      description: Summarize nearby auth, cookies, bearer tokens, API keys, browser profile state, internal network reach, or "none known". Keep it sanitized.
+      placeholder: The fetch path may run with a provider bearer token and can follow pagination URLs returned by an external API; no secrets included.
+    validations:
+      required: true
+  - type: textarea
+    id: highest-risk
+    attributes:
+      label: Highest risk or decision
+      description: What decision should this review help you make?
+      placeholder: Whether the destination allowlist, redirect validation, credential stripping, and metadata-IP tests are enough before launch.
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Timing
+      description: When do you want the review to start after scope/payment confirmation?
+      options:
+        - Same day if available
+        - 48h target
+        - This week
+        - Date to discuss
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose network and asset if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum ETH after scope acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after scope acceptance
+        - Solana SOL after scope acceptance
+        - Solana SPL USDC after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, OAuth codes, cookies, bearer tokens, private keys, private URLs with credentials, or sensitive customer data in this issue.
+          required: true
+        - label: I understand payment is only requested after written scope acceptance for the selected package.
+          required: true

@@ -25,6 +25,12 @@
     <priority>0.97</priority>
   </url>
   <url>
+    <loc>https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html</loc>
+    <lastmod>2026-06-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.97</priority>
+  </url>
+  <url>
     <loc>https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html</loc>
     <lastmod>2026-06-20</lastmod>
     <changefreq>weekly</changefreq>

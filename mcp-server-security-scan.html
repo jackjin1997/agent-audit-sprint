@@ -62,6 +62,7 @@
         </p>
         <div class="service-actions">
           <a class="button primary" href="scan.html">Open browser scanner</a>
+          <a class="button secondary dark" href="mcp-ssrf-security-review.html">MCP SSRF review</a>
           <a class="button secondary dark" href="mcp-security-radar.html">Open MCP Security Radar</a>
           <a class="button secondary dark" href="scan.html?repo=https://github.com/org/repo">Use shareable repo format</a>
           <a class="button secondary dark" href="mcp-security-audit-service.html">View $1,000 audit service</a>
@@ -74,6 +75,7 @@
           <div><span>Input</span><strong>Public GitHub URL or private local files</strong></div>
           <div><span>Runtime</span><strong>Browser-only, no dependency install</strong></div>
           <div><span>Output</span><strong>Markdown triage report and paid audit handoff</strong></div>
+          <div><span>SSRF</span><strong>USD $299 focused path for dynamic URL fetch findings</strong></div>
           <div><span>Upgrade</span><strong>USD $1,000 human review for one repo or slice</strong></div>
         </div>
       </section>
@@ -91,6 +93,7 @@
         </div>
         <div class="service-list compact-list">
           <div><a href="scan.html">Open the public GitHub URL scanner</a></div>
+          <div><a href="mcp-ssrf-security-review.html">Use the MCP SSRF focused review path for dynamic URL fetch findings</a></div>
           <div><a href="mcp-security-radar.html">View the public MCP Security Radar snapshot</a></div>
           <div><a href="scan.html?repo=https://github.com/jackjin1997/douban-mcp">Example scan link for a public MCP repo</a></div>
           <div><a href="samples.html">Compare the scan with human sample reports</a></div>
@@ -124,6 +127,7 @@
         <div class="service-list compact-list">
           <div><a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml">Start an audit request</a> with the scanner output attached.</div>
           <div><a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml">Reserve an audit slot</a> when the scope is already clear.</div>
+          <div><a href="mcp-ssrf-security-review.html">Open the fixed USD $299 MCP SSRF review</a> for one dynamic URL fetch boundary.</div>
           <div><a href="quote.html">Open the fixed USD $1,000 quote</a> after scope acceptance.</div>
           <div><a href="terms.html">Review terms</a> before any payment is sent.</div>
         </div>
@@ -136,6 +140,7 @@
           <li>MCP server setup, transports, bind addresses, hosted entrypoints, and agent-facing APIs.</li>
           <li>Write, destructive, privileged, external API, filesystem, browser, shell, database, and cloud tool paths.</li>
           <li>Credential loading, auth checks, secret redaction, logging, error handling, and tool output exposure.</li>
+          <li>Dynamic URL fetch, pagination URL, callback, redirect, webhook, proxy, and SSRF-with-credentials surfaces.</li>
           <li>Tests, CI, schemas, and documentation that prove risky tools fail closed before launch.</li>
         </ol>
         <div class="service-actions">

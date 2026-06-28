@@ -1,12 +1,12 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
-Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
+Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
 AI Music Generator storefront page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 AI Jingle $29 hook sketch page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
@@ -24,6 +24,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
+- MCP SSRF and Dynamic URL Fetch Review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Music Generator for Videos, Ads, and Podcasts: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 - AI Jingle Generator: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
@@ -41,6 +42,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - AI agent intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
 - Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
+- MCP SSRF focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml
 - Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
 - Short paid-slot intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 - Code Scanning audit intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml
@@ -82,7 +84,8 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Standalone GitHub Action: https://github.com/jackjin1997/agent-mcp-code-scan-action
 - GitHub Action usage: jackjin1997/agent-mcp-code-scan-action@v1
 - Local CLI via GitHub: npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
-- Auth/SSRF-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, credential-boundary, dynamic URL fetch, pagination URL, callback URL, redirect URL, webhook, proxy fetch, and MCP SSRF signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
+- Auth-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, and credential-boundary signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
+- MCP SSRF scanner handoff: browser and CLI scanner outputs route dynamic URL fetch, pagination URL, callback URL, redirect URL, webhook, proxy fetch, and SSRF-with-credentials signals to the USD $299 MCP SSRF focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml and review page at https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
 - Lead finder: node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 
 ## Audit Fit
@@ -91,7 +94,9 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
 - Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, dynamic URL fetch, SSRF with cookies, redaction, and cache key isolation.
-- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, authenticated browser boundary, or MCP SSRF/dynamic URL fetch boundary.
+- Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, or authenticated browser boundary.
+- MCP SSRF/dynamic URL fetch review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html for one pagination URL, callback URL, redirect URL, webhook URL, proxy URL, user-provided URL fetch, or SSRF-with-credentials boundary.
+- MCP SSRF focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml
 - Useful evidence includes a repo URL, SARIF alert link, public scanner output, risk summary, deployment model, and desired delivery visibility.
 
 ## High-Intent Verticals

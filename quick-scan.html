@@ -53,6 +53,7 @@
         <div class="service-summary">
           <div><span>Entry</span><strong>USD $99 quick scan</strong></div>
           <div><span>Focused</span><strong>USD $299 same-day review</strong></div>
+          <div><span>SSRF</span><strong>USD $299 MCP SSRF review</strong></div>
           <div><span>Full</span><strong>USD $1,000 sprint</strong></div>
           <div><span>Start Rule</span><strong>Pay after scope acceptance</strong></div>
         </div>
@@ -98,6 +99,26 @@
 
       <section class="service-band service-split">
         <div>
+          <p class="eyebrow">Scanner-led package</p>
+          <h2>USD $299 MCP SSRF Focused Review</h2>
+          <p>
+            For one dynamic URL fetch boundary: pagination URL, callback URL, redirect URL, webhook URL, proxy URL, download URL, or SSRF-with-credentials finding from the browser scanner or SARIF output.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml">Request SSRF review</a>
+            <a class="button secondary dark" href="mcp-ssrf-security-review.html">View SSRF review page</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Input:</strong> one dynamic URL fetch path plus scanner output, SARIF alert, or sanitized route summary.</div>
+          <div><strong>Output:</strong> boundary map, ranked risks, redirect/destination policy notes, credential-stripping guidance, and SSRF regression checklist.</div>
+          <div><strong>Target:</strong> same day when available after scope and payment confirmation.</div>
+          <div><strong>Upgrade:</strong> move to Agent Auth or full sprint if the URL fetch boundary expands into broader session, cookie, browser, or write-tool risk.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
           <p class="eyebrow">Package 03</p>
           <h2>USD $1,000 Full Audit Sprint</h2>
           <p>
@@ -132,7 +153,7 @@
             <strong>Copyable packet</strong>
             <code id="quick-payment-packet">I accept the selected Agent/MCP security review package.
 
-Package: [USD $99 Quick Scan Report / USD $299 Same-day Focused Review / USD $1,000 Full Audit Sprint]
+Package: [USD $99 Quick Scan Report / USD $299 Same-day Focused Review / USD $299 MCP SSRF Focused Review / USD $1,000 Full Audit Sprint]
 Scope: [repo/product slice]
 Delivery: [public issue comment or private Markdown report]
 Payment timing: after written scope acceptance only.

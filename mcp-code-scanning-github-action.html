@@ -40,6 +40,7 @@
       <nav class="nav">
         <a href="mcp-security-audit-service.html">Service</a>
         <a href="mcp-server-security-scan.html">MCP Scan</a>
+        <a href="mcp-ssrf-security-review.html">MCP SSRF</a>
         <a href="mcp-code-scanning-github-action.html">Code Scanning</a>
         <a href="scan.html">Scanner</a>
         <a href="checklist.html">Checklist</a>
@@ -58,6 +59,7 @@
           <a class="button primary" href="examples/github-code-scanning.yml">Open workflow example</a>
           <a class="button secondary dark" href="https://github.com/jackjin1997/agent-mcp-code-scan-action">Open Action repo</a>
           <a class="button secondary dark" href="mcp-server-security-scan.html">Use browser scanner</a>
+          <a class="button secondary dark" href="mcp-ssrf-security-review.html">Review SSRF alerts</a>
           <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml">Open code scanning audit</a>
         </div>
       </section>
@@ -68,6 +70,7 @@
           <div><span>Runtime</span><strong>No target dependency install or target code execution</strong></div>
           <div><span>Action</span><strong>jackjin1997/agent-mcp-code-scan-action@v1</strong></div>
           <div><span>Verified</span><strong>Public @v1 smoke workflow checks Markdown and SARIF output</strong></div>
+          <div><span>SSRF</span><strong>Dynamic URL fetch alerts can use the USD $299 focused review</strong></div>
           <div><span>Upgrade</span><strong>USD $1,000 human audit for one repo or slice</strong></div>
         </div>
       </section>
@@ -127,6 +130,7 @@ jobs:
           <div>Remote transport exposure appears as warning or error level scanner output.</div>
           <div>Write, destructive, shell, browser, database, cloud, and external API paths are highlighted for review.</div>
           <div>Credential paths without redaction signals are promoted as high-risk triage findings.</div>
+          <div>Dynamic URL fetch, callback, redirect, webhook, proxy, and pagination URL signals can route to the MCP SSRF focused review.</div>
           <div>Missing tests, CI, or common quality scripts are kept visible before launch.</div>
         </div>
       </section>
@@ -163,11 +167,13 @@ jobs:
         <ol>
           <li>Use the workflow for free triage before launch or before opening a paid audit request.</li>
           <li>Attach the generated SARIF, workflow run, GitHub Security alert, or Markdown scanner report to the code scanning audit intake.</li>
+          <li>If the alert is a dynamic URL fetch or SSRF-with-credentials boundary, use the fixed USD $299 MCP SSRF review first.</li>
           <li>Confirm scope for one repo or product slice before any payment is sent.</li>
           <li>Pay USD $1,000 only after written scope acceptance; delivery starts after payment confirmation.</li>
         </ol>
         <div class="service-actions">
           <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=code-scanning-audit.yml">Start code scanning audit</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml">Start SSRF review</a>
           <a class="button secondary dark" href="quote.html">Open fixed quote</a>
           <a class="button secondary dark" href="terms.html">Review terms</a>
         </div>

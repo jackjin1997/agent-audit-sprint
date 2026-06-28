@@ -10,6 +10,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
 - USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
+- USD $299 MCP SSRF Focused Review for one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
@@ -20,12 +21,13 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
 - `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
+- `mcp-ssrf-security-review.html` - focused $299 MCP SSRF and Dynamic URL Fetch Review page for scanner/SARIF findings involving pagination URLs, callbacks, redirects, webhooks, proxy URLs, and credential-bearing URL fetches
 - `ai-agent-security-radar.html` - public no-execution radar snapshot of popular AI agent repo scan signals
 - `mcp-security-audit-service.html` / `docs/mcp-security-audit-service.md` - commercial intent service page
 - `mcp-server-security-scan.html` - search-focused browser scan entry point for MCP server security triage
 - `mcp-security-radar.html` - public no-execution radar snapshot of popular MCP repo scan signals
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
-- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth/SSRF-heavy Agent Auth focused-review routing, and paid audit handoff
+- `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth-heavy Agent Auth routing, dynamic URL fetch / SSRF focused-review routing, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
 - `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, Reels/Shorts/UGC hooks, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, source-rights email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, browser audio sketch, WAV download, and email brief handoff
@@ -60,7 +62,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` / `reports/agentgap-agent-config-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, and payment proof forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, and payment proof forms
 - `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
@@ -98,6 +100,8 @@ Browser:
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
+- MCP SSRF and Dynamic URL Fetch Review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
+- MCP SSRF focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
 - AI Agent Radar scan briefs: https://jackjin1997.github.io/agent-audit-sprint/reports/browser-use-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openhands-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/smolagents-ai-agent-security-scan.html, https://jackjin1997.github.io/agent-audit-sprint/reports/openai-agents-python-security-scan.html
@@ -110,7 +114,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
-- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth/SSRF-heavy scans add a USD $299 Agent Auth focused-review recommendation and direct intake link
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, while dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation and direct intake link
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -125,7 +129,7 @@ node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-inte
 ```
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, dynamic URL fetch/SSRF surfaces, redaction, tests, and CI. It is a triage helper, not a security certification.
-The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, credential-boundary, pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, the scanner also routes to the USD $299 Agent Auth focused-review intake.
+The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner routes to the USD $299 Agent Auth focused-review intake. If pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, it routes to the USD $299 MCP SSRF focused-review intake.
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 
 Use it from GitHub Actions:

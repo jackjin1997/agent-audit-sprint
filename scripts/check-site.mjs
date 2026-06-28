@@ -22,6 +22,7 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
+const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
 const aiAgentSecurityRadar = `file://${resolve(root, "ai-agent-security-radar.html")}`;
 const service = `file://${resolve(root, "mcp-security-audit-service.html")}`;
 const mcpServerScan = `file://${resolve(root, "mcp-server-security-scan.html")}`;
@@ -49,6 +50,7 @@ const requiredFiles = [
   "index.html",
   "ai-agent-security-audit-service.html",
   "agent-auth-security-review.html",
+  "mcp-ssrf-security-review.html",
   "ai-agent-security-radar.html",
   "mcp-security-audit-service.html",
   "mcp-server-security-scan.html",
@@ -87,6 +89,7 @@ const requiredFiles = [
   ".github/workflows/goal-status-monitor.yml",
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
+  ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/triage-audit-request.yml",
@@ -182,6 +185,15 @@ if (!llmsText.includes("USD $299 Agent Auth Focused Review")) {
 if (!llmsText.includes("agent-auth-review.yml")) {
   throw new Error("llms.txt is missing the Agent Auth focused review intake link");
 }
+if (!llmsText.includes("MCP SSRF and Dynamic URL Fetch Review")) {
+  throw new Error("llms.txt is missing the MCP SSRF focused review context");
+}
+if (!llmsText.includes("USD $299 MCP SSRF Focused Review")) {
+  throw new Error("llms.txt is missing the MCP SSRF focused review package price");
+}
+if (!llmsText.includes("mcp-ssrf-review.yml")) {
+  throw new Error("llms.txt is missing the MCP SSRF focused review intake link");
+}
 if (!llmsText.includes("dynamic URL fetch") || !llmsText.includes("MCP SSRF")) {
   throw new Error("llms.txt is missing the MCP SSRF/dynamic URL fetch scanner context");
 }
@@ -239,10 +251,13 @@ const markdownOutput = execFileSync(process.execPath, [resolve(root, "tools/agen
 if (!markdownOutput.includes("## Paid 48-hour review")) {
   throw new Error("Scanner Markdown output is missing paid review CTA");
 }
+if (!markdownOutput.includes("MCP SSRF Focused Review") || !markdownOutput.includes("mcp-ssrf-review.yml")) {
+  throw new Error("Scanner Markdown output is missing MCP SSRF focused-review handoff");
+}
 if (!markdownOutput.includes("Agent Auth Focused Review") || !markdownOutput.includes("agent-auth-review.yml")) {
   throw new Error("Scanner Markdown output is missing Agent Auth focused-review handoff");
 }
-if (!markdownOutput.includes("Dynamic URL fetch or SSRF surface") || !markdownOutput.includes("MCP SSRF/dynamic fetch boundary")) {
+if (!markdownOutput.includes("Dynamic URL fetch or SSRF surface") || !markdownOutput.includes("SSRF-with-credentials boundary")) {
   throw new Error("Scanner Markdown output is missing MCP SSRF/dynamic URL fetch handoff");
 }
 if (!markdownOutput.includes("https://jackjin1997.github.io/agent-audit-sprint/terms.html")) {
@@ -420,6 +435,66 @@ if (!agentAuthIntentOutput.includes("Do not send payment until scope is accepted
 }
 if (!agentAuthIntentOutput.includes("payment-confirmation.yml")) {
   throw new Error("Agent Auth intent dry-run output is missing payment proof link");
+}
+
+const mcpSsrfIntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $299 MCP SSRF Focused Review",
+      "",
+      "### Project or repo URL",
+      "",
+      "https://github.com/example/agent-mcp",
+      "",
+      "### URL fetch boundary",
+      "",
+      "fetch_pagination_url / next_url",
+      "",
+      "### Credential or network context",
+      "",
+      "Bearer token can be attached to pagination fetches; no secrets included.",
+      "",
+      "### Highest risk or decision",
+      "",
+      "metadata IP, unsafe redirect, and credential stripping tests before launch",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "Same day if available",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum ERC-20 USDC/USDT/DAI after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!mcpSsrfIntentOutput.includes("USD $299 MCP SSRF Focused Review")) {
+  throw new Error("MCP SSRF intent dry-run output is missing package name");
+}
+if (!mcpSsrfIntentOutput.includes("fetch_pagination_url / next_url")) {
+  throw new Error("MCP SSRF intent dry-run output is missing URL fetch boundary");
+}
+if (!mcpSsrfIntentOutput.includes("Bearer token can be attached to pagination fetches")) {
+  throw new Error("MCP SSRF intent dry-run output is missing credential context");
+}
+if (!mcpSsrfIntentOutput.includes("mcp-ssrf-security-review.html")) {
+  throw new Error("MCP SSRF intent dry-run output is missing MCP SSRF service link");
+}
+if (!mcpSsrfIntentOutput.includes("Do not send payment until scope is accepted")) {
+  throw new Error("MCP SSRF intent dry-run output is missing payment guardrail");
+}
+if (!mcpSsrfIntentOutput.includes("payment-confirmation.yml")) {
+  throw new Error("MCP SSRF intent dry-run output is missing payment proof link");
 }
 
 const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
@@ -633,6 +708,9 @@ try {
     if (!indexBody.includes("Agent auth review") || !indexBody.includes("Agent auth and cookie vault reviews")) {
       throw new Error(`Index page missing Agent Auth focused review entry in ${viewport.name}`);
     }
+    if (!indexBody.includes("MCP SSRF review") || !indexBody.includes("MCP SSRF focused reviews")) {
+      throw new Error(`Index page missing MCP SSRF focused review entry in ${viewport.name}`);
+    }
     if (!indexBody.includes("Open the AI Agent Security Radar")) {
       throw new Error(`Index page missing AI Agent Security Radar link in ${viewport.name}`);
     }
@@ -641,6 +719,9 @@ try {
     }
     if (!indexBody.includes("Use the GitHub Code Scanning workflow")) {
       throw new Error(`Index page missing Code Scanning workflow link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the MCP SSRF focused review page")) {
+      throw new Error(`Index page missing MCP SSRF focused review scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
       throw new Error(`Index page missing standalone Code Scanning action usage in ${viewport.name}`);
@@ -1613,6 +1694,33 @@ try {
     const agentAuthOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (agentAuthOverflow) throw new Error(`Agent Auth review horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(mcpSsrfReview, { waitUntil: "networkidle" });
+    const mcpSsrfTitle = await page.locator("h1").innerText();
+    if (!mcpSsrfTitle.includes("MCP SSRF and Dynamic URL Fetch Review")) {
+      throw new Error(`Unexpected MCP SSRF review h1 in ${viewport.name}: ${mcpSsrfTitle}`);
+    }
+    const mcpSsrfText = await page.locator("body").innerText();
+    if (
+      !mcpSsrfText.includes("USD $299 MCP SSRF Focused Review") ||
+      !mcpSsrfText.includes("fetch_pagination_url") ||
+      !mcpSsrfText.includes("SSRF-with-credentials") ||
+      !mcpSsrfText.includes("metadata IPs") ||
+      !mcpSsrfText.includes("Payment only after written scope acceptance") ||
+      !mcpSsrfText.includes("Payment timing: after written scope acceptance only.")
+    ) {
+      throw new Error(`MCP SSRF review page missing package, URL fetch scope, or payment guardrail in ${viewport.name}`);
+    }
+    const mcpSsrfCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!mcpSsrfCta?.includes("mcp-ssrf-review.yml")) {
+      throw new Error(`MCP SSRF review CTA missing dedicated intake URL in ${viewport.name}`);
+    }
+    const mcpSsrfCopyTarget = await page.locator("[data-copy-target='#ssrf-payment-packet']").getAttribute("data-copy-target");
+    if (mcpSsrfCopyTarget !== "#ssrf-payment-packet") {
+      throw new Error(`MCP SSRF payment packet copy target missing in ${viewport.name}`);
+    }
+    const mcpSsrfOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (mcpSsrfOverflow) throw new Error(`MCP SSRF review horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(aiAgentSecurityRadar, { waitUntil: "networkidle" });
     const aiAgentRadarTitle = await page.locator("h1").innerText();
     if (!aiAgentRadarTitle.includes("AI Agent Security Radar")) {
@@ -1735,11 +1843,17 @@ try {
     if (!mcpServerScanText.includes("USD $1,000") || !mcpServerScanText.includes("Open fixed quote")) {
       throw new Error(`MCP server scan page missing paid audit handoff in ${viewport.name}`);
     }
+    if (!mcpServerScanText.includes("USD $299 focused path for dynamic URL fetch findings")) {
+      throw new Error(`MCP server scan page missing MCP SSRF focused-review handoff in ${viewport.name}`);
+    }
     if (!mcpServerScanText.includes("does not execute target code")) {
       throw new Error(`MCP server scan page missing no-execution safety copy in ${viewport.name}`);
     }
     if (!mcpServerScanText.includes("Open MCP Security Radar")) {
       throw new Error(`MCP server scan page missing Radar link in ${viewport.name}`);
+    }
+    if (!mcpServerScanText.includes("MCP SSRF review")) {
+      throw new Error(`MCP server scan page missing MCP SSRF CTA in ${viewport.name}`);
     }
     const mcpServerScanCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (mcpServerScanCta !== "scan.html") {
@@ -1840,6 +1954,9 @@ try {
     if (!mcpCodeScanningText.includes("Public @v1 smoke workflow checks Markdown and SARIF output")) {
       throw new Error(`MCP code scanning page missing standalone action verification copy in ${viewport.name}`);
     }
+    if (!mcpCodeScanningText.includes("Dynamic URL fetch alerts can use the USD $299 focused review")) {
+      throw new Error(`MCP code scanning page missing MCP SSRF focused-review copy in ${viewport.name}`);
+    }
     if (!mcpCodeScanningText.includes("jackjin1997/agent-mcp-code-scan-action")) {
       throw new Error(`MCP code scanning page missing standalone action repo link in ${viewport.name}`);
     }
@@ -1849,6 +1966,9 @@ try {
     if (!mcpCodeScanningText.includes("Start code scanning audit")) {
       throw new Error(`MCP code scanning page missing dedicated intake CTA in ${viewport.name}`);
     }
+    if (!mcpCodeScanningText.includes("Start SSRF review")) {
+      throw new Error(`MCP code scanning page missing SSRF review CTA in ${viewport.name}`);
+    }
     const mcpCodeScanningCta = await page.locator("a.button.primary").first().getAttribute("href");
     if (mcpCodeScanningCta !== "examples/github-code-scanning.yml") {
       throw new Error(`MCP code scanning primary CTA should open workflow example in ${viewport.name}`);
@@ -1856,6 +1976,10 @@ try {
     const codeScanningAuditLinks = await page.locator("a[href*='template=code-scanning-audit.yml']").count();
     if (codeScanningAuditLinks < 1) {
       throw new Error(`MCP code scanning page missing code scanning audit issue link in ${viewport.name}`);
+    }
+    const ssrfReviewLinks = await page.locator("a[href*='template=mcp-ssrf-review.yml']").count();
+    if (ssrfReviewLinks < 1) {
+      throw new Error(`MCP code scanning page missing MCP SSRF review issue link in ${viewport.name}`);
     }
     const mcpCodeScanningOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (mcpCodeScanningOverflow) {
@@ -1965,6 +2089,9 @@ try {
     if (!scanText.includes("Reserve audit slot")) {
       throw new Error(`Scanner page missing short slot reservation CTA in ${viewport.name}`);
     }
+    if (!scanText.includes("MCP SSRF review")) {
+      throw new Error(`Scanner page missing MCP SSRF focused-review CTA in ${viewport.name}`);
+    }
     if (!scanText.includes("npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo")) {
       throw new Error(`Scanner page missing GitHub npx scanner command in ${viewport.name}`);
     }
@@ -2036,24 +2163,27 @@ try {
     if (!scanOutput.includes("Paid 48-hour review")) {
       throw new Error(`Scanner output missing paid review handoff in ${viewport.name}`);
     }
+    if (!scanOutput.includes("MCP SSRF Focused Review") || !scanOutput.includes("mcp-ssrf-review.yml")) {
+      throw new Error(`Scanner output missing MCP SSRF focused-review handoff in ${viewport.name}`);
+    }
     if (!scanOutput.includes("Agent Auth Focused Review") || !scanOutput.includes("agent-auth-review.yml")) {
-      throw new Error(`Scanner output missing Agent Auth focused-review handoff in ${viewport.name}`);
+      throw new Error(`Scanner output missing related Agent Auth focused-review handoff in ${viewport.name}`);
     }
     if (!scanOutput.includes("Dynamic URL fetch or SSRF surface") || !scanOutput.includes("Dynamic URL fetch can become SSRF with credentials")) {
       throw new Error(`Scanner output missing MCP SSRF/dynamic URL fetch finding in ${viewport.name}`);
     }
     const scanHref = await page.locator("[data-open-scan-request]").first().getAttribute("href");
-    if (!scanHref?.includes("agent-auth-review.yml")) {
-      throw new Error(`Scanner request link missing Agent Auth focused-review template in ${viewport.name}`);
+    if (!scanHref?.includes("mcp-ssrf-review.yml")) {
+      throw new Error(`Scanner request link missing MCP SSRF focused-review template in ${viewport.name}`);
     }
     const localAuditPacket = await page.locator("[data-audit-packet-output]").inputValue();
     if (!localAuditPacket.includes("Private or local repo; access details to be shared after scope acceptance.")) {
       throw new Error(`Local scanner audit packet missing private repo handoff in ${viewport.name}`);
     }
-    if (!localAuditPacket.includes("USD $299 Agent Auth Focused Review") || !localAuditPacket.includes("agent-auth-review.yml")) {
-      throw new Error(`Local scanner audit packet missing Agent Auth focused-review path in ${viewport.name}`);
+    if (!localAuditPacket.includes("USD $299 MCP SSRF Focused Review") || !localAuditPacket.includes("mcp-ssrf-review.yml")) {
+      throw new Error(`Local scanner audit packet missing MCP SSRF focused-review path in ${viewport.name}`);
     }
-    if (!localAuditPacket.includes("MCP SSRF/dynamic fetch boundary")) {
+    if (!localAuditPacket.includes("SSRF-with-credentials boundary")) {
       throw new Error(`Local scanner audit packet missing MCP SSRF focused-review boundary in ${viewport.name}`);
     }
     if (!localAuditPacket.includes("Payment timing: after written scope acceptance only.")) {
@@ -2071,6 +2201,7 @@ try {
     if (
       !quickScanText.includes("USD $99 Quick Scan Report") ||
       !quickScanText.includes("USD $299 Same-day Focused Review") ||
+      !quickScanText.includes("USD $299 MCP SSRF Focused Review") ||
       !quickScanText.includes("USD $1,000 Full Audit Sprint") ||
       !quickScanText.includes("Pay after scope acceptance") ||
       !quickScanText.includes("Copy payment packet")

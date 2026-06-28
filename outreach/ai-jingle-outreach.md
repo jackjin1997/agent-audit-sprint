@@ -8,6 +8,7 @@ Use this playbook to sell the AI Jingle Generator offer without spam, fake scarc
 
 - Page: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - Short-form ad music page: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
+- UGC agency music hook page: https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html
 - Podcast sponsor page: https://jackjin1997.github.io/agent-audit-sprint/podcast-sponsor-jingle.html
 - Quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml
@@ -113,6 +114,9 @@ The $29 Short-Form Ad Hook Sketch is a small first test: one selected 8-12 secon
 
 Short-form packet generator:
 https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html#generator
+
+UGC agency page:
+https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html
 
 No private client data is needed for a first brief. A public product/category, target viewer, platform, required line/tagline, publishing channel, and source-material rights note are enough. Payment is only after the written brief is accepted.
 

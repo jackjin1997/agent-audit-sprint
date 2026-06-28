@@ -14,7 +14,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, short-form Reels/Shorts/UGC ads, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, commercial jingle page, short-form ad music generator page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
 
 ## Files
 
@@ -34,6 +34,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
 - `ai-short-form-ad-music.html` - USD $29 short-form ad music generator page for TikTok, Instagram Reels, YouTube Shorts, UGC ads, creator tags, product demo openers, dynamic order packet, email handoff, acceptance/payment packet, browser WAV sketch, source-rights intake, and commercial-use memo delivery
+- `ugc-agency-ai-music-hooks.html` - USD $29 UGC agency audio hook page for paid-social teams that need client approval packets, source-rights memos, dynamic order packets, and $149 agency ad music pack upsell
 - `ai-real-estate-listing-music.html` - real-estate USD $29 listing video soundtrack page for property reels, walkthroughs, open-house teasers, and agent media teams
 - `ai-wedding-video-music.html` - wedding USD $29 highlight soundtrack page for wedding videographers, teaser reels, social cuts, and filmmaker briefs
 - `ai-podcast-intro-generator.html` - creator-facing USD $29 podcast intro hook page for show openers, outro bumps, segment stings, and podcast channels that are not ready for sponsor packs
@@ -91,6 +92,7 @@ Browser:
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
 - AI short-form ad music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
+- AI UGC agency music hook pack: https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html
 - AI real estate listing music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-real-estate-listing-music.html
 - AI wedding video music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-wedding-video-music.html
 - AI podcast intro generator: https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html

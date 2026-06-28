@@ -35,6 +35,7 @@ const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
 const aiShortFormAdMusic = `file://${resolve(root, "ai-short-form-ad-music.html")}`;
+const ugcAgencyAiMusicHooks = `file://${resolve(root, "ugc-agency-ai-music-hooks.html")}`;
 const aiRealEstateListingMusic = `file://${resolve(root, "ai-real-estate-listing-music.html")}`;
 const aiWeddingVideoMusic = `file://${resolve(root, "ai-wedding-video-music.html")}`;
 const aiPodcastIntro = `file://${resolve(root, "ai-podcast-intro-generator.html")}`;
@@ -63,6 +64,7 @@ const requiredFiles = [
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
   "ai-short-form-ad-music.html",
+  "ugc-agency-ai-music-hooks.html",
   "ai-real-estate-listing-music.html",
   "ai-wedding-video-music.html",
   "ai-podcast-intro-generator.html",
@@ -214,6 +216,12 @@ if (!llmsText.includes("AI Podcast Intro Generator")) {
 }
 if (!llmsText.includes("AI Commercial Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Commercial Jingle Generator page");
+}
+if (!llmsText.includes("AI Short-Form Ad Music Generator")) {
+  throw new Error("llms.txt is missing the AI Short-Form Ad Music Generator page");
+}
+if (!llmsText.includes("AI UGC Agency Music Hook Pack")) {
+  throw new Error("llms.txt is missing the AI UGC Agency Music Hook Pack page");
 }
 if (!llmsText.includes("AI Real Estate Listing Music Generator")) {
   throw new Error("llms.txt is missing the AI Real Estate Listing Music Generator page");
@@ -685,6 +693,7 @@ try {
       !indexBody.includes("Open the AI Music Generator storefront") ||
       !indexBody.includes("Copy the $29 AI music brief") ||
       !indexBody.includes("Open short-form ad music page") ||
+      !indexBody.includes("Open UGC agency music hook page") ||
       !indexBody.includes("Ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
     ) {
@@ -766,6 +775,10 @@ try {
     const indexShortFormAdMusicLinks = await page.locator("a[href='ai-short-form-ad-music.html']").count();
     if (indexShortFormAdMusicLinks < 1) {
       throw new Error(`Index page missing short-form ad music page link in ${viewport.name}`);
+    }
+    const indexUgcAgencyMusicLinks = await page.locator("a[href='ugc-agency-ai-music-hooks.html']").count();
+    if (indexUgcAgencyMusicLinks < 1) {
+      throw new Error(`Index page missing UGC agency music hook page link in ${viewport.name}`);
     }
 
     await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
@@ -888,6 +901,7 @@ try {
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
       !aiMusicGeneratorText.includes("Reels, Shorts, And UGC Ads") ||
+      !aiMusicGeneratorText.includes("UGC Agency Client Approval Hooks") ||
       !aiMusicGeneratorText.includes("Short-form ad music") ||
       !aiMusicGeneratorText.includes("Real Estate Listing Music") ||
       !aiMusicGeneratorText.includes("Wedding Video Music") ||
@@ -1025,6 +1039,120 @@ try {
     }
     const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(ugcAgencyAiMusicHooks, { waitUntil: "networkidle" });
+    const ugcAgencyTitle = await page.locator("h1").innerText();
+    if (!ugcAgencyTitle.includes("AI UGC Agency Music Hook Pack")) {
+      throw new Error(`Unexpected UGC agency music hook h1 in ${viewport.name}: ${ugcAgencyTitle}`);
+    }
+    const ugcAgencyText = await page.locator("body").innerText();
+    if (
+      !ugcAgencyText.includes("USD $29 UGC Agency Audio Hook Sketch") ||
+      !ugcAgencyText.includes("Email agency brief") ||
+      !ugcAgencyText.includes("Open order form") ||
+      !ugcAgencyText.includes("Generate a client approval music hook packet") ||
+      !ugcAgencyText.includes("Generate agency packet") ||
+      !ugcAgencyText.includes("Client Approval") ||
+      !ugcAgencyText.includes("paid-social") ||
+      !ugcAgencyText.includes("source-material rights") ||
+      !ugcAgencyText.includes("commercial-use memo") ||
+      !ugcAgencyText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !ugcAgencyText.includes("No known-artist soundalikes") ||
+      !ugcAgencyText.includes("AI music storefront")
+    ) {
+      throw new Error(`UGC agency music hook page missing package, agency fit, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const ugcAgencyHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!ugcAgencyHeroLoaded) throw new Error(`UGC agency music hook hero image failed to load in ${viewport.name}`);
+    const ugcAgencyAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      ugcAgencyAudioSources.length !== 3 ||
+      !ugcAgencyAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !ugcAgencyAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !ugcAgencyAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`UGC agency music hook sample audio sources missing in ${viewport.name}`);
+    }
+    await page.locator("[data-jingle-form] [name='brand']").fill("Launch Reel Client Test");
+    await page.locator("[data-jingle-form] [name='audience']").fill(
+      "Ecommerce skincare buyers seeing a creator-led product demo and launch-week offer."
+    );
+    await page.locator("[data-jingle-form] [name='tagline']").fill("Three steps, one brighter routine.");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const ugcAgencyGeneratedPacket = await page.locator("[data-jingle-output]").inputValue();
+    if (
+      !ugcAgencyGeneratedPacket.includes("## AI UGC agency music hook brief") ||
+      !ugcAgencyGeneratedPacket.includes("Launch Reel Client Test") ||
+      !ugcAgencyGeneratedPacket.includes("USD $29 UGC Agency Audio Hook Sketch") ||
+      !ugcAgencyGeneratedPacket.includes("Primary use: Client approval audio hook") ||
+      !ugcAgencyGeneratedPacket.includes("Publishing channel: Client approval only") ||
+      !ugcAgencyGeneratedPacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !ugcAgencyGeneratedPacket.includes("## Production prompt") ||
+      !ugcAgencyGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
+      !ugcAgencyGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`UGC agency music hook dynamic packet missing brand, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
+    }
+    const ugcAgencyGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (!ugcAgencyGeneratedOrderHref?.includes("template=ai-jingle-order.yml")) {
+      throw new Error(`UGC agency music hook dynamic order link missing order template in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(ugcAgencyGeneratedOrderHref).includes("AI UGC agency music hook order: Launch Reel Client Test")) {
+      throw new Error(`UGC agency music hook dynamic order link missing project title in ${viewport.name}`);
+    }
+    const ugcAgencyAcceptancePacket = await page.locator("[data-jingle-acceptance-output]").inputValue();
+    if (
+      !ugcAgencyAcceptancePacket.includes("## Acceptance and payment handoff") ||
+      !ugcAgencyAcceptancePacket.includes("Amount: USD $29 equivalent") ||
+      !ugcAgencyAcceptancePacket.includes("I accept the USD $29 UGC Agency Audio Hook Sketch for Launch Reel Client Test") ||
+      !ugcAgencyAcceptancePacket.includes("Publishing channel: Client approval only") ||
+      !ugcAgencyAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !ugcAgencyAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
+      !ugcAgencyAcceptancePacket.includes("payment-confirmation.yml")
+    ) {
+      throw new Error(`UGC agency music hook acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
+    }
+    const ugcAgencyCommercialMemo = await page.locator("[data-jingle-commercial-output]").inputValue();
+    if (
+      !ugcAgencyCommercialMemo.includes("## Commercial-use music memo") ||
+      !ugcAgencyCommercialMemo.includes("Project: Launch Reel Client Test") ||
+      !ugcAgencyCommercialMemo.includes("This is an order memo and usage record, not legal clearance") ||
+      !ugcAgencyCommercialMemo.includes("Publishing channel: Client approval only") ||
+      !ugcAgencyCommercialMemo.includes("Source tool and plan/tier note recorded") ||
+      !ugcAgencyCommercialMemo.includes("Paid delivery starts only after the written brief")
+    ) {
+      throw new Error(`UGC agency music hook usage memo missing project, channel, source note, legal, or start-rule copy in ${viewport.name}`);
+    }
+    const ugcAgencySketchHref = await page.locator("[data-download-jingle-sketch]").getAttribute("href");
+    if (!ugcAgencySketchHref?.startsWith("blob:")) {
+      throw new Error(`UGC agency music hook WAV sketch link was not generated in ${viewport.name}`);
+    }
+    const ugcAgencyBrief = await page.locator("textarea[aria-label='AI UGC agency music hook brief template']").inputValue();
+    if (
+      !ugcAgencyBrief.includes("Package: USD $29 UGC Agency Audio Hook Sketch") ||
+      !ugcAgencyBrief.includes("Primary use: client approval audio hook") ||
+      !ugcAgencyBrief.includes("Publishing channel: client approval only") ||
+      !ugcAgencyBrief.includes("Source material rights: original prompt only") ||
+      !ugcAgencyBrief.includes("Delivery: one selected 6-15 second agency audio hook sketch") ||
+      !ugcAgencyBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`UGC agency music hook brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+    }
+    const ugcAgencyEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      ugcAgencyEmailLinks.length < 3 ||
+      !ugcAgencyEmailLinks.every((href) => href.includes("AI UGC agency music hook brief")) ||
+      !ugcAgencyEmailLinks.every((href) => href.includes("USD $29 UGC Agency Audio Hook Sketch")) ||
+      !ugcAgencyEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`UGC agency music hook page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const ugcAgencyOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (ugcAgencyOverflow) throw new Error(`UGC agency music hook horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiShortFormAdMusic, { waitUntil: "networkidle" });
     const shortFormAdMusicTitle = await page.locator("h1").innerText();

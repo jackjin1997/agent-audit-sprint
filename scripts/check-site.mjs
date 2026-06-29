@@ -1264,9 +1264,13 @@ try {
       !aiMusicSamplesText.includes("Business Show Intro Packet") ||
       !aiMusicSamplesText.includes("Radio ID And Drop Packet") ||
       !aiMusicSamplesText.includes("Payment timing: after written brief acceptance only") ||
-      !aiMusicSamplesText.includes("Submit payment proof after acceptance")
+      !aiMusicSamplesText.includes("Submit payment proof after acceptance") ||
+      !aiMusicSamplesText.includes("ETH or ERC-20 USDC/USDT/DAI only after the written brief") ||
+      !aiMusicSamplesText.includes("SOL or SPL USDC only after the written brief") ||
+      !aiMusicSamplesText.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
+      !aiMusicSamplesText.includes("5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM")
     ) {
-      throw new Error(`AI music samples page missing package, sample packet, payment, or proof copy in ${viewport.name}`);
+      throw new Error(`AI music samples page missing package, sample packet, payment address, or proof copy in ${viewport.name}`);
     }
     const aiMusicSamplesHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicSamplesHeroLoaded) throw new Error(`AI music samples hero image failed to load in ${viewport.name}`);

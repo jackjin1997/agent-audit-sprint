@@ -9,13 +9,6 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
         button.textContent = original;
       }, 1300);
     } catch {
-      if (target) {
-        const range = document.createRange();
-        range.selectNodeContents(target);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
       button.textContent = "Select";
     }
   });

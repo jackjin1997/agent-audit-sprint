@@ -9,6 +9,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Offer
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
+- USD $299 AI Agent Cost Leak Review for token spend, context bloat, RAG over-retrieval, model-routing drift, retry loops, cache misses, and coding-agent tool-call loops
 - USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
 - USD $299 MCP SSRF Focused Review for one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary
 - Ranked findings with evidence, impact, and fix plan
@@ -20,6 +21,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
+- `ai-agent-cost-leak-review.html` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` - focused $299 AI Agent Cost Leak Review page and intake for token spend, context bloat, RAG cost, model routing, retry loops, cache misses, and tool-call loops
 - `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
 - `mcp-ssrf-security-review.html` - focused $299 MCP SSRF and Dynamic URL Fetch Review page for scanner/SARIF findings involving pagination URLs, callbacks, redirects, webhooks, proxy URLs, and credential-bearing URL fetches
 - `ai-agent-security-radar.html` - public no-execution radar snapshot of popular AI agent repo scan signals
@@ -56,7 +58,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle, product video music, and UGC agency music hook package orders
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment with accepted service, amount, transaction evidence, and receipt/delivery template routing
-- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI music orders, and ETH/SOL stablecoin/native payment signals
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI agent cost leak review requests, AI music orders, and ETH/SOL stablecoin/native payment signals
 - `scripts/find-high-intent-leads.mjs` - GitHub issue search helper for current agent/MCP security, auth, scanner, and transport discussions; writes private lead shortlists without auto-posting
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
@@ -65,7 +67,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` / `reports/agentgap-agent-config-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, Agent Auth focused review, MCP SSRF focused review, product video music order, UGC agency music hook order, and payment proof forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, AI agent cost leak focused review, Agent Auth focused review, MCP SSRF focused review, product video music order, UGC agency music hook order, and payment proof forms
 - `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
@@ -104,6 +106,8 @@ Browser:
 - AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI jingle email brief: jackjin1997@gmail.com after copying the short brief template; payment is still after written brief acceptance only
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
+- AI Agent cost leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - MCP SSRF and Dynamic URL Fetch Review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
@@ -120,7 +124,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
-- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, while dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation and direct intake link
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation, and cost-heavy agent workflows can use the USD $299 AI Agent Cost Leak Review intake
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -136,6 +140,7 @@ node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-inte
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, dynamic URL fetch/SSRF surfaces, redaction, tests, and CI. It is a triage helper, not a security certification.
 The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner routes to the USD $299 Agent Auth focused-review intake. If pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, it routes to the USD $299 MCP SSRF focused-review intake.
+The AI Agent Cost Leak Review is a separate USD $299 focused review for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 
 Use it from GitHub Actions:

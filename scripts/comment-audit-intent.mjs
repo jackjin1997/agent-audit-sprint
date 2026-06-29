@@ -4,6 +4,7 @@ const MARKER = "<!-- agent-mcp-audit-intent -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-security-audit-service.html";
 const AGENT_AUTH_URL = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
 const MCP_SSRF_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html";
+const AGENT_COST_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
@@ -44,6 +45,15 @@ function packageDetails(rawChoice = "") {
     };
   }
   if (choice.includes("$299") || /focused/i.test(choice)) {
+    if (/cost leak|token spend|llm spend|model routing|rag|cache miss|retry|tool loop|coding agent/i.test(choice)) {
+      return {
+        name: "USD $299 AI Agent Cost Leak Review",
+        price: "USD $299",
+        target: "same day when available",
+        deliverable:
+          "focused review of one AI agent token spend, context bloat, retry loop, cache miss, model-routing, RAG, or tool-call cost leak with ranked fixes and budget guardrails",
+      };
+    }
     if (/mcp ssrf|ssrf|dynamic url|url fetch|fetch_pagination|pagination_url|callback_url|redirect_url|webhook_url|proxy_url/i.test(choice)) {
       return {
         name: "USD $299 MCP SSRF Focused Review",
@@ -80,7 +90,10 @@ function packageDetails(rawChoice = "") {
 function renderIntentComment(issueBody = "") {
   const requestedPackage = extractField(issueBody, "Requested package");
   const packageInfo = packageDetails(requestedPackage);
-  const project = extractField(issueBody, "Project or repo URL") || "the project";
+  const project =
+    extractField(issueBody, "Project or repo URL") ||
+    extractField(issueBody, "Project, repo, product, or workflow URL") ||
+    "the project";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || "48h target";
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
@@ -88,10 +101,16 @@ function renderIntentComment(issueBody = "") {
   const authBoundary = extractField(issueBody, "Boundary to review");
   const fetchBoundary = extractField(issueBody, "URL fetch boundary");
   const credentialContext = extractField(issueBody, "Credential or network context");
+  const costBoundary = extractField(issueBody, "Cost boundary");
+  const usageEvidence = extractField(issueBody, "Sanitized usage evidence");
   const highestRisk = extractField(issueBody, "Highest risk or decision");
+  const highestCostQuestion = extractField(issueBody, "Highest cost question");
   const authContext = authFlow || authBoundary || packageInfo.name.includes("Agent Auth");
   const ssrfContext = fetchBoundary || credentialContext;
-  const serviceDetailsUrl = packageInfo.name.includes("MCP SSRF") || ssrfContext
+  const costContext = costBoundary || usageEvidence || packageInfo.name.includes("Cost Leak");
+  const serviceDetailsUrl = packageInfo.name.includes("AI Agent Cost Leak") || costContext
+    ? AGENT_COST_URL
+    : packageInfo.name.includes("MCP SSRF") || ssrfContext
     ? MCP_SSRF_URL
     : packageInfo.name.includes("Agent Auth") || authContext
       ? AGENT_AUTH_URL
@@ -108,6 +127,13 @@ Highest risk or decision: **${highestRisk || "not specified"}**
 URL fetch boundary: **${fetchBoundary || "not specified"}**
 Credential or network context: **${credentialContext || "not specified"}**
 Highest risk or decision: **${highestRisk || "not specified"}**
+`
+    : "";
+  const costDetails = costContext
+    ? `
+Cost boundary: **${costBoundary || "not specified"}**
+Sanitized usage evidence: **${usageEvidence || "not specified"}**
+Highest cost question: **${highestCostQuestion || highestRisk || "not specified"}**
 `
     : "";
 
@@ -130,6 +156,7 @@ Payment path: **${paymentPath}**
 Expected deliverable: ${packageInfo.deliverable}
 ${authDetails}
 ${ssrfDetails}
+${costDetails}
 
 Package ladder and copyable payment packets: ${PACKAGE_URL}
 Full sprint quote: ${QUOTE_URL}

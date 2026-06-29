@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fixed-price AI agent token cost and LLM spend review for coding agents, chat workflows, RAG pipelines, tool loops, retries, cache misses, and runaway model bills.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html">
+    <meta property="og:title" content="AI Agent Cost Leak Review">
+    <meta property="og:description" content="USD $299 focused review for one AI agent token spend, context bloat, retry loop, cache miss, or model-routing cost leak.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Agent Cost Leak Review">
+    <meta name="twitter:description" content="USD $299 focused review for AI agent token spend, cache misses, tool loops, model routing, and runaway LLM bills.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>AI Agent Cost Leak Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "AI Agent Cost Leak Review",
+        "description": "Fixed-price focused review for one AI agent token spend, context bloat, retry loop, cache miss, model routing, or tool-call cost leak.",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "areaServed": "Worldwide",
+        "serviceType": "AI agent token cost and LLM spend review",
+        "offers": {
+          "@type": "Offer",
+          "price": "299",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
+        <a href="quick-scan.html">Quick Scan</a>
+        <a href="agent-auth-security-review.html">Agent Auth</a>
+        <a href="mcp-ssrf-security-review.html">MCP SSRF</a>
+        <a href="scan.html">Scanner</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">Focused review for AI agent spend leaks</p>
+        <h1>AI Agent Cost Leak Review</h1>
+        <p>
+          A USD $299 focused review for one AI agent cost leak: context bloat, model-routing drift, tool-call loops, retry storms, cache misses, oversized RAG chunks, verbose traces, or one workflow where token spend is rising faster than product value. The output is a spend map, ranked leak drivers, and a fix checklist for lowering recurring LLM cost without breaking the workflow.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Request cost leak review</a>
+          <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app">Open TokenMeter</a>
+          <a class="button secondary dark" href="quick-scan.html">Quick scan packages</a>
+          <a class="button secondary dark" href="quote.html">View full sprint quote</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Entry</span><strong>USD $99 Quick Scan</strong></div>
+          <div><span>Focused</span><strong>USD $299 AI Agent Cost Leak Review</strong></div>
+          <div><span>Full</span><strong>USD $1,000 Full Audit Sprint</strong></div>
+          <div><span>Start Rule</span><strong>Payment only after written scope acceptance</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">When to use it</p>
+          <h2>Use this when usage grows but confidence does not</h2>
+          <p>
+            This package is for builders who already have an agent, chat workflow, RAG pipeline, coding-agent task runner, or tool-using product in motion and need a narrow outside pass on why the bill is high.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>Agent loops:</strong> tool retries, planning loops, self-correction passes, browser steps, code edits, or test reruns that burn tokens silently.</div>
+          <div><strong>Context bloat:</strong> giant prompts, repeated system text, full logs, oversized file snippets, stale memory, or untrimmed conversation history.</div>
+          <div><strong>RAG cost:</strong> over-broad retrieval, duplicate chunks, rerank fanout, embedding waste, or low-value context sent to expensive models.</div>
+          <div><strong>Model routing:</strong> tasks using frontier models when a smaller model, cached input, batch path, or deterministic code path is enough.</div>
+          <div><strong>Observability gap:</strong> missing per-feature, per-customer, per-tool, or per-run cost attribution before launch or pricing changes.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Review checklist</p>
+          <h2>What I check in the cost boundary</h2>
+          <p>
+            The review follows one expensive path from user action to prompts, retrieval, tool calls, retries, model choices, cached inputs, logs, and billing attribution.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Token budget by stage: system prompt, user context, retrieved context, tool output, scratchpad, reasoning traces, and final response.</div>
+          <div>Loop and retry controls: max iterations, retry backoff, duplicate tool calls, repeated test runs, and failure-mode spend caps.</div>
+          <div>Model routing policy: cheap-path candidates, fallback rules, context-window thresholds, batchable work, and escalation triggers.</div>
+          <div>Cache and reuse: stable prompt prefixes, reusable summaries, retrieved-context dedupe, cached input eligibility, and avoidable prompt churn.</div>
+          <div>Instrumentation: request IDs, tool span IDs, per-customer cost tags, redacted traces, and daily guardrails before a bill spike becomes invisible.</div>
+          <div>Pricing readiness: whether the product price, free tier, or internal budget can survive realistic agent usage.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">USD $299 output</p>
+          <h2>Focused review deliverables</h2>
+          <p>
+            The focused package reviews one agreed workflow or cost path. It is designed to turn a confusing LLM bill into specific product and engineering changes.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Request $299 cost review</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div><strong>Spend map:</strong> user action, model calls, token volume, retrieval, tools, retries, caches, and billing attribution for one workflow.</div>
+          <div><strong>Ranked leaks:</strong> concise findings with estimated impact direction and lowest-risk fix path.</div>
+          <div><strong>Reduction checklist:</strong> prompt trimming, retrieval limits, model-routing changes, cache candidates, loop caps, and observability gaps.</div>
+          <div><strong>Pricing guardrails:</strong> package, free-tier, or internal budget checks for the selected workflow.</div>
+          <div><strong>Upgrade path:</strong> if the review expands into security, auth, SSRF, or full agent launch risk, the full USD $1,000 sprint can be scoped separately.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Cost evidence</p>
+          <h2>Start with a calculator snapshot or sanitized trace</h2>
+          <p>
+            TokenMeter can estimate model spend for a workload, and a sanitized trace can show where the agent is actually spending. Do not paste private prompts, customer data, API keys, or proprietary logs in public issues.
+          </p>
+        </div>
+        <div class="report-preview" aria-label="Cost leak handoff">
+          <div class="report-row high"><span>Signal</span><strong>Runaway token spend, repeated tool loops, or model-routing drift</strong></div>
+          <div class="report-row medium"><span>Tool</span><strong><a href="https://tokenmeter-mu.vercel.app">Use TokenMeter to estimate monthly LLM spend</a></strong></div>
+          <div class="report-row medium"><span>Evidence</span><strong>Attach sanitized request counts, model mix, token totals, retry counts, or a redacted trace summary</strong></div>
+          <div class="report-row pass"><span>Guardrail</span><strong>No secrets, private prompts, customer records, API keys, or raw production traces in public issues</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Payment packet</p>
+          <h2>Copy after scope acceptance</h2>
+          <p>
+            Payment is requested only after the written scope is accepted. The review can use public repo context, public docs, screenshots, summarized usage numbers, or a sanitized trace.
+          </p>
+          <div class="service-actions">
+            <button class="button primary" type="button" data-copy-target="#cost-payment-packet">Copy payment packet</button>
+            <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml">Submit payment proof</a>
+            <a class="button secondary dark" href="terms.html">Review terms</a>
+          </div>
+        </div>
+        <div class="service-list">
+          <div>
+            <strong>Copyable packet</strong>
+            <code id="cost-payment-packet">I accept the AI Agent Cost Leak Review package.
+
+Package: USD $299 AI Agent Cost Leak Review
+Scope: [one agent workflow, RAG path, coding-agent loop, model-routing path, or token spend issue]
+Delivery: [public issue comment or private Markdown report]
+Payment timing: after written scope acceptance only.
+
+Ethereum address (ETH or ERC-20 USDC/USDT/DAI):
+0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF
+
+Solana address (SOL or SPL USDC):
+5CjUaMAsbXx2Hjczwoqi4MChTU1KjfUzbdiwPqZeceVM
+
+Payment proof form:
+https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml</code>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://tokenmeter-mu.vercel.app">TokenMeter</a>
+      <a href="https://jzxwiki.com">jzxwiki.com</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/discussions/1">booking FAQ</a>
+      <a href="https://github.com/jackjin1997">github.com/jackjin1997</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

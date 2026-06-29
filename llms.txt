@@ -1,12 +1,12 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
 Operator: Zexu Jin
 GitHub: https://github.com/jackjin1997
-Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
+Prices: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, or USD $1,000 Full Audit Sprint for one accepted audit scope
 AI Jingle Generator prices: USD $29 Founding Hook Sketch, USD $79 Jingle Hook Pack, USD $149 Ad Music Pack, or USD $399 Sonic Launch Kit after accepted brief
 AI Music Generator storefront page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 AI Music Samples and Order Packets page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html
@@ -25,6 +25,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 ## Primary Pages
 
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - MCP SSRF and Dynamic URL Fetch Review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
 - Quick Scan package ladder: https://jackjin1997.github.io/agent-audit-sprint/quick-scan.html
@@ -45,6 +46,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Quote: https://jackjin1997.github.io/agent-audit-sprint/quote.html
 - Terms: https://jackjin1997.github.io/agent-audit-sprint/terms.html
 - AI agent intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-agent-audit.yml
+- AI Agent cost leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - MCP SSRF focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml
 - Full intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=audit-request.yml
@@ -77,7 +79,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Public sample audio: coffee shop hook, business podcast intro, radio ID/drop, and product demo hook WAV samples are embedded across the AI music offer pages; `ai-music-samples.html` gives every public sample a copyable sample-to-order packet, while the product demo hook also includes a product-video-specific fast lane.
 - Static MVP demo: the AI Jingle page and AI Music Generator storefront can generate local browser audio sketches and downloadable WAV drafts from the order brief. This is a lightweight preview, not the paid AI-assisted final.
 - Order ops: email brief to jackjin1997@gmail.com for non-GitHub buyers, generated acceptance/payment handoff and dynamic acceptance email after selected package acceptance, commercial-use memo email for publishing channel/source-material records, `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` for tracked general issue intake with a public reference-sample selector, `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` for ecommerce product-video music orders, or `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` for UGC agency client-approval orders; `.github/workflows/respond-ai-jingle-order.yml` posts next steps, selected sample direction, payment timing, and rights guardrails for issue orders.
-- Monitoring: `scripts/check-goal-status.mjs` treats `ai-jingle-order`, `ai-product-video-music-order`, and `ugc-agency-music-hook-order` issues plus USD $29+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
+- Monitoring: `scripts/check-goal-status.mjs` treats `agent-cost-leak-review`, `ai-jingle-order`, `ai-product-video-music-order`, and `ugc-agency-music-hook-order` issues plus USD $29+ wallet signals as attention events while keeping the overall verified revenue goal at USD $1,000.
 - Fulfillment templates: `templates/ai-jingle-invoice.md`, `templates/ai-jingle-receipt.md`, and `templates/ai-jingle-delivery-note.md` cover invoice, receipt, and delivery handoff for paid jingle work.
 - Guardrails: avoid known-artist soundalikes, living voice clones, third-party lyrics without rights, and vague ownership claims. AI-generated music may have copyright-registration limits.
 - Payment rule: payment only after written brief acceptance for the selected jingle package.
@@ -95,6 +97,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Local CLI via GitHub: npm exec --yes github:jackjin1997/agent-audit-sprint -- /path/to/repo
 - Auth-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, and credential-boundary signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - MCP SSRF scanner handoff: browser and CLI scanner outputs route dynamic URL fetch, pagination URL, callback URL, redirect URL, webhook, proxy fetch, and SSRF-with-credentials signals to the USD $299 MCP SSRF focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml and review page at https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
+- AI agent cost leak review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary. Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Lead finder: node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 
 ## Audit Fit
@@ -102,6 +105,8 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - AI agents with tool calls, function calling, LangGraph flows, browser automation, RAG, memory/state, workspace integrations, cloud/API access, or irreversible write actions.
 - MCP servers with remote transports, write tools, browser automation, workspace integrations, trading actions, database access, or cloud operations.
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
+- AI agent cost leak review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary.
+- AI Agent Cost Leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, dynamic URL fetch, SSRF with cookies, redaction, and cache key isolation.
 - Agent Auth focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml for one token broker, cookie vault, site_login, OAuth/HITL, protected-resource metadata, or authenticated browser boundary.
 - MCP SSRF/dynamic URL fetch review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html for one pagination URL, callback URL, redirect URL, webhook URL, proxy URL, user-provided URL fetch, or SSRF-with-credentials boundary.

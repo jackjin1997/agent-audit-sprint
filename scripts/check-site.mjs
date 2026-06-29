@@ -21,6 +21,7 @@ const openAiAgentsPythonScanReport = `file://${resolve(root, "reports/openai-age
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
+const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
 const aiAgentSecurityRadar = `file://${resolve(root, "ai-agent-security-radar.html")}`;
@@ -52,6 +53,7 @@ const browserAutomation = `file://${resolve(root, "browser-automation-mcp-securi
 const requiredFiles = [
   "index.html",
   "ai-agent-security-audit-service.html",
+  "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
   "mcp-ssrf-security-review.html",
   "ai-agent-security-radar.html",
@@ -94,6 +96,7 @@ const requiredFiles = [
   ".github/FUNDING.yml",
   ".github/workflows/goal-status-monitor.yml",
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
+  ".github/ISSUE_TEMPLATE/agent-cost-leak-review.yml",
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
@@ -184,6 +187,15 @@ if (!llmsText.includes("MCP Security Radar")) {
 }
 if (!llmsText.includes("AI Agent Security Radar")) {
   throw new Error("llms.txt is missing the AI Agent Radar link context");
+}
+if (!llmsText.includes("AI Agent Cost Leak Review")) {
+  throw new Error("llms.txt is missing the AI Agent Cost Leak review context");
+}
+if (!llmsText.includes("USD $299 AI Agent Cost Leak Review")) {
+  throw new Error("llms.txt is missing the AI Agent Cost Leak review package price");
+}
+if (!llmsText.includes("agent-cost-leak-review.yml")) {
+  throw new Error("llms.txt is missing the AI Agent Cost Leak review intake link");
 }
 if (!llmsText.includes("Agent Auth and Cookie Vault Security Review")) {
   throw new Error("llms.txt is missing the Agent Auth focused review context");
@@ -543,6 +555,69 @@ if (!mcpSsrfIntentOutput.includes("Do not send payment until scope is accepted")
 }
 if (!mcpSsrfIntentOutput.includes("payment-confirmation.yml")) {
   throw new Error("MCP SSRF intent dry-run output is missing payment proof link");
+}
+
+const agentCostIntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $299 AI Agent Cost Leak Review",
+      "",
+      "### Project, repo, product, or workflow URL",
+      "",
+      "https://github.com/example/agent-cost-app",
+      "",
+      "### Cost boundary",
+      "",
+      "Coding agent loop / repeated tool calls",
+      "",
+      "### Sanitized usage evidence",
+      "",
+      "2,400 agent runs/week with repeated tool retries and long RAG context; no private prompts included.",
+      "",
+      "### Highest cost question",
+      "",
+      "whether prompt trimming, cache reuse, and model routing can cut spend before launch",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "Same day if available",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum ERC-20 USDC/USDT/DAI after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!agentCostIntentOutput.includes("USD $299 AI Agent Cost Leak Review")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing package name");
+}
+if (!agentCostIntentOutput.includes("Coding agent loop / repeated tool calls")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing cost boundary");
+}
+if (!agentCostIntentOutput.includes("https://github.com/example/agent-cost-app")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing project URL");
+}
+if (!agentCostIntentOutput.includes("2,400 agent runs/week with repeated tool retries")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing usage evidence");
+}
+if (!agentCostIntentOutput.includes("ai-agent-cost-leak-review.html")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing service link");
+}
+if (!agentCostIntentOutput.includes("Do not send payment until scope is accepted")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing payment guardrail");
+}
+if (!agentCostIntentOutput.includes("payment-confirmation.yml")) {
+  throw new Error("AI Agent Cost Leak intent dry-run output is missing payment proof link");
 }
 
 const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
@@ -933,6 +1008,9 @@ try {
     if (!indexBody.includes("Open the AI agent security audit page")) {
       throw new Error(`Index page missing AI agent security audit link in ${viewport.name}`);
     }
+    if (!indexBody.includes("Cost leak review") || !indexBody.includes("AI agent cost leak reviews")) {
+      throw new Error(`Index page missing AI Agent Cost Leak focused review entry in ${viewport.name}`);
+    }
     if (!indexBody.includes("Agent auth review") || !indexBody.includes("Agent auth and cookie vault reviews")) {
       throw new Error(`Index page missing Agent Auth focused review entry in ${viewport.name}`);
     }
@@ -950,6 +1028,9 @@ try {
     }
     if (!indexBody.includes("Open the MCP SSRF focused review page")) {
       throw new Error(`Index page missing MCP SSRF focused review scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the AI agent cost leak review page")) {
+      throw new Error(`Index page missing AI Agent Cost Leak review scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("jackjin1997/agent-mcp-code-scan-action@v1")) {
       throw new Error(`Index page missing standalone Code Scanning action usage in ${viewport.name}`);
@@ -2250,6 +2331,33 @@ try {
     }
     const aiAgentServiceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiAgentServiceOverflow) throw new Error(`AI agent service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiAgentCostLeakReview, { waitUntil: "networkidle" });
+    const aiAgentCostTitle = await page.locator("h1").innerText();
+    if (!aiAgentCostTitle.includes("AI Agent Cost Leak Review")) {
+      throw new Error(`Unexpected AI Agent Cost Leak review h1 in ${viewport.name}: ${aiAgentCostTitle}`);
+    }
+    const aiAgentCostText = await page.locator("body").innerText();
+    if (
+      !aiAgentCostText.includes("USD $299 AI Agent Cost Leak Review") ||
+      !aiAgentCostText.includes("context bloat") ||
+      !aiAgentCostText.includes("model-routing") ||
+      !aiAgentCostText.includes("cache misses") ||
+      !aiAgentCostText.includes("Payment only after written scope acceptance") ||
+      !aiAgentCostText.includes("Payment timing: after written scope acceptance only.")
+    ) {
+      throw new Error(`AI Agent Cost Leak review page missing package, cost scope, or payment guardrail in ${viewport.name}`);
+    }
+    const aiAgentCostCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!aiAgentCostCta?.includes("agent-cost-leak-review.yml")) {
+      throw new Error(`AI Agent Cost Leak review CTA missing dedicated intake URL in ${viewport.name}`);
+    }
+    const aiAgentCostCopyTarget = await page.locator("[data-copy-target='#cost-payment-packet']").getAttribute("data-copy-target");
+    if (aiAgentCostCopyTarget !== "#cost-payment-packet") {
+      throw new Error(`AI Agent Cost Leak payment packet copy target missing in ${viewport.name}`);
+    }
+    const aiAgentCostOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiAgentCostOverflow) throw new Error(`AI Agent Cost Leak review horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(agentAuthReview, { waitUntil: "networkidle" });
     const agentAuthTitle = await page.locator("h1").innerText();

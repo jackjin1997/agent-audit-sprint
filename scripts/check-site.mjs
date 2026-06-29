@@ -31,6 +31,7 @@ const mcpCodeScanning = `file://${resolve(root, "mcp-code-scanning-github-action
 const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
+const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -61,6 +62,7 @@ const requiredFiles = [
   "scan.html",
   "quick-scan.html",
   "ai-music-generator.html",
+  "ai-music-samples.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -209,6 +211,12 @@ if (!llmsText.includes("AI Jingle Generator")) {
 }
 if (!llmsText.includes("AI Music Generator for Videos, Ads, and Podcasts")) {
   throw new Error("llms.txt is missing the AI Music Generator storefront context");
+}
+if (!llmsText.includes("AI Music Samples and Order Packets")) {
+  throw new Error("llms.txt is missing the AI Music Samples and Order Packets page");
+}
+if (!llmsText.includes("ai-music-samples.html")) {
+  throw new Error("llms.txt is missing the AI music samples page URL");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -966,6 +974,10 @@ try {
     if (indexAiMusicLinks < 3) {
       throw new Error(`Index page missing AI music storefront links in ${viewport.name}`);
     }
+    const indexAiMusicSamplesLinks = await page.locator("a[href='ai-music-samples.html']").count();
+    if (indexAiMusicSamplesLinks < 2) {
+      throw new Error(`Index page missing AI music samples page links in ${viewport.name}`);
+    }
     const indexShortFormAdMusicLinks = await page.locator("a[href='ai-short-form-ad-music.html']").count();
     if (indexShortFormAdMusicLinks < 1) {
       throw new Error(`Index page missing short-form ad music page link in ${viewport.name}`);
@@ -1238,6 +1250,69 @@ try {
     }
     const aiMusicGeneratorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicGeneratorOverflow) throw new Error(`AI music generator horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiMusicSamples, { waitUntil: "networkidle" });
+    const aiMusicSamplesTitle = await page.locator("h1").innerText();
+    if (!aiMusicSamplesTitle.includes("AI Music Samples and Order Packets")) {
+      throw new Error(`Unexpected AI music samples h1 in ${viewport.name}: ${aiMusicSamplesTitle}`);
+    }
+    const aiMusicSamplesText = await page.locator("body").innerText();
+    if (
+      !aiMusicSamplesText.includes("USD $29 hook sketch") ||
+      !aiMusicSamplesText.includes("Product Demo Hook Packet") ||
+      !aiMusicSamplesText.includes("Coffee Shop Hook Packet") ||
+      !aiMusicSamplesText.includes("Business Show Intro Packet") ||
+      !aiMusicSamplesText.includes("Radio ID And Drop Packet") ||
+      !aiMusicSamplesText.includes("Payment timing: after written brief acceptance only") ||
+      !aiMusicSamplesText.includes("Submit payment proof after acceptance")
+    ) {
+      throw new Error(`AI music samples page missing package, sample packet, payment, or proof copy in ${viewport.name}`);
+    }
+    const aiMusicSamplesHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!aiMusicSamplesHeroLoaded) throw new Error(`AI music samples hero image failed to load in ${viewport.name}`);
+    const aiMusicSamplesAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      aiMusicSamplesAudioSources.length !== 4 ||
+      !aiMusicSamplesAudioSources.includes("assets/audio/product-demo-hook.wav") ||
+      !aiMusicSamplesAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !aiMusicSamplesAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !aiMusicSamplesAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI music samples page audio sources missing in ${viewport.name}`);
+    }
+    const aiMusicSamplePacketIds = [
+      "#sample-packet-product-demo",
+      "#sample-packet-coffee-shop",
+      "#sample-packet-business-show",
+      "#sample-packet-radio-id",
+    ];
+    for (const packetId of aiMusicSamplePacketIds) {
+      const packetText = await page.locator(packetId).innerText();
+      if (
+        !packetText.includes("Reference sample:") ||
+        !packetText.includes("Sample URL: https://jackjin1997.github.io/agent-audit-sprint/assets/audio/") ||
+        !packetText.includes("Source material rights:") ||
+        !packetText.includes("Payment timing: after written brief acceptance only")
+      ) {
+        throw new Error(`AI music samples packet ${packetId} missing reference, source, rights, or payment copy in ${viewport.name}`);
+      }
+      const copyTarget = await page.locator(`[data-copy-target='${packetId}']`).getAttribute("data-copy-target");
+      if (copyTarget !== packetId) {
+        throw new Error(`AI music samples packet ${packetId} copy target missing in ${viewport.name}`);
+      }
+    }
+    const aiMusicSamplesProductOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
+    if (!aiMusicSamplesProductOrderHref?.includes("template=ai-product-video-music-order.yml")) {
+      throw new Error(`AI music samples product order link missing product-video template in ${viewport.name}`);
+    }
+    const aiMusicSamplesGeneralOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (aiMusicSamplesGeneralOrderLinks < 4) {
+      throw new Error(`AI music samples page missing general AI music order links in ${viewport.name}`);
+    }
+    const aiMusicSamplesOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiMusicSamplesOverflow) throw new Error(`AI music samples horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiProductVideoMusic, { waitUntil: "networkidle" });
     const productVideoTitle = await page.locator("h1").innerText();

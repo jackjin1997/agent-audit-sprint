@@ -230,6 +230,16 @@ if (!llmsText.includes("AI Podcast Intro Generator")) {
 if (!llmsText.includes("AI Commercial Jingle Generator")) {
   throw new Error("llms.txt is missing the AI Commercial Jingle Generator page");
 }
+const aiJingleOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-jingle-order.yml"), "utf8");
+if (
+  !aiJingleOrderTemplate.includes("id: reference_sample") ||
+  !aiJingleOrderTemplate.includes("Reference sample or direction") ||
+  !aiJingleOrderTemplate.includes("Coffee Shop 30s Hook sample") ||
+  !aiJingleOrderTemplate.includes("Business Show Intro sample") ||
+  !aiJingleOrderTemplate.includes("Radio ID And Drop sample")
+) {
+  throw new Error("AI jingle order template is missing the general reference sample selector");
+}
 if (!llmsText.includes("AI Product Video Music Generator")) {
   throw new Error("llms.txt is missing the AI Product Video Music Generator page");
 }
@@ -557,6 +567,10 @@ const jingleOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts
       "",
       "30 second ad cut",
       "",
+      "### Reference sample or direction",
+      "",
+      "Coffee Shop 30s Hook sample",
+      "",
       "### Brand brief",
       "",
       "Warm local coffee shop jingle for morning commuters with a clean ending.",
@@ -581,6 +595,9 @@ if (!jingleOrderOutput.includes("AI jingle order received")) {
 }
 if (!jingleOrderOutput.includes("Bean There Coffee") || !jingleOrderOutput.includes("USD $29 equivalent")) {
   throw new Error("AI jingle order dry-run output is missing brand or package price");
+}
+if (!jingleOrderOutput.includes("Reference sample or direction: **Coffee Shop 30s Hook sample**")) {
+  throw new Error("AI jingle order dry-run output is missing the selected public reference sample");
 }
 if (!jingleOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")) {
   throw new Error("AI jingle order dry-run output is missing payment guardrail");

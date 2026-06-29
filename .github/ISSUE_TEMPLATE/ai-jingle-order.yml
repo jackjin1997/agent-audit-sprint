@@ -45,6 +45,19 @@ body:
         - Other short branded audio
     validations:
       required: true
+  - type: dropdown
+    id: reference_sample
+    attributes:
+      label: Reference sample or direction
+      description: Pick the closest public reference or write details in the brand brief below.
+      options:
+        - Coffee Shop 30s Hook sample
+        - Business Show Intro sample
+        - Radio ID And Drop sample
+        - Product Demo Hook sample
+        - Custom direction described below
+    validations:
+      required: true
   - type: textarea
     id: brief
     attributes:

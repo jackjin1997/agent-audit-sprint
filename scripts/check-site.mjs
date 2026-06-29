@@ -1238,6 +1238,10 @@ try {
       !productVideoText.includes("Open product video order") ||
       !productVideoText.includes("Generate a product video music order packet") ||
       !productVideoText.includes("Generate product packet") ||
+      !productVideoText.includes("SAMPLE-TO-ORDER FAST LANE") ||
+      !productVideoText.includes("Use Product Demo Hook as the paid brief reference") ||
+      !productVideoText.includes("Copy sample packet") ||
+      !productVideoText.includes("Open sample-based order") ||
       !productVideoText.includes("Shopify") ||
       !productVideoText.includes("TikTok Shop") ||
       !productVideoText.includes("Meta ad creative") ||
@@ -1263,6 +1267,26 @@ try {
       !productVideoAudioSources.includes("assets/audio/radio-id-drop.wav")
     ) {
       throw new Error(`AI product video music sample audio sources missing in ${viewport.name}`);
+    }
+    const productVideoSamplePacket = await page.locator("#product-video-sample-order-packet").innerText();
+    if (
+      !productVideoSamplePacket.includes("Package: USD $29 Product Video Music Hook Sketch") ||
+      !productVideoSamplePacket.includes("Sample direction: Product Demo Hook") ||
+      !productVideoSamplePacket.includes("assets/audio/product-demo-hook.wav") ||
+      !productVideoSamplePacket.includes("Delivery: one selected 6-15 second product video music hook sketch") ||
+      !productVideoSamplePacket.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI product video music sample-to-order packet missing sample, delivery, or payment copy in ${viewport.name}`);
+    }
+    const productVideoSampleCopyTarget = await page
+      .locator("[data-copy-target='#product-video-sample-order-packet']")
+      .getAttribute("data-copy-target");
+    if (productVideoSampleCopyTarget !== "#product-video-sample-order-packet") {
+      throw new Error(`AI product video music sample packet copy target missing in ${viewport.name}`);
+    }
+    const productVideoSampleOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
+    if (!productVideoSampleOrderHref?.includes("template=ai-product-video-music-order.yml")) {
+      throw new Error(`AI product video music sample-based order link missing product order template in ${viewport.name}`);
     }
     await page.locator("[data-jingle-form] [name='brand']").fill("BrightBottle Launch");
     await page.locator("[data-jingle-form] [name='audience']").fill(

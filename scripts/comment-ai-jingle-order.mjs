@@ -108,6 +108,7 @@ function renderJingleOrderComment(issueBody = "") {
   const usage = extractField(issueBody, "Primary use") || "short branded audio";
   const channel = extractField(issueBody, "Publishing channel");
   const rightsSource = extractField(issueBody, "Source material rights");
+  const referenceSample = extractField(issueBody, "Reference sample or direction");
   const targetViewer = extractField(issueBody, "Target viewer and offer");
   const productOffer = extractField(issueBody, "Product offer and target buyer");
   const requiredLine = extractField(issueBody, "Required line or CTA");
@@ -119,6 +120,7 @@ function renderJingleOrderComment(issueBody = "") {
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
   const agencyDetails = [
+    referenceSample ? `- Reference sample or direction: **${referenceSample}**` : "",
     channel ? `- Publishing channel: **${channel}**` : "",
     rightsSource ? `- Source material rights: **${rightsSource}**` : "",
     visualPacing ? `- Visual pacing: **${visualPacing}**` : "",

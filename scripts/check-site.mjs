@@ -228,6 +228,14 @@ if (!llmsText.includes("AI Product Video Music Generator")) {
 if (!llmsText.includes("ai-product-video-music-order.yml")) {
   throw new Error("llms.txt is missing the AI product video music order intake");
 }
+const productVideoOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-product-video-music-order.yml"), "utf8");
+if (
+  !productVideoOrderTemplate.includes("id: reference_sample") ||
+  !productVideoOrderTemplate.includes("Reference sample or direction") ||
+  !productVideoOrderTemplate.includes("Product Demo Hook sample")
+) {
+  throw new Error("AI product video music order template is missing the reference sample selector");
+}
 if (!llmsText.includes("AI Short-Form Ad Music Generator")) {
   throw new Error("llms.txt is missing the AI Short-Form Ad Music Generator page");
 }
@@ -676,6 +684,10 @@ const productVideoOrderOutput = execFileSync(process.execPath, [resolve(root, "s
       "",
       "BrightBottle Launch",
       "",
+      "### Reference sample or direction",
+      "",
+      "Product Demo Hook sample",
+      "",
       "### Store, product page, or creative brief link",
       "",
       "https://example.com/products/bottle",
@@ -724,11 +736,12 @@ if (!productVideoOrderOutput.includes("USD $29 Product Video Music Hook Sketch")
 }
 if (
   !productVideoOrderOutput.includes("BrightBottle Launch") ||
+  !productVideoOrderOutput.includes("Reference sample or direction: **Product Demo Hook sample**") ||
   !productVideoOrderOutput.includes("Publishing channel: **Shopify product page**") ||
   !productVideoOrderOutput.includes("Source material rights: **Original prompt only; no third-party lyrics or melodies**") ||
   !productVideoOrderOutput.includes("Required CTA or product claim: **Hydrate smarter before the next refill.**")
 ) {
-  throw new Error("Product video order dry-run output is missing product, channel, rights, or CTA details");
+  throw new Error("Product video order dry-run output is missing product, sample, channel, rights, or CTA details");
 }
 if (
   !productVideoOrderOutput.includes("ai-product-video-music.html") ||

@@ -26,6 +26,19 @@ body:
       placeholder: BrightBottle Launch
     validations:
       required: true
+  - type: dropdown
+    id: reference_sample
+    attributes:
+      label: Reference sample or direction
+      description: Pick the closest public reference or write details in the offer field below.
+      options:
+        - Product Demo Hook sample
+        - Coffee Shop 30s Hook sample
+        - Business Show Intro sample
+        - Radio ID And Drop sample
+        - Custom direction described below
+    validations:
+      required: true
   - type: input
     id: website
     attributes:

@@ -79,7 +79,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `assets/audit-dashboard.html` - source for the hero bitmap
 - `assets/audit-dashboard.png` - generated hero bitmap
 - `assets/ai-jingle-studio.svg` / `assets/ai-jingle-studio.png` - generated visual asset for the AI music offer
-- `assets/audio/*.wav` / `scripts/render-jingle-samples.mjs` - reproducible public sample audio for the AI jingle package cards
+- `assets/audio/*.wav` / `scripts/render-jingle-samples.mjs` - reproducible public sample audio for the AI jingle and product-video package cards, including a product demo hook sample
 
 ## Heuristic Scanner
 

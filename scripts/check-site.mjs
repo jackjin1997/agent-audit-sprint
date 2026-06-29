@@ -112,6 +112,7 @@ const requiredFiles = [
   "assets/audio/coffee-shop-30s-hook.wav",
   "assets/audio/business-show-intro.wav",
   "assets/audio/radio-id-drop.wav",
+  "assets/audio/product-demo-hook.wav",
   "assets/payments/eth-address.svg",
   "assets/payments/sol-address.svg",
   "reports/douban-mcp-sample-audit.html",
@@ -1255,7 +1256,8 @@ try {
       audioElements.map((audio) => audio.getAttribute("src") || "")
     );
     if (
-      productVideoAudioSources.length !== 3 ||
+      productVideoAudioSources.length !== 4 ||
+      !productVideoAudioSources.includes("assets/audio/product-demo-hook.wav") ||
       !productVideoAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
       !productVideoAudioSources.includes("assets/audio/business-show-intro.wav") ||
       !productVideoAudioSources.includes("assets/audio/radio-id-drop.wav")

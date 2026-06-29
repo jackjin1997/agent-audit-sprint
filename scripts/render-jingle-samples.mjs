@@ -32,6 +32,14 @@ const samples = [
     melody: [0, 7, 12, 14, 12, 7, 5, 2],
     accent: 0.38,
   },
+  {
+    file: "product-demo-hook.wav",
+    bpm: 124,
+    root: 64,
+    seconds: 7,
+    melody: [0, 4, 7, 11, 9, 7, 4, 2, 0, 7, 9, 12],
+    accent: 0.31,
+  },
 ];
 
 function midiToHz(note) {

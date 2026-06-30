@@ -37,6 +37,7 @@ const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
+const aiSaasLaunchVideoMusic = `file://${resolve(root, "ai-saas-launch-video-music.html")}`;
 const aiProductVideoMusic = `file://${resolve(root, "ai-product-video-music.html")}`;
 const aiShortFormAdMusic = `file://${resolve(root, "ai-short-form-ad-music.html")}`;
 const ugcAgencyAiMusicHooks = `file://${resolve(root, "ugc-agency-ai-music-hooks.html")}`;
@@ -70,6 +71,7 @@ const requiredFiles = [
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
+  "ai-saas-launch-video-music.html",
   "ai-product-video-music.html",
   "ai-short-form-ad-music.html",
   "ugc-agency-ai-music-hooks.html",
@@ -103,6 +105,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
+  ".github/ISSUE_TEMPLATE/ai-saas-launch-video-music-order.yml",
   ".github/ISSUE_TEMPLATE/ai-product-video-music-order.yml",
   ".github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml",
   ".github/workflows/validate.yml",
@@ -272,6 +275,22 @@ if (
   !aiJingleOrderTemplate.includes("Radio ID And Drop sample")
 ) {
   throw new Error("AI jingle order template is missing the general reference sample selector");
+}
+if (!llmsText.includes("AI SaaS Launch Video Music Generator")) {
+  throw new Error("llms.txt is missing the AI SaaS Launch Video Music Generator page");
+}
+if (!llmsText.includes("ai-saas-launch-video-music-order.yml")) {
+  throw new Error("llms.txt is missing the AI SaaS launch video music order intake");
+}
+const saasLaunchOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-saas-launch-video-music-order.yml"), "utf8");
+if (
+  !saasLaunchOrderTemplate.includes("id: reference_sample") ||
+  !saasLaunchOrderTemplate.includes("Reference sample or direction") ||
+  !saasLaunchOrderTemplate.includes("Product Demo Hook sample") ||
+  !saasLaunchOrderTemplate.includes("Product Hunt launch video") ||
+  !saasLaunchOrderTemplate.includes("SaaS demo walkthrough")
+) {
+  throw new Error("AI SaaS launch video music order template is missing reference, Product Hunt, or demo fields");
 }
 if (!llmsText.includes("AI Product Video Music Generator")) {
   throw new Error("llms.txt is missing the AI Product Video Music Generator page");
@@ -935,6 +954,87 @@ if (
   throw new Error("Product video order dry-run output is missing service, payment proof, or payment guardrail");
 }
 
+const saasLaunchOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $29 SaaS Launch Video Music Hook Sketch",
+      "",
+      "### Product, app, or SaaS name",
+      "",
+      "LaunchPad AI Demo",
+      "",
+      "### Reference sample or direction",
+      "",
+      "Product Demo Hook sample",
+      "",
+      "### Landing page, demo, or launch brief link",
+      "",
+      "https://example.com/launch",
+      "",
+      "### Primary use",
+      "",
+      "Product Hunt launch video",
+      "",
+      "### Publishing channel",
+      "",
+      "Product Hunt launch page",
+      "",
+      "### Source material rights",
+      "",
+      "Original prompt only; no third-party lyrics or melodies",
+      "",
+      "### Product positioning and target user",
+      "",
+      "Indie founders launching an AI workflow product who need to understand the value in the first 10 seconds.",
+      "",
+      "### Required CTA or product claim",
+      "",
+      "Launch the demo, understand the workflow, ship with confidence.",
+      "",
+      "### Visual pacing",
+      "",
+      "Problem-solution demo",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Solana SPL USDC after brief acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!saasLaunchOrderOutput.includes("USD $29 SaaS Launch Video Music Hook Sketch")) {
+  throw new Error("SaaS launch video music order dry-run output is missing package name");
+}
+if (
+  !saasLaunchOrderOutput.includes("LaunchPad AI Demo") ||
+  !saasLaunchOrderOutput.includes("Reference sample or direction: **Product Demo Hook sample**") ||
+  !saasLaunchOrderOutput.includes("Publishing channel: **Product Hunt launch page**") ||
+  !saasLaunchOrderOutput.includes("Source material rights: **Original prompt only; no third-party lyrics or melodies**") ||
+  !saasLaunchOrderOutput.includes("Required CTA or product claim: **Launch the demo, understand the workflow, ship with confidence.**")
+) {
+  throw new Error("SaaS launch video music order dry-run output is missing project, sample, channel, rights, or CTA details");
+}
+if (
+  !saasLaunchOrderOutput.includes("ai-saas-launch-video-music.html") ||
+  !saasLaunchOrderOutput.includes("payment-confirmation.yml") ||
+  !saasLaunchOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")
+) {
+  throw new Error("SaaS launch video music order dry-run output is missing service, payment proof, or payment guardrail");
+}
+
 const paymentProofOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-payment-proof.mjs")], {
   encoding: "utf8",
   env: {
@@ -1302,6 +1402,8 @@ try {
       !aiMusicGeneratorText.includes("Source material rights") ||
       !aiMusicGeneratorText.includes("Copy usage memo") ||
       !aiMusicGeneratorText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !aiMusicGeneratorText.includes("SaaS Launch Video Music") ||
+      !aiMusicGeneratorText.includes("Open SaaS launch page") ||
       !aiMusicGeneratorText.includes("Local Commercial Jingle") ||
       !aiMusicGeneratorText.includes("Product video music") ||
       !aiMusicGeneratorText.includes("Reels, Shorts, And UGC Ads") ||
@@ -1330,7 +1432,7 @@ try {
     const aiMusicGeneratorBrief = await page.locator("textarea[aria-label='AI music generator brief template']").inputValue();
     if (
       !aiMusicGeneratorBrief.includes("Package: USD $29 Founding Hook Sketch") ||
-      !aiMusicGeneratorBrief.includes("Use case: local ad") ||
+      !aiMusicGeneratorBrief.includes("Use case: SaaS launch video / Product Hunt launch video / local ad") ||
       !aiMusicGeneratorBrief.includes("Publishing channel: paid social / YouTube monetized video") ||
       !aiMusicGeneratorBrief.includes("Source material rights: original prompt only / buyer-owned tagline") ||
       !aiMusicGeneratorBrief.includes("Delivery: one selected short AI-assisted music sketch, production prompt, rough cut note, source/tool note, commercial-use memo") ||

@@ -129,6 +129,206 @@ if (intakeForm) {
   });
 }
 
+const openRouterCostForm = document.querySelector("[data-openrouter-cost-form]");
+
+function numberField(form, name, fallback = 0) {
+  const value = Number(new FormData(form).get(name));
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function usd(value) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: value >= 100 ? 0 : 2,
+  }).format(Math.max(0, value));
+}
+
+function compactNumber(value) {
+  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(Math.max(0, value));
+}
+
+function openRouterPackage(total, daily, retryPercent, toolCalls) {
+  if (total >= 1000 || daily >= 150) {
+    return {
+      label: "USD $1,000 AI Cost Spike Emergency Sprint",
+      template: "ai-cost-spike-emergency.yml",
+      tokenMeterPath: "emergency",
+      reason: "the estimate is already in emergency-spike territory or the daily burn rate needs containment",
+    };
+  }
+  if (total >= 299 || retryPercent >= 15 || toolCalls >= 5) {
+    return {
+      label: "USD $299 AI Agent Cost Leak Review",
+      template: "agent-cost-leak-review.yml",
+      tokenMeterPath: "agent",
+      reason: "the workload has enough recurring cost, retry overhead, or tool fanout to justify a focused leak review",
+    };
+  }
+  return {
+    label: "USD $99 Quick AI API Cost Audit",
+    template: "paid-audit-intent.yml",
+    tokenMeterPath: "quick",
+    reason: "the estimate looks like a bounded pricing and provider-cost sanity check",
+  };
+}
+
+function selectedOpenRouterModel(form) {
+  const select = form.querySelector("[name='modelPreset']");
+  return select?.selectedOptions?.[0]?.value || "OpenRouter editable custom model";
+}
+
+function syncOpenRouterPreset(form) {
+  const selected = form.querySelector("[name='modelPreset']")?.selectedOptions?.[0];
+  if (!selected) return;
+  const inputPrice = form.querySelector("[name='inputPrice']");
+  const outputPrice = form.querySelector("[name='outputPrice']");
+  const cachePrice = form.querySelector("[name='cachePrice']");
+  inputPrice.value = selected.dataset.inputPrice || inputPrice.value;
+  outputPrice.value = selected.dataset.outputPrice || outputPrice.value;
+  cachePrice.value = selected.dataset.cachePrice || cachePrice.value;
+}
+
+function calculateOpenRouterCost(form) {
+  const monthlyRequests = numberField(form, "monthlyRequests", 0);
+  const inputTokens = numberField(form, "inputTokens", 0);
+  const outputTokens = numberField(form, "outputTokens", 0);
+  const cacheReadPercent = Math.min(100, Math.max(0, numberField(form, "cacheReadPercent", 0)));
+  const retryPercent = Math.max(0, numberField(form, "retryPercent", 0));
+  const toolCalls = Math.max(0, numberField(form, "toolCalls", 0));
+  const inputPrice = Math.max(0, numberField(form, "inputPrice", 0));
+  const outputPrice = Math.max(0, numberField(form, "outputPrice", 0));
+  const cachePrice = Math.max(0, numberField(form, "cachePrice", 0));
+  const effectiveRequests = monthlyRequests * (1 + retryPercent / 100);
+  const cachedInputTokens = effectiveRequests * inputTokens * (cacheReadPercent / 100);
+  const uncachedInputTokens = effectiveRequests * inputTokens - cachedInputTokens;
+  const monthlyOutputTokens = effectiveRequests * outputTokens;
+  const inputCost = (uncachedInputTokens / 1_000_000) * inputPrice;
+  const cacheCost = (cachedInputTokens / 1_000_000) * cachePrice;
+  const outputCost = (monthlyOutputTokens / 1_000_000) * outputPrice;
+  const total = inputCost + cacheCost + outputCost;
+  const daily = total / 30;
+  return {
+    monthlyRequests,
+    inputTokens,
+    outputTokens,
+    cacheReadPercent,
+    retryPercent,
+    toolCalls,
+    inputPrice,
+    outputPrice,
+    cachePrice,
+    effectiveRequests,
+    uncachedInputTokens,
+    cachedInputTokens,
+    monthlyOutputTokens,
+    inputCost,
+    cacheCost,
+    outputCost,
+    total,
+    daily,
+  };
+}
+
+function buildOpenRouterPacket(form, result, route) {
+  const data = new FormData(form);
+  const project = clean(data.get("project"), "Project or workflow TBD");
+  const question = clean(data.get("question"), "Which cost controls should change first?");
+  const evidence = clean(data.get("evidence"), "Sanitized evidence TBD");
+  const model = selectedOpenRouterModel(form);
+  return [
+    "## OpenRouter / LLM cost review request",
+    "",
+    `Project or workflow URL: ${project}`,
+    `Recommended package: ${route.label}`,
+    `Reason: ${route.reason}.`,
+    `Model preset or editable model: ${model}`,
+    "",
+    "## Calculator snapshot",
+    "",
+    `Estimated monthly model cost: ${usd(result.total)}`,
+    `Estimated daily model cost: ${usd(result.daily)}`,
+    `Monthly requests: ${compactNumber(result.monthlyRequests)}`,
+    `Effective requests after retry overhead: ${compactNumber(result.effectiveRequests)}`,
+    `Average input tokens/request: ${compactNumber(result.inputTokens)}`,
+    `Average output tokens/request: ${compactNumber(result.outputTokens)}`,
+    `Cache-read share of input tokens: ${result.cacheReadPercent}%`,
+    `Retry or failed-run overhead: ${result.retryPercent}%`,
+    `Tool calls per run: ${compactNumber(result.toolCalls)}`,
+    `Uncached input tokens/month: ${compactNumber(result.uncachedInputTokens)}`,
+    `Cached input tokens/month: ${compactNumber(result.cachedInputTokens)}`,
+    `Output tokens/month: ${compactNumber(result.monthlyOutputTokens)}`,
+    `Input price per 1M uncached tokens: ${usd(result.inputPrice)}`,
+    `Output price per 1M tokens: ${usd(result.outputPrice)}`,
+    `Cache-read price per 1M tokens: ${usd(result.cachePrice)}`,
+    "",
+    "## Highest cost question",
+    "",
+    question,
+    "",
+    "## Sanitized evidence summary",
+    "",
+    evidence,
+    "",
+    "## Links",
+    "",
+    `TokenMeter audit path: https://tokenmeter-mu.vercel.app/audit?path=${route.tokenMeterPath}&source=openrouter-calculator`,
+    "Focused review page: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html",
+    "Emergency sprint page: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html",
+    "",
+    "## Confirmation",
+    "",
+    "- [x] I will not include private prompts, API keys, customer data, provider account IDs, raw production traces, or sensitive billing details in a public issue.",
+    "- [x] I understand payment is only requested after written scope acceptance.",
+    "- [x] I understand calculator pricing is an editable estimate and final scope/payment must be accepted in writing.",
+  ].join("\n");
+}
+
+function updateOpenRouterCost() {
+  if (!openRouterCostForm) return;
+  const result = calculateOpenRouterCost(openRouterCostForm);
+  const route = openRouterPackage(result.total, result.daily, result.retryPercent, result.toolCalls);
+  const packet = buildOpenRouterPacket(openRouterCostForm, result, route);
+  const total = document.querySelector("[data-openrouter-total]");
+  const daily = document.querySelector("[data-openrouter-daily]");
+  const fit = document.querySelector("[data-openrouter-fit]");
+  const output = openRouterCostForm.querySelector("[data-openrouter-packet]");
+  const openLink = openRouterCostForm.querySelector("[data-openrouter-open-brief]");
+  const project = clean(new FormData(openRouterCostForm).get("project"), "OpenRouter cost review");
+  total.textContent = `${usd(result.total)} estimated monthly model cost`;
+  daily.textContent = `${usd(result.daily)} estimated daily model cost`;
+  fit.textContent = route.label;
+  output.value = packet;
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(route.template)}&title=${encodeURIComponent(`OpenRouter cost review: ${projectNameFromUrl(project)}`)}&body=${encodeURIComponent(packet)}`;
+}
+
+if (openRouterCostForm) {
+  updateOpenRouterCost();
+  openRouterCostForm.addEventListener("input", updateOpenRouterCost);
+  openRouterCostForm.addEventListener("change", (event) => {
+    if (event.target?.name === "modelPreset") {
+      syncOpenRouterPreset(openRouterCostForm);
+    }
+    updateOpenRouterCost();
+  });
+  openRouterCostForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateOpenRouterCost();
+    openRouterCostForm.querySelector("[data-openrouter-packet]").focus();
+  });
+  openRouterCostForm.querySelector("[data-copy-openrouter-packet]").addEventListener("click", async (event) => {
+    updateOpenRouterCost();
+    const output = openRouterCostForm.querySelector("[data-openrouter-packet]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
+  });
+}
+
 const jingleForm = document.querySelector("[data-jingle-form]");
 let currentSketchUrl = "";
 const jingleEmailRecipient = "jackjin1997@gmail.com";

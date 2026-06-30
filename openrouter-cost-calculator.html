@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Editable OpenRouter and LLM API cost calculator that turns model usage into a $99, $299, or $1,000 AI cost review intake packet.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html">
+    <meta property="og:title" content="OpenRouter Cost Calculator">
+    <meta property="og:description" content="Estimate OpenRouter or LLM API spend, then copy a sanitized cost review packet for a fixed-price audit intake.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenRouter Cost Calculator">
+    <meta name="twitter:description" content="Editable LLM cost estimate with direct $99, $299, and $1,000 AI cost audit handoff.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>OpenRouter Cost Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "OpenRouter Cost Calculator",
+        "description": "Editable calculator for estimating OpenRouter and LLM API usage cost and preparing a sanitized AI cost review intake packet.",
+        "url": "https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
+        <a href="ai-cost-spike-emergency.html">Cost Spike</a>
+        <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
+        <a href="quick-scan.html">Quick Scan</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">LLM spend estimate to paid scope packet</p>
+        <h1>OpenRouter Cost Calculator</h1>
+        <p>
+          Estimate one OpenRouter or LLM API workload, see whether it fits the USD $99 quick scan, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint, then copy a sanitized intake packet. Pricing presets were checked against the OpenRouter models API on 2026-06-30 and remain editable snapshots, not a billing guarantee; verify provider pricing before accepting scope.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="#calculator">Run calculator</a>
+          <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-calculator">TokenMeter quick audit</a>
+          <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=agent&source=openrouter-calculator">Agent cost review</a>
+          <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=emergency&source=openrouter-calculator">Emergency sprint</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Free tool</span><strong>Editable OpenRouter cost estimate</strong></div>
+          <div><span>Quick</span><strong>USD $99 API cost scan</strong></div>
+          <div><span>Focused</span><strong>USD $299 AI Agent Cost Leak Review</strong></div>
+          <div><span>Emergency</span><strong>USD $1,000 AI Cost Spike Emergency Sprint</strong></div>
+          <div><span>Start Rule</span><strong>Payment only after written scope acceptance</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split" id="calculator">
+        <div>
+          <p class="eyebrow">Calculator</p>
+          <h2>Turn model usage into a review packet</h2>
+          <p>
+            Use sanitized counts only: request volume, model mix, token estimates, cache-read share, retry rate, and tool-call fanout. Do not paste private prompts, customer data, API keys, provider account IDs, raw traces, or billing screenshots with sensitive values.
+          </p>
+          <div class="report-preview" aria-label="OpenRouter cost result">
+            <div class="report-row high"><span>Monthly</span><strong data-openrouter-total>$0.00 estimated monthly model cost</strong></div>
+            <div class="report-row medium"><span>Daily</span><strong data-openrouter-daily>$0.00 estimated daily model cost</strong></div>
+            <div class="report-row low"><span>Fit</span><strong data-openrouter-fit>USD $99 Quick AI API Cost Audit</strong></div>
+            <div class="report-row pass"><span>Guardrail</span><strong>Payment only after written scope acceptance; calculator output is not a payment request.</strong></div>
+          </div>
+        </div>
+        <form class="request-tool" data-openrouter-cost-form>
+          <div class="field-grid">
+            <label>
+              Project or workflow URL
+              <input name="project" value="https://github.com/example/runaway-agent" autocomplete="off">
+            </label>
+            <label>
+              Model preset
+              <select name="modelPreset">
+                <option value="OpenRouter editable custom model" data-input-price="1.00" data-output-price="3.00" data-cache-price="0.20">Custom editable model</option>
+                <option value="OpenRouter moonshotai/kimi-k2.7-code" data-input-price="0.74" data-output-price="3.50" data-cache-price="0.15" selected>Kimi K2.7 Code snapshot</option>
+                <option value="OpenRouter z-ai/glm-5.2" data-input-price="0.94" data-output-price="3.00" data-cache-price="0.18">GLM 5.2 snapshot</option>
+                <option value="OpenRouter openrouter/free" data-input-price="0.00" data-output-price="0.00" data-cache-price="0.00">Free Models Router snapshot</option>
+                <option value="OpenRouter anthropic/claude-opus-4.8" data-input-price="5.00" data-output-price="25.00" data-cache-price="0.50">Claude Opus 4.8 snapshot</option>
+              </select>
+            </label>
+            <label>
+              Monthly requests
+              <input name="monthlyRequests" type="number" min="1" step="1" value="24000">
+            </label>
+            <label>
+              Average input tokens/request
+              <input name="inputTokens" type="number" min="0" step="100" value="4800">
+            </label>
+            <label>
+              Average output tokens/request
+              <input name="outputTokens" type="number" min="0" step="100" value="1200">
+            </label>
+            <label>
+              Cache-read share of input tokens (%)
+              <input name="cacheReadPercent" type="number" min="0" max="100" step="1" value="35">
+            </label>
+            <label>
+              Retry or failed-run overhead (%)
+              <input name="retryPercent" type="number" min="0" step="1" value="18">
+            </label>
+            <label>
+              Tool calls per run
+              <input name="toolCalls" type="number" min="0" step="1" value="6">
+            </label>
+            <label>
+              Input price per 1M uncached tokens (USD)
+              <input name="inputPrice" type="number" min="0" step="0.01" value="0.74">
+            </label>
+            <label>
+              Output price per 1M tokens (USD)
+              <input name="outputPrice" type="number" min="0" step="0.01" value="3.50">
+            </label>
+            <label>
+              Cache-read price per 1M tokens (USD)
+              <input name="cachePrice" type="number" min="0" step="0.01" value="0.15">
+            </label>
+            <label>
+              Main cost question
+              <input name="question" value="Which cache, routing, retry, or loop caps can cut spend before launch?">
+            </label>
+          </div>
+          <label>
+            Sanitized evidence summary
+            <textarea name="evidence">Agent workflow uses OpenRouter for planning, retrieval summaries, and tool-call repair. Counts are estimates only; no private prompts, API keys, account IDs, or customer data included.</textarea>
+          </label>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Generate cost packet</button>
+            <button class="button secondary dark" type="button" data-copy-openrouter-packet>Copy packet</button>
+            <a class="button secondary dark" data-openrouter-open-brief href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Open GitHub intake</a>
+          </div>
+          <textarea class="brief-output" data-openrouter-packet aria-label="OpenRouter cost review packet"></textarea>
+        </form>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Routing</p>
+          <h2>Pick the package from the cost shape</h2>
+          <p>
+            The calculator routes small estimates to a quick API cost scan, recurring workflow waste to the focused review, and already-spiking bills to the emergency sprint. The final package is still agreed in writing before any payment request.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>USD $99 Quick AI API Cost Audit:</strong> a small model mix, launch-pricing, or provider-cost sanity check.</div>
+          <div><strong>USD $299 AI Agent Cost Leak Review:</strong> one workflow with context bloat, model-routing drift, cache misses, retry loops, or tool-call fanout.</div>
+          <div><strong>USD $1,000 AI Cost Spike Emergency Sprint:</strong> a live bill spike, fast burn rate, failed launch pricing, or urgent containment need.</div>
+          <div><strong>Evidence boundary:</strong> use model ids, token totals, counts, retry rates, and redacted summaries, not secrets or raw private traces.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Cost drivers</p>
+          <h2>What the paid review checks after intake</h2>
+          <p>
+            A calculator estimate is only the first pass. The paid review looks for the product and engineering levers that change recurring cost: routing, cacheability, context selection, retries, and feature-level attribution.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="ai-agent-cost-leak-review.html">View $299 focused review</a>
+            <a class="button secondary dark" href="ai-cost-spike-emergency.html">View $1,000 emergency sprint</a>
+          </div>
+        </div>
+        <div class="service-list compact-list">
+          <div>Whether cache-read savings are actually reachable with stable prompt prefixes and reusable context.</div>
+          <div>Whether expensive models are reserved for the work that needs them, with cheaper default paths for routine steps.</div>
+          <div>Whether retries, repair loops, tool fanout, and browser/coding-agent loops have hard spend caps.</div>
+          <div>Whether product pricing, free-tier assumptions, or customer-level budgets survive realistic monthly usage.</div>
+          <div>Whether logs can attribute cost by feature, customer, model, tool, and run without exposing sensitive data.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="https://openrouter.ai/api/v1/models">OpenRouter model API</a>
+      <a href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-calculator">TokenMeter audit intake</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Cost leak intake</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml">Emergency intake</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

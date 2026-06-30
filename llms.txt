@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, USD $1,000 AI Cost Spike Emergency Sprint, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for SaaS/Product Hunt launch videos, ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, USD $1,000 AI Cost Spike Emergency Sprint, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, editable OpenRouter Cost Calculator, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for SaaS/Product Hunt launch videos, ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -22,11 +22,13 @@ AI Jingle email brief: jackjin1997@gmail.com
 Payment assets after scope acceptance: ETH or ERC-20 USDC/USDT/DAI on Ethereum; SOL or SPL USDC on Solana
 Start rule: payment only after written scope acceptance
 Delivery target: 48 hours after written scope acceptance and payment confirmation
+OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
 
 ## Primary Pages
 
 - AI Agent Security Audit Service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
 - AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
+- OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
 - AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
 - MCP SSRF and Dynamic URL Fetch Review: https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
@@ -94,6 +96,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 
 - Browser scanner: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable repo scan URL format: https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo
+- OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html for editable model-spend estimates, cache-read assumptions, retry overhead, tool-call fanout, and sanitized packet generation before choosing the USD $99 quick audit, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint
 - AI Agent Security Radar: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-radar.html
 - MCP server scan entry: https://jackjin1997.github.io/agent-audit-sprint/mcp-server-security-scan.html
 - MCP Security Radar: https://jackjin1997.github.io/agent-audit-sprint/mcp-security-radar.html
@@ -104,6 +107,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Auth-heavy scanner handoff: browser and CLI scanner outputs route token, cookie, session, OAuth, Bearer, API key, and credential-boundary signals to the USD $299 Agent Auth focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-auth-review.yml
 - MCP SSRF scanner handoff: browser and CLI scanner outputs route dynamic URL fetch, pagination URL, callback URL, redirect URL, webhook, proxy fetch, and SSRF-with-credentials signals to the USD $299 MCP SSRF focused review intake at https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=mcp-ssrf-review.yml and review page at https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html
 - AI cost spike emergency sprint: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk. Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml
+- OpenRouter cost calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html for OpenRouter and LLM API spend estimates, editable price snapshots, cache-read share, retry overhead, tool-call fanout, and $99/$299/$1,000 AI cost review routing
 - AI agent cost leak review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary. Intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Lead finder: node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-intent-leads-$(date +%F).md
 
@@ -114,6 +118,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 - Agent products that call tools, hold credentials, automate logged-in browser sessions, or perform irreversible write actions.
 - AI cost spike emergency sprint: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk.
 - AI Cost Spike emergency intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml
+- OpenRouter cost calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html for model-spend estimates, cache-read assumptions, retry overhead, tool-call fanout, and package routing.
 - AI agent cost leak review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary.
 - AI Agent Cost Leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent auth/cookie vault review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html for token brokers, cookie vaults, site_login/site_logout flows, OAuth, CIBA, AAuth, HITL consent, authenticated scraping, dynamic URL fetch, SSRF with cookies, redaction, and cache key isolation.

@@ -26,6 +26,7 @@ const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
 const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.html")}`;
+const openRouterCostCalculator = `file://${resolve(root, "openrouter-cost-calculator.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
@@ -60,6 +61,7 @@ const requiredFiles = [
   "index.html",
   "ai-agent-security-audit-service.html",
   "ai-cost-spike-emergency.html",
+  "openrouter-cost-calculator.html",
   "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
   "mcp-ssrf-security-review.html",
@@ -70,6 +72,7 @@ const requiredFiles = [
   "mcp-code-scanning-github-action.html",
   "scan.html",
   "quick-scan.html",
+  "openrouter-cost-calculator.html",
   "ai-music-generator.html",
   "ai-music-samples.html",
   "ai-jingle-generator.html",
@@ -202,6 +205,12 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 if (!llmsText.includes("AI Agent Cost Leak Review")) {
   throw new Error("llms.txt is missing the AI Agent Cost Leak review context");
 }
+if (!llmsText.includes("OpenRouter Cost Calculator")) {
+  throw new Error("llms.txt is missing the OpenRouter Cost Calculator context");
+}
+if (!llmsText.includes("openrouter-cost-calculator.html")) {
+  throw new Error("llms.txt is missing the OpenRouter Cost Calculator URL");
+}
 if (!llmsText.includes("AI Cost Spike Emergency Sprint")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency Sprint context");
 }
@@ -210,6 +219,9 @@ if (!llmsText.includes("USD $299 AI Agent Cost Leak Review")) {
 }
 if (!llmsText.includes("USD $1,000 AI Cost Spike Emergency Sprint")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency Sprint package price");
+}
+if (!llmsText.includes("cache-read assumptions") || !llmsText.includes("tool-call fanout")) {
+  throw new Error("llms.txt is missing the OpenRouter cost calculator routing context");
 }
 if (!llmsText.includes("ai-cost-spike-emergency.yml")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency intake link");
@@ -1270,6 +1282,14 @@ try {
     ) {
       throw new Error(`Index page missing AI Cost Spike emergency entry in ${viewport.name}`);
     }
+    if (
+      !indexBody.includes("OpenRouter cost calculator") ||
+      !indexBody.includes("OpenRouter Cost Calculator for model spend triage") ||
+      !indexBody.includes("Open the OpenRouter Cost Calculator") ||
+      !indexBody.includes("cache-read assumptions, retry overhead, tool-call fanout")
+    ) {
+      throw new Error(`Index page missing OpenRouter cost calculator entry in ${viewport.name}`);
+    }
     if (!indexBody.includes("Cost leak review") || !indexBody.includes("AI agent cost leak reviews")) {
       throw new Error(`Index page missing AI Agent Cost Leak focused review entry in ${viewport.name}`);
     }
@@ -1293,6 +1313,9 @@ try {
     }
     if (!indexBody.includes("Open the AI cost spike emergency page")) {
       throw new Error(`Index page missing AI Cost Spike emergency scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the OpenRouter cost calculator")) {
+      throw new Error(`Index page missing OpenRouter cost calculator scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the AI agent cost leak review page")) {
       throw new Error(`Index page missing AI Agent Cost Leak review scanner link in ${viewport.name}`);
@@ -2787,6 +2810,54 @@ try {
     }
     const costSpikeOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (costSpikeOverflow) throw new Error(`AI Cost Spike emergency horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(openRouterCostCalculator, { waitUntil: "networkidle" });
+    const openRouterTitle = await page.locator("h1").innerText();
+    if (!openRouterTitle.includes("OpenRouter Cost Calculator")) {
+      throw new Error(`Unexpected OpenRouter Cost Calculator h1 in ${viewport.name}: ${openRouterTitle}`);
+    }
+    const openRouterText = await page.locator("body").innerText();
+    if (
+      !openRouterText.includes("USD $99 Quick AI API Cost Audit") ||
+      !openRouterText.includes("USD $299 AI Agent Cost Leak Review") ||
+      !openRouterText.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+      !openRouterText.includes("cache-read share") ||
+      !openRouterText.includes("tool-call fanout") ||
+      !openRouterText.includes("Payment only after written scope acceptance")
+    ) {
+      throw new Error(`OpenRouter Cost Calculator page missing package ladder, calculator scope, or payment guardrail in ${viewport.name}`);
+    }
+    await page.locator("[data-openrouter-cost-form] [name='project']").fill("https://github.com/example/openrouter-agent");
+    await page.locator("[data-openrouter-cost-form] [name='monthlyRequests']").fill("24000");
+    await page.locator("[data-openrouter-cost-form] [name='retryPercent']").fill("18");
+    await page.locator("[data-openrouter-cost-form]").evaluate((form) => form.requestSubmit());
+    const openRouterPacket = await page.locator("[data-openrouter-packet]").inputValue();
+    if (
+      !openRouterPacket.includes("USD $299 AI Agent Cost Leak Review") ||
+      !openRouterPacket.includes("https://github.com/example/openrouter-agent") ||
+      !openRouterPacket.includes("Estimated monthly model cost") ||
+      !openRouterPacket.includes("Tool calls per run") ||
+      !openRouterPacket.includes("I will not include private prompts")
+    ) {
+      throw new Error(`OpenRouter calculator packet is missing focused review routing or safety text in ${viewport.name}`);
+    }
+    const openRouterHref = await page.locator("[data-openrouter-open-brief]").getAttribute("href");
+    if (!openRouterHref?.includes("agent-cost-leak-review.yml")) {
+      throw new Error(`OpenRouter calculator default intake link is missing cost leak review template in ${viewport.name}`);
+    }
+    await page.locator("[data-openrouter-cost-form] [name='monthlyRequests']").fill("300000");
+    await page.locator("[data-openrouter-cost-form] [name='outputTokens']").fill("3000");
+    await page.locator("[data-openrouter-cost-form]").evaluate((form) => form.requestSubmit());
+    const openRouterEmergencyPacket = await page.locator("[data-openrouter-packet]").inputValue();
+    const openRouterEmergencyHref = await page.locator("[data-openrouter-open-brief]").getAttribute("href");
+    if (
+      !openRouterEmergencyPacket.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+      !openRouterEmergencyHref?.includes("ai-cost-spike-emergency.yml")
+    ) {
+      throw new Error(`OpenRouter calculator did not route high spend to emergency intake in ${viewport.name}`);
+    }
+    const openRouterOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (openRouterOverflow) throw new Error(`OpenRouter Cost Calculator horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiAgentCostLeakReview, { waitUntil: "networkidle" });
     const aiAgentCostTitle = await page.locator("h1").innerText();

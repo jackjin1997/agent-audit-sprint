@@ -1404,6 +1404,14 @@ try {
       if (copyTarget !== packetId) {
         throw new Error(`AI music samples packet ${packetId} copy target missing in ${viewport.name}`);
       }
+      const emailHref = await page.locator(`[data-mailto-target='${packetId}']`).getAttribute("href");
+      if (
+        !emailHref?.startsWith("mailto:jackjin1997@gmail.com") ||
+        !decodeURIComponent(emailHref).includes("Reference sample:") ||
+        !decodeURIComponent(emailHref).includes("Payment timing: after written brief acceptance only")
+      ) {
+        throw new Error(`AI music samples packet ${packetId} email handoff missing reference or payment copy in ${viewport.name}`);
+      }
     }
     const aiMusicSamplesProductOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
     if (!aiMusicSamplesProductOrderHref?.includes("template=ai-product-video-music-order.yml")) {

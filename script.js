@@ -140,6 +140,15 @@ function mailtoHref(subject, body) {
   return `mailto:${jingleEmailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+document.querySelectorAll("[data-mailto-target]").forEach((link) => {
+  const target = document.querySelector(link.getAttribute("data-mailto-target") || "");
+  const subject = link.getAttribute("data-mailto-subject") || "AI music brief";
+  const body = target?.textContent?.trim() || "";
+  if (body) {
+    link.href = mailtoHref(subject, body);
+  }
+});
+
 function compactTitle(value, fallback = "brand") {
   return clean(value, fallback).replace(/\s+/g, " ").slice(0, 80);
 }

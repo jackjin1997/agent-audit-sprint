@@ -124,6 +124,7 @@ const requiredFiles = [
   "assets/audio/business-show-intro.wav",
   "assets/audio/radio-id-drop.wav",
   "assets/audio/product-demo-hook.wav",
+  "assets/audio/saas-launch-hero-hook.wav",
   "assets/payments/eth-address.svg",
   "assets/payments/sol-address.svg",
   "reports/douban-mcp-sample-audit.html",
@@ -286,6 +287,7 @@ const saasLaunchOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLA
 if (
   !saasLaunchOrderTemplate.includes("id: reference_sample") ||
   !saasLaunchOrderTemplate.includes("Reference sample or direction") ||
+  !saasLaunchOrderTemplate.includes("SaaS Launch Hero Hook sample") ||
   !saasLaunchOrderTemplate.includes("Product Demo Hook sample") ||
   !saasLaunchOrderTemplate.includes("Product Hunt launch video") ||
   !saasLaunchOrderTemplate.includes("SaaS demo walkthrough")
@@ -970,7 +972,7 @@ const saasLaunchOrderOutput = execFileSync(process.execPath, [resolve(root, "scr
       "",
       "### Reference sample or direction",
       "",
-      "Product Demo Hook sample",
+      "SaaS Launch Hero Hook sample",
       "",
       "### Landing page, demo, or launch brief link",
       "",
@@ -1020,7 +1022,7 @@ if (!saasLaunchOrderOutput.includes("USD $29 SaaS Launch Video Music Hook Sketch
 }
 if (
   !saasLaunchOrderOutput.includes("LaunchPad AI Demo") ||
-  !saasLaunchOrderOutput.includes("Reference sample or direction: **Product Demo Hook sample**") ||
+  !saasLaunchOrderOutput.includes("Reference sample or direction: **SaaS Launch Hero Hook sample**") ||
   !saasLaunchOrderOutput.includes("Publishing channel: **Product Hunt launch page**") ||
   !saasLaunchOrderOutput.includes("Source material rights: **Original prompt only; no third-party lyrics or melodies**") ||
   !saasLaunchOrderOutput.includes("Required CTA or product claim: **Launch the demo, understand the workflow, ship with confidence.**")
@@ -1648,7 +1650,8 @@ try {
       audioElements.map((audio) => audio.getAttribute("src") || "")
     );
     if (
-      saasLaunchAudioSources.length !== 4 ||
+      saasLaunchAudioSources.length !== 5 ||
+      !saasLaunchAudioSources.includes("assets/audio/saas-launch-hero-hook.wav") ||
       !saasLaunchAudioSources.includes("assets/audio/product-demo-hook.wav") ||
       !saasLaunchAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
       !saasLaunchAudioSources.includes("assets/audio/business-show-intro.wav") ||
@@ -1659,8 +1662,8 @@ try {
     const saasLaunchSamplePacket = await page.locator("#saas-launch-sample-order-packet").innerText();
     if (
       !saasLaunchSamplePacket.includes("Package: USD $29 SaaS Launch Video Music Hook Sketch") ||
-      !saasLaunchSamplePacket.includes("Sample direction: Product Demo Hook") ||
-      !saasLaunchSamplePacket.includes("assets/audio/product-demo-hook.wav") ||
+      !saasLaunchSamplePacket.includes("Sample direction: SaaS Launch Hero Hook") ||
+      !saasLaunchSamplePacket.includes("assets/audio/saas-launch-hero-hook.wav") ||
       !saasLaunchSamplePacket.includes("Delivery: one selected 6-15 second SaaS launch video music hook sketch") ||
       !saasLaunchSamplePacket.includes("Payment timing: after written brief acceptance only")
     ) {
@@ -1672,7 +1675,7 @@ try {
     if (saasLaunchSampleCopyTarget !== "#saas-launch-sample-order-packet") {
       throw new Error(`AI SaaS launch video music sample packet copy target missing in ${viewport.name}`);
     }
-    const saasLaunchSampleOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
+    const saasLaunchSampleOrderHref = await page.locator("a[href*='SaaS%20Launch%20Hero%20Hook%20reference']").getAttribute("href");
     if (!saasLaunchSampleOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")) {
       throw new Error(`AI SaaS launch video music sample-based order link missing SaaS launch order template in ${viewport.name}`);
     }

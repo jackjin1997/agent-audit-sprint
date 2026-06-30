@@ -32,6 +32,7 @@ body:
       label: Reference sample or direction
       description: Pick the closest public reference or write details in the positioning field below.
       options:
+        - SaaS Launch Hero Hook sample
         - Product Demo Hook sample
         - Coffee Shop 30s Hook sample
         - Business Show Intro sample

@@ -40,6 +40,14 @@ const samples = [
     melody: [0, 4, 7, 11, 9, 7, 4, 2, 0, 7, 9, 12],
     accent: 0.31,
   },
+  {
+    file: "saas-launch-hero-hook.wav",
+    bpm: 128,
+    root: 61,
+    seconds: 8,
+    melody: [0, 5, 7, 12, 10, 7, 5, 2, 0, 7, 12, 14, 12, 10, 7, 5],
+    accent: 0.29,
+  },
 ];
 
 function midiToHz(note) {

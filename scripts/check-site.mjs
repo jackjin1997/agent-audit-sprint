@@ -785,6 +785,13 @@ if (!jingleOrderOutput.includes("Bean There Coffee") || !jingleOrderOutput.inclu
 if (!jingleOrderOutput.includes("Reference sample or direction: **Coffee Shop 30s Hook sample**")) {
   throw new Error("AI jingle order dry-run output is missing the selected public reference sample");
 }
+if (
+  !jingleOrderOutput.includes("Selected sample fast lane") ||
+  !jingleOrderOutput.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+  !jingleOrderOutput.includes("ai-music-samples.html")
+) {
+  throw new Error("AI jingle order dry-run output is missing the public sample fast lane");
+}
 if (!jingleOrderOutput.includes("Please do not send payment until the brief/package is accepted in writing")) {
   throw new Error("AI jingle order dry-run output is missing payment guardrail");
 }
@@ -799,6 +806,61 @@ if (
 }
 if (!jingleOrderOutput.includes("AI-generated music can have copyright-registration limits")) {
   throw new Error("AI jingle order dry-run output is missing rights guardrail");
+}
+
+const genericSaasReferenceOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $29 Founding Hook Sketch",
+      "",
+      "### Brand, podcast, channel, or product name",
+      "",
+      "LaunchPad Lite",
+      "",
+      "### Website or social link",
+      "",
+      "https://example.com",
+      "",
+      "### Primary use",
+      "",
+      "15 second social ad",
+      "",
+      "### Reference sample or direction",
+      "",
+      "SaaS Launch Hero Hook sample",
+      "",
+      "### Brand brief",
+      "",
+      "SaaS launch demo hook for a Product Hunt teaser.",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "48h target",
+      "",
+      "### Payment path",
+      "",
+      "Solana SPL USDC after brief acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (
+  !genericSaasReferenceOrderOutput.includes("USD $29 SaaS Launch Video Music Hook Sketch") ||
+  !genericSaasReferenceOrderOutput.includes("Reference sample or direction: **SaaS Launch Hero Hook sample**") ||
+  !genericSaasReferenceOrderOutput.includes("assets/audio/saas-launch-hero-hook.wav") ||
+  !genericSaasReferenceOrderOutput.includes("ai-saas-launch-video-music.html") ||
+  !genericSaasReferenceOrderOutput.includes("ai-saas-launch-video-music-order.yml")
+) {
+  throw new Error("Generic AI jingle order dry-run did not route SaaS Launch Hero sample to the SaaS fast lane");
 }
 
 const ugcAgencyOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {

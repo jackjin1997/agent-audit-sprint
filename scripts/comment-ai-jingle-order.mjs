@@ -5,6 +5,10 @@ const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-
 const UGC_AGENCY_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html";
 const PRODUCT_VIDEO_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html";
 const SAAS_LAUNCH_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html";
+const SAMPLE_HUB_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html";
+const AI_JINGLE_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml";
+const PRODUCT_VIDEO_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-product-video-music-order.yml";
+const SAAS_LAUNCH_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-saas-launch-video-music-order.yml";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -112,8 +116,76 @@ function packageDetails(rawChoice = "") {
   };
 }
 
+function referenceSampleDetails(rawSample = "") {
+  const sample = rawSample.trim();
+  if (/SaaS Launch Hero Hook/i.test(sample)) {
+    return {
+      name: "SaaS Launch Hero Hook",
+      sampleUrl: "https://jackjin1997.github.io/agent-audit-sprint/assets/audio/saas-launch-hero-hook.wav",
+      serviceUrl: SAAS_LAUNCH_SERVICE_URL,
+      orderUrl: SAAS_LAUNCH_ORDER_URL,
+    };
+  }
+  if (/Product Demo Hook/i.test(sample)) {
+    return {
+      name: "Product Demo Hook",
+      sampleUrl: "https://jackjin1997.github.io/agent-audit-sprint/assets/audio/product-demo-hook.wav",
+      serviceUrl: PRODUCT_VIDEO_SERVICE_URL,
+      orderUrl: PRODUCT_VIDEO_ORDER_URL,
+    };
+  }
+  if (/Coffee Shop 30s Hook/i.test(sample)) {
+    return {
+      name: "Coffee Shop 30s Hook",
+      sampleUrl: "https://jackjin1997.github.io/agent-audit-sprint/assets/audio/coffee-shop-30s-hook.wav",
+      serviceUrl: SERVICE_URL,
+      orderUrl: AI_JINGLE_ORDER_URL,
+    };
+  }
+  if (/Business Show Intro/i.test(sample)) {
+    return {
+      name: "Business Show Intro",
+      sampleUrl: "https://jackjin1997.github.io/agent-audit-sprint/assets/audio/business-show-intro.wav",
+      serviceUrl: SERVICE_URL,
+      orderUrl: AI_JINGLE_ORDER_URL,
+    };
+  }
+  if (/Radio ID And Drop/i.test(sample)) {
+    return {
+      name: "Radio ID And Drop",
+      sampleUrl: "https://jackjin1997.github.io/agent-audit-sprint/assets/audio/radio-id-drop.wav",
+      serviceUrl: SERVICE_URL,
+      orderUrl: AI_JINGLE_ORDER_URL,
+    };
+  }
+  return null;
+}
+
+function packageDetailsForReferenceSample(packageInfo, referenceSample = "") {
+  if (/SaaS Launch Hero Hook/i.test(referenceSample)) {
+    if (packageInfo.name === "USD $29 Founding Hook Sketch") {
+      return packageDetails("USD $29 SaaS Launch Video Music Hook Sketch");
+    }
+    if (packageInfo.name === "USD $149 Ad Music Pack") {
+      return packageDetails("USD $149 SaaS Launch Music Pack");
+    }
+  }
+  if (/Product Demo Hook/i.test(referenceSample)) {
+    if (packageInfo.name === "USD $29 Founding Hook Sketch") {
+      return packageDetails("USD $29 Product Video Music Hook Sketch");
+    }
+    if (packageInfo.name === "USD $149 Ad Music Pack") {
+      return packageDetails("USD $149 Ecommerce Ad Music Pack");
+    }
+  }
+  return packageInfo;
+}
+
 function renderJingleOrderComment(issueBody = "") {
-  const packageInfo = packageDetails(extractField(issueBody, "Requested package"));
+  const requestedPackage = extractField(issueBody, "Requested package");
+  const referenceSample = extractField(issueBody, "Reference sample or direction");
+  const sampleDetails = referenceSampleDetails(referenceSample);
+  const packageInfo = packageDetailsForReferenceSample(packageDetails(requestedPackage), referenceSample);
   const brand =
     extractField(issueBody, "Brand, podcast, channel, or product name") ||
     extractField(issueBody, "Agency or client project") ||
@@ -129,7 +201,6 @@ function renderJingleOrderComment(issueBody = "") {
   const usage = extractField(issueBody, "Primary use") || "short branded audio";
   const channel = extractField(issueBody, "Publishing channel");
   const rightsSource = extractField(issueBody, "Source material rights");
-  const referenceSample = extractField(issueBody, "Reference sample or direction");
   const targetViewer = extractField(issueBody, "Target viewer and offer");
   const productPositioning = extractField(issueBody, "Product positioning and target user");
   const productOffer = extractField(issueBody, "Product offer and target buyer");
@@ -141,7 +212,7 @@ function renderJingleOrderComment(issueBody = "") {
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
-  const agencyDetails = [
+  const referenceDetails = [
     referenceSample ? `- Reference sample or direction: **${referenceSample}**` : "",
     channel ? `- Publishing channel: **${channel}**` : "",
     rightsSource ? `- Source material rights: **${rightsSource}**` : "",
@@ -165,11 +236,19 @@ Thanks for requesting **${packageInfo.name}** for **${brand}**.
 - Requested timing: **${timing}**
 - Payment path: **${paymentPath}**
 - Expected deliverable: ${packageInfo.deliverable}
-${agencyDetails.length ? `\nAgency/client approval details:\n\n${agencyDetails.join("\n")}\n` : ""}
+${referenceDetails.length ? `\nReference and production details:\n\n${referenceDetails.join("\n")}\n` : ""}
 
 Brief summary:
 
 > ${brief.replace(/\n+/g, "\n> ")}
+${sampleDetails ? `
+### Selected sample fast lane
+
+- Sample hub: ${SAMPLE_HUB_URL}
+- Public sample: ${sampleDetails.sampleUrl}
+- Best-fit service page: ${sampleDetails.serviceUrl}
+- Best-fit tracked order form: ${sampleDetails.orderUrl}
+` : ""}
 
 ### Next step
 

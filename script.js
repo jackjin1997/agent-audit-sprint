@@ -349,6 +349,102 @@ document.querySelectorAll("[data-mailto-target]").forEach((link) => {
   }
 });
 
+const sampleBriefForm = document.querySelector("[data-sample-brief-form]");
+
+function selectedSampleOption(form) {
+  return form.querySelector("[name='sample']")?.selectedOptions?.[0] || null;
+}
+
+function selectedSamplePackage(form, option) {
+  const selectedPackage = clean(new FormData(form).get("package"), "Use sample default package");
+  return selectedPackage === "Use sample default package"
+    ? option?.dataset.package || "USD $29 Founding Hook Sketch"
+    : selectedPackage;
+}
+
+function buildSampleBrief(form) {
+  const data = new FormData(form);
+  const option = selectedSampleOption(form);
+  const sample = clean(option?.value, "SaaS Launch Hero Hook");
+  const selectedPackage = selectedSamplePackage(form, option);
+  const brand = clean(data.get("brand"), "Brand, show, channel, or product TBD");
+  const projectUrl = clean(data.get("projectUrl"), "Website, product page, or social link TBD");
+  const channel = clean(data.get("channel"), "Publishing channel TBD");
+  const rights = clean(data.get("rights"), "Source material rights TBD");
+  const audience = clean(data.get("audience"), "Audience and offer TBD");
+  const cta = clean(data.get("cta"), "Required CTA or product claim TBD");
+  const deadline = clean(data.get("deadline"), "Deadline TBD");
+  const sampleUrl = option?.dataset.url || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html";
+  const primaryUse = option?.dataset.primaryUse || "short paid music hook";
+  const delivery = option?.dataset.delivery || "one selected short AI-assisted music hook sketch";
+  const service = option?.dataset.service || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html";
+
+  return [
+    "AI music sample brief",
+    "",
+    `Package: ${selectedPackage}`,
+    `Reference sample: ${sample}`,
+    `Sample URL: ${sampleUrl}`,
+    `Best-fit service page: ${service}`,
+    `Brand, show, channel, or product name: ${brand}`,
+    `Website, product page, or social link: ${projectUrl}`,
+    `Primary use: ${primaryUse}`,
+    `Publishing channel: ${channel}`,
+    `Source material rights: ${rights}`,
+    `Audience and offer: ${audience}`,
+    `Required CTA or product claim: ${cta}`,
+    `Deadline: ${deadline}`,
+    `Delivery: ${delivery}, production prompt, rough cut note, source/tool note, commercial-use memo, and usage guardrails`,
+    "Payment timing: after written brief acceptance only",
+    "Avoid: known-artist soundalikes, celebrity/living voice clones, copyrighted songs, and third-party lyrics without rights",
+  ].join("\n");
+}
+
+function updateSampleBrief() {
+  if (!sampleBriefForm) return;
+  const option = selectedSampleOption(sampleBriefForm);
+  const packet = buildSampleBrief(sampleBriefForm);
+  const selectedPackage = selectedSamplePackage(sampleBriefForm, option);
+  const template = option?.dataset.template || "ai-jingle-order.yml";
+  const labels = option?.dataset.labels || "ai-jingle-order";
+  const data = new FormData(sampleBriefForm);
+  const brand = clean(data.get("brand"), "AI music sample");
+  const sample = clean(option?.value, "sample reference");
+  const title = `AI music sample order: ${compactTitle(brand)} - ${sample}`;
+  const price = sampleBriefForm.querySelector("[data-sample-brief-price]");
+  const templateSummary = sampleBriefForm.querySelector("[data-sample-brief-template]");
+  const output = sampleBriefForm.querySelector("[data-sample-brief-output]");
+  const emailLink = sampleBriefForm.querySelector("[data-sample-email-brief]");
+  const openLink = sampleBriefForm.querySelector("[data-sample-open-order]");
+  price.textContent = selectedPackage;
+  templateSummary.textContent = template;
+  output.value = packet;
+  emailLink.href = mailtoHref(`AI music sample brief: ${sample}`, packet);
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(template)}&labels=${encodeURIComponent(labels)}&title=${encodeURIComponent(title)}&body=${encodeURIComponent(packet)}`;
+}
+
+if (sampleBriefForm) {
+  updateSampleBrief();
+  sampleBriefForm.addEventListener("input", updateSampleBrief);
+  sampleBriefForm.addEventListener("change", updateSampleBrief);
+  sampleBriefForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateSampleBrief();
+    sampleBriefForm.querySelector("[data-sample-brief-output]").focus();
+  });
+  sampleBriefForm.querySelector("[data-copy-sample-brief]").addEventListener("click", async (event) => {
+    updateSampleBrief();
+    const output = sampleBriefForm.querySelector("[data-sample-brief-output]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
+  });
+}
+
 function compactTitle(value, fallback = "brand") {
   return clean(value, fallback).replace(/\s+/g, " ").slice(0, 80);
 }

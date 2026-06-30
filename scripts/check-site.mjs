@@ -1648,6 +1648,7 @@ try {
     if (
       !aiMusicSamplesText.includes("USD $29 hook sketch") ||
       !aiMusicSamplesText.includes("SaaS Launch Hero Hook Packet") ||
+      !aiMusicSamplesText.includes("Turn one sample into a filled order packet") ||
       !aiMusicSamplesText.includes("Product Demo Hook Packet") ||
       !aiMusicSamplesText.includes("Coffee Shop Hook Packet") ||
       !aiMusicSamplesText.includes("Business Show Intro Packet") ||
@@ -1675,6 +1676,52 @@ try {
       !aiMusicSamplesAudioSources.includes("assets/audio/radio-id-drop.wav")
     ) {
       throw new Error(`AI music samples page audio sources missing in ${viewport.name}`);
+    }
+    const sampleBuilderDefaultPacket = await page.locator("[data-sample-brief-output]").inputValue();
+    if (
+      !sampleBuilderDefaultPacket.includes("Package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !sampleBuilderDefaultPacket.includes("Reference sample: SaaS Launch Hero Hook") ||
+      !sampleBuilderDefaultPacket.includes("Best-fit service page: https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html") ||
+      !sampleBuilderDefaultPacket.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music samples sample brief builder default packet missing SaaS route or payment guardrail in ${viewport.name}`);
+    }
+    const sampleBuilderDefaultHref = await page.locator("[data-sample-open-order]").getAttribute("href");
+    if (
+      !sampleBuilderDefaultHref?.includes("template=ai-saas-launch-video-music-order.yml") ||
+      !sampleBuilderDefaultHref.includes("labels=ai-jingle-order%2Cai-saas-launch-video-music-order")
+    ) {
+      throw new Error(`AI music samples sample brief builder default order link missing SaaS template or labels in ${viewport.name}`);
+    }
+    await page.locator("[data-sample-brief-form] [name='sample']").selectOption("Product Demo Hook");
+    await page.locator("[data-sample-brief-form] [name='brand']").fill("Demo Bottle Launch");
+    await page.locator("[data-sample-brief-form] [name='channel']").fill("TikTok Shop ad and Shopify product page");
+    await page.locator("[data-sample-brief-form]").evaluate((form) => form.requestSubmit());
+    const sampleBuilderProductPacket = await page.locator("[data-sample-brief-output]").inputValue();
+    if (
+      !sampleBuilderProductPacket.includes("Package: USD $29 Product Video Music Hook Sketch") ||
+      !sampleBuilderProductPacket.includes("Reference sample: Product Demo Hook") ||
+      !sampleBuilderProductPacket.includes("Demo Bottle Launch") ||
+      !sampleBuilderProductPacket.includes("TikTok Shop ad and Shopify product page") ||
+      !sampleBuilderProductPacket.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music samples sample brief builder product packet missing route, buyer fields, or payment guardrail in ${viewport.name}`);
+    }
+    const sampleBuilderProductHref = await page.locator("[data-sample-open-order]").getAttribute("href");
+    if (
+      !sampleBuilderProductHref?.includes("template=ai-product-video-music-order.yml") ||
+      !sampleBuilderProductHref.includes("labels=ai-jingle-order%2Cai-product-video-music-order") ||
+      !decodeURIComponent(sampleBuilderProductHref).includes("AI music sample order: Demo Bottle Launch - Product Demo Hook")
+    ) {
+      throw new Error(`AI music samples sample brief builder product order link missing product template, labels, or title in ${viewport.name}`);
+    }
+    const sampleBuilderProductEmail = await page.locator("[data-sample-email-brief]").getAttribute("href");
+    if (
+      !sampleBuilderProductEmail?.startsWith("mailto:jackjin1997@gmail.com") ||
+      !decodeURIComponent(sampleBuilderProductEmail).includes("Reference sample: Product Demo Hook") ||
+      !decodeURIComponent(sampleBuilderProductEmail).includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music samples sample brief builder email link missing product sample or payment guardrail in ${viewport.name}`);
     }
     const aiMusicSamplePacketIds = [
       "#sample-packet-saas-launch",
@@ -2821,6 +2868,10 @@ try {
       !openRouterText.includes("USD $99 Quick AI API Cost Audit") ||
       !openRouterText.includes("USD $299 AI Agent Cost Leak Review") ||
       !openRouterText.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+      !openRouterText.includes("Kimi K2.7 Code snapshot") ||
+      !openRouterText.includes("GLM 5.2 snapshot") ||
+      !openRouterText.includes("Free Models Router snapshot") ||
+      !openRouterText.includes("Claude Opus 4.8 snapshot") ||
       !openRouterText.includes("cache-read share") ||
       !openRouterText.includes("tool-call fanout") ||
       !openRouterText.includes("Payment only after written scope acceptance")

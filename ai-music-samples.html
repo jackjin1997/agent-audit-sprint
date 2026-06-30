@@ -141,6 +141,130 @@
         </div>
       </section>
 
+      <section class="band request" id="sample-builder" aria-labelledby="sample-builder-title">
+        <div class="section-head">
+          <p class="eyebrow">Fast brief builder</p>
+          <h2 id="sample-builder-title">Turn one sample into a filled order packet</h2>
+          <p>
+            Pick the closest WAV reference, add the buyer fields, then copy, email, or open the tracked order path. Payment still waits for written brief acceptance.
+          </p>
+        </div>
+        <form class="request-tool music-brief" data-sample-brief-form>
+          <div class="field-grid">
+            <label>
+              <span>Reference sample</span>
+              <select name="sample">
+                <option
+                  value="SaaS Launch Hero Hook"
+                  data-package="USD $29 SaaS Launch Video Music Hook Sketch"
+                  data-template="ai-saas-launch-video-music-order.yml"
+                  data-labels="ai-jingle-order,ai-saas-launch-video-music-order"
+                  data-url="https://jackjin1997.github.io/agent-audit-sprint/assets/audio/saas-launch-hero-hook.wav"
+                  data-primary-use="Product Hunt launch video / SaaS demo walkthrough / landing-page hero video / founder intro reel"
+                  data-delivery="one selected 6-15 second SaaS launch video music hook sketch"
+                  data-service="https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html"
+                >SaaS Launch Hero Hook</option>
+                <option
+                  value="Product Demo Hook"
+                  data-package="USD $29 Product Video Music Hook Sketch"
+                  data-template="ai-product-video-music-order.yml"
+                  data-labels="ai-jingle-order,ai-product-video-music-order"
+                  data-url="https://jackjin1997.github.io/agent-audit-sprint/assets/audio/product-demo-hook.wav"
+                  data-primary-use="Shopify product page video / TikTok Shop ad opener / Meta ad creative / Amazon listing video"
+                  data-delivery="one selected 6-15 second product video music hook sketch"
+                  data-service="https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html"
+                >Product Demo Hook</option>
+                <option
+                  value="Coffee Shop 30s Hook"
+                  data-package="USD $29 Founding Hook Sketch"
+                  data-template="ai-jingle-order.yml"
+                  data-labels="ai-jingle-order"
+                  data-url="https://jackjin1997.github.io/agent-audit-sprint/assets/audio/coffee-shop-30s-hook.wav"
+                  data-primary-use="local ad / paid social promo / short-form opener / launch offer"
+                  data-delivery="one selected 8-12 second local ad hook sketch"
+                  data-service="https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html"
+                >Coffee Shop 30s Hook</option>
+                <option
+                  value="Business Show Intro"
+                  data-package="USD $29 Founding Hook Sketch"
+                  data-template="ai-jingle-order.yml"
+                  data-labels="ai-jingle-order"
+                  data-url="https://jackjin1997.github.io/agent-audit-sprint/assets/audio/business-show-intro.wav"
+                  data-primary-use="podcast intro / founder video / sponsor segment / business walkthrough"
+                  data-delivery="one selected 8-12 second show intro hook sketch"
+                  data-service="https://jackjin1997.github.io/agent-audit-sprint/ai-podcast-intro-generator.html"
+                >Business Show Intro</option>
+                <option
+                  value="Radio ID And Drop"
+                  data-package="USD $29 Founding Hook Sketch"
+                  data-template="ai-jingle-order.yml"
+                  data-labels="ai-jingle-order"
+                  data-url="https://jackjin1997.github.io/agent-audit-sprint/assets/audio/radio-id-drop.wav"
+                  data-primary-use="radio ID / creator tag / event sting / end-card CTA / sponsor bumper"
+                  data-delivery="one selected 5-10 second identity hook sketch"
+                  data-service="https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html"
+                >Radio ID And Drop</option>
+              </select>
+            </label>
+            <label>
+              <span>Package</span>
+              <select name="package">
+                <option>Use sample default package</option>
+                <option>USD $29 Founding Hook Sketch</option>
+                <option>USD $29 SaaS Launch Video Music Hook Sketch</option>
+                <option>USD $29 Product Video Music Hook Sketch</option>
+                <option>USD $149 Ad Music Pack</option>
+              </select>
+            </label>
+            <label>
+              <span>Brand, show, channel, or product</span>
+              <input name="brand" value="LaunchPad AI Demo" autocomplete="organization">
+            </label>
+            <label>
+              <span>Website, product page, or social link</span>
+              <input name="projectUrl" value="https://example.com/demo" autocomplete="url">
+            </label>
+            <label>
+              <span>Publishing channel</span>
+              <input name="channel" value="Product Hunt launch video and landing-page hero">
+            </label>
+            <label>
+              <span>Source material rights</span>
+              <select name="rights">
+                <option>original prompt only</option>
+                <option>buyer-owned tagline</option>
+                <option>cleared demo video or voiceover reference</option>
+                <option>needs rights review before payment</option>
+              </select>
+            </label>
+            <label>
+              <span>Audience and offer</span>
+              <input name="audience" value="Indie founders evaluating an AI workflow demo">
+            </label>
+            <label>
+              <span>Required CTA or product claim</span>
+              <input name="cta" value="Launch the demo, understand the workflow, ship with confidence.">
+            </label>
+            <label>
+              <span>Deadline</span>
+              <input name="deadline" value="48h target after written brief acceptance">
+            </label>
+          </div>
+          <div class="service-summary">
+            <div><span>Selected package</span><strong data-sample-brief-price>USD $29 SaaS Launch Video Music Hook Sketch</strong></div>
+            <div><span>Tracked path</span><strong data-sample-brief-template>ai-saas-launch-video-music-order.yml</strong></div>
+            <div><span>Guardrail</span><strong>Payment after written brief acceptance only</strong></div>
+          </div>
+          <div class="request-actions">
+            <button class="button primary" type="submit">Generate sample brief</button>
+            <button class="button secondary dark" type="button" data-copy-sample-brief>Copy brief</button>
+            <a class="button secondary dark" data-sample-email-brief href="mailto:jackjin1997@gmail.com?subject=AI%20music%20sample%20brief">Email brief</a>
+            <a class="button secondary dark" data-sample-open-order href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-saas-launch-video-music-order.yml">Open tracked order</a>
+          </div>
+          <textarea class="brief-output" data-sample-brief-output aria-label="Generated AI music sample brief"></textarea>
+        </form>
+      </section>
+
       <section class="band request" id="packets" aria-labelledby="packets-title">
         <div class="section-head">
           <p class="eyebrow">Sample-to-order packets</p>

@@ -1621,6 +1621,154 @@ try {
     const aiMusicSamplesOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicSamplesOverflow) throw new Error(`AI music samples horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(aiSaasLaunchVideoMusic, { waitUntil: "networkidle" });
+    const saasLaunchTitle = await page.locator("h1").innerText();
+    if (!saasLaunchTitle.includes("AI SaaS Launch Video Music Generator")) {
+      throw new Error(`Unexpected AI SaaS launch video music h1 in ${viewport.name}: ${saasLaunchTitle}`);
+    }
+    const saasLaunchText = await page.locator("body").innerText();
+    if (
+      !saasLaunchText.includes("USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !saasLaunchText.includes("Product Hunt launch videos") ||
+      !saasLaunchText.includes("SaaS demo walkthroughs") ||
+      !saasLaunchText.includes("Generate launch packet") ||
+      !saasLaunchText.includes("Email launch brief") ||
+      !saasLaunchText.includes("Open SaaS launch order") ||
+      !saasLaunchText.includes("Source material rights") ||
+      !saasLaunchText.includes("commercial-use memo") ||
+      !saasLaunchText.includes("Payment is requested only after the written brief and package are accepted") ||
+      !saasLaunchText.includes("source/tool note") ||
+      !saasLaunchText.includes("AI music storefront")
+    ) {
+      throw new Error(`AI SaaS launch video music page missing package, launch fit, payment, rights, or CTA copy in ${viewport.name}`);
+    }
+    const saasLaunchHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!saasLaunchHeroLoaded) throw new Error(`AI SaaS launch video music hero image failed to load in ${viewport.name}`);
+    const saasLaunchAudioSources = await page.locator(".sample-card audio").evaluateAll((audioElements) =>
+      audioElements.map((audio) => audio.getAttribute("src") || "")
+    );
+    if (
+      saasLaunchAudioSources.length !== 4 ||
+      !saasLaunchAudioSources.includes("assets/audio/product-demo-hook.wav") ||
+      !saasLaunchAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
+      !saasLaunchAudioSources.includes("assets/audio/business-show-intro.wav") ||
+      !saasLaunchAudioSources.includes("assets/audio/radio-id-drop.wav")
+    ) {
+      throw new Error(`AI SaaS launch video music sample audio sources missing in ${viewport.name}`);
+    }
+    const saasLaunchSamplePacket = await page.locator("#saas-launch-sample-order-packet").innerText();
+    if (
+      !saasLaunchSamplePacket.includes("Package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !saasLaunchSamplePacket.includes("Sample direction: Product Demo Hook") ||
+      !saasLaunchSamplePacket.includes("assets/audio/product-demo-hook.wav") ||
+      !saasLaunchSamplePacket.includes("Delivery: one selected 6-15 second SaaS launch video music hook sketch") ||
+      !saasLaunchSamplePacket.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI SaaS launch video music sample-to-order packet missing sample, delivery, or payment copy in ${viewport.name}`);
+    }
+    const saasLaunchSampleCopyTarget = await page
+      .locator("[data-copy-target='#saas-launch-sample-order-packet']")
+      .getAttribute("data-copy-target");
+    if (saasLaunchSampleCopyTarget !== "#saas-launch-sample-order-packet") {
+      throw new Error(`AI SaaS launch video music sample packet copy target missing in ${viewport.name}`);
+    }
+    const saasLaunchSampleOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
+    if (!saasLaunchSampleOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")) {
+      throw new Error(`AI SaaS launch video music sample-based order link missing SaaS launch order template in ${viewport.name}`);
+    }
+    await page.locator("[data-jingle-form] [name='brand']").fill("LaunchPad AI Demo");
+    await page.locator("[data-jingle-form] [name='audience']").fill(
+      "Indie founders launching an AI workflow product who need to understand the value in the first 10 seconds."
+    );
+    await page.locator("[data-jingle-form] [name='tagline']").fill(
+      "Launch the demo, understand the workflow, ship with confidence."
+    );
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const saasLaunchGeneratedPacket = await page.locator("[data-jingle-output]").inputValue();
+    if (
+      !saasLaunchGeneratedPacket.includes("## AI SaaS launch video music brief") ||
+      !saasLaunchGeneratedPacket.includes("LaunchPad AI Demo") ||
+      !saasLaunchGeneratedPacket.includes("USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !saasLaunchGeneratedPacket.includes("Primary use: Product Hunt launch video") ||
+      !saasLaunchGeneratedPacket.includes("Publishing channel: Product Hunt launch page") ||
+      !saasLaunchGeneratedPacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !saasLaunchGeneratedPacket.includes("## Production prompt") ||
+      !saasLaunchGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
+      !saasLaunchGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
+    ) {
+      throw new Error(`AI SaaS launch video music dynamic packet missing project, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
+    }
+    const saasLaunchGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (!saasLaunchGeneratedOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")) {
+      throw new Error(`AI SaaS launch video music dynamic order link missing SaaS launch order template in ${viewport.name}`);
+    }
+    if (!saasLaunchGeneratedOrderHref.includes("labels=ai-jingle-order%2Cai-saas-launch-video-music-order")) {
+      throw new Error(`AI SaaS launch video music dynamic order link missing SaaS launch order labels in ${viewport.name}`);
+    }
+    if (!decodeURIComponent(saasLaunchGeneratedOrderHref).includes("AI SaaS launch video music order: LaunchPad AI Demo")) {
+      throw new Error(`AI SaaS launch video music dynamic order link missing project title in ${viewport.name}`);
+    }
+    const saasLaunchAcceptancePacket = await page.locator("[data-jingle-acceptance-output]").inputValue();
+    if (
+      !saasLaunchAcceptancePacket.includes("## Acceptance and payment handoff") ||
+      !saasLaunchAcceptancePacket.includes("Amount: USD $29 equivalent") ||
+      !saasLaunchAcceptancePacket.includes("I accept the USD $29 SaaS Launch Video Music Hook Sketch for LaunchPad AI Demo") ||
+      !saasLaunchAcceptancePacket.includes("Publishing channel: Product Hunt launch page") ||
+      !saasLaunchAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
+      !saasLaunchAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
+      !saasLaunchAcceptancePacket.includes("Payment proof service field: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !saasLaunchAcceptancePacket.includes("payment-confirmation.yml")
+    ) {
+      throw new Error(`AI SaaS launch video music acceptance packet missing amount, acceptance, payment, or guardrail copy in ${viewport.name}`);
+    }
+    const saasLaunchCommercialMemo = await page.locator("[data-jingle-commercial-output]").inputValue();
+    if (
+      !saasLaunchCommercialMemo.includes("## Commercial-use music memo") ||
+      !saasLaunchCommercialMemo.includes("Project: LaunchPad AI Demo") ||
+      !saasLaunchCommercialMemo.includes("This is an order memo and usage record, not legal clearance") ||
+      !saasLaunchCommercialMemo.includes("Publishing channel: Product Hunt launch page") ||
+      !saasLaunchCommercialMemo.includes("Source tool and plan/tier note recorded") ||
+      !saasLaunchCommercialMemo.includes("Paid delivery starts only after the written brief")
+    ) {
+      throw new Error(`AI SaaS launch video music usage memo missing project, channel, source note, legal, or start-rule copy in ${viewport.name}`);
+    }
+    const saasLaunchSketchHref = await page.locator("[data-download-jingle-sketch]").getAttribute("href");
+    if (!saasLaunchSketchHref?.startsWith("blob:")) {
+      throw new Error(`AI SaaS launch video music WAV sketch link was not generated in ${viewport.name}`);
+    }
+    const saasLaunchBrief = await page.locator("textarea[aria-label='AI SaaS launch video music brief template']").inputValue();
+    if (
+      !saasLaunchBrief.includes("Package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !saasLaunchBrief.includes("Primary use: Product Hunt launch video") ||
+      !saasLaunchBrief.includes("Publishing channel: Product Hunt launch page") ||
+      !saasLaunchBrief.includes("Source material rights: original prompt only") ||
+      !saasLaunchBrief.includes("Delivery: one selected 6-15 second SaaS launch video music hook sketch") ||
+      !saasLaunchBrief.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI SaaS launch video music brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+    }
+    const saasLaunchOrderLinks = await page.locator("a[href*='template=ai-saas-launch-video-music-order.yml']").count();
+    if (saasLaunchOrderLinks < 2) {
+      throw new Error(`AI SaaS launch video music page missing dedicated SaaS launch order links in ${viewport.name}`);
+    }
+    const saasLaunchPaymentProofLinks = await page.locator("a[href*='template=payment-confirmation.yml']").count();
+    if (saasLaunchPaymentProofLinks < 2) {
+      throw new Error(`AI SaaS launch video music page missing payment proof links in ${viewport.name}`);
+    }
+    const saasLaunchEmailLinks = await page.locator("a[href^='mailto:jackjin1997@gmail.com']").evaluateAll((links) =>
+      links.map((link) => decodeURIComponent(link.getAttribute("href") || ""))
+    );
+    if (
+      saasLaunchEmailLinks.length < 4 ||
+      !saasLaunchEmailLinks.every((href) => href.includes("AI SaaS launch video music brief")) ||
+      !saasLaunchEmailLinks.every((href) => href.includes("USD $29 SaaS Launch Video Music Hook Sketch")) ||
+      !saasLaunchEmailLinks.every((href) => href.includes("Payment timing: after written brief acceptance only"))
+    ) {
+      throw new Error(`AI SaaS launch video music page missing email brief link or payment guardrail in ${viewport.name}`);
+    }
+    const saasLaunchOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (saasLaunchOverflow) throw new Error(`AI SaaS launch video music horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(aiProductVideoMusic, { waitUntil: "networkidle" });
     const productVideoTitle = await page.locator("h1").innerText();
     if (!productVideoTitle.includes("AI Product Video Music Generator")) {

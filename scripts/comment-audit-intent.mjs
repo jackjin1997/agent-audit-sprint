@@ -5,6 +5,7 @@ const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-securi
 const AGENT_AUTH_URL = "https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html";
 const MCP_SSRF_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html";
 const AGENT_COST_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html";
+const COST_SPIKE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
@@ -36,6 +37,15 @@ function scannerLinkFor(project) {
 
 function packageDetails(rawChoice = "") {
   const choice = rawChoice.trim();
+  if (/cost spike|emergency/i.test(choice)) {
+    return {
+      name: "USD $1,000 AI Cost Spike Emergency Sprint",
+      price: "USD $1,000",
+      target: "24h after scope and payment confirmation",
+      deliverable:
+        "emergency spend-driver map and containment plan for one runaway AI agent, RAG workflow, coding-agent loop, support bot, or model API bill spike",
+    };
+  }
   if (choice.includes("$99") || /quick scan/i.test(choice)) {
     return {
       name: "USD $99 Quick Scan Report",
@@ -102,13 +112,20 @@ function renderIntentComment(issueBody = "") {
   const fetchBoundary = extractField(issueBody, "URL fetch boundary");
   const credentialContext = extractField(issueBody, "Credential or network context");
   const costBoundary = extractField(issueBody, "Cost boundary");
+  const costSpike = extractField(issueBody, "Cost spike type");
   const usageEvidence = extractField(issueBody, "Sanitized usage evidence");
+  const sanitizedCostEvidence = extractField(issueBody, "Sanitized cost evidence");
   const highestRisk = extractField(issueBody, "Highest risk or decision");
   const highestCostQuestion = extractField(issueBody, "Highest cost question");
+  const emergencyDecision = extractField(issueBody, "Emergency decision");
+  const deadline = extractField(issueBody, "Deadline or billing risk window");
   const authContext = authFlow || authBoundary || packageInfo.name.includes("Agent Auth");
   const ssrfContext = fetchBoundary || credentialContext;
-  const costContext = costBoundary || usageEvidence || packageInfo.name.includes("Cost Leak");
-  const serviceDetailsUrl = packageInfo.name.includes("AI Agent Cost Leak") || costContext
+  const costSpikeContext = costSpike || sanitizedCostEvidence || packageInfo.name.includes("Cost Spike");
+  const costContext = costBoundary || costSpike || usageEvidence || sanitizedCostEvidence || packageInfo.name.includes("Cost Leak");
+  const serviceDetailsUrl = costSpikeContext
+    ? COST_SPIKE_URL
+    : packageInfo.name.includes("AI Agent Cost Leak") || costContext
     ? AGENT_COST_URL
     : packageInfo.name.includes("MCP SSRF") || ssrfContext
     ? MCP_SSRF_URL
@@ -131,9 +148,10 @@ Highest risk or decision: **${highestRisk || "not specified"}**
     : "";
   const costDetails = costContext
     ? `
-Cost boundary: **${costBoundary || "not specified"}**
-Sanitized usage evidence: **${usageEvidence || "not specified"}**
-Highest cost question: **${highestCostQuestion || highestRisk || "not specified"}**
+Cost boundary: **${costBoundary || costSpike || "not specified"}**
+Sanitized usage evidence: **${usageEvidence || sanitizedCostEvidence || "not specified"}**
+Highest cost question: **${highestCostQuestion || emergencyDecision || highestRisk || "not specified"}**
+Deadline or billing risk window: **${deadline || "not specified"}**
 `
     : "";
 

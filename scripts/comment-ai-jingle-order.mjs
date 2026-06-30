@@ -4,6 +4,7 @@ const MARKER = "<!-- ai-jingle-order-response -->";
 const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html";
 const UGC_AGENCY_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html";
 const PRODUCT_VIDEO_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html";
+const SAAS_LAUNCH_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -21,6 +22,15 @@ function extractField(body = "", label) {
 
 function packageDetails(rawChoice = "") {
   const choice = rawChoice.trim();
+  if (/SaaS Launch Video Music Hook/i.test(choice)) {
+    return {
+      name: "USD $29 SaaS Launch Video Music Hook Sketch",
+      price: "USD $29",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "one selected 6-15 second SaaS launch video music hook sketch, production prompt, rough cut note, source/tool note, commercial-use memo, and usage guardrails",
+      serviceUrl: SAAS_LAUNCH_SERVICE_URL,
+    };
+  }
   if (/Product Video Music Hook/i.test(choice)) {
     return {
       name: "USD $29 Product Video Music Hook Sketch",
@@ -75,6 +85,15 @@ function packageDetails(rawChoice = "") {
       serviceUrl: UGC_AGENCY_SERVICE_URL,
     };
   }
+  if (/SaaS Launch Music/i.test(choice)) {
+    return {
+      name: "USD $149 SaaS Launch Music Pack",
+      price: "USD $149",
+      target: "24-48h after brief and payment confirmation",
+      deliverable: "three selected SaaS launch-video music variants for one launch campaign, 15/30/60 second cut plan, one revision pass, source/tool note, and commercial-use notes",
+      serviceUrl: SAAS_LAUNCH_SERVICE_URL,
+    };
+  }
   if (/Ecommerce Ad Music/i.test(choice)) {
     return {
       name: "USD $149 Ecommerce Ad Music Pack",
@@ -98,11 +117,13 @@ function renderJingleOrderComment(issueBody = "") {
   const brand =
     extractField(issueBody, "Brand, podcast, channel, or product name") ||
     extractField(issueBody, "Agency or client project") ||
+    extractField(issueBody, "Product, app, or SaaS name") ||
     extractField(issueBody, "Product or store name") ||
     "the brand/show";
   const website =
     extractField(issueBody, "Website or social link") ||
     extractField(issueBody, "Website, store, or creative brief link") ||
+    extractField(issueBody, "Landing page, demo, or launch brief link") ||
     extractField(issueBody, "Store, product page, or creative brief link") ||
     "not provided";
   const usage = extractField(issueBody, "Primary use") || "short branded audio";
@@ -110,12 +131,13 @@ function renderJingleOrderComment(issueBody = "") {
   const rightsSource = extractField(issueBody, "Source material rights");
   const referenceSample = extractField(issueBody, "Reference sample or direction");
   const targetViewer = extractField(issueBody, "Target viewer and offer");
+  const productPositioning = extractField(issueBody, "Product positioning and target user");
   const productOffer = extractField(issueBody, "Product offer and target buyer");
   const requiredLine = extractField(issueBody, "Required line or CTA");
   const productClaim = extractField(issueBody, "Required CTA or product claim");
   const visualPacing = extractField(issueBody, "Visual pacing");
   const approvalNeed = extractField(issueBody, "Client approval need");
-  const brief = extractField(issueBody, "Brand brief") || targetViewer || productOffer || "brief to confirm";
+  const brief = extractField(issueBody, "Brand brief") || targetViewer || productPositioning || productOffer || "brief to confirm";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";

@@ -1,0 +1,152 @@
+name: Buy AI SaaS launch video music
+description: Short buying-intent form for Product Hunt and SaaS launch video music hooks
+title: "AI SaaS launch video music order: <product or app name>"
+labels: ["ai-jingle-order", "ai-saas-launch-video-music-order"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a paid AI-assisted SaaS launch video music hook sketch or launch music pack. Do not paste secrets, credentials, private customer data, unreleased sensitive product data, private analytics, or third-party lyrics you do not have rights to use.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: Pick the smallest package that answers the current launch-video need.
+      options:
+        - USD $29 SaaS Launch Video Music Hook Sketch
+        - USD $79 Jingle Hook Pack
+        - USD $149 SaaS Launch Music Pack
+        - USD $399 Sonic Launch Kit
+    validations:
+      required: true
+  - type: input
+    id: product
+    attributes:
+      label: Product, app, or SaaS name
+      placeholder: LaunchPad AI Demo
+    validations:
+      required: true
+  - type: dropdown
+    id: reference_sample
+    attributes:
+      label: Reference sample or direction
+      description: Pick the closest public reference or write details in the positioning field below.
+      options:
+        - Product Demo Hook sample
+        - Coffee Shop 30s Hook sample
+        - Business Show Intro sample
+        - Radio ID And Drop sample
+        - Custom direction described below
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Landing page, demo, or launch brief link
+      placeholder: https://example.com/launch
+  - type: dropdown
+    id: usage
+    attributes:
+      label: Primary use
+      options:
+        - Product Hunt launch video
+        - SaaS demo walkthrough
+        - Landing page hero video
+        - Founder intro video
+        - Waitlist launch teaser
+        - Feature announcement reel
+    validations:
+      required: true
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Publishing channel
+      options:
+        - Product Hunt launch page
+        - Landing page hero video
+        - X or LinkedIn launch post
+        - YouTube demo or Shorts
+        - App store or marketplace listing
+        - Investor or sales deck demo
+    validations:
+      required: true
+  - type: dropdown
+    id: source_rights
+    attributes:
+      label: Source material rights
+      options:
+        - Original prompt only; no third-party lyrics or melodies
+        - Brand-owned tagline only
+        - Cleared demo video or voiceover reference
+        - Needs rights review before generation
+    validations:
+      required: true
+  - type: textarea
+    id: positioning
+    attributes:
+      label: Product positioning and target user
+      description: Summarize the product, target user, launch message, and demo context without private customer data.
+      placeholder: Indie founders launching an AI workflow product who need to understand the value in the first 10 seconds.
+    validations:
+      required: true
+  - type: input
+    id: cta
+    attributes:
+      label: Required CTA or product claim
+      placeholder: Launch the demo, understand the workflow, ship with confidence.
+  - type: dropdown
+    id: pacing
+    attributes:
+      label: Visual pacing
+      options:
+        - Problem-solution demo
+        - Feature walkthrough
+        - Founder intro
+        - UI montage
+        - Waitlist teaser
+        - Pricing launch
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Timing
+      options:
+        - 24h if available
+        - 48h target
+        - This week
+        - Date to discuss
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Payment is requested only after the brief is accepted in writing.
+      options:
+        - Ethereum ETH after brief acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after brief acceptance
+        - Solana SOL after brief acceptance
+        - Solana SPL USDC after brief acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, private customer data, unreleased sensitive product data, private analytics, or third-party lyrics I do not have rights to use.
+          required: true
+        - label: I understand AI-generated music may have copyright-registration limits, and this package is not legal clearance.
+          required: true
+        - label: I understand payment is only requested after written brief acceptance for the selected package.
+          required: true

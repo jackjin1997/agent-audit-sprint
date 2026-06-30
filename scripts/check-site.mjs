@@ -21,6 +21,7 @@ const openAiAgentsPythonScanReport = `file://${resolve(root, "reports/openai-age
 const terms = `file://${resolve(root, "terms.html")}`;
 const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
+const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
@@ -53,6 +54,7 @@ const browserAutomation = `file://${resolve(root, "browser-automation-mcp-securi
 const requiredFiles = [
   "index.html",
   "ai-agent-security-audit-service.html",
+  "ai-cost-spike-emergency.html",
   "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
   "mcp-ssrf-security-review.html",
@@ -96,6 +98,7 @@ const requiredFiles = [
   ".github/FUNDING.yml",
   ".github/workflows/goal-status-monitor.yml",
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
+  ".github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml",
   ".github/ISSUE_TEMPLATE/agent-cost-leak-review.yml",
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
@@ -191,11 +194,29 @@ if (!llmsText.includes("AI Agent Security Radar")) {
 if (!llmsText.includes("AI Agent Cost Leak Review")) {
   throw new Error("llms.txt is missing the AI Agent Cost Leak review context");
 }
+if (!llmsText.includes("AI Cost Spike Emergency Sprint")) {
+  throw new Error("llms.txt is missing the AI Cost Spike Emergency Sprint context");
+}
 if (!llmsText.includes("USD $299 AI Agent Cost Leak Review")) {
   throw new Error("llms.txt is missing the AI Agent Cost Leak review package price");
 }
+if (!llmsText.includes("USD $1,000 AI Cost Spike Emergency Sprint")) {
+  throw new Error("llms.txt is missing the AI Cost Spike Emergency Sprint package price");
+}
+if (!llmsText.includes("ai-cost-spike-emergency.yml")) {
+  throw new Error("llms.txt is missing the AI Cost Spike Emergency intake link");
+}
 if (!llmsText.includes("agent-cost-leak-review.yml")) {
   throw new Error("llms.txt is missing the AI Agent Cost Leak review intake link");
+}
+const costSpikeTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml"), "utf8");
+if (
+  !costSpikeTemplate.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+  !costSpikeTemplate.includes("labels: [\"audit-intent\", \"ai-cost-spike-emergency\"]") ||
+  !costSpikeTemplate.includes("Cost spike type") ||
+  !costSpikeTemplate.includes("payment is only requested after written scope acceptance")
+) {
+  throw new Error("AI Cost Spike emergency template is missing price, label, cost-spike field, or payment guardrail");
 }
 if (!llmsText.includes("Agent Auth and Cookie Vault Security Review")) {
   throw new Error("llms.txt is missing the Agent Auth focused review context");
@@ -555,6 +576,69 @@ if (!mcpSsrfIntentOutput.includes("Do not send payment until scope is accepted")
 }
 if (!mcpSsrfIntentOutput.includes("payment-confirmation.yml")) {
   throw new Error("MCP SSRF intent dry-run output is missing payment proof link");
+}
+
+const costSpikeIntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $1,000 AI Cost Spike Emergency Sprint",
+      "",
+      "### Project, repo, product, or workflow URL",
+      "",
+      "https://github.com/example/runaway-agent",
+      "",
+      "### Cost spike type",
+      "",
+      "Runaway coding agent or repeated tool calls",
+      "",
+      "### Sanitized cost evidence",
+      "",
+      "Spend moved from $200/day to $900/day after agent launch; no private prompts included.",
+      "",
+      "### Emergency decision",
+      "",
+      "which caps, model routes, cache changes, retrieval limits, or kill switches can stop the bill spike this week",
+      "",
+      "### Deadline or billing risk window",
+      "",
+      "Within 24h",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Payment path",
+      "",
+      "Ethereum ERC-20 USDC/USDT/DAI after scope acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!costSpikeIntentOutput.includes("USD $1,000 AI Cost Spike Emergency Sprint")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing package name");
+}
+if (!costSpikeIntentOutput.includes("Runaway coding agent or repeated tool calls")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing cost spike type");
+}
+if (!costSpikeIntentOutput.includes("Spend moved from $200/day to $900/day")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing sanitized evidence");
+}
+if (!costSpikeIntentOutput.includes("Within 24h")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing deadline");
+}
+if (!costSpikeIntentOutput.includes("ai-cost-spike-emergency.html")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing service link");
+}
+if (!costSpikeIntentOutput.includes("Do not send payment until scope is accepted")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing payment guardrail");
+}
+if (!costSpikeIntentOutput.includes("payment-confirmation.yml")) {
+  throw new Error("AI Cost Spike emergency dry-run output is missing payment proof link");
 }
 
 const agentCostIntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
@@ -985,10 +1069,11 @@ try {
       !indexBody.includes("AI Music Generator storefront for a $29 first order") ||
       !indexBody.includes("Open the AI Music Generator storefront") ||
       !indexBody.includes("Copy the $29 AI music brief") ||
+      !indexBody.includes("Open SaaS launch video music page") ||
       !indexBody.includes("Open product video music page") ||
       !indexBody.includes("Open short-form ad music page") ||
       !indexBody.includes("Open UGC agency music hook page") ||
-      !indexBody.includes("Product videos, ads, Reels, Shorts, UGC videos") ||
+      !indexBody.includes("SaaS/Product Hunt launch videos, product videos, ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
     ) {
       throw new Error(`Index page missing AI music storefront promotion in ${viewport.name}`);
@@ -1007,6 +1092,13 @@ try {
     }
     if (!indexBody.includes("Open the AI agent security audit page")) {
       throw new Error(`Index page missing AI agent security audit link in ${viewport.name}`);
+    }
+    if (
+      !indexBody.includes("Cost spike emergency") ||
+      !indexBody.includes("AI Cost Spike Emergency Sprint for runaway LLM bills") ||
+      !indexBody.includes("Open the emergency intake")
+    ) {
+      throw new Error(`Index page missing AI Cost Spike emergency entry in ${viewport.name}`);
     }
     if (!indexBody.includes("Cost leak review") || !indexBody.includes("AI agent cost leak reviews")) {
       throw new Error(`Index page missing AI Agent Cost Leak focused review entry in ${viewport.name}`);
@@ -1028,6 +1120,9 @@ try {
     }
     if (!indexBody.includes("Open the MCP SSRF focused review page")) {
       throw new Error(`Index page missing MCP SSRF focused review scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the AI cost spike emergency page")) {
+      throw new Error(`Index page missing AI Cost Spike emergency scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the AI agent cost leak review page")) {
       throw new Error(`Index page missing AI Agent Cost Leak review scanner link in ${viewport.name}`);
@@ -2339,6 +2434,31 @@ try {
     }
     const aiAgentServiceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiAgentServiceOverflow) throw new Error(`AI agent service horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiCostSpikeEmergency, { waitUntil: "networkidle" });
+    const costSpikeTitle = await page.locator("h1").innerText();
+    if (!costSpikeTitle.includes("AI Cost Spike Emergency Sprint")) {
+      throw new Error(`Unexpected AI Cost Spike emergency h1 in ${viewport.name}: ${costSpikeTitle}`);
+    }
+    const costSpikeText = await page.locator("body").innerText();
+    if (
+      !costSpikeText.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+      !costSpikeText.includes("24h containment plan") ||
+      !costSpikeText.includes("runaway LLM bills") ||
+      !costSpikeText.includes("Payment timing: after written scope acceptance only.")
+    ) {
+      throw new Error(`AI Cost Spike emergency page missing package, urgency, or payment guardrail in ${viewport.name}`);
+    }
+    const costSpikeCta = await page.locator("a.button.primary").first().getAttribute("href");
+    if (!costSpikeCta?.includes("ai-cost-spike-emergency.yml")) {
+      throw new Error(`AI Cost Spike emergency CTA missing dedicated intake URL in ${viewport.name}`);
+    }
+    const costSpikeCopyTarget = await page.locator("[data-copy-target='#cost-spike-payment-packet']").getAttribute("data-copy-target");
+    if (costSpikeCopyTarget !== "#cost-spike-payment-packet") {
+      throw new Error(`AI Cost Spike emergency payment packet copy target missing in ${viewport.name}`);
+    }
+    const costSpikeOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (costSpikeOverflow) throw new Error(`AI Cost Spike emergency horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiAgentCostLeakReview, { waitUntil: "networkidle" });
     const aiAgentCostTitle = await page.locator("h1").innerText();

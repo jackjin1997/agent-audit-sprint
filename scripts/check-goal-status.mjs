@@ -48,9 +48,11 @@ const INTAKE_LABELS = new Set([
   "payment-proof",
   "code-scanning-audit",
   "ai-agent-audit",
+  "ai-cost-spike-emergency",
   "agent-cost-leak-review",
   "ai-jingle-order",
   "ai-product-video-music-order",
+  "ai-saas-launch-video-music-order",
   "ugc-agency-music-hook-order",
 ]);
 
@@ -260,8 +262,10 @@ function isTokenMeterPaidIntake(entry) {
   const packageName = String(entry.package || "").toLowerCase();
   return (
     intent === "cost-audit" ||
+    intent === "ai-cost-spike-emergency" ||
     intent === "agent-cost-leak-review" ||
     packageName.includes("cost audit") ||
+    packageName.includes("cost spike emergency") ||
     packageName.includes("cost leak review") ||
     packageName.includes("$99") ||
     packageName.includes("$299")

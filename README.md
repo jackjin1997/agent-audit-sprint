@@ -9,18 +9,20 @@ https://jackjin1997.github.io/agent-audit-sprint/
 ## Offer
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
+- USD $1,000 AI Cost Spike Emergency Sprint for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk
 - USD $299 AI Agent Cost Leak Review for token spend, context bloat, RAG over-retrieval, model-routing drift, retry loops, cache misses, and coding-agent tool-call loops
 - USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
 - USD $299 MCP SSRF Focused Review for one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for ecommerce product videos, small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, product video music page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, sample-to-order packet page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for SaaS/Product Hunt launch videos, ecommerce product videos, small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, SaaS launch video music page, product video music page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, sample-to-order packet page, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
 
 ## Files
 
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
+- `ai-cost-spike-emergency.html` / `.github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml` - urgent $1,000 AI Cost Spike Emergency Sprint page and intake for runaway LLM bills, agent loops, retry storms, RAG over-retrieval, model routing, cache misses, and 24h containment planning
 - `ai-agent-cost-leak-review.html` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` - focused $299 AI Agent Cost Leak Review page and intake for token spend, context bloat, RAG cost, model routing, retry loops, cache misses, and tool-call loops
 - `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
 - `mcp-ssrf-security-review.html` - focused $299 MCP SSRF and Dynamic URL Fetch Review page for scanner/SARIF findings involving pagination URLs, callbacks, redirects, webhooks, proxy URLs, and credential-bearing URL fetches
@@ -31,11 +33,12 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `mcp-code-scanning-github-action.html` - search-focused GitHub Code Scanning/SARIF workflow page
 - `scan.html` / `scan.js` - browser scanner for public GitHub URLs, private local files, auth-heavy Agent Auth routing, dynamic URL fetch / SSRF focused-review routing, and paid audit handoff
 - `quick-scan.html` / `templates/quick-scan.md` - low-friction $99, $299, and $1,000 package ladder
-- `ai-music-generator.html` - buyer-facing AI music generator storefront that routes ads, Reels/Shorts/UGC hooks, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, source-rights email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
+- `ai-music-generator.html` - buyer-facing AI music generator storefront that routes SaaS launch videos, ads, Reels/Shorts/UGC hooks, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, source-rights email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
 - `ai-music-samples.html` - public AI music sample-to-order page with four WAV references, copyable and email-ready paid brief packets, product-video order routing, general AI music order routing, and after-acceptance payment guardrails
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, reference-sample intake field, browser audio sketch, WAV download, and email brief handoff
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
+- `ai-saas-launch-video-music.html` / `.github/ISSUE_TEMPLATE/ai-saas-launch-video-music-order.yml` - SaaS/Product Hunt USD $29 launch video music hook page and dedicated order form for Product Hunt launch videos, SaaS demo walkthroughs, landing-page hero videos, app marketplace clips, founder intro reels, waitlist teasers, Product Demo Hook sample-to-order packet, reference-sample intake field, and $149 SaaS launch music pack upsell
 - `ai-product-video-music.html` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` - ecommerce USD $29 product video music hook page and dedicated order form for Shopify product videos, TikTok Shop ads, Meta ad creative, marketplace listing videos, Product Demo Hook sample-to-order packet, reference-sample intake field, and $149 ecommerce ad music pack upsell
 - `ai-short-form-ad-music.html` - USD $29 short-form ad music generator page for TikTok, Instagram Reels, YouTube Shorts, UGC ads, creator tags, product demo openers, dynamic order packet, email handoff, acceptance/payment packet, browser WAV sketch, source-rights intake, and commercial-use memo delivery
 - `ugc-agency-ai-music-hooks.html` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` - USD $29 UGC agency audio hook page and dedicated order form for paid-social teams that need client approval packets, source-rights memos, dynamic order packets, and $149 agency ad music pack upsell
@@ -55,10 +58,10 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - Standalone Action repo - https://github.com/jackjin1997/agent-mcp-code-scan-action for cleaner GitHub Action discovery
 - `.github/workflows/triage-audit-request.yml` / `scripts/comment-audit-triage.mjs` - automated free triage comment for new audit intake issues
 - `.github/workflows/respond-audit-intent.yml` / `scripts/comment-audit-intent.mjs` - automated next-step comment for short paid-slot issues
-- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle, product video music, and UGC agency music hook package orders
+- `.github/workflows/respond-ai-jingle-order.yml` / `scripts/comment-ai-jingle-order.mjs` - automated next-step comment for AI jingle, SaaS launch video music, product video music, and UGC agency music hook package orders
 - `.github/workflows/respond-code-scanning-audit.yml` / `scripts/comment-code-scanning-audit.mjs` - automated next-step comment for SARIF/Code Scanning audit issues
 - `.github/workflows/respond-payment-proof.yml` / `scripts/comment-payment-proof.mjs` - automated payment proof checklist comment with accepted service, amount, transaction evidence, and receipt/delivery template routing
-- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI agent cost leak review requests, AI music orders, and ETH/SOL stablecoin/native payment signals
+- `.github/workflows/goal-status-monitor.yml` / `scripts/check-goal-status.mjs` / `scripts/install-goal-monitor-launchd.mjs` / `scripts/run-goal-monitor-loop.mjs` - scheduled, launchd, and visible background goal monitors for open intake issues, AI cost spike emergency requests, AI agent cost leak review requests, AI music orders including SaaS launch video music, and ETH/SOL stablecoin/native payment signals
 - `scripts/find-high-intent-leads.mjs` - GitHub issue search helper for current agent/MCP security, auth, scanner, and transport discussions; writes private lead shortlists without auto-posting
 - `examples/github-action.yml` - copyable Markdown artifact workflow example
 - `examples/github-code-scanning.yml` - copyable SARIF/code scanning workflow example
@@ -67,7 +70,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `reports/douban-mcp-sample-audit.md` / `reports/firecrawl-mcp-sample-audit.md` / `reports/browserbase-mcp-sample-audit.md` / `reports/sentinel-agent-dogfood-audit.md` / `reports/agentgap-agent-config-dogfood-audit.md` - sample reports based on real public repos and self-owned dogfood
 - `reports/*-security-scan.html` - public Radar detail pages for selected high-intent MCP repos
 - `reports/browser-use-ai-agent-security-scan.html` / `reports/openhands-ai-agent-security-scan.html` / `reports/smolagents-ai-agent-security-scan.html` / `reports/openai-agents-python-security-scan.html` - public AI Agent Radar scan briefs for high-intent agent repos
-- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, AI agent cost leak focused review, Agent Auth focused review, MCP SSRF focused review, product video music order, UGC agency music hook order, and payment proof forms
+- `.github/ISSUE_TEMPLATE/audit-request.yml` / `.github/ISSUE_TEMPLATE/paid-audit-intent.yml` / `.github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` / `.github/ISSUE_TEMPLATE/agent-auth-review.yml` / `.github/ISSUE_TEMPLATE/mcp-ssrf-review.yml` / `.github/ISSUE_TEMPLATE/ai-saas-launch-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ai-product-video-music-order.yml` / `.github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml` / `.github/ISSUE_TEMPLATE/payment-confirmation.yml` - full intake, short paid-slot, AI cost spike emergency sprint, AI agent cost leak focused review, Agent Auth focused review, MCP SSRF focused review, SaaS launch video music order, product video music order, UGC agency music hook order, and payment proof forms
 - `.github/ISSUE_TEMPLATE/ai-agent-audit.yml` - dedicated AI agent security audit intake form
 - `.github/ISSUE_TEMPLATE/code-scanning-audit.yml` - SARIF/GitHub Code Scanning audit intake form
 - `script.js` - local-only request brief builder and payment address copy actions
@@ -96,6 +99,7 @@ Browser:
 - AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
+- AI SaaS launch video music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html
 - AI product video music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html
 - AI short-form ad music generator: https://jackjin1997.github.io/agent-audit-sprint/ai-short-form-ad-music.html
 - AI UGC agency music hook pack: https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html
@@ -106,6 +110,8 @@ Browser:
 - AI jingle quote/payment packet: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html
 - AI jingle email brief: jackjin1997@gmail.com after copying the short brief template; payment is still after written brief acceptance only
 - AI agent security audit service: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-security-audit-service.html
+- AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
+- AI Cost Spike emergency intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml
 - AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 - AI Agent cost leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
@@ -124,7 +130,7 @@ Browser:
 - Public repo URL scan: https://jackjin1997.github.io/agent-audit-sprint/scan.html
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
-- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation, and cost-heavy agent workflows can use the USD $299 AI Agent Cost Leak Review intake
+- Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation, cost-heavy agent workflows can use the USD $299 AI Agent Cost Leak Review intake, and runaway bill spikes can use the USD $1,000 AI Cost Spike Emergency Sprint intake
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -140,6 +146,7 @@ node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-inte
 
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, dynamic URL fetch/SSRF surfaces, redaction, tests, and CI. It is a triage helper, not a security certification.
 The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner routes to the USD $299 Agent Auth focused-review intake. If pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, it routes to the USD $299 MCP SSRF focused-review intake.
+The AI Cost Spike Emergency Sprint is a USD $1,000 urgent containment package for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
 The AI Agent Cost Leak Review is a separate USD $299 focused review for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 

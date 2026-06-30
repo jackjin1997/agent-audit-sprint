@@ -51,6 +51,7 @@ body:
       label: Reference sample or direction
       description: Pick the closest public reference or write details in the brand brief below.
       options:
+        - SaaS Launch Hero Hook sample
         - Coffee Shop 30s Hook sample
         - Business Show Intro sample
         - Radio ID And Drop sample

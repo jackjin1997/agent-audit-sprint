@@ -4,6 +4,10 @@ import { resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 
 const root = resolve(import.meta.dirname, "..");
+const chromiumExecutablePath = process.env.SITE_CHECK_CHROMIUM_EXECUTABLE_PATH || "";
+if (chromiumExecutablePath && !existsSync(chromiumExecutablePath)) {
+  throw new Error(`SITE_CHECK_CHROMIUM_EXECUTABLE_PATH does not exist: ${chromiumExecutablePath}`);
+}
 const index = `file://${resolve(root, "index.html")}`;
 const doubanReport = `file://${resolve(root, "reports/douban-mcp-sample-audit.html")}`;
 const firecrawlReport = `file://${resolve(root, "reports/firecrawl-mcp-sample-audit.html")}`;
@@ -271,9 +275,11 @@ const aiJingleOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE
 if (
   !aiJingleOrderTemplate.includes("id: reference_sample") ||
   !aiJingleOrderTemplate.includes("Reference sample or direction") ||
+  !aiJingleOrderTemplate.includes("SaaS Launch Hero Hook sample") ||
   !aiJingleOrderTemplate.includes("Coffee Shop 30s Hook sample") ||
   !aiJingleOrderTemplate.includes("Business Show Intro sample") ||
-  !aiJingleOrderTemplate.includes("Radio ID And Drop sample")
+  !aiJingleOrderTemplate.includes("Radio ID And Drop sample") ||
+  !aiJingleOrderTemplate.includes("Product Demo Hook sample")
 ) {
   throw new Error("AI jingle order template is missing the general reference sample selector");
 }
@@ -1144,7 +1150,7 @@ if (!codeScanningAuditOutput.includes("scan.html?repo=https%3A%2F%2Fgithub.com%2
   throw new Error("Code scanning audit dry-run output is missing shareable scanner link");
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch(chromiumExecutablePath ? { executablePath: chromiumExecutablePath } : {});
 try {
   for (const viewport of [
     { width: 1440, height: 1000, name: "desktop" },
@@ -1556,6 +1562,7 @@ try {
     const aiMusicSamplesText = await page.locator("body").innerText();
     if (
       !aiMusicSamplesText.includes("USD $29 hook sketch") ||
+      !aiMusicSamplesText.includes("SaaS Launch Hero Hook Packet") ||
       !aiMusicSamplesText.includes("Product Demo Hook Packet") ||
       !aiMusicSamplesText.includes("Coffee Shop Hook Packet") ||
       !aiMusicSamplesText.includes("Business Show Intro Packet") ||
@@ -1575,7 +1582,8 @@ try {
       audioElements.map((audio) => audio.getAttribute("src") || "")
     );
     if (
-      aiMusicSamplesAudioSources.length !== 4 ||
+      aiMusicSamplesAudioSources.length !== 5 ||
+      !aiMusicSamplesAudioSources.includes("assets/audio/saas-launch-hero-hook.wav") ||
       !aiMusicSamplesAudioSources.includes("assets/audio/product-demo-hook.wav") ||
       !aiMusicSamplesAudioSources.includes("assets/audio/coffee-shop-30s-hook.wav") ||
       !aiMusicSamplesAudioSources.includes("assets/audio/business-show-intro.wav") ||
@@ -1584,6 +1592,7 @@ try {
       throw new Error(`AI music samples page audio sources missing in ${viewport.name}`);
     }
     const aiMusicSamplePacketIds = [
+      "#sample-packet-saas-launch",
       "#sample-packet-product-demo",
       "#sample-packet-coffee-shop",
       "#sample-packet-business-show",
@@ -1615,6 +1624,10 @@ try {
     const aiMusicSamplesProductOrderHref = await page.locator("a[href*='Product%20Demo%20Hook%20reference']").getAttribute("href");
     if (!aiMusicSamplesProductOrderHref?.includes("template=ai-product-video-music-order.yml")) {
       throw new Error(`AI music samples product order link missing product-video template in ${viewport.name}`);
+    }
+    const aiMusicSamplesSaasOrderHref = await page.locator("a[href*='SaaS%20Launch%20Hero%20Hook%20reference']").getAttribute("href");
+    if (!aiMusicSamplesSaasOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")) {
+      throw new Error(`AI music samples SaaS order link missing SaaS launch template in ${viewport.name}`);
     }
     const aiMusicSamplesGeneralOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (aiMusicSamplesGeneralOrderLinks < 4) {

@@ -10,6 +10,7 @@ const heartbeatPath = join(privateMonitorDir, "goal-monitor-loop-heartbeat.json"
 const latestStatusPath = join(privateMonitorDir, "latest-goal-status.txt");
 const historyLogPath = join(logsDir, "goal-monitor-history.log");
 const processLogPath = join(logsDir, "goal-monitor-loop.process.log");
+const localEnvPath = join(repoRoot, "private-notes", "tokenmeter-admin-token.env");
 const intervalSeconds = Number(process.env.GOAL_LOOP_INTERVAL_SECONDS || "900");
 const force = process.env.GOAL_LOOP_FORCE === "true";
 
@@ -80,9 +81,10 @@ if (existsSync(pidPath) && readFileSync(pidPath, "utf8").trim() === String(proce
 
 async function runCheck() {
   return new Promise((resolveRun) => {
+    const localEnv = readLocalEnv(localEnvPath);
     const child = spawn(process.execPath, ["scripts/check-goal-status.mjs"], {
       cwd: repoRoot,
-      env: { ...process.env, GOAL_ATTENTION_FAIL: "true" },
+      env: { ...process.env, ...localEnv, GOAL_ATTENTION_FAIL: "true" },
       stdio: ["ignore", "pipe", "pipe"],
     });
     let output = "";
@@ -99,6 +101,23 @@ async function runCheck() {
       resolveRun({ status: status ?? 1, output });
     });
   });
+}
+
+function readLocalEnv(path) {
+  if (!existsSync(path)) return {};
+  const env = {};
+  for (const line of readFileSync(path, "utf8").split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const index = trimmed.indexOf("=");
+    if (index <= 0) continue;
+    const key = trimmed.slice(0, index).trim();
+    const value = trimmed.slice(index + 1).trim();
+    if (/^[A-Z0-9_]+$/.test(key)) {
+      env[key] = value;
+    }
+  }
+  return env;
 }
 
 function isProcessAlive(pid) {

@@ -23,6 +23,13 @@ const REVENUE_PACKAGE_ATTENTION_USD = Number(process.env.GOAL_REVENUE_PACKAGE_AT
 const ETH_ATTENTION_THRESHOLD = Number(process.env.GOAL_ETH_ATTENTION_THRESHOLD || "0.3");
 const SOL_ATTENTION_THRESHOLD = Number(process.env.GOAL_SOL_ATTENTION_THRESHOLD || "8");
 const ATTENTION_FAIL = process.env.GOAL_ATTENTION_FAIL === "true";
+const TOKENMETER_WAITLIST_URL =
+  process.env.TOKENMETER_WAITLIST_URL || "https://tokenmeter-mu.vercel.app/api/waitlist";
+const TOKENMETER_WAITLIST_ADMIN_TOKEN =
+  process.env.TOKENMETER_WAITLIST_ADMIN_TOKEN || process.env.WAITLIST_ADMIN_TOKEN || "";
+const TOKENMETER_WAITLIST_FIXTURE_JSON = process.env.TOKENMETER_WAITLIST_FIXTURE_JSON || "";
+const TOKENMETER_WAITLIST_FIXTURE_PATH = process.env.TOKENMETER_WAITLIST_FIXTURE_PATH || "";
+const TOKENMETER_WAITLIST_SINCE = process.env.TOKENMETER_WAITLIST_SINCE || "";
 
 const ETH_ADDRESS = process.env.GOAL_ETH_ADDRESS || DEFAULT_ETH_ADDRESS;
 const SOL_ADDRESS = process.env.GOAL_SOL_ADDRESS || DEFAULT_SOL_ADDRESS;
@@ -213,6 +220,119 @@ async function getLeadReplies() {
   return replies;
 }
 
+function maskEmail(email) {
+  const value = String(email || "").trim().toLowerCase();
+  const match = value.match(/^([^@]{1,64})@(.+)$/);
+  if (!match) return "unknown";
+  const [, local, domain] = match;
+  const tld = domain.includes(".") ? domain.slice(domain.lastIndexOf(".")) : "";
+  return `${local.slice(0, 2)}***@***${tld}`;
+}
+
+function cleanMonitorText(value, max = 120) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").slice(0, max);
+}
+
+function isTokenMeterSmokeEntry(entry) {
+  const haystack = [
+    entry.email,
+    entry.intent,
+    entry.package,
+    entry.source,
+    entry.provider,
+    entry.monthlySpend,
+    entry.useCase,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  return (
+    haystack.includes("codex-smoke") ||
+    haystack.includes("smoke test") ||
+    haystack.includes("production smoke") ||
+    haystack.includes("ignore/remove")
+  );
+}
+
+function isTokenMeterPaidIntake(entry) {
+  const intent = String(entry.intent || "").toLowerCase();
+  const packageName = String(entry.package || "").toLowerCase();
+  return (
+    intent === "cost-audit" ||
+    intent === "agent-cost-leak-review" ||
+    packageName.includes("cost audit") ||
+    packageName.includes("cost leak review") ||
+    packageName.includes("$99") ||
+    packageName.includes("$299")
+  );
+}
+
+function isAfterTokenMeterSince(entry) {
+  if (!TOKENMETER_WAITLIST_SINCE) return true;
+  const since = new Date(TOKENMETER_WAITLIST_SINCE);
+  if (Number.isNaN(since.getTime())) return true;
+  const ts = new Date(entry.ts || entry.createdAt || 0);
+  return !Number.isNaN(ts.getTime()) && ts > since;
+}
+
+function normalizeTokenMeterExport(data) {
+  const entries = Array.isArray(data) ? data : Array.isArray(data?.emails) ? data.emails : [];
+  return entries
+    .filter((entry) => entry && typeof entry === "object")
+    .filter((entry) => isAfterTokenMeterSince(entry))
+    .filter((entry) => !isTokenMeterSmokeEntry(entry))
+    .filter((entry) => isTokenMeterPaidIntake(entry))
+    .map((entry) => ({
+      ts: cleanMonitorText(entry.ts || entry.createdAt || ""),
+      emailMasked: maskEmail(entry.email),
+      intent: cleanMonitorText(entry.intent || "unknown", 80),
+      package: cleanMonitorText(entry.package || "unknown", 120),
+      source: cleanMonitorText(entry.source || "unknown", 120),
+      provider: cleanMonitorText(entry.provider || "unknown", 120),
+      monthlySpend: cleanMonitorText(entry.monthlySpend || "unknown", 80),
+      hasUseCase: Boolean(cleanMonitorText(entry.useCase || "")),
+    }))
+    .sort((a, b) => String(b.ts).localeCompare(String(a.ts)));
+}
+
+async function getTokenMeterIntakeStatus() {
+  if (TOKENMETER_WAITLIST_FIXTURE_JSON || TOKENMETER_WAITLIST_FIXTURE_PATH) {
+    const raw = TOKENMETER_WAITLIST_FIXTURE_JSON || readFileSync(resolve(TOKENMETER_WAITLIST_FIXTURE_PATH), "utf8");
+    const parsed = JSON.parse(raw);
+    return {
+      enabled: true,
+      source: TOKENMETER_WAITLIST_FIXTURE_JSON ? "fixture-json" : "fixture-path",
+      status: "ok",
+      paidIntakes: normalizeTokenMeterExport(parsed),
+    };
+  }
+
+  if (!TOKENMETER_WAITLIST_ADMIN_TOKEN) {
+    return {
+      enabled: false,
+      source: TOKENMETER_WAITLIST_URL,
+      status: "skipped",
+      reason: "TOKENMETER_WAITLIST_ADMIN_TOKEN is not set",
+      paidIntakes: [],
+    };
+  }
+
+  const exportData = await fetchJson(TOKENMETER_WAITLIST_URL, {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${TOKENMETER_WAITLIST_ADMIN_TOKEN}`,
+    },
+  });
+  return {
+    enabled: true,
+    source: TOKENMETER_WAITLIST_URL,
+    status: "ok",
+    exportedCount: Number(exportData.count) || 0,
+    paidIntakes: normalizeTokenMeterExport(exportData),
+  };
+}
+
 async function getPrices() {
   try {
     const prices = await fetchJson(
@@ -338,6 +458,19 @@ function renderSummary(result) {
         )
         .join("\n")
     : "| None | - | - | - | - |";
+  const tokenMeterRows = result.tokenMeter.paidIntakes.length
+    ? result.tokenMeter.paidIntakes
+        .slice(0, 20)
+        .map(
+          (entry) =>
+            `| ${entry.ts || "unknown"} | ${entry.emailMasked} | ${entry.intent.replaceAll("|", "\\|")} | ${entry.package.replaceAll("|", "\\|")} | ${entry.source.replaceAll("|", "\\|")} | ${entry.monthlySpend.replaceAll("|", "\\|")} |`
+        )
+        .join("\n")
+    : "| None | - | - | - | - | - |";
+  const tokenMeterStatus =
+    result.tokenMeter.status === "skipped"
+      ? `Skipped: ${result.tokenMeter.reason}`
+      : `${result.tokenMeter.status}; exported entries: ${result.tokenMeter.exportedCount ?? "unknown"}`;
   return [
     "# Goal Status Monitor",
     "",
@@ -358,6 +491,14 @@ function renderSummary(result) {
     "| Lead | Author | Created | Reason | URL |",
     "|---|---|---|---|---|",
     leadRows,
+    "",
+    "## TokenMeter Paid Intakes",
+    "",
+    tokenMeterStatus,
+    "",
+    "| Created | Email | Intent | Package | Source | Spend |",
+    "|---|---|---|---|---|---|",
+    tokenMeterRows,
     "",
     "## Wallet Snapshot",
     "",
@@ -380,9 +521,17 @@ function renderSummary(result) {
   ].join("\n");
 }
 
-const [openIssuesResult, leadRepliesResult, pricesResult, ethereumResult, solanaResult] = await Promise.allSettled([
+const [
+  openIssuesResult,
+  leadRepliesResult,
+  tokenMeterResult,
+  pricesResult,
+  ethereumResult,
+  solanaResult,
+] = await Promise.allSettled([
   getOpenIssues(),
   getLeadReplies(),
+  getTokenMeterIntakeStatus(),
   getPrices(),
   getEthereumBalances(),
   getSolanaBalances(),
@@ -390,6 +539,16 @@ const [openIssuesResult, leadRepliesResult, pricesResult, ethereumResult, solana
 const checkErrors = [];
 const openIssues = unwrap(openIssuesResult, [], "githubIssues");
 const leadReplies = unwrap(leadRepliesResult, [], "leadReplies");
+const tokenMeter = unwrap(
+  tokenMeterResult,
+  {
+    enabled: Boolean(TOKENMETER_WAITLIST_ADMIN_TOKEN),
+    source: TOKENMETER_WAITLIST_URL,
+    status: "error",
+    paidIntakes: [],
+  },
+  "tokenMeterIntakes"
+);
 const prices = unwrap(pricesResult, { ETH: null, SOL: null, error: "price lookup unavailable" }, "prices");
 const ethereum = unwrap(
   ethereumResult,
@@ -402,12 +561,17 @@ if (Array.isArray(solana.checkErrors) && solana.checkErrors.length) {
 }
 delete solana.checkErrors;
 const paymentSignal = computePaymentSignal(ethereum, solana, prices);
-const attentionRequired = openIssues.length > 0 || leadReplies.length > 0 || paymentSignal.potentialPayment;
+const attentionRequired =
+  openIssues.length > 0 ||
+  leadReplies.length > 0 ||
+  tokenMeter.paidIntakes.length > 0 ||
+  paymentSignal.potentialPayment;
 const result = {
   checkedAt: new Date().toISOString(),
   repository: REPOSITORY,
   openIssues,
   leadReplies,
+  tokenMeter,
   prices,
   ethereum,
   solana,

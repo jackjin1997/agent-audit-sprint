@@ -24,4 +24,6 @@ jobs:
           GOAL_USD_TARGET: "1000"
           GOAL_ATTENTION_THRESHOLD_USD: "900"
           GOAL_REVENUE_PACKAGE_ATTENTION_USD: "29"
+          TOKENMETER_WAITLIST_URL: "https://tokenmeter-mu.vercel.app/api/waitlist"
+          TOKENMETER_WAITLIST_ADMIN_TOKEN: ${{ secrets.TOKENMETER_WAITLIST_ADMIN_TOKEN }}
         run: node scripts/check-goal-status.mjs

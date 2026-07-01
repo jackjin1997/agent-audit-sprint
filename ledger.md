@@ -265,6 +265,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music sample-to-rush conversion path | `ai-music-samples.html`, `script.js`, `scripts/check-site.mjs`, `README.md`, `llms.txt` | Added a direct USD $49 Same-Day Hook Sketch option to the public sample brief builder so listeners can keep their chosen WAV reference while routing the generated copy/email/GitHub packet to the dedicated `ai-music-rush-order.yml` form with written availability confirmation before payment; no accepted scope or payment counted |
 
+| AI Short-form video-to-rush music intake | `ai-short-form-ad-music.html`, `script.js`, `scripts/check-site.mjs`, `README.md`, `llms.txt` | Added video/media URL and key timestamp fields to the short-form ad music generator, plus USD $49 Same-Day Hook Sketch routing to `ai-music-rush-order.yml` so buyers with a finished vertical video can preserve timing notes through order/email/acceptance/memo handoff before payment; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

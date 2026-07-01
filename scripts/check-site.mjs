@@ -2728,7 +2728,9 @@ try {
     const shortFormAdMusicText = await page.locator("body").innerText();
     if (
       !shortFormAdMusicText.includes("USD $29 Short-Form Ad Hook Sketch") ||
+      !shortFormAdMusicText.includes("USD $49 Same-Day Hook Sketch") ||
       !shortFormAdMusicText.includes("Email short-form brief") ||
+      !shortFormAdMusicText.includes("Rush video order") ||
       !shortFormAdMusicText.includes("Open order form") ||
       !shortFormAdMusicText.includes("Build a ready-to-send short-form ad music packet") ||
       !shortFormAdMusicText.includes("Generate short-form packet") ||
@@ -2740,6 +2742,7 @@ try {
       !shortFormAdMusicText.includes("UGC ads") ||
       !shortFormAdMusicText.includes("publishing channel") ||
       !shortFormAdMusicText.includes("source material rights") ||
+      !shortFormAdMusicText.includes("Key video beats or timestamps") ||
       !shortFormAdMusicText.includes("commercial-use memo") ||
       !shortFormAdMusicText.includes("Payment is requested only after the written brief and package are accepted") ||
       !shortFormAdMusicText.includes("No known-artist soundalikes") ||
@@ -2762,6 +2765,8 @@ try {
       throw new Error(`AI short-form ad music sample audio sources missing in ${viewport.name}`);
     }
     await page.locator("[data-jingle-form] [name='brand']").fill("Launch Reel Co");
+    await page.locator("[data-jingle-form] [name='projectUrl']").fill("https://example.com/launch-reel-video");
+    await page.locator("[data-jingle-form] [name='sceneBeats']").fill("0-2s product reveal, 3-6s before-after, 7-10s offer");
     await page.locator("[data-jingle-form] [name='audience']").fill(
       "Skincare buyers watching a fast before-after UGC product demo with a launch-week offer."
     );
@@ -2772,14 +2777,18 @@ try {
       !shortFormGeneratedPacket.includes("## AI short-form ad music brief") ||
       !shortFormGeneratedPacket.includes("Launch Reel Co") ||
       !shortFormGeneratedPacket.includes("USD $29 Short-Form Ad Hook Sketch") ||
+      !shortFormGeneratedPacket.includes("Video, media folder, or product URL: https://example.com/launch-reel-video") ||
       !shortFormGeneratedPacket.includes("Primary use: 6-10s TikTok/Reels/Shorts hook") ||
+      !shortFormGeneratedPacket.includes("Key video beats or timestamps: 0-2s product reveal, 3-6s before-after, 7-10s offer") ||
       !shortFormGeneratedPacket.includes("Publishing channel: TikTok organic or paid ad") ||
       !shortFormGeneratedPacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !shortFormGeneratedPacket.includes("## Production prompt") ||
+      !shortFormGeneratedPacket.includes("Video, product, or media reference: https://example.com/launch-reel-video.") ||
+      !shortFormGeneratedPacket.includes("Match these visual beats: 0-2s product reveal, 3-6s before-after, 7-10s offer.") ||
       !shortFormGeneratedPacket.includes("Payment timing: after written brief acceptance only") ||
       !shortFormGeneratedPacket.includes("Payment is requested only after the brief and package are accepted in writing")
     ) {
-      throw new Error(`AI short-form ad music dynamic packet missing brand, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
+      throw new Error(`AI short-form ad music dynamic packet missing brand, video timing, channel, rights, prompt, or payment guardrail in ${viewport.name}`);
     }
     const shortFormGeneratedOrderHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
     if (!shortFormGeneratedOrderHref?.includes("template=ai-jingle-order.yml")) {
@@ -2793,6 +2802,8 @@ try {
       !shortFormAcceptancePacket.includes("## Acceptance and payment handoff") ||
       !shortFormAcceptancePacket.includes("Amount: USD $29 equivalent") ||
       !shortFormAcceptancePacket.includes("I accept the USD $29 Short-Form Ad Hook Sketch for Launch Reel Co") ||
+      !shortFormAcceptancePacket.includes("Video, media folder, or product URL: https://example.com/launch-reel-video") ||
+      !shortFormAcceptancePacket.includes("Key video beats or timestamps: 0-2s product reveal, 3-6s before-after, 7-10s offer") ||
       !shortFormAcceptancePacket.includes("Publishing channel: TikTok organic or paid ad") ||
       !shortFormAcceptancePacket.includes("Source material rights: Original prompt only; no third-party lyrics or melodies") ||
       !shortFormAcceptancePacket.includes("Payment timing: after written brief acceptance only") ||
@@ -2807,6 +2818,8 @@ try {
       !shortFormCommercialMemo.includes("## Commercial-use music memo") ||
       !shortFormCommercialMemo.includes("Project: Launch Reel Co") ||
       !shortFormCommercialMemo.includes("This is an order memo and usage record, not legal clearance") ||
+      !shortFormCommercialMemo.includes("Video, media folder, or product URL: https://example.com/launch-reel-video") ||
+      !shortFormCommercialMemo.includes("Key video beats or timestamps: 0-2s product reveal, 3-6s before-after, 7-10s offer") ||
       !shortFormCommercialMemo.includes("Publishing channel: TikTok organic or paid ad") ||
       !shortFormCommercialMemo.includes("Source tool and plan/tier note recorded") ||
       !shortFormCommercialMemo.includes("Paid delivery starts only after the written brief")
@@ -2821,17 +2834,38 @@ try {
     if (!shortFormSketchHref?.startsWith("blob:")) {
       throw new Error(`AI short-form ad music WAV sketch link was not generated in ${viewport.name}`);
     }
+    await page.locator("[data-jingle-form] [name='package']").selectOption("USD $49 Same-Day Hook Sketch");
+    await page.locator("[data-jingle-form] [name='timing']").selectOption("24h rush requested");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
+    const shortFormRushPacket = await page.locator("[data-jingle-output]").inputValue();
+    const shortFormRushHref = await page.locator("[data-open-jingle-brief]").getAttribute("href");
+    if (
+      !shortFormRushPacket.includes("Package: USD $49 Same-Day Hook Sketch") ||
+      !shortFormRushPacket.includes("Timing: 24h rush requested") ||
+      !shortFormRushPacket.includes("Video, media folder, or product URL: https://example.com/launch-reel-video") ||
+      !shortFormRushPacket.includes("Key video beats or timestamps: 0-2s product reveal, 3-6s before-after, 7-10s offer") ||
+      !shortFormRushHref?.includes("template=ai-music-rush-order.yml") ||
+      !shortFormRushHref.includes("labels=ai-jingle-order%2Cai-music-rush-order") ||
+      !decodeURIComponent(shortFormRushHref).includes("AI music rush order: Launch Reel Co")
+    ) {
+      throw new Error(`AI short-form ad music rush packet did not preserve video timing or route to the rush order form in ${viewport.name}`);
+    }
+    await page.locator("[data-jingle-form] [name='package']").selectOption("USD $29 Short-Form Ad Hook Sketch");
+    await page.locator("[data-jingle-form] [name='timing']").selectOption("48h target after accepted brief");
+    await page.locator("[data-jingle-form]").evaluate((form) => form.requestSubmit());
     const shortFormAdMusicBrief = await page.locator("textarea[aria-label='AI short-form ad music brief template']").inputValue();
     if (
       !shortFormAdMusicBrief.includes("Package: USD $29 Short-Form Ad Hook Sketch") ||
+      !shortFormAdMusicBrief.includes("Video or media folder link:") ||
       !shortFormAdMusicBrief.includes("Primary use: 6-10s TikTok/Reels/Shorts hook") ||
       !shortFormAdMusicBrief.includes("Publishing channel: TikTok / Instagram Reels / YouTube Shorts") ||
       !shortFormAdMusicBrief.includes("Source material rights: original prompt only / buyer-owned tagline") ||
-      !shortFormAdMusicBrief.includes("Delivery: one selected 6-15 second short-form ad music hook sketch") ||
+      !shortFormAdMusicBrief.includes("Key video beats or timestamps: 0-2s hook / 3-6s proof / 7-10s CTA / custom") ||
+      !shortFormAdMusicBrief.includes("Delivery: one selected 6-15 second short-form ad music hook sketch or same-day 8-15 second rush direction") ||
       !shortFormAdMusicBrief.includes("commercial-use memo") ||
       !shortFormAdMusicBrief.includes("Payment timing: after written brief acceptance only")
     ) {
-      throw new Error(`AI short-form ad music brief missing package, delivery, rights, channel, or payment copy in ${viewport.name}`);
+      throw new Error(`AI short-form ad music brief missing package, video timing, delivery, rights, channel, or payment copy in ${viewport.name}`);
     }
     const shortFormAdMusicOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (shortFormAdMusicOrderLinks < 2) {

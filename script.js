@@ -1421,11 +1421,15 @@ function buildJinglePacket(form) {
   const style = clean(data.get("style"), "clear vocal hook with polished ad music bed");
   const audience = clean(data.get("audience"), "Audience and offer TBD");
   const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const projectUrl = data.has("projectUrl") ? clean(data.get("projectUrl"), "Video, media folder, or product URL TBD") : "";
+  const sceneBeats = data.has("sceneBeats") ? clean(data.get("sceneBeats"), "Key scene beats TBD") : "";
   const channel = data.has("channel") ? clean(data.get("channel"), "Publishing channel TBD") : "";
   const rightsSource = data.has("rightsSource") ? clean(data.get("rightsSource"), "Source material rights TBD") : "";
 
   const productionPrompt = [
     `Create a ${usage.toLowerCase()} for "${brand}".`,
+    ...(projectUrl ? [`Video, product, or media reference: ${projectUrl}.`] : []),
+    ...(sceneBeats ? [`Match these visual beats: ${sceneBeats}.`] : []),
     `Mood: ${mood}.`,
     `Voice or style: ${style}.`,
     `Audience and offer: ${audience}.`,
@@ -1440,7 +1444,9 @@ function buildJinglePacket(form) {
     "",
     `Package: ${selectedPackage}`,
     `Brand/show: ${brand}`,
+    ...(projectUrl ? [`Video, media folder, or product URL: ${projectUrl}`] : []),
     `Primary use: ${usage}`,
+    ...(sceneBeats ? [`Key video beats or timestamps: ${sceneBeats}`] : []),
     `Timing: ${timing}`,
     ...(channel ? [`Publishing channel: ${channel}`] : []),
     ...(rightsSource ? [`Source material rights: ${rightsSource}`] : []),
@@ -1475,6 +1481,8 @@ function buildJingleAcceptancePacket(form) {
   const usage = clean(data.get("usage"), "8-12s local ad hook");
   const timing = clean(data.get("timing"), "48h target after accepted brief");
   const tagline = clean(data.get("tagline"), "No required tagline provided");
+  const projectUrl = data.has("projectUrl") ? clean(data.get("projectUrl"), "Video, media folder, or product URL TBD") : "";
+  const sceneBeats = data.has("sceneBeats") ? clean(data.get("sceneBeats"), "Key scene beats TBD") : "";
   const channel = data.has("channel") ? clean(data.get("channel"), "Publishing channel TBD") : "";
   const rightsSource = data.has("rightsSource") ? clean(data.get("rightsSource"), "Source material rights TBD") : "";
   const amount = packageAmount(selectedPackage);
@@ -1487,7 +1495,9 @@ function buildJingleAcceptancePacket(form) {
     `Package: ${selectedPackage}`,
     `Amount: ${amount} equivalent`,
     `Brand/show/project: ${brand}`,
+    ...(projectUrl ? [`Video, media folder, or product URL: ${projectUrl}`] : []),
     `Scope: ${usage}`,
+    ...(sceneBeats ? [`Key video beats or timestamps: ${sceneBeats}`] : []),
     ...(channel ? [`Publishing channel: ${channel}`] : []),
     ...(rightsSource ? [`Source material rights: ${rightsSource}`] : []),
     `Required line or tagline: ${tagline}`,
@@ -1515,6 +1525,8 @@ function buildJingleCommercialMemo(form) {
   const brand = clean(data.get("brand"), "Brand TBD");
   const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
   const usage = clean(data.get("usage"), "8-12s local ad hook");
+  const projectUrl = data.has("projectUrl") ? clean(data.get("projectUrl"), "Video, media folder, or product URL TBD") : "";
+  const sceneBeats = data.has("sceneBeats") ? clean(data.get("sceneBeats"), "Key scene beats TBD") : "";
   const channel = clean(data.get("channel"), "Publishing channel TBD");
   const rightsSource = clean(data.get("rightsSource"), "Original prompt only; no third-party lyrics or melodies");
   const tagline = clean(data.get("tagline"), "No required tagline provided");
@@ -1528,7 +1540,9 @@ function buildJingleCommercialMemo(form) {
     `Project: ${brand}`,
     `Package: ${selectedPackage}`,
     `Amount: ${amount} equivalent`,
+    ...(projectUrl ? [`Video, media folder, or product URL: ${projectUrl}`] : []),
     `Primary use: ${usage}`,
+    ...(sceneBeats ? [`Key video beats or timestamps: ${sceneBeats}`] : []),
     `Publishing channel: ${channel}`,
     `Source material rights: ${rightsSource}`,
     `Required line or tagline: ${tagline}`,
@@ -1546,6 +1560,21 @@ function buildJingleCommercialMemo(form) {
     "Start rule:",
     "Paid delivery starts only after the written brief, selected package, publishing channel, and payment path are accepted.",
   ].join("\n");
+}
+
+function jingleOrderRoute(form, selectedPackage) {
+  if (isSameDayRushPackage(selectedPackage)) {
+    return {
+      template: "ai-music-rush-order.yml",
+      labels: "ai-jingle-order,ai-music-rush-order",
+      titlePrefix: "AI music rush order",
+    };
+  }
+  return {
+    template: form.dataset.orderTemplate || "ai-jingle-order.yml",
+    labels: form.dataset.orderLabels || "ai-jingle-order",
+    titlePrefix: form.dataset.orderTitlePrefix || "AI jingle order",
+  };
 }
 
 function hashString(value) {
@@ -1706,11 +1735,14 @@ function updateJingleBrief() {
   const packet = buildJinglePacket(jingleForm);
   const acceptancePacket = buildJingleAcceptancePacket(jingleForm);
   const commercialMemo = buildJingleCommercialMemo(jingleForm);
-  const brand = compactTitle(new FormData(jingleForm).get("brand"), "brand");
-  const titlePrefix = jingleForm.dataset.orderTitlePrefix || "AI jingle order";
+  const data = new FormData(jingleForm);
+  const selectedPackage = clean(data.get("package"), "USD $29 Founding Hook Sketch");
+  const route = jingleOrderRoute(jingleForm, selectedPackage);
+  const brand = compactTitle(data.get("brand"), "brand");
+  const titlePrefix = route.titlePrefix;
   const emailPrefix = jingleForm.dataset.emailSubjectPrefix || "AI jingle brief";
-  const orderTemplate = jingleForm.dataset.orderTemplate || "ai-jingle-order.yml";
-  const orderLabels = jingleForm.dataset.orderLabels || "ai-jingle-order";
+  const orderTemplate = route.template;
+  const orderLabels = route.labels;
   const title = `${titlePrefix}: ${brand}`;
   output.value = packet;
   if (acceptanceOutput) {

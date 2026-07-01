@@ -12,7 +12,7 @@ on:
 
 jobs:
   respond:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.labels.*.name, 'ai-jingle-order') || contains(github.event.issue.labels.*.name, 'ai-product-video-music-order') || contains(github.event.issue.labels.*.name, 'ai-saas-launch-video-music-order') || contains(github.event.issue.labels.*.name, 'ugc-agency-music-hook-order')
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.labels.*.name, 'ai-jingle-order') || contains(github.event.issue.labels.*.name, 'ai-music-rush-order') || contains(github.event.issue.labels.*.name, 'ai-product-video-music-order') || contains(github.event.issue.labels.*.name, 'ai-saas-launch-video-music-order') || contains(github.event.issue.labels.*.name, 'ugc-agency-music-hook-order')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     concurrency:

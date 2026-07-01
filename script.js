@@ -1046,11 +1046,15 @@ function aiMusicOrderResult(form) {
   const sampleUrl = selectedSample === "Use route default sample"
     ? "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html"
     : sampleOption?.dataset.url || "Provided in buyer brief";
+  const isRushPackage = /same-day|rush|\$49/i.test(packageName);
   return {
     ...pricingResult,
     amount,
     packageName,
     reason: packageChoice === "Use calculator recommendation" ? pricingResult.reason : "buyer-selected package",
+    template: isRushPackage ? "ai-music-rush-order.yml" : pricingResult.template,
+    labels: isRushPackage ? "ai-jingle-order,ai-music-rush-order" : pricingResult.labels,
+    service: isRushPackage ? "https://jackjin1997.github.io/agent-audit-sprint/ai-music-rush-order.html" : pricingResult.service,
     sample,
     sampleUrl,
   };

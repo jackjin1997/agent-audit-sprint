@@ -14,6 +14,7 @@ body:
       description: Pick the smallest package that answers the current campaign need.
       options:
         - USD $29 Founding Hook Sketch
+        - USD $49 Same-Day Hook Sketch
         - USD $79 Jingle Hook Pack
         - USD $149 Ad Music Pack
         - USD $399 Sonic Launch Kit

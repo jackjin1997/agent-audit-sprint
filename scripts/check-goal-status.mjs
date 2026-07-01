@@ -51,6 +51,7 @@ const INTAKE_LABELS = new Set([
   "ai-cost-spike-emergency",
   "agent-cost-leak-review",
   "ai-jingle-order",
+  "ai-music-rush-order",
   "ai-product-video-music-order",
   "ai-saas-launch-video-music-order",
   "ugc-agency-music-hook-order",

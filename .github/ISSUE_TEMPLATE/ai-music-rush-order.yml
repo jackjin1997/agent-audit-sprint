@@ -1,0 +1,144 @@
+name: Buy same-day AI music rush
+description: 24h availability-confirmed order form for a USD $49 AI music hook sketch
+title: "AI music rush order: <brand, product, show, or clip>"
+labels: ["ai-jingle-order", "ai-music-rush-order"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the USD $49 Same-Day Hook Sketch only. Do not paste private campaign data, unreleased customer data, credentials, raw production folders, copyrighted lyrics, or third-party material you do not have rights to use. Rush timing is confirmed in writing before payment.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: The rush package is intentionally narrow so availability can be accepted or declined quickly.
+      options:
+        - USD $49 Same-Day Hook Sketch
+    validations:
+      required: true
+  - type: input
+    id: brand
+    attributes:
+      label: Brand, podcast, channel, or product name
+      placeholder: Same-Day Launch Clip
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline and timezone
+      placeholder: Today 6pm PT / 2026-07-01 18:00 PT
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Website or social link
+      placeholder: https://example.com/urgent-clip
+  - type: dropdown
+    id: usage
+    attributes:
+      label: Primary use
+      options:
+        - Launch video due today
+        - Paid social ad due today
+        - Product clip due today
+        - Podcast cue or sponsor bump due today
+        - Creator reel or short-form video due today
+        - Internal pitch clip due today
+    validations:
+      required: true
+  - type: dropdown
+    id: reference_sample
+    attributes:
+      label: Reference sample or direction
+      description: Pick the closest public reference or describe a custom direction in the brief.
+      options:
+        - Product Demo Hook sample
+        - SaaS Launch Hero Hook sample
+        - Business Show Intro sample
+        - Coffee Shop 30s Hook sample
+        - Radio ID And Drop sample
+        - Custom direction described below
+    validations:
+      required: true
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Publishing channel
+      options:
+        - Paid social ad or product launch
+        - YouTube or creator monetized video
+        - Podcast intro or sponsor segment
+        - Product page or marketplace listing clip
+        - Client approval or internal pitch
+    validations:
+      required: true
+  - type: dropdown
+    id: source_rights
+    attributes:
+      label: Source material rights
+      options:
+        - Original prompt only; no third-party lyrics or melodies
+        - Buyer-owned tagline or voiceover only
+        - Cleared product video or voiceover reference
+        - Needs rights review before payment
+    validations:
+      required: true
+  - type: textarea
+    id: brief
+    attributes:
+      label: Brand brief
+      description: Audience, offer, clip context, mood, and what should happen in the first five seconds.
+      placeholder: Urgent product launch reel for founders. Needs one fast, credible 8-15 second hook that leaves room for captions and a voiceover.
+    validations:
+      required: true
+  - type: input
+    id: cta
+    attributes:
+      label: Required line or CTA
+      placeholder: Publish the clip today.
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Timing
+      options:
+        - 24h rush requested, confirm availability first
+        - Same business day if available
+        - Next morning if today is full
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Payment is requested only after rush availability and the brief are accepted in writing.
+      options:
+        - Ethereum ETH after brief acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after brief acceptance
+        - Solana SOL after brief acceptance
+        - Solana SPL USDC after brief acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include secrets, credentials, private campaign data, unreleased customer data, raw production folders, or third-party lyrics I do not have rights to use.
+          required: true
+        - label: I understand rush timing is confirmed before payment, and no payment is requested if the deadline cannot be accepted.
+          required: true
+        - label: I understand AI-generated music may have copyright-registration limits, and this package is not legal clearance.
+          required: true
+        - label: I understand payment is only requested after written availability and brief acceptance for the selected package.
+          required: true

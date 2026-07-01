@@ -253,6 +253,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music same-day rush owned distribution refresh | GitHub profile README commit `c1f3a678caa2`, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 revision `3f0bfcd06321`, discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/7 updated at `2026-07-01T10:44:32Z` | Added the USD $49 Same-Day Hook Sketch page and `?lane=rush` order-desk path to owned profile, gist, and discussion surfaces so urgent launch videos, ads, podcast cues, product clips, and creator reels route to written availability confirmation and accepted-brief-before-payment handling; no accepted scope or payment counted |
 
+| AI Music same-day rush dedicated intake | `.github/ISSUE_TEMPLATE/ai-music-rush-order.yml`, `.github/ISSUE_TEMPLATE/ai-jingle-order.yml`, `.github/workflows/respond-ai-jingle-order.yml`, `scripts/comment-ai-jingle-order.mjs`, `scripts/check-goal-status.mjs`, `ai-music-rush-order.html`, `script.js`, `README.md`, `llms.txt`, `scripts/check-site.mjs` | Added a dedicated USD $49 Same-Day Hook Sketch issue form with deadline/timezone, publishing-channel, source-rights, and payment-after-written-availability fields; routed the rush page and order desk to the new template, fixed the autoresponder so $49 rush orders are not classified as $29 sketches, and added monitor/test coverage for the `ai-music-rush-order` label; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

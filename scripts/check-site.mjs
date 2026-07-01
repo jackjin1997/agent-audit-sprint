@@ -126,6 +126,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
+  ".github/ISSUE_TEMPLATE/ai-music-rush-order.yml",
   ".github/ISSUE_TEMPLATE/ai-saas-launch-video-music-order.yml",
   ".github/ISSUE_TEMPLATE/ai-product-video-music-order.yml",
   ".github/ISSUE_TEMPLATE/ugc-agency-music-hook-order.yml",
@@ -336,6 +337,7 @@ if (!llmsText.includes("AI Commercial Jingle Generator")) {
 const aiJingleOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-jingle-order.yml"), "utf8");
 if (
   !aiJingleOrderTemplate.includes("id: reference_sample") ||
+  !aiJingleOrderTemplate.includes("USD $49 Same-Day Hook Sketch") ||
   !aiJingleOrderTemplate.includes("Reference sample or direction") ||
   !aiJingleOrderTemplate.includes("SaaS Launch Hero Hook sample") ||
   !aiJingleOrderTemplate.includes("Coffee Shop 30s Hook sample") ||
@@ -344,6 +346,18 @@ if (
   !aiJingleOrderTemplate.includes("Product Demo Hook sample")
 ) {
   throw new Error("AI jingle order template is missing the general reference sample selector");
+}
+if (!llmsText.includes("ai-music-rush-order.yml")) {
+  throw new Error("llms.txt is missing the AI music rush order intake");
+}
+const aiMusicRushOrderTemplate = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/ai-music-rush-order.yml"), "utf8");
+if (
+  !aiMusicRushOrderTemplate.includes("USD $49 Same-Day Hook Sketch") ||
+  !aiMusicRushOrderTemplate.includes("Deadline and timezone") ||
+  !aiMusicRushOrderTemplate.includes("ai-music-rush-order") ||
+  !aiMusicRushOrderTemplate.includes("24h rush requested, confirm availability first")
+) {
+  throw new Error("AI music rush order template is missing the $49 package, deadline, label, or timing fields");
 }
 if (!llmsText.includes("AI SaaS Launch Video Music Generator")) {
   throw new Error("llms.txt is missing the AI SaaS Launch Video Music Generator page");
@@ -923,6 +937,73 @@ if (
   !genericSaasReferenceOrderOutput.includes("ai-saas-launch-video-music-order.yml")
 ) {
   throw new Error("Generic AI jingle order dry-run did not route SaaS Launch Hero sample to the SaaS fast lane");
+}
+
+const rushMusicOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    JINGLE_ORDER_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $49 Same-Day Hook Sketch",
+      "",
+      "### Brand, podcast, channel, or product name",
+      "",
+      "Same-Day Launch Clip",
+      "",
+      "### Deadline and timezone",
+      "",
+      "Today 6pm PT",
+      "",
+      "### Website or social link",
+      "",
+      "https://example.com/urgent-clip",
+      "",
+      "### Primary use",
+      "",
+      "Launch video due today",
+      "",
+      "### Reference sample or direction",
+      "",
+      "Product Demo Hook sample",
+      "",
+      "### Publishing channel",
+      "",
+      "Paid social ad or product launch",
+      "",
+      "### Source material rights",
+      "",
+      "Buyer-owned tagline or voiceover only",
+      "",
+      "### Brand brief",
+      "",
+      "One urgent launch reel needs an 8-15 second hook that leaves room for captions.",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Timing",
+      "",
+      "24h rush requested, confirm availability first",
+      "",
+      "### Payment path",
+      "",
+      "Solana SPL USDC after brief acceptance",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (
+  !rushMusicOrderOutput.includes("USD $49 Same-Day Hook Sketch") ||
+  !rushMusicOrderOutput.includes("USD $49 equivalent") ||
+  !rushMusicOrderOutput.includes("Deadline and timezone: **Today 6pm PT**") ||
+  !rushMusicOrderOutput.includes("ai-music-rush-order.html") ||
+  !rushMusicOrderOutput.includes("ai-music-rush-order.yml")
+) {
+  throw new Error("AI music rush order dry-run output is missing $49 package, deadline, service page, or rush order form");
 }
 
 const ugcAgencyOrderOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-ai-jingle-order.mjs")], {
@@ -2057,7 +2138,8 @@ try {
       !rushLanePacket.includes("Contact: buyer@example.com") ||
       !rushLanePacket.includes("Delivery timing: 24h rush requested, confirm availability first") ||
       !rushLanePacket.includes("Payment timing: after written brief acceptance only") ||
-      !rushLaneHref?.includes("template=ai-jingle-order.yml") ||
+      !rushLaneHref?.includes("template=ai-music-rush-order.yml") ||
+      !rushLaneHref.includes("labels=ai-jingle-order%2Cai-music-rush-order") ||
       !decodeURIComponent(rushLaneEmail || "").includes("AI music order brief: Same-Day Launch Clip")
     ) {
       throw new Error(`AI music order desk rush fast lane did not prefill the $49 packet in ${viewport.name}`);
@@ -2159,9 +2241,9 @@ try {
     if (rushOrderDeskLinks < 3) {
       throw new Error(`AI music rush page missing prefilled rush order desk links in ${viewport.name}`);
     }
-    const rushOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    const rushOrderLinks = await page.locator("a[href*='template=ai-music-rush-order.yml']").count();
     if (rushOrderLinks < 1) {
-      throw new Error(`AI music rush page missing tracked AI jingle order link in ${viewport.name}`);
+      throw new Error(`AI music rush page missing tracked same-day rush order link in ${viewport.name}`);
     }
     const rushHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!rushHeroLoaded) throw new Error(`AI music rush hero image failed to load in ${viewport.name}`);

@@ -5,10 +5,12 @@ const SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-
 const UGC_AGENCY_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ugc-agency-ai-music-hooks.html";
 const PRODUCT_VIDEO_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-product-video-music.html";
 const SAAS_LAUNCH_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-saas-launch-video-music.html";
+const RUSH_SERVICE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-music-rush-order.html";
 const SAMPLE_HUB_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html";
 const AI_JINGLE_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-jingle-order.yml";
 const PRODUCT_VIDEO_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-product-video-music-order.yml";
 const SAAS_LAUNCH_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-saas-launch-video-music-order.yml";
+const RUSH_ORDER_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-music-rush-order.yml";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
 const PAYMENT_PROOF_URL = "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml";
@@ -51,6 +53,15 @@ function packageDetails(rawChoice = "") {
       target: "24-48h after brief and payment confirmation",
       deliverable: "one selected 6-15 second agency audio hook sketch, production prompt, rough cut note, source/tool note, client-ready usage memo, and guardrails",
       serviceUrl: UGC_AGENCY_SERVICE_URL,
+    };
+  }
+  if (choice.includes("$49") || /same-day|rush/i.test(choice)) {
+    return {
+      name: "USD $49 Same-Day Hook Sketch",
+      price: "USD $49",
+      target: "same-day target after written availability, brief acceptance, and payment confirmation",
+      deliverable: "one selected 8-15 second rush music hook direction, production prompt, rough cut note, source/tool note, commercial-use memo, and usage guardrails",
+      serviceUrl: RUSH_SERVICE_URL,
     };
   }
   if (choice.includes("$29") || /founding|sketch/i.test(choice)) {
@@ -211,9 +222,11 @@ function renderJingleOrderComment(issueBody = "") {
   const brief = extractField(issueBody, "Brand brief") || targetViewer || productPositioning || productOffer || "brief to confirm";
   const contact = extractField(issueBody, "Preferred contact") || "this issue";
   const timing = extractField(issueBody, "Timing") || packageInfo.target;
+  const deadline = extractField(issueBody, "Deadline and timezone");
   const paymentPath = extractField(issueBody, "Payment path") || "to confirm";
   const referenceDetails = [
     referenceSample ? `- Reference sample or direction: **${referenceSample}**` : "",
+    deadline ? `- Deadline and timezone: **${deadline}**` : "",
     channel ? `- Publishing channel: **${channel}**` : "",
     rightsSource ? `- Source material rights: **${rightsSource}**` : "",
     visualPacing ? `- Visual pacing: **${visualPacing}**` : "",
@@ -261,6 +274,7 @@ ${PAYMENT_PROOF_URL}
 - Ethereum: \`${ETH_ADDRESS}\`
 - Solana: \`${SOL_ADDRESS}\`
 - Service page and browser sketch demo: ${packageInfo.serviceUrl}
+- Same-day rush order form: ${RUSH_ORDER_URL}
 - Fixed jingle quote and payment packet: ${QUOTE_URL}
 - Invoice template: ${INVOICE_TEMPLATE_URL}
 - Delivery note template: ${DELIVERY_NOTE_TEMPLATE_URL}

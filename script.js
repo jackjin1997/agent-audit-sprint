@@ -597,6 +597,132 @@ function mailtoHref(subject, body) {
 const aiMusicPricingForm = document.querySelector("[data-ai-music-pricing-form]");
 const aiMusicOrderForm = document.querySelector("[data-ai-music-order-form]");
 
+const aiMusicOrderLanes = {
+  saas: {
+    useCase: "SaaS launch video",
+    packageChoice: "Use calculator recommendation",
+    sample: "SaaS Launch Hero Hook",
+    brand: "SaaS Launch Video",
+    projectUrl: "https://example.com/launch",
+    contact: "founder@example.com",
+    lengthSeconds: "12",
+    variants: "1",
+    cutPlan: "single",
+    revisions: "0",
+    timing: "48h target after accepted brief",
+    channel: "Paid social ad or product launch",
+    rights: "Buyer-owned tagline or voiceover",
+    audience: "SaaS founders and Product Hunt visitors seeing a launch demo. The first five seconds should feel sharp, credible, and fast.",
+    cta: "CTA: try the launch demo. Required phrase: ship the workflow today.",
+    notes: "Match the SaaS Launch Hero Hook energy. Keep the cue clean under voiceover and avoid known-artist soundalikes.",
+  },
+  product: {
+    useCase: "Product video",
+    packageChoice: "Use calculator recommendation",
+    sample: "Product Demo Hook",
+    brand: "Product Demo Video",
+    projectUrl: "https://example.com/product",
+    contact: "marketing@example.com",
+    lengthSeconds: "12",
+    variants: "1",
+    cutPlan: "single",
+    revisions: "0",
+    timing: "48h target after accepted brief",
+    channel: "Paid social ad or product launch",
+    rights: "Buyer-owned tagline or voiceover",
+    audience: "Ecommerce buyers watching a short product demo or marketplace launch clip.",
+    cta: "CTA: see the product in action. Required phrase: built for everyday use.",
+    notes: "Use the Product Demo Hook as the reference. Leave room for captions and a product voiceover.",
+  },
+  ugc: {
+    useCase: "UGC agency client approval",
+    packageChoice: "USD $149 Ad Music Pack",
+    sample: "Product Demo Hook",
+    brand: "UGC Client Approval Pack",
+    projectUrl: "https://example.com/client-brief",
+    contact: "agency@example.com",
+    lengthSeconds: "30",
+    variants: "3",
+    cutPlan: "two-cuts",
+    revisions: "1",
+    timing: "48h target after accepted brief",
+    channel: "Client approval or internal pitch",
+    rights: "Buyer-owned tagline or voiceover",
+    audience: "Paid-social client stakeholders reviewing UGC ad directions before final production.",
+    cta: "CTA: approve the creative direction. Required phrase: ready for launch week.",
+    notes: "Provide three client-reviewable directions with a 15 and 30 second cut plan. No artist soundalikes or third-party lyrics.",
+  },
+  podcast: {
+    useCase: "Podcast intro or sponsor cue",
+    packageChoice: "USD $149 Ad Music Pack",
+    sample: "Business Show Intro",
+    brand: "Podcast Sponsor Campaign",
+    projectUrl: "https://example.com/media-kit",
+    contact: "sponsorships@example.com",
+    lengthSeconds: "30",
+    variants: "3",
+    cutPlan: "two-cuts",
+    revisions: "1",
+    timing: "This week",
+    channel: "Podcast intro or sponsor segment",
+    rights: "Buyer-owned tagline or voiceover",
+    audience: "Podcast listeners hearing a host-read sponsor segment or branded show opener.",
+    cta: "CTA: visit the sponsor link. Required phrase: brought to you by the sponsor.",
+    notes: "Use the Business Show Intro sample as the reference. Keep it sponsor-safe, concise, and easy to duck under speech.",
+  },
+  listing: {
+    useCase: "Real estate listing video",
+    packageChoice: "Use calculator recommendation",
+    sample: "Business Show Intro",
+    brand: "Listing Video Soundtrack",
+    projectUrl: "https://example.com/listing",
+    contact: "agent@example.com",
+    lengthSeconds: "30",
+    variants: "1",
+    cutPlan: "single",
+    revisions: "0",
+    timing: "48h target after accepted brief",
+    channel: "Event, listing, or wedding delivery",
+    rights: "Original prompt only",
+    audience: "Home buyers watching a listing reel, open-house teaser, or walkthrough clip.",
+    cta: "CTA: schedule a showing. Required phrase: see the full tour.",
+    notes: "Polished, warm, and neutral. Avoid overly dramatic trailer cues and leave room for property captions.",
+  },
+  wedding: {
+    useCase: "Wedding highlight video",
+    packageChoice: "USD $79 Jingle Hook Pack",
+    sample: "Coffee Shop 30s Hook",
+    brand: "Wedding Highlight Soundtrack",
+    projectUrl: "https://example.com/wedding-film",
+    contact: "films@example.com",
+    lengthSeconds: "30",
+    variants: "2",
+    cutPlan: "single",
+    revisions: "0",
+    timing: "This week",
+    channel: "Event, listing, or wedding delivery",
+    rights: "Original prompt only",
+    audience: "Couples and families watching a teaser reel or wedding highlight cut.",
+    cta: "CTA: share the highlight. Required phrase: no spoken tagline needed.",
+    notes: "Create two emotional but clean directions. Avoid copyrighted songs, known-artist soundalikes, and vocal clones.",
+  },
+};
+
+function setNamedFieldValue(form, name, value) {
+  const field = form.elements.namedItem(name);
+  if (!field || value === undefined) return;
+  field.value = value;
+}
+
+function applyAiMusicOrderLane(form) {
+  const lane = new URLSearchParams(window.location.search).get("lane");
+  const preset = lane ? aiMusicOrderLanes[lane.toLowerCase()] : null;
+  if (!preset) return;
+  Object.entries(preset).forEach(([name, value]) => {
+    setNamedFieldValue(form, name, value);
+  });
+}
+
 function selectedAiMusicUseCaseOption(form) {
   return form.querySelector("[name='useCase']")?.selectedOptions?.[0] || null;
 }
@@ -909,6 +1035,7 @@ if (aiMusicPricingForm) {
 }
 
 if (aiMusicOrderForm) {
+  applyAiMusicOrderLane(aiMusicOrderForm);
   updateAiMusicOrderDesk();
   aiMusicOrderForm.addEventListener("input", updateAiMusicOrderDesk);
   aiMusicOrderForm.addEventListener("change", updateAiMusicOrderDesk);

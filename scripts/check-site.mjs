@@ -1922,6 +1922,31 @@ try {
     ) {
       throw new Error(`AI music order desk acceptance handoff did not update for UGC agency $399 order in ${viewport.name}`);
     }
+
+    await page.goto(`${aiMusicOrderDesk}?lane=podcast#order-desk`, { waitUntil: "networkidle" });
+    const podcastLanePacket = await page.locator("[data-ai-music-order-output]").inputValue();
+    const podcastLaneAcceptance = await page.locator("[data-ai-music-order-acceptance-output]").inputValue();
+    const podcastLaneHref = await page.locator("[data-ai-music-order-open]").getAttribute("href");
+    const podcastLaneEmail = await page.locator("[data-ai-music-order-email]").getAttribute("href");
+    if (
+      !podcastLanePacket.includes("Requested package: USD $149 Ad Music Pack") ||
+      !podcastLanePacket.includes("Use case: Podcast intro or sponsor cue") ||
+      !podcastLanePacket.includes("Reference sample: Business Show Intro") ||
+      !podcastLanePacket.includes("Contact: sponsorships@example.com") ||
+      !podcastLanePacket.includes("Publishing channel: Podcast intro or sponsor segment") ||
+      !podcastLaneHref?.includes("template=ai-jingle-order.yml") ||
+      !decodeURIComponent(podcastLaneEmail || "").includes("AI music order brief: Podcast Sponsor Campaign")
+    ) {
+      throw new Error(`AI music order desk podcast fast lane did not prefill the $149 sponsor packet in ${viewport.name}`);
+    }
+    if (
+      !podcastLaneAcceptance.includes("Package: USD $149 Ad Music Pack") ||
+      !podcastLaneAcceptance.includes("Amount: USD $149 equivalent") ||
+      !podcastLaneAcceptance.includes("Brand, product, show, or client: Podcast Sponsor Campaign") ||
+      !podcastLaneAcceptance.includes("Payment proof service field: USD $149 Ad Music Pack")
+    ) {
+      throw new Error(`AI music order desk podcast fast lane did not prefill acceptance/payment handoff in ${viewport.name}`);
+    }
     const aiMusicOrderOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicOrderOverflow) throw new Error(`AI music order desk horizontal overflow detected in ${viewport.name}`);
 

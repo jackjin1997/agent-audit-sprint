@@ -230,12 +230,254 @@ function calculateOpenRouterCost(form) {
   };
 }
 
+function normalizeUsageKey(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function parseMaybeNumber(value) {
+  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+  const text = String(value ?? "").replace(/[,$]/g, "").trim();
+  if (!text) return 0;
+  const number = Number(text);
+  return Number.isFinite(number) ? number : 0;
+}
+
+function flattenUsageRow(value, prefix = "", output = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return output;
+  Object.entries(value).forEach(([key, entry]) => {
+    const path = prefix ? `${prefix}.${key}` : key;
+    if (entry && typeof entry === "object" && !Array.isArray(entry)) {
+      flattenUsageRow(entry, path, output);
+      return;
+    }
+    const normalizedPath = normalizeUsageKey(path);
+    const normalizedKey = normalizeUsageKey(key);
+    output[normalizedPath] = entry;
+    if (!(normalizedKey in output)) output[normalizedKey] = entry;
+  });
+  return output;
+}
+
+function usageValue(flat, keys) {
+  for (const key of keys) {
+    const normalized = normalizeUsageKey(key);
+    if (normalized in flat) return flat[normalized];
+  }
+  return "";
+}
+
+function usageNumber(flat, keys) {
+  return parseMaybeNumber(usageValue(flat, keys));
+}
+
+function usageTruthy(flat, keys) {
+  const value = usageValue(flat, keys);
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value > 0;
+  const text = String(value || "").toLowerCase().trim();
+  return Boolean(text && !["false", "0", "null", "none", "success", "ok"].includes(text));
+}
+
+function parseCsvRows(text) {
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length < 2) return [];
+
+  function parseLine(line) {
+    const cells = [];
+    let cell = "";
+    let quoted = false;
+    for (let index = 0; index < line.length; index += 1) {
+      const char = line[index];
+      const next = line[index + 1];
+      if (char === '"' && quoted && next === '"') {
+        cell += '"';
+        index += 1;
+      } else if (char === '"') {
+        quoted = !quoted;
+      } else if (char === "," && !quoted) {
+        cells.push(cell.trim());
+        cell = "";
+      } else {
+        cell += char;
+      }
+    }
+    cells.push(cell.trim());
+    return cells;
+  }
+
+  const headers = parseLine(lines[0]);
+  if (headers.length < 2) return [];
+  return lines.slice(1).map((line) => {
+    const cells = parseLine(line);
+    return headers.reduce((row, header, index) => {
+      row[header] = cells[index] ?? "";
+      return row;
+    }, {});
+  });
+}
+
+function rowsFromUsageJson(value) {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== "object") return [];
+  for (const key of ["data", "rows", "usage", "items", "results", "requests", "generations", "logs", "records"]) {
+    if (Array.isArray(value[key])) return value[key];
+  }
+  return [value];
+}
+
+function parseUsageRows(text) {
+  const trimmed = String(text || "").trim();
+  if (!trimmed) return [];
+  try {
+    return rowsFromUsageJson(JSON.parse(trimmed));
+  } catch {
+    // Fall through to JSONL or CSV.
+  }
+
+  const lines = trimmed.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length > 1) {
+    try {
+      return lines.map((line) => JSON.parse(line));
+    } catch {
+      // Fall through to CSV.
+    }
+  }
+  return parseCsvRows(trimmed);
+}
+
+function summarizeUsageRows(rows, sampleDays) {
+  const modelCounts = new Map();
+  let inputTokensTotal = 0;
+  let outputTokensTotal = 0;
+  let cacheTokensTotal = 0;
+  let toolCallsTotal = 0;
+  let rowsWithToolCalls = 0;
+  let retryOrFailedRows = 0;
+
+  rows.forEach((row) => {
+    const flat = flattenUsageRow(row);
+    inputTokensTotal += usageNumber(flat, [
+      "input_tokens",
+      "prompt_tokens",
+      "inputTokens",
+      "promptTokens",
+      "usage.prompt_tokens",
+      "tokens_in",
+      "tokensIn",
+    ]);
+    outputTokensTotal += usageNumber(flat, [
+      "output_tokens",
+      "completion_tokens",
+      "outputTokens",
+      "completionTokens",
+      "usage.completion_tokens",
+      "tokens_out",
+      "tokensOut",
+    ]);
+    cacheTokensTotal += usageNumber(flat, [
+      "cache_read_tokens",
+      "cached_tokens",
+      "cached_prompt_tokens",
+      "cacheReadTokens",
+      "prompt_cache_hit_tokens",
+      "usage.prompt_tokens_details.cached_tokens",
+    ]);
+
+    const directToolCalls = Array.isArray(row?.tool_calls) ? row.tool_calls.length : 0;
+    const toolCalls = directToolCalls || usageNumber(flat, ["tool_calls", "toolCalls", "tool_call_count", "toolCallCount"]);
+    if (toolCalls > 0) {
+      toolCallsTotal += toolCalls;
+      rowsWithToolCalls += 1;
+    }
+
+    const model = clean(usageValue(flat, ["model", "model_id", "modelId", "generation_model", "provider_model"]), "");
+    if (model) modelCounts.set(model, (modelCounts.get(model) || 0) + 1);
+
+    const status = String(usageValue(flat, ["status", "state", "finish_reason", "finishReason"]) || "").toLowerCase();
+    const failedStatus = /fail|error|timeout|rate[_ -]?limit|cancel|retry/.test(status);
+    if (failedStatus || usageTruthy(flat, ["error", "failed", "retry", "retried", "timeout"])) {
+      retryOrFailedRows += 1;
+    }
+  });
+
+  const rowCount = rows.length;
+  const safeSampleDays = Math.min(31, Math.max(1, Number(sampleDays) || 30));
+  const monthlyRequests = Math.max(1, Math.round(rowCount * (30 / safeSampleDays)));
+  const averageInputTokens = Math.round((inputTokensTotal || cacheTokensTotal) / Math.max(1, rowCount));
+  const averageOutputTokens = Math.round(outputTokensTotal / Math.max(1, rowCount));
+  const cacheBase = Math.max(inputTokensTotal, cacheTokensTotal);
+  const cacheReadPercent = cacheBase > 0 ? Math.round((cacheTokensTotal / cacheBase) * 100) : 0;
+  const successfulRows = Math.max(1, rowCount - retryOrFailedRows);
+  const retryPercent = Math.round((retryOrFailedRows / successfulRows) * 100);
+  const averageToolCalls = rowsWithToolCalls ? Math.round(toolCallsTotal / rowsWithToolCalls) : 0;
+  const models = [...modelCounts.entries()]
+    .sort((left, right) => right[1] - left[1])
+    .slice(0, 4)
+    .map(([model, count]) => `${model} (${count})`);
+
+  return {
+    rowCount,
+    sampleDays: safeSampleDays,
+    monthlyRequests,
+    averageInputTokens,
+    averageOutputTokens,
+    cacheReadPercent: Math.min(100, Math.max(0, cacheReadPercent)),
+    retryPercent,
+    averageToolCalls,
+    inputTokensTotal,
+    outputTokensTotal,
+    cacheTokensTotal,
+    retryOrFailedRows,
+    models,
+  };
+}
+
+function applyUsageImportToOpenRouterForm(form) {
+  const importText = form.querySelector("[name='usageImport']")?.value || "";
+  const summaryTarget = form.querySelector("[data-openrouter-import-summary]");
+  let rows = [];
+  try {
+    rows = parseUsageRows(importText).filter((row) => row && typeof row === "object");
+  } catch {
+    rows = [];
+  }
+  if (!rows.length) {
+    form.dataset.openrouterImportedUsageSummary = "";
+    if (summaryTarget) summaryTarget.textContent = "No usage rows imported. Paste sanitized JSON, JSONL, or CSV with token count fields.";
+    return;
+  }
+
+  const summary = summarizeUsageRows(rows, numberField(form, "usageSampleDays", 30));
+  form.querySelector("[name='monthlyRequests']").value = String(summary.monthlyRequests);
+  form.querySelector("[name='inputTokens']").value = String(summary.averageInputTokens);
+  form.querySelector("[name='outputTokens']").value = String(summary.averageOutputTokens);
+  form.querySelector("[name='cacheReadPercent']").value = String(summary.cacheReadPercent);
+  form.querySelector("[name='retryPercent']").value = String(summary.retryPercent);
+  if (summary.averageToolCalls > 0) {
+    form.querySelector("[name='toolCalls']").value = String(summary.averageToolCalls);
+  }
+
+  const modelSummary = summary.models.length ? summary.models.join(", ") : "model field not detected";
+  form.dataset.openrouterImportedUsageSummary = [
+    `Imported usage rows: ${compactNumber(summary.rowCount)} over ${summary.sampleDays} day sample`,
+    `Scaled monthly requests: ${compactNumber(summary.monthlyRequests)}`,
+    `Detected models: ${modelSummary}`,
+    `Imported token totals: ${compactNumber(summary.inputTokensTotal)} input, ${compactNumber(summary.outputTokensTotal)} output, ${compactNumber(summary.cacheTokensTotal)} cache-read`,
+    `Retry or failed rows: ${compactNumber(summary.retryOrFailedRows)}`,
+  ].join("\n");
+  if (summaryTarget) {
+    summaryTarget.textContent = `Imported ${compactNumber(summary.rowCount)} rows over ${summary.sampleDays} day sample; scaled to ${compactNumber(summary.monthlyRequests)} monthly requests. Models: ${modelSummary}.`;
+  }
+  updateOpenRouterCost();
+}
+
 function buildOpenRouterPacket(form, result, route) {
   const data = new FormData(form);
   const project = clean(data.get("project"), "Project or workflow TBD");
   const question = clean(data.get("question"), "Which cost controls should change first?");
   const evidence = clean(data.get("evidence"), "Sanitized evidence TBD");
   const model = selectedOpenRouterModel(form);
+  const importSummary = clean(form.dataset.openrouterImportedUsageSummary, "");
   return [
     "## OpenRouter / LLM cost review request",
     "",
@@ -261,6 +503,7 @@ function buildOpenRouterPacket(form, result, route) {
     `Input price per 1M uncached tokens: ${usd(result.inputPrice)}`,
     `Output price per 1M tokens: ${usd(result.outputPrice)}`,
     `Cache-read price per 1M tokens: ${usd(result.cachePrice)}`,
+    ...(importSummary ? ["", "## Usage import summary", "", importSummary] : []),
     "",
     "## Highest cost question",
     "",
@@ -326,6 +569,17 @@ if (openRouterCostForm) {
       output.select();
       setButtonText(event.currentTarget, "Select");
     }
+  });
+  openRouterCostForm.querySelector("[data-import-openrouter-usage]")?.addEventListener("click", () => {
+    applyUsageImportToOpenRouterForm(openRouterCostForm);
+  });
+  openRouterCostForm.querySelector("[data-clear-openrouter-usage]")?.addEventListener("click", () => {
+    const importBox = openRouterCostForm.querySelector("[name='usageImport']");
+    const summary = openRouterCostForm.querySelector("[data-openrouter-import-summary]");
+    if (importBox) importBox.value = "";
+    openRouterCostForm.dataset.openrouterImportedUsageSummary = "";
+    if (summary) summary.textContent = "Usage import has not been applied.";
+    updateOpenRouterCost();
   });
 }
 

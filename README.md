@@ -10,7 +10,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
 - USD $1,000 AI Cost Spike Emergency Sprint for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk
-- Free OpenRouter Cost Calculator for editable model-spend estimates, cache-read assumptions, retry overhead, tool-call fanout, and direct $99/$299/$1,000 AI cost review routing
+- Free OpenRouter Cost Calculator for editable model-spend estimates, JSON/JSONL/CSV usage import, cache-read assumptions, retry overhead, tool-call fanout, and direct $99/$299/$1,000 AI cost review routing
 - USD $299 AI Agent Cost Leak Review for token spend, context bloat, RAG over-retrieval, model-routing drift, retry loops, cache misses, and coding-agent tool-call loops
 - USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
 - USD $299 MCP SSRF Focused Review for one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary
@@ -24,7 +24,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `index.html` - public landing page
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
 - `ai-cost-spike-emergency.html` / `.github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml` - urgent $1,000 AI Cost Spike Emergency Sprint page and intake for runaway LLM bills, agent loops, retry storms, RAG over-retrieval, model routing, cache misses, and 24h containment planning
-- `openrouter-cost-calculator.html` - free editable OpenRouter / LLM API cost calculator that estimates monthly model spend, cache-read savings, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review intake packet
+- `openrouter-cost-calculator.html` - free editable OpenRouter / LLM API cost calculator that estimates monthly model spend from manual inputs or sanitized JSON/JSONL/CSV usage rows, cache-read savings, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review intake packet
 - `ai-agent-cost-leak-review.html` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` - focused $299 AI Agent Cost Leak Review page and intake for token spend, context bloat, RAG cost, model routing, retry loops, cache misses, and tool-call loops
 - `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
 - `mcp-ssrf-security-review.html` - focused $299 MCP SSRF and Dynamic URL Fetch Review page for scanner/SARIF findings involving pagination URLs, callbacks, redirects, webhooks, proxy URLs, and credential-bearing URL fetches
@@ -134,7 +134,7 @@ Browser:
 - Shareable scan link: `https://jackjin1997.github.io/agent-audit-sprint/scan.html?repo=https://github.com/org/repo`
 - Private repo scan: use the local folder selector on the same page
 - Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation, cost-heavy agent workflows can use the USD $299 AI Agent Cost Leak Review intake, and runaway bill spikes can use the USD $1,000 AI Cost Spike Emergency Sprint intake
-- OpenRouter cost packet: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html estimates model spend, cache-read share, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review packet
+- OpenRouter cost packet: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html estimates model spend from manual inputs or sanitized JSON, JSONL, or CSV usage rows, cache-read share, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review packet
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -151,7 +151,7 @@ node scripts/find-high-intent-leads.mjs --limit 30 --out private-notes/high-inte
 The scanner looks for tool registration, remote transports, write actions, credential paths, auth gates, dynamic URL fetch/SSRF surfaces, redaction, tests, and CI. It is a triage helper, not a security certification.
 The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner routes to the USD $299 Agent Auth focused-review intake. If pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, it routes to the USD $299 MCP SSRF focused-review intake.
 The AI Cost Spike Emergency Sprint is a USD $1,000 urgent containment package for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
-The OpenRouter Cost Calculator is a free editable estimator for model spend, cache-read assumptions, retry overhead, and tool-call fanout. It generates a sanitized packet for the USD $99 quick audit, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
+The OpenRouter Cost Calculator is a free editable estimator for model spend, cache-read assumptions, retry overhead, and tool-call fanout. It can also import sanitized JSON, JSONL, or CSV usage rows and scale them to a monthly estimate before generating a sanitized packet for the USD $99 quick audit, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
 The AI Agent Cost Leak Review is a separate USD $299 focused review for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 

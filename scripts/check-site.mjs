@@ -223,6 +223,9 @@ if (!llmsText.includes("USD $1,000 AI Cost Spike Emergency Sprint")) {
 if (!llmsText.includes("cache-read assumptions") || !llmsText.includes("tool-call fanout")) {
   throw new Error("llms.txt is missing the OpenRouter cost calculator routing context");
 }
+if (!llmsText.includes("JSON, JSONL, or CSV usage rows")) {
+  throw new Error("llms.txt is missing the OpenRouter usage import context");
+}
 if (!llmsText.includes("ai-cost-spike-emergency.yml")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency intake link");
 }
@@ -2874,6 +2877,7 @@ try {
       !openRouterText.includes("Claude Opus 4.8 snapshot") ||
       !openRouterText.includes("cache-read share") ||
       !openRouterText.includes("tool-call fanout") ||
+      !openRouterText.includes("Paste sanitized OpenRouter JSON, JSONL, or CSV rows") ||
       !openRouterText.includes("Payment only after written scope acceptance")
     ) {
       throw new Error(`OpenRouter Cost Calculator page missing package ladder, calculator scope, or payment guardrail in ${viewport.name}`);
@@ -2895,6 +2899,26 @@ try {
     const openRouterHref = await page.locator("[data-openrouter-open-brief]").getAttribute("href");
     if (!openRouterHref?.includes("agent-cost-leak-review.yml")) {
       throw new Error(`OpenRouter calculator default intake link is missing cost leak review template in ${viewport.name}`);
+    }
+    await page.locator("[data-openrouter-cost-form] [name='usageSampleDays']").fill("1");
+    await page.locator("[data-openrouter-usage-import]").fill([
+      '{"model":"openrouter/moonshotai/kimi-k2.7-code","input_tokens":5000,"output_tokens":1200,"cache_read_tokens":1000,"status":"success","tool_calls":5}',
+      '{"model":"openrouter/moonshotai/kimi-k2.7-code","input_tokens":4500,"output_tokens":1000,"cache_read_tokens":900,"status":"timeout","tool_calls":5}',
+      '{"model":"openrouter/z-ai/glm-5.2","input_tokens":5500,"output_tokens":1400,"cache_read_tokens":1100,"status":"success","tool_calls":4}',
+    ].join("\n"));
+    await page.locator("[data-import-openrouter-usage]").click();
+    const importedRequests = await page.locator("[data-openrouter-cost-form] [name='monthlyRequests']").inputValue();
+    const importedCacheShare = await page.locator("[data-openrouter-cost-form] [name='cacheReadPercent']").inputValue();
+    const importedSummary = await page.locator("[data-openrouter-import-summary]").innerText();
+    const importedPacket = await page.locator("[data-openrouter-packet]").inputValue();
+    if (
+      importedRequests !== "90" ||
+      importedCacheShare !== "20" ||
+      !importedSummary.includes("Imported 3 rows over 1 day sample") ||
+      !importedPacket.includes("## Usage import summary") ||
+      !importedPacket.includes("Retry or failed rows: 1")
+    ) {
+      throw new Error(`OpenRouter usage import did not populate monthly fields or packet summary in ${viewport.name}`);
     }
     await page.locator("[data-openrouter-cost-form] [name='monthlyRequests']").fill("300000");
     await page.locator("[data-openrouter-cost-form] [name='outputTokens']").fill("3000");

@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Editable OpenRouter and LLM API cost calculator that turns model usage into a $99, $299, or $1,000 AI cost review intake packet.">
+    <meta name="description" content="Editable OpenRouter and LLM API cost calculator with JSON, JSONL, and CSV usage import that turns model usage into a $99, $299, or $1,000 AI cost review intake packet.">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Zexu Jin">
     <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html">
     <meta property="og:title" content="OpenRouter Cost Calculator">
-    <meta property="og:description" content="Estimate OpenRouter or LLM API spend, then copy a sanitized cost review packet for a fixed-price audit intake.">
+    <meta property="og:description" content="Estimate OpenRouter or LLM API spend from manual inputs or sanitized usage rows, then copy a cost review packet for a fixed-price audit intake.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html">
     <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
@@ -23,7 +23,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "OpenRouter Cost Calculator",
-        "description": "Editable calculator for estimating OpenRouter and LLM API usage cost and preparing a sanitized AI cost review intake packet.",
+        "description": "Editable calculator for estimating OpenRouter and LLM API usage cost from manual inputs or sanitized JSON, JSONL, and CSV usage rows, then preparing a sanitized AI cost review intake packet.",
         "url": "https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Any",
@@ -61,7 +61,7 @@
         <p class="eyebrow">LLM spend estimate to paid scope packet</p>
         <h1>OpenRouter Cost Calculator</h1>
         <p>
-          Estimate one OpenRouter or LLM API workload, see whether it fits the USD $99 quick scan, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint, then copy a sanitized intake packet. Pricing presets were checked against the OpenRouter models API on 2026-06-30 and remain editable snapshots, not a billing guarantee; verify provider pricing before accepting scope.
+          Estimate one OpenRouter or LLM API workload from manual counts or sanitized usage rows, see whether it fits the USD $99 quick scan, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint, then copy a sanitized intake packet. Pricing presets were checked against the OpenRouter models API on 2026-06-30 and remain editable snapshots, not a billing guarantee; verify provider pricing before accepting scope.
         </p>
         <div class="service-actions">
           <a class="button primary" href="#calculator">Run calculator</a>
@@ -86,7 +86,7 @@
           <p class="eyebrow">Calculator</p>
           <h2>Turn model usage into a review packet</h2>
           <p>
-            Use sanitized counts only: request volume, model mix, token estimates, cache-read share, retry rate, and tool-call fanout. Do not paste private prompts, customer data, API keys, provider account IDs, raw traces, or billing screenshots with sensitive values.
+            Use sanitized counts only: request volume, model mix, token estimates, cache-read share, retry rate, and tool-call fanout. You can paste redacted JSON, JSONL, or CSV usage rows to fill the calculator. Do not paste private prompts, customer data, API keys, provider account IDs, raw traces, or billing screenshots with sensitive values.
           </p>
           <div class="report-preview" aria-label="OpenRouter cost result">
             <div class="report-row high"><span>Monthly</span><strong data-openrouter-total>$0.00 estimated monthly model cost</strong></div>
@@ -156,6 +156,28 @@
             Sanitized evidence summary
             <textarea name="evidence">Agent workflow uses OpenRouter for planning, retrieval summaries, and tool-call repair. Counts are estimates only; no private prompts, API keys, account IDs, or customer data included.</textarea>
           </label>
+          <div class="usage-import">
+            <div>
+              <p class="eyebrow">Usage import</p>
+              <strong>Paste sanitized OpenRouter JSON, JSONL, or CSV rows</strong>
+              <p>
+                Supported fields include model, input_tokens, prompt_tokens, output_tokens, completion_tokens, cache_read_tokens, cached_tokens, status, error, retry, and tool_calls. Rows are scaled to a monthly estimate using the sample window below.
+              </p>
+            </div>
+            <label>
+              Sample window in days
+              <input name="usageSampleDays" type="number" min="1" max="31" step="1" value="30">
+            </label>
+            <label>
+              Sanitized usage rows
+              <textarea name="usageImport" data-openrouter-usage-import placeholder='{"model":"openrouter/moonshotai/kimi-k2.7-code","input_tokens":4800,"output_tokens":1200,"cache_read_tokens":1600,"status":"success"}'></textarea>
+            </label>
+            <div class="request-actions">
+              <button class="button secondary dark" type="button" data-import-openrouter-usage>Import usage rows</button>
+              <button class="button secondary dark" type="button" data-clear-openrouter-usage>Clear import</button>
+            </div>
+            <p class="import-status" data-openrouter-import-summary>Usage import has not been applied.</p>
+          </div>
           <div class="request-actions">
             <button class="button primary" type="submit">Generate cost packet</button>
             <button class="button secondary dark" type="button" data-copy-openrouter-packet>Copy packet</button>

@@ -231,6 +231,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 | OpenRouter Balance Guardrail page | `openrouter-balance-guardrail.html` | Added an owned OpenRouter balance and key-limit guardrail page that separates account credits, current key limits, generation usage, stale-state handling, BYOK scope, pre-dispatch reservations, actual-cost reconciliation, and $99/$299/$1,000 AI cost review routing; no payment counted |
 | OpenRouter Balance Guardrail owned distribution refresh | GitHub profile README, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07, booking FAQ https://github.com/jackjin1997/agent-audit-sprint/discussions/1, scanner discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Added owned distribution links for the OpenRouter Balance Guardrail page so credits, current key limits, stale balance states, BYOK separation, pre-dispatch reservations, and actual generation cost reconciliation route to $99/$299/$1,000 AI cost review paths before payment; no accepted scope or payment counted |
 
+| cnoe LLM Budget & Quota lead reply | https://github.com/cnoe-io/ai-platform-engineering/issues/2080#issuecomment-4849916539 | Posted a no-PR LiteLLM budget/quota release-gate checklist covering pre-dispatch reservations, policy snapshots, missing usage/price states, key lifecycle, reconciliation, hard-block responses, and concurrency tests; routed only as a restrained TokenMeter cost-control review option; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

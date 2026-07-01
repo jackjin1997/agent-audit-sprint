@@ -130,6 +130,7 @@ if (intakeForm) {
 }
 
 const openRouterCostForm = document.querySelector("[data-openrouter-cost-form]");
+const openRouterReconcileForm = document.querySelector("[data-openrouter-reconcile-form]");
 
 function numberField(form, name, fallback = 0) {
   const value = Number(new FormData(form).get(name));
@@ -580,6 +581,192 @@ if (openRouterCostForm) {
     openRouterCostForm.dataset.openrouterImportedUsageSummary = "";
     if (summary) summary.textContent = "Usage import has not been applied.";
     updateOpenRouterCost();
+  });
+}
+
+function calculateOpenRouterReconciliation(form) {
+  const productCost = Math.max(0, numberField(form, "productCost", 0));
+  const actualCost = Math.max(0, numberField(form, "actualCost", 0));
+  const generationCount = Math.max(1, numberField(form, "generationCount", 1));
+  const cacheReadTokens = Math.max(0, numberField(form, "cacheReadTokens", 0));
+  const uncachedPromptTokens = Math.max(0, numberField(form, "uncachedPromptTokens", 0));
+  const outputTokens = Math.max(0, numberField(form, "outputTokens", 0));
+  const reasoningTokens = Math.max(0, numberField(form, "reasoningTokens", 0));
+  const retryReplayCount = Math.max(0, numberField(form, "retryReplayCount", 0));
+  const delta = actualCost - productCost;
+  const absoluteDelta = Math.abs(delta);
+  const actualVsDisplayRatio = productCost > 0 ? actualCost / productCost : actualCost > 0 ? Infinity : 0;
+  const largestDirectionalRatio =
+    actualCost > 0 && productCost > 0 ? Math.max(actualCost / productCost, productCost / actualCost) : actualCost > 0 || productCost > 0 ? Infinity : 0;
+  const totalTokens = cacheReadTokens + uncachedPromptTokens + outputTokens + reasoningTokens;
+  return {
+    productCost,
+    actualCost,
+    generationCount,
+    cacheReadTokens,
+    uncachedPromptTokens,
+    outputTokens,
+    reasoningTokens,
+    retryReplayCount,
+    delta,
+    absoluteDelta,
+    actualVsDisplayRatio,
+    largestDirectionalRatio,
+    totalTokens,
+  };
+}
+
+function openRouterReconciliationRatioLabel(result) {
+  if (result.productCost === 0 && result.actualCost > 0) {
+    return `OpenRouter charged ${usd(result.actualCost)} while product displayed $0.00`;
+  }
+  if (result.actualCost === 0 && result.productCost > 0) {
+    return `Product displayed ${usd(result.productCost)} while OpenRouter actual cost was $0.00`;
+  }
+  if (result.productCost > 0 && result.actualCost > 0) {
+    return `${result.actualVsDisplayRatio.toFixed(1)}x OpenRouter actual vs product display`;
+  }
+  return "No positive product or provider cost entered";
+}
+
+function openRouterReconciliationDeltaLabel(result) {
+  if (result.delta === 0) return "$0.00 provider actual matches product display";
+  const sign = result.delta > 0 ? "+" : "-";
+  const direction = result.delta > 0 ? "above" : "below";
+  return `${sign}${usd(result.absoluteDelta)} provider actual ${direction} product display`;
+}
+
+function openRouterReconciliationPackage(result) {
+  if (result.actualCost >= 1000 || result.absoluteDelta >= 500 || result.retryReplayCount >= 10) {
+    return {
+      label: "USD $1,000 AI Cost Spike Emergency Sprint",
+      template: "ai-cost-spike-emergency.yml",
+      tokenMeterPath: "emergency",
+      reason: "the provider actual charge or replay risk is large enough to need urgent containment",
+    };
+  }
+  if (
+    result.absoluteDelta >= 0.05 ||
+    result.largestDirectionalRatio >= 1.5 ||
+    result.generationCount > 1 ||
+    result.retryReplayCount > 0 ||
+    result.cacheReadTokens > 0 ||
+    result.reasoningTokens > 0
+  ) {
+    return {
+      label: "USD $299 AI Agent Cost Leak Review",
+      template: "agent-cost-leak-review.yml",
+      tokenMeterPath: "agent",
+      reason: "the mismatch needs provider-actual reconciliation, generation id dedupe, cache/reasoning handling, or audit-trail review",
+    };
+  }
+  return {
+    label: "USD $99 Quick AI API Cost Audit",
+    template: "paid-audit-intent.yml",
+    tokenMeterPath: "quick",
+    reason: "the mismatch looks bounded enough for a pricing-unit and display-field sanity check",
+  };
+}
+
+function buildOpenRouterReconciliationPacket(form, result, route) {
+  const data = new FormData(form);
+  const project = clean(data.get("project"), "Project or workflow TBD");
+  const direction = clean(data.get("direction"), "Direction unclear");
+  const question = clean(data.get("question"), "Which cost field should be authoritative?");
+  const evidence = clean(data.get("evidence"), "Sanitized evidence TBD");
+  return [
+    "## OpenRouter actual-cost reconciliation request",
+    "",
+    `Project or workflow URL: ${project}`,
+    `Recommended package: ${route.label}`,
+    `Reason: ${route.reason}.`,
+    `Observed mismatch direction: ${direction}`,
+    "",
+    "## Cost snapshot",
+    "",
+    `Product displayed cost: ${usd(result.productCost)}`,
+    `OpenRouter provider actual cost: ${usd(result.actualCost)}`,
+    `Actual-vs-display ratio: ${openRouterReconciliationRatioLabel(result)}`,
+    `Absolute delta: ${usd(result.absoluteDelta)}`,
+    `Signed delta: ${openRouterReconciliationDeltaLabel(result)}`,
+    `Generation count in run: ${compactNumber(result.generationCount)}`,
+    `Cache-read tokens: ${compactNumber(result.cacheReadTokens)}`,
+    `Uncached prompt tokens: ${compactNumber(result.uncachedPromptTokens)}`,
+    `Output tokens: ${compactNumber(result.outputTokens)}`,
+    `Reasoning tokens: ${compactNumber(result.reasoningTokens)}`,
+    `Retry or replay count: ${compactNumber(result.retryReplayCount)}`,
+    `Total summarized tokens: ${compactNumber(result.totalTokens)}`,
+    "",
+    "## Reconciliation checkpoints",
+    "",
+    "- Provider actual cost field: reconcile `usage.cost` and `/api/v1/generation` `total_cost` against product display.",
+    "- Generation id idempotency: one provider generation id should be counted once across refresh, retry, polling, replay, and stream-finalization paths.",
+    "- Scope labels: separate per-response, per-step, per-run, and cumulative totals.",
+    "- Multi-call aggregation: preserve each generation record before producing a workflow total.",
+    "- Cache-read and reasoning fallback pricing: avoid silently treating cached or reasoning tokens as free or as regular prompt tokens.",
+    "- Retry dedupe: failed, timed-out, streamed, or replayed calls should follow provider records rather than UI event counts.",
+    "- Audit trail: show model, provider, token counts, cost source, and timestamp without prompts, keys, account ids, or customer data.",
+    "",
+    "## Highest reconciliation question",
+    "",
+    question,
+    "",
+    "## Sanitized evidence summary",
+    "",
+    evidence,
+    "",
+    "## Links",
+    "",
+    `TokenMeter audit path: https://tokenmeter-mu.vercel.app/audit?path=${route.tokenMeterPath}&source=openrouter-reconciliation`,
+    "OpenRouter cost calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html",
+    "Focused review page: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html",
+    "Emergency sprint page: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html",
+    "",
+    "## Confirmation",
+    "",
+    "- [x] I will not include private prompts, API keys, customer data, provider account IDs, raw production traces, or sensitive billing screenshots in a public issue.",
+    "- [x] I understand payment is only requested after written scope acceptance.",
+    "- [x] I understand provider actual-cost reconciliation needs the final accepted scope before any payment request.",
+  ].join("\n");
+}
+
+function updateOpenRouterReconciliation() {
+  if (!openRouterReconcileForm) return;
+  const result = calculateOpenRouterReconciliation(openRouterReconcileForm);
+  const route = openRouterReconciliationPackage(result);
+  const packet = buildOpenRouterReconciliationPacket(openRouterReconcileForm, result, route);
+  const ratio = document.querySelector("[data-openrouter-reconcile-ratio]");
+  const delta = document.querySelector("[data-openrouter-reconcile-delta]");
+  const fit = document.querySelector("[data-openrouter-reconcile-fit]");
+  const output = openRouterReconcileForm.querySelector("[data-openrouter-reconcile-packet]");
+  const openLink = openRouterReconcileForm.querySelector("[data-openrouter-reconcile-open-brief]");
+  const project = clean(new FormData(openRouterReconcileForm).get("project"), "OpenRouter actual-cost reconciliation");
+  ratio.textContent = openRouterReconciliationRatioLabel(result);
+  delta.textContent = openRouterReconciliationDeltaLabel(result);
+  fit.textContent = route.label;
+  output.value = packet;
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(route.template)}&title=${encodeURIComponent(`OpenRouter actual-cost reconciliation: ${projectNameFromUrl(project)}`)}&body=${encodeURIComponent(packet)}`;
+}
+
+if (openRouterReconcileForm) {
+  updateOpenRouterReconciliation();
+  openRouterReconcileForm.addEventListener("input", updateOpenRouterReconciliation);
+  openRouterReconcileForm.addEventListener("change", updateOpenRouterReconciliation);
+  openRouterReconcileForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateOpenRouterReconciliation();
+    openRouterReconcileForm.querySelector("[data-openrouter-reconcile-packet]").focus();
+  });
+  openRouterReconcileForm.querySelector("[data-copy-openrouter-reconcile-packet]").addEventListener("click", async (event) => {
+    updateOpenRouterReconciliation();
+    const output = openRouterReconcileForm.querySelector("[data-openrouter-reconcile-packet]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
   });
 }
 

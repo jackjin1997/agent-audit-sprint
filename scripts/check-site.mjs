@@ -27,6 +27,7 @@ const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
 const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.html")}`;
 const openRouterCostCalculator = `file://${resolve(root, "openrouter-cost-calculator.html")}`;
+const openRouterActualCostReconciliation = `file://${resolve(root, "openrouter-actual-cost-reconciliation.html")}`;
 const openRouterBalanceGuardrail = `file://${resolve(root, "openrouter-balance-guardrail.html")}`;
 const liteLlmBudgetGuardrail = `file://${resolve(root, "litellm-budget-guardrail.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
@@ -68,6 +69,7 @@ const requiredFiles = [
   "ai-agent-security-audit-service.html",
   "ai-cost-spike-emergency.html",
   "openrouter-cost-calculator.html",
+  "openrouter-actual-cost-reconciliation.html",
   "openrouter-balance-guardrail.html",
   "litellm-budget-guardrail.html",
   "ai-agent-cost-leak-review.html",
@@ -223,6 +225,12 @@ if (!llmsText.includes("OpenRouter Cost Calculator")) {
 if (!llmsText.includes("openrouter-cost-calculator.html")) {
   throw new Error("llms.txt is missing the OpenRouter Cost Calculator URL");
 }
+if (!llmsText.includes("OpenRouter Actual Cost Reconciliation")) {
+  throw new Error("llms.txt is missing the OpenRouter Actual Cost Reconciliation context");
+}
+if (!llmsText.includes("openrouter-actual-cost-reconciliation.html")) {
+  throw new Error("llms.txt is missing the OpenRouter Actual Cost Reconciliation URL");
+}
 if (!llmsText.includes("LiteLLM Budget Guardrail")) {
   throw new Error("llms.txt is missing the LiteLLM Budget Guardrail context");
 }
@@ -243,6 +251,9 @@ if (!llmsText.includes("cache-read assumptions") || !llmsText.includes("tool-cal
 }
 if (!llmsText.includes("JSON, JSONL, or CSV usage rows")) {
   throw new Error("llms.txt is missing the OpenRouter usage import context");
+}
+if (!llmsText.includes("usage.cost") || !llmsText.includes("generation `total_cost`") || !llmsText.includes("generation id")) {
+  throw new Error("llms.txt is missing the OpenRouter actual-cost reconciliation context");
 }
 if (!llmsText.includes("per-user quotas") || !llmsText.includes("policy snapshots")) {
   throw new Error("llms.txt is missing the LiteLLM budget guardrail routing context");
@@ -1327,9 +1338,12 @@ try {
       !indexBody.includes("OpenRouter cost calculator") ||
       !indexBody.includes("OpenRouter Cost Calculator for model spend triage") ||
       !indexBody.includes("Open the OpenRouter Cost Calculator") ||
+      !indexBody.includes("Open the OpenRouter Actual Cost Reconciliation") ||
+      !indexBody.includes("usage.cost") ||
+      !indexBody.includes("generation id dedupe") ||
       !indexBody.includes("cache-read assumptions, retry overhead, tool-call fanout")
     ) {
-      throw new Error(`Index page missing OpenRouter cost calculator entry in ${viewport.name}`);
+      throw new Error(`Index page missing OpenRouter cost calculator or actual-cost reconciliation entry in ${viewport.name}`);
     }
     if (
       !indexBody.includes("LiteLLM budget guardrail") ||
@@ -1364,6 +1378,9 @@ try {
     }
     if (!indexBody.includes("Open the OpenRouter cost calculator")) {
       throw new Error(`Index page missing OpenRouter cost calculator scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the OpenRouter actual cost reconciliation page")) {
+      throw new Error(`Index page missing OpenRouter actual-cost reconciliation scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the LiteLLM budget guardrail")) {
       throw new Error(`Index page missing LiteLLM budget guardrail scanner link in ${viewport.name}`);
@@ -3313,6 +3330,58 @@ try {
     }
     const openRouterOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (openRouterOverflow) throw new Error(`OpenRouter Cost Calculator horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(openRouterActualCostReconciliation, { waitUntil: "networkidle" });
+    const openRouterReconcileTitle = await page.locator("h1").innerText();
+    if (!openRouterReconcileTitle.includes("OpenRouter Actual Cost Reconciliation")) {
+      throw new Error(`Unexpected OpenRouter Actual Cost Reconciliation h1 in ${viewport.name}: ${openRouterReconcileTitle}`);
+    }
+    const openRouterReconcileText = await page.locator("body").innerText();
+    if (
+      !openRouterReconcileText.includes("usage.cost") ||
+      !openRouterReconcileText.includes("generation id") ||
+      !openRouterReconcileText.includes("cache-read") ||
+      !openRouterReconcileText.includes("Payment only after written scope acceptance") ||
+      !openRouterReconcileText.includes("$99") ||
+      !openRouterReconcileText.includes("$299") ||
+      !openRouterReconcileText.includes("$1,000")
+    ) {
+      throw new Error(`OpenRouter Actual Cost Reconciliation page missing provider fields, package ladder, or payment guardrail in ${viewport.name}`);
+    }
+    await page.locator("[data-openrouter-reconcile-form] [name='project']").fill("https://github.com/example/openrouter-agent");
+    await page.locator("[data-openrouter-reconcile-form] [name='productCost']").fill("0.0088");
+    await page.locator("[data-openrouter-reconcile-form] [name='actualCost']").fill("0.211");
+    await page.locator("[data-openrouter-reconcile-form] [name='generationCount']").fill("4");
+    await page.locator("[data-openrouter-reconcile-form] [name='cacheReadTokens']").fill("184000");
+    await page.locator("[data-openrouter-reconcile-form] [name='retryReplayCount']").fill("1");
+    await page.locator("[data-openrouter-reconcile-form]").evaluate((form) => form.requestSubmit());
+    const openRouterReconcileRatio = await page.locator("[data-openrouter-reconcile-ratio]").innerText();
+    const openRouterReconcilePacket = await page.locator("[data-openrouter-reconcile-packet]").inputValue();
+    const openRouterReconcileHref = await page.locator("[data-openrouter-reconcile-open-brief]").getAttribute("href");
+    if (
+      !openRouterReconcileRatio.includes("24.0x") ||
+      !openRouterReconcilePacket.includes("24.0x") ||
+      !openRouterReconcilePacket.includes("USD $299 AI Agent Cost Leak Review") ||
+      !openRouterReconcilePacket.includes("Provider actual cost field") ||
+      !openRouterReconcilePacket.includes("generation id") ||
+      !openRouterReconcilePacket.toLowerCase().includes("cache-read") ||
+      !openRouterReconcilePacket.includes("I will not include private prompts") ||
+      !openRouterReconcileHref?.includes("agent-cost-leak-review.yml")
+    ) {
+      throw new Error(`OpenRouter actual-cost reconciliation packet missing 24x routing, safety text, or focused intake in ${viewport.name}`);
+    }
+    await page.locator("[data-openrouter-reconcile-form] [name='actualCost']").fill("1200");
+    await page.locator("[data-openrouter-reconcile-form]").evaluate((form) => form.requestSubmit());
+    const openRouterReconcileEmergencyPacket = await page.locator("[data-openrouter-reconcile-packet]").inputValue();
+    const openRouterReconcileEmergencyHref = await page.locator("[data-openrouter-reconcile-open-brief]").getAttribute("href");
+    if (
+      !openRouterReconcileEmergencyPacket.includes("USD $1,000 AI Cost Spike Emergency Sprint") ||
+      !openRouterReconcileEmergencyHref?.includes("ai-cost-spike-emergency.yml")
+    ) {
+      throw new Error(`OpenRouter actual-cost reconciliation did not route high provider cost to emergency intake in ${viewport.name}`);
+    }
+    const openRouterReconcileOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (openRouterReconcileOverflow) throw new Error(`OpenRouter Actual Cost Reconciliation horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(openRouterBalanceGuardrail, { waitUntil: "networkidle" });
     const openRouterBalanceTitle = await page.locator("h1").innerText();

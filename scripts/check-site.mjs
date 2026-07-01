@@ -125,6 +125,7 @@ const requiredFiles = [
   ".github/ISSUE_TEMPLATE/ai-agent-audit.yml",
   ".github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml",
   ".github/ISSUE_TEMPLATE/agent-cost-leak-review.yml",
+  ".github/ISSUE_TEMPLATE/openrouter-402-brownout.yml",
   ".github/ISSUE_TEMPLATE/agent-auth-review.yml",
   ".github/ISSUE_TEMPLATE/mcp-ssrf-review.yml",
   ".github/ISSUE_TEMPLATE/ai-jingle-order.yml",
@@ -240,6 +241,9 @@ if (!llmsText.includes("OpenRouter 402 Brownout Runbook")) {
 if (!llmsText.includes("openrouter-402-brownout.html")) {
   throw new Error("llms.txt is missing the OpenRouter 402 Brownout Runbook URL");
 }
+if (!llmsText.includes("openrouter-402-brownout.yml")) {
+  throw new Error("llms.txt is missing the OpenRouter 402 Brownout intake link");
+}
 if (!llmsText.includes("LiteLLM Budget Guardrail")) {
   throw new Error("llms.txt is missing the LiteLLM Budget Guardrail context");
 }
@@ -284,6 +288,15 @@ if (
   !costSpikeTemplate.includes("payment is only requested after written scope acceptance")
 ) {
   throw new Error("AI Cost Spike emergency template is missing price, label, cost-spike field, or payment guardrail");
+}
+const openRouter402Template = readFileSync(resolve(root, ".github/ISSUE_TEMPLATE/openrouter-402-brownout.yml"), "utf8");
+if (
+  !openRouter402Template.includes("USD $99 OpenRouter 402 Quick Triage") ||
+  !openRouter402Template.includes("labels: [\"audit-intent\", \"openrouter-402-brownout\"]") ||
+  !openRouter402Template.includes("Brownout state") ||
+  !openRouter402Template.includes("payment is only requested after written scope acceptance")
+) {
+  throw new Error("OpenRouter 402 brownout template is missing price ladder, label, brownout state field, or payment guardrail");
 }
 if (!llmsText.includes("Agent Auth and Cookie Vault Security Review")) {
   throw new Error("llms.txt is missing the Agent Auth focused review context");
@@ -810,6 +823,60 @@ if (!agentCostIntentOutput.includes("2,400 agent runs/week with repeated tool re
 }
 if (!agentCostIntentOutput.includes("ai-agent-cost-leak-review.html")) {
   throw new Error("AI Agent Cost Leak intent dry-run output is missing service link");
+}
+
+const openRouter402IntentOutput = execFileSync(process.execPath, [resolve(root, "scripts/comment-audit-intent.mjs")], {
+  encoding: "utf8",
+  env: {
+    ...process.env,
+    INTENT_DRY_RUN: "true",
+    ISSUE_BODY: [
+      "### Requested package",
+      "",
+      "USD $99 OpenRouter 402 Quick Triage",
+      "",
+      "### Project, repo, product, or workflow URL",
+      "",
+      "https://github.com/example/openrouter-agent",
+      "",
+      "### Brownout state",
+      "",
+      "max_tokens too high for remaining balance",
+      "",
+      "### Sanitized evidence",
+      "",
+      "OpenRouter 402 after 2k output token request, 3 retries, stale balance snapshot; no API keys included.",
+      "",
+      "### Dispatch decision needed",
+      "",
+      "whether to cap max_tokens, block dispatch, or queue for credits before launch",
+      "",
+      "### Deadline or launch window",
+      "",
+      "Before launch on Friday",
+      "",
+      "### Preferred contact",
+      "",
+      "reply in this issue",
+      "",
+      "### Payment path",
+      "",
+      "Need invoice/discussion first",
+    ].join("\n"),
+  },
+  maxBuffer: 1024 * 1024,
+});
+if (!openRouter402IntentOutput.includes("USD $99 OpenRouter 402 Quick Triage")) {
+  throw new Error("OpenRouter 402 intent dry-run output is missing package name");
+}
+if (!openRouter402IntentOutput.includes("max_tokens too high for remaining balance")) {
+  throw new Error("OpenRouter 402 intent dry-run output is missing brownout state");
+}
+if (!openRouter402IntentOutput.includes("OpenRouter 402 after 2k output token request")) {
+  throw new Error("OpenRouter 402 intent dry-run output is missing sanitized evidence");
+}
+if (!openRouter402IntentOutput.includes("openrouter-402-brownout.html")) {
+  throw new Error("OpenRouter 402 intent dry-run output is missing service link");
 }
 if (!agentCostIntentOutput.includes("Do not send payment until scope is accepted")) {
   throw new Error("AI Agent Cost Leak intent dry-run output is missing payment guardrail");
@@ -3591,6 +3658,10 @@ try {
     const openRouter402ImageCount = await page.locator("img[src='assets/audit-dashboard.png']").count();
     if (openRouter402ImageCount !== 1) {
       throw new Error(`OpenRouter 402 Brownout page missing visual asset in ${viewport.name}`);
+    }
+    const openRouter402IntakeHref = await page.locator("a[href*='openrouter-402-brownout.yml']").first().getAttribute("href");
+    if (!openRouter402IntakeHref?.includes("openrouter-402-brownout.yml")) {
+      throw new Error(`OpenRouter 402 Brownout page missing dedicated intake link in ${viewport.name}`);
     }
     const openRouter402Overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (openRouter402Overflow) throw new Error(`OpenRouter 402 Brownout horizontal overflow detected in ${viewport.name}`);

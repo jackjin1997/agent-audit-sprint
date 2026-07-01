@@ -1,0 +1,98 @@
+name: OpenRouter 402 brownout review
+description: Buy a USD $99, $299, or $1,000 review for OpenRouter 402 Payment Required, insufficient credits, max_tokens, stale balance, or retry containment failures
+title: "OpenRouter 402 review: <project name>"
+labels: ["audit-intent", "openrouter-402-brownout"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for an OpenRouter 402 Payment Required or balance brownout review. Do not paste API keys, private prompts, customer data, billing account details, screenshots with account ids, or raw production traces with sensitive values.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Requested package
+      description: Choose the smallest useful scope. Payment is only requested after written scope acceptance.
+      options:
+        - USD $99 OpenRouter 402 Quick Triage
+        - USD $299 OpenRouter Agent Cost-Control Review
+        - USD $1,000 AI Cost Spike Emergency Sprint
+    validations:
+      required: true
+  - type: input
+    id: project
+    attributes:
+      label: Project, repo, product, or workflow URL
+      description: Public repo, docs, demo, TokenMeter snapshot, sanitized trace summary, or product URL.
+      placeholder: https://github.com/org/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: brownout-state
+    attributes:
+      label: Brownout state
+      description: Pick the closest OpenRouter failure or dispatch decision.
+      options:
+        - 402 Payment Required after dispatch
+        - Insufficient credits or waiting-credit state
+        - max_tokens too high for remaining balance
+        - Stale balance or stale key-limit snapshot
+        - Streaming 402 fallback or partial response
+        - Retry storm after provider rejection
+        - BYOK versus shared-key balance confusion
+        - Other OpenRouter balance brownout
+    validations:
+      required: true
+  - type: textarea
+    id: sanitized-evidence
+    attributes:
+      label: Sanitized evidence
+      description: Summarize model ids, prompt/output token ranges, retry behavior, cache-read share, and user-facing state. Keep it sanitized.
+      placeholder: openrouter/model-id, 4k-8k prompt tokens, requested 2k output tokens, 3 retries after 402, stale balance snapshot for 10 minutes; no API keys or private prompts included.
+    validations:
+      required: true
+  - type: textarea
+    id: dispatch-decision
+    attributes:
+      label: Dispatch decision needed
+      description: What should the review decide first?
+      placeholder: Whether to cap max_tokens, block dispatch, queue for credits, switch model, refund reservations, or stop retry loops before launch.
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline or launch window
+      description: When does this need a decision?
+      placeholder: Before launch this week; within 24h; before the next billing cycle
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: Email, GitHub handle, or "reply in this issue".
+      placeholder: reply in this issue
+    validations:
+      required: true
+  - type: dropdown
+    id: payment
+    attributes:
+      label: Payment path
+      description: Choose network and asset if ready, or invoice/discussion first if billing details need to be agreed before payment.
+      options:
+        - Ethereum ETH after scope acceptance
+        - Ethereum ERC-20 USDC/USDT/DAI after scope acceptance
+        - Solana SOL after scope acceptance
+        - Solana SPL USDC after scope acceptance
+        - Need invoice/discussion first
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I will not include API keys, private prompts, customer data, billing account details, screenshots with account ids, or raw production traces with sensitive values in this issue.
+          required: true
+        - label: I understand payment is only requested after written scope acceptance for the selected package.
+          required: true

@@ -6,6 +6,7 @@ const AGENT_AUTH_URL = "https://jackjin1997.github.io/agent-audit-sprint/agent-a
 const MCP_SSRF_URL = "https://jackjin1997.github.io/agent-audit-sprint/mcp-ssrf-security-review.html";
 const AGENT_COST_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html";
 const COST_SPIKE_URL = "https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html";
+const OPENROUTER_402_URL = "https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html";
 const SCANNER_URL = "https://jackjin1997.github.io/agent-audit-sprint/scan.html";
 const QUOTE_URL = "https://jackjin1997.github.io/agent-audit-sprint/quote.html";
 const TERMS_URL = "https://jackjin1997.github.io/agent-audit-sprint/terms.html";
@@ -44,7 +45,27 @@ function packageDetails(rawChoice = "") {
       target: "24h after scope and payment confirmation",
       deliverable:
         "emergency spend-driver map and containment plan for one runaway AI agent, RAG workflow, coding-agent loop, support bot, or model API bill spike",
-    };
+      };
+    }
+  if (/openrouter.*402|402.*openrouter|brownout|payment required|insufficient credits|max_tokens/i.test(choice)) {
+    if (choice.includes("$99") || /quick triage/i.test(choice)) {
+      return {
+        name: "USD $99 OpenRouter 402 Quick Triage",
+        price: "USD $99",
+        target: "same day when available",
+        deliverable:
+          "focused triage of one OpenRouter 402, insufficient credits, max_tokens, stale balance, streaming fallback, or retry-containment path with a dispatch decision checklist",
+      };
+    }
+    if (choice.includes("$299") || /cost-control/i.test(choice)) {
+      return {
+        name: "USD $299 OpenRouter Agent Cost-Control Review",
+        price: "USD $299",
+        target: "same day when available",
+        deliverable:
+          "focused review of one OpenRouter-backed agent workflow with reservation, retry containment, actual-cost reconciliation, and user-facing block states",
+      };
+    }
   }
   if (choice.includes("$99") || /quick scan/i.test(choice)) {
     return {
@@ -113,18 +134,31 @@ function renderIntentComment(issueBody = "") {
   const credentialContext = extractField(issueBody, "Credential or network context");
   const costBoundary = extractField(issueBody, "Cost boundary");
   const costSpike = extractField(issueBody, "Cost spike type");
+  const brownoutState = extractField(issueBody, "Brownout state");
   const usageEvidence = extractField(issueBody, "Sanitized usage evidence");
   const sanitizedCostEvidence = extractField(issueBody, "Sanitized cost evidence");
+  const brownoutEvidence = extractField(issueBody, "Sanitized evidence");
   const highestRisk = extractField(issueBody, "Highest risk or decision");
   const highestCostQuestion = extractField(issueBody, "Highest cost question");
   const emergencyDecision = extractField(issueBody, "Emergency decision");
-  const deadline = extractField(issueBody, "Deadline or billing risk window");
+  const dispatchDecision = extractField(issueBody, "Dispatch decision needed");
+  const deadline = extractField(issueBody, "Deadline or billing risk window") || extractField(issueBody, "Deadline or launch window");
   const authContext = authFlow || authBoundary || packageInfo.name.includes("Agent Auth");
   const ssrfContext = fetchBoundary || credentialContext;
+  const openRouter402Context = brownoutState || dispatchDecision || packageInfo.name.includes("OpenRouter 402");
   const costSpikeContext = costSpike || sanitizedCostEvidence || packageInfo.name.includes("Cost Spike");
-  const costContext = costBoundary || costSpike || usageEvidence || sanitizedCostEvidence || packageInfo.name.includes("Cost Leak");
+  const costContext =
+    openRouter402Context ||
+    costBoundary ||
+    costSpike ||
+    usageEvidence ||
+    sanitizedCostEvidence ||
+    brownoutEvidence ||
+    packageInfo.name.includes("Cost Leak");
   const serviceDetailsUrl = costSpikeContext
     ? COST_SPIKE_URL
+    : openRouter402Context
+    ? OPENROUTER_402_URL
     : packageInfo.name.includes("AI Agent Cost Leak") || costContext
     ? AGENT_COST_URL
     : packageInfo.name.includes("MCP SSRF") || ssrfContext
@@ -148,9 +182,9 @@ Highest risk or decision: **${highestRisk || "not specified"}**
     : "";
   const costDetails = costContext
     ? `
-Cost boundary: **${costBoundary || costSpike || "not specified"}**
-Sanitized usage evidence: **${usageEvidence || sanitizedCostEvidence || "not specified"}**
-Highest cost question: **${highestCostQuestion || emergencyDecision || highestRisk || "not specified"}**
+Cost boundary: **${brownoutState || costBoundary || costSpike || "not specified"}**
+Sanitized usage evidence: **${brownoutEvidence || usageEvidence || sanitizedCostEvidence || "not specified"}**
+Highest cost question: **${dispatchDecision || highestCostQuestion || emergencyDecision || highestRisk || "not specified"}**
 Deadline or billing risk window: **${deadline || "not specified"}**
 `
     : "";

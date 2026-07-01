@@ -239,6 +239,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music fast-lane internal routing | `index.html`, `ai-music-generator.html`, `ai-music-samples.html`, `ai-music-pricing-calculator.html`, `scripts/check-site.mjs`, `README.md`, `llms.txt` | Added direct SaaS $29, product $29, UGC $149, podcast $149, listing $29, and wedding $79 prefilled order desk links from the main AI music entry points so buyers can land on accepted-brief-before-payment packets with less routing friction; no accepted scope or payment counted |
 
+| AI Music commercial-use packet page | `ai-music-commercial-use.html`, `index.html`, `ai-music-generator.html`, `ai-music-order-desk.html`, `sitemap.xml`, `README.md`, `llms.txt`, `scripts/check-site.mjs` | Added a commercial-use packet page for AI-assisted ad music, monetized video music, podcast/sponsor cues, ecommerce product clips, UGC client work, listing videos, and wedding highlights, with publishing-channel/source-rights intake, no-soundalike exclusions, source/tool note, usage memo, order desk fast lanes, email handoff, and payment-after-accepted-brief guardrails; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

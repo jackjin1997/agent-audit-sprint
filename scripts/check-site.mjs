@@ -43,6 +43,7 @@ const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
 const aiMusicPricingCalculator = `file://${resolve(root, "ai-music-pricing-calculator.html")}`;
 const aiMusicOrderDesk = `file://${resolve(root, "ai-music-order-desk.html")}`;
+const aiMusicCommercialUse = `file://${resolve(root, "ai-music-commercial-use.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -83,6 +84,7 @@ const requiredFiles = [
   "ai-music-samples.html",
   "ai-music-pricing-calculator.html",
   "ai-music-order-desk.html",
+  "ai-music-commercial-use.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -296,6 +298,9 @@ if (!llmsText.includes("AI Music Pricing Calculator") || !llmsText.includes("ai-
 }
 if (!llmsText.includes("AI Music Order Desk") || !llmsText.includes("ai-music-order-desk.html")) {
   throw new Error("llms.txt is missing the AI Music Order Desk page");
+}
+if (!llmsText.includes("AI Music Commercial-Use Packet") || !llmsText.includes("ai-music-commercial-use.html")) {
+  throw new Error("llms.txt is missing the AI Music Commercial-Use Packet page");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -1281,6 +1286,7 @@ try {
       !indexBody.includes("Open product video music page") ||
       !indexBody.includes("Open short-form ad music page") ||
       !indexBody.includes("Open UGC agency music hook page") ||
+      !indexBody.includes("Copy the AI music commercial-use packet") ||
       !indexBody.includes("SaaS/Product Hunt launch videos, product videos, ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
     ) {
@@ -1412,6 +1418,10 @@ try {
     if (indexUgcAgencyMusicLinks < 1) {
       throw new Error(`Index page missing UGC agency music hook page link in ${viewport.name}`);
     }
+    const indexAiMusicCommercialUseLinks = await page.locator("a[href='ai-music-commercial-use.html']").count();
+    if (indexAiMusicCommercialUseLinks < 1) {
+      throw new Error(`Index page missing AI music commercial-use packet link in ${viewport.name}`);
+    }
     const indexAiMusicFastLaneLinks = await page.locator(
       "a[href='ai-music-order-desk.html?lane=saas#order-desk'], a[href='ai-music-order-desk.html?lane=product#order-desk'], a[href='ai-music-order-desk.html?lane=ugc#order-desk'], a[href='ai-music-order-desk.html?lane=podcast#order-desk']"
     ).count();
@@ -1533,6 +1543,7 @@ try {
       !aiMusicGeneratorText.includes("Open order form") ||
       !aiMusicGeneratorText.includes("Generate an order-ready AI music prompt") ||
       !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
+      !aiMusicGeneratorText.includes("Commercial-use packet") ||
       !aiMusicGeneratorText.includes("SaaS $29 order") ||
       !aiMusicGeneratorText.includes("Podcast $149 order") ||
       !aiMusicGeneratorText.includes("Publishing channel") ||
@@ -1556,6 +1567,10 @@ try {
     const aiMusicGeneratorFastLaneLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
     if (aiMusicGeneratorFastLaneLinks < 6) {
       throw new Error(`AI music generator page missing fast-lane order desk links in ${viewport.name}`);
+    }
+    const aiMusicGeneratorCommercialUseLinks = await page.locator("a[href='ai-music-commercial-use.html']").count();
+    if (aiMusicGeneratorCommercialUseLinks < 1) {
+      throw new Error(`AI music generator page missing commercial-use packet link in ${viewport.name}`);
     }
     const aiMusicGeneratorHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicGeneratorHeroLoaded) throw new Error(`AI music generator hero image failed to load in ${viewport.name}`);
@@ -1994,6 +2009,47 @@ try {
     }
     const aiMusicOrderOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicOrderOverflow) throw new Error(`AI music order desk horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiMusicCommercialUse, { waitUntil: "networkidle" });
+    const aiMusicCommercialUseTitle = await page.locator("h1").innerText();
+    if (!aiMusicCommercialUseTitle.includes("AI Music Commercial-Use Packet")) {
+      throw new Error(`Unexpected AI music commercial-use h1 in ${viewport.name}: ${aiMusicCommercialUseTitle}`);
+    }
+    const aiMusicCommercialUseText = await page.locator("body").innerText();
+    if (
+      !aiMusicCommercialUseText.includes("Copy commercial-use packet") ||
+      !aiMusicCommercialUseText.includes("USD $29 Commercial-Use Hook Sketch") ||
+      !aiMusicCommercialUseText.includes("USD $149 Commercial Ad Music Pack") ||
+      !aiMusicCommercialUseText.includes("Publishing channel") ||
+      !aiMusicCommercialUseText.includes("Source material rights") ||
+      !aiMusicCommercialUseText.includes("No Soundalike Requests") ||
+      !aiMusicCommercialUseText.includes("commercial-use memo") ||
+      !aiMusicCommercialUseText.includes("Payment timing: after written brief acceptance only") ||
+      !aiMusicCommercialUseText.includes("not legal advice")
+    ) {
+      throw new Error(`AI music commercial-use page missing package, rights, memo, or payment guardrail copy in ${viewport.name}`);
+    }
+    const commercialUsePacket = await page.locator("#commercial-use-packet").innerText();
+    if (
+      !commercialUsePacket.includes("AI music commercial-use packet") ||
+      !commercialUsePacket.includes("Avoid: known-artist soundalikes") ||
+      !commercialUsePacket.includes("Payment timing: after written brief acceptance only") ||
+      !commercialUsePacket.includes("not legal advice")
+    ) {
+      throw new Error(`AI music commercial-use packet missing safety or payment text in ${viewport.name}`);
+    }
+    const commercialUseOrderLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
+    if (commercialUseOrderLinks < 6) {
+      throw new Error(`AI music commercial-use page missing fast-lane order desk links in ${viewport.name}`);
+    }
+    const commercialUseCopyTarget = await page.locator("[data-copy-target='#commercial-use-packet']").getAttribute("data-copy-target");
+    if (commercialUseCopyTarget !== "#commercial-use-packet") {
+      throw new Error(`AI music commercial-use copy target missing in ${viewport.name}`);
+    }
+    const commercialUseHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!commercialUseHeroLoaded) throw new Error(`AI music commercial-use hero image failed to load in ${viewport.name}`);
+    const commercialUseOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (commercialUseOverflow) throw new Error(`AI music commercial-use horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiSaasLaunchVideoMusic, { waitUntil: "networkidle" });
     const saasLaunchTitle = await page.locator("h1").innerText();

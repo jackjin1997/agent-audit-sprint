@@ -39,6 +39,7 @@ const scan = `file://${resolve(root, "scan.html")}`;
 const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
+const aiMusicPricingCalculator = `file://${resolve(root, "ai-music-pricing-calculator.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -75,6 +76,7 @@ const requiredFiles = [
   "openrouter-cost-calculator.html",
   "ai-music-generator.html",
   "ai-music-samples.html",
+  "ai-music-pricing-calculator.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -273,6 +275,9 @@ if (!llmsText.includes("AI Music Samples and Order Packets")) {
 }
 if (!llmsText.includes("ai-music-samples.html")) {
   throw new Error("llms.txt is missing the AI music samples page URL");
+}
+if (!llmsText.includes("AI Music Pricing Calculator") || !llmsText.includes("ai-music-pricing-calculator.html")) {
+  throw new Error("llms.txt is missing the AI Music Pricing Calculator page");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -1770,6 +1775,66 @@ try {
     }
     const aiMusicSamplesOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicSamplesOverflow) throw new Error(`AI music samples horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiMusicPricingCalculator, { waitUntil: "networkidle" });
+    const aiMusicPricingTitle = await page.locator("h1").innerText();
+    if (!aiMusicPricingTitle.includes("AI Music Pricing Calculator")) {
+      throw new Error(`Unexpected AI music pricing calculator h1 in ${viewport.name}: ${aiMusicPricingTitle}`);
+    }
+    const aiMusicPricingText = await page.locator("body").innerText();
+    if (
+      !aiMusicPricingText.includes("USD $29") ||
+      !aiMusicPricingText.includes("$79") ||
+      !aiMusicPricingText.includes("USD $149") ||
+      !aiMusicPricingText.includes("USD $399") ||
+      !aiMusicPricingText.includes("Payment after written brief acceptance only") ||
+      !aiMusicPricingText.includes("Source material rights") ||
+      !aiMusicPricingText.includes("Generate price packet")
+    ) {
+      throw new Error(`AI music pricing calculator is missing package ladder, rights, or payment guardrails in ${viewport.name}`);
+    }
+    const aiMusicPricingHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!aiMusicPricingHeroLoaded) throw new Error(`AI music pricing hero image failed to load in ${viewport.name}`);
+    const defaultPricingPacket = await page.locator("[data-ai-music-pricing-packet]").inputValue();
+    const defaultPricingOrderHref = await page.locator("[data-ai-music-pricing-open-order]").getAttribute("href");
+    if (
+      !defaultPricingPacket.includes("Recommended package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !defaultPricingPacket.includes("Suggested reference sample: SaaS Launch Hero Hook") ||
+      !defaultPricingPacket.includes("Payment timing: after written brief acceptance only") ||
+      !defaultPricingOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")
+    ) {
+      throw new Error(`AI music pricing default packet missing SaaS $29 route or payment guardrail in ${viewport.name}`);
+    }
+    await page.locator("[name='variants']").fill("3");
+    await page.locator("[name='cutPlan']").selectOption("two-cuts");
+    await page.locator("[name='revisions']").selectOption("1");
+    const campaignPricingPacket = await page.locator("[data-ai-music-pricing-packet]").inputValue();
+    if (
+      !campaignPricingPacket.includes("Recommended package: USD $149 Ad Music Pack") ||
+      !campaignPricingPacket.includes("campaign-ready cuts or revision pass")
+    ) {
+      throw new Error(`AI music pricing calculator did not route campaign shape to $149 in ${viewport.name}`);
+    }
+    await page.locator("[name='variants']").fill("4");
+    await page.locator("[name='cutPlan']").selectOption("full-pack");
+    await page.locator("[name='revisions']").selectOption("2");
+    const launchPricingPacket = await page.locator("[data-ai-music-pricing-packet]").inputValue();
+    if (
+      !launchPricingPacket.includes("Recommended package: USD $399 Sonic Launch Kit") ||
+      !launchPricingPacket.includes("multi-asset launch set")
+    ) {
+      throw new Error(`AI music pricing calculator did not route launch shape to $399 in ${viewport.name}`);
+    }
+    const pricingEmailHref = await page.locator("[data-ai-music-pricing-email]").getAttribute("href");
+    if (
+      !pricingEmailHref?.includes("mailto:jackjin1997@gmail.com") ||
+      !pricingEmailHref.includes("USD%20%24399%20Sonic%20Launch%20Kit") ||
+      !pricingEmailHref.includes("Payment%20timing")
+    ) {
+      throw new Error(`AI music pricing email packet missing recipient, package, or guardrail in ${viewport.name}`);
+    }
+    const aiMusicPricingOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiMusicPricingOverflow) throw new Error(`AI music pricing calculator horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiSaasLaunchVideoMusic, { waitUntil: "networkidle" });
     const saasLaunchTitle = await page.locator("h1").innerText();

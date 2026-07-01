@@ -594,6 +594,125 @@ function mailtoHref(subject, body) {
   return `mailto:${jingleEmailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+const aiMusicPricingForm = document.querySelector("[data-ai-music-pricing-form]");
+
+function selectedAiMusicUseCaseOption(form) {
+  return form.querySelector("[name='useCase']")?.selectedOptions?.[0] || null;
+}
+
+function aiMusicPricingResult(form) {
+  const data = new FormData(form);
+  const option = selectedAiMusicUseCaseOption(form);
+  const defaultPackage = option?.dataset.defaultPackage || "USD $29 Founding Hook Sketch";
+  const lengthSeconds = Math.max(5, numberField(form, "lengthSeconds", 15));
+  const variants = Math.max(1, numberField(form, "variants", 1));
+  const cutPlan = clean(data.get("cutPlan"), "single");
+  const revisions = Math.max(0, numberField(form, "revisions", 0));
+  const reasons = [];
+  let amount = 29;
+  let packageName = defaultPackage;
+
+  if (variants >= 4 || revisions >= 2 || cutPlan === "full-pack") {
+    amount = 399;
+    packageName = "USD $399 Sonic Launch Kit";
+    reasons.push("multi-asset launch set");
+  } else if (variants >= 3 || lengthSeconds >= 30 || cutPlan === "two-cuts" || revisions >= 1) {
+    amount = 149;
+    packageName = "USD $149 Ad Music Pack";
+    reasons.push("campaign-ready cuts or revision pass");
+  } else if (variants >= 2 || lengthSeconds > 15) {
+    amount = 79;
+    packageName = "USD $79 Jingle Hook Pack";
+    reasons.push("two-direction comparison");
+  } else {
+    reasons.push("one short direction");
+  }
+
+  if (clean(data.get("rights"), "").toLowerCase().includes("needs rights review")) {
+    reasons.push("rights review before payment");
+  }
+  if (clean(data.get("timing"), "").toLowerCase().includes("rush")) {
+    reasons.push("rush timing must be confirmed before acceptance");
+  }
+
+  return {
+    amount,
+    packageName,
+    reason: reasons.join("; "),
+    template: option?.dataset.template || "ai-jingle-order.yml",
+    labels: option?.dataset.labels || "ai-jingle-order",
+    service: option?.dataset.service || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html",
+    sample: option?.dataset.sample || "Coffee Shop 30s Hook",
+  };
+}
+
+function buildAiMusicPricingPacket(form, result) {
+  const data = new FormData(form);
+  const useCase = clean(data.get("useCase"), "AI music brief");
+  const brand = clean(data.get("brand"), "Brand, product, show, or client TBD");
+  const projectUrl = clean(data.get("projectUrl"), "Website, product page, or media kit TBD");
+  const lengthSeconds = clean(data.get("lengthSeconds"), "15");
+  const variants = clean(data.get("variants"), "1");
+  const cutPlan = clean(data.get("cutPlan"), "single");
+  const revisions = clean(data.get("revisions"), "0");
+  const timing = clean(data.get("timing"), "48h target after accepted brief");
+  const channel = clean(data.get("channel"), "Publishing channel TBD");
+  const rights = clean(data.get("rights"), "Source material rights TBD");
+  const audience = clean(data.get("audience"), "Audience and required CTA TBD");
+
+  return [
+    "AI music pricing calculator packet",
+    "",
+    `Recommended package: ${result.packageName}`,
+    `Estimated amount: ${usd(result.amount)}`,
+    `Reason: ${result.reason}`,
+    `Best-fit service page: ${result.service}`,
+    `Suggested reference sample: ${result.sample}`,
+    "",
+    "Buyer brief",
+    `Use case: ${useCase}`,
+    `Brand, product, show, or client: ${brand}`,
+    `Website, product page, or media kit: ${projectUrl}`,
+    `Target length: ${lengthSeconds} seconds`,
+    `Directions or variants needed: ${variants}`,
+    `Cut plan: ${cutPlan}`,
+    `Revision need: ${revisions}`,
+    `Delivery timing: ${timing}`,
+    `Publishing channel: ${channel}`,
+    `Source material rights: ${rights}`,
+    `Audience and required CTA: ${audience}`,
+    "",
+    "Acceptance rule",
+    "Payment timing: after written brief acceptance only.",
+    "Do not send payment until the package, source-material rights, publishing channel, and payment path are accepted in writing.",
+    "",
+    "Delivery notes",
+    "- Includes selected AI-assisted music direction, production prompt, rough cut note, source/tool note, and usage memo.",
+    "- No known-artist soundalikes, living voice clones, copyrighted songs, or third-party lyrics without rights.",
+    "- AI-generated music may have copyright-registration limits; delivery includes usage notes, not legal clearance.",
+  ].join("\n");
+}
+
+function updateAiMusicPricing() {
+  if (!aiMusicPricingForm) return;
+  const result = aiMusicPricingResult(aiMusicPricingForm);
+  const packet = buildAiMusicPricingPacket(aiMusicPricingForm, result);
+  const data = new FormData(aiMusicPricingForm);
+  const brand = compactTitle(data.get("brand"), "brand");
+  const price = aiMusicPricingForm.querySelector("[data-ai-music-price]");
+  const fit = aiMusicPricingForm.querySelector("[data-ai-music-fit]");
+  const route = aiMusicPricingForm.querySelector("[data-ai-music-route]");
+  const output = aiMusicPricingForm.querySelector("[data-ai-music-pricing-packet]");
+  const emailLink = aiMusicPricingForm.querySelector("[data-ai-music-pricing-email]");
+  const openLink = aiMusicPricingForm.querySelector("[data-ai-music-pricing-open-order]");
+  price.textContent = result.packageName;
+  fit.textContent = result.reason;
+  route.textContent = result.template;
+  output.value = packet;
+  emailLink.href = mailtoHref(`AI music price brief: ${brand}`, packet);
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(result.template)}&labels=${encodeURIComponent(result.labels)}&title=${encodeURIComponent(`AI music price brief: ${brand}`)}&body=${encodeURIComponent(packet)}`;
+}
+
 document.querySelectorAll("[data-mailto-target]").forEach((link) => {
   const target = document.querySelector(link.getAttribute("data-mailto-target") || "");
   const subject = link.getAttribute("data-mailto-subject") || "AI music brief";
@@ -602,6 +721,28 @@ document.querySelectorAll("[data-mailto-target]").forEach((link) => {
     link.href = mailtoHref(subject, body);
   }
 });
+
+if (aiMusicPricingForm) {
+  updateAiMusicPricing();
+  aiMusicPricingForm.addEventListener("input", updateAiMusicPricing);
+  aiMusicPricingForm.addEventListener("change", updateAiMusicPricing);
+  aiMusicPricingForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateAiMusicPricing();
+    aiMusicPricingForm.querySelector("[data-ai-music-pricing-packet]").focus();
+  });
+  aiMusicPricingForm.querySelector("[data-copy-ai-music-pricing-packet]").addEventListener("click", async (event) => {
+    updateAiMusicPricing();
+    const output = aiMusicPricingForm.querySelector("[data-ai-music-pricing-packet]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
+  });
+}
 
 const sampleBriefForm = document.querySelector("[data-sample-brief-form]");
 

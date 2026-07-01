@@ -786,6 +786,50 @@ function buildAiMusicOrderPacket(form, result) {
   ].join("\n");
 }
 
+function buildAiMusicOrderAcceptancePacket(form, result) {
+  const data = new FormData(form);
+  const useCase = clean(data.get("useCase"), "AI music brief");
+  const brand = clean(data.get("brand"), "Brand, product, show, or client TBD");
+  const contact = clean(data.get("contact"), "Contact TBD");
+  const timing = clean(data.get("timing"), "48h target after accepted brief");
+  const channel = clean(data.get("channel"), "Publishing channel TBD");
+  const rights = clean(data.get("rights"), "Source material rights TBD");
+  const cta = clean(data.get("cta"), "CTA, tagline, or product claim TBD");
+  const amount = packageAmount(result.packageName);
+
+  return [
+    "AI music acceptance and payment handoff",
+    "",
+    "Use this only after the written brief and selected package are accepted.",
+    "",
+    `Package: ${result.packageName}`,
+    `Amount: ${amount} equivalent`,
+    `Brand, product, show, or client: ${brand}`,
+    `Use case: ${useCase}`,
+    `Reference sample: ${result.sample}`,
+    `Publishing channel: ${channel}`,
+    `Source material rights: ${rights}`,
+    `Required CTA, tagline, or product claim: ${cta}`,
+    `Buyer contact: ${contact}`,
+    `Delivery target: ${timing} and payment confirmation`,
+    "",
+    "Acceptance reply:",
+    `I accept the ${result.packageName} for ${brand}. Use case: ${useCase}. Reference sample: ${result.sample}. Publishing channel: ${channel}. Source material rights: ${rights}. Required CTA/tagline/product claim: ${cta}. Payment timing: after written brief acceptance only. I will not request known-artist soundalikes, living voice clones, copyrighted songs, or third-party lyrics without rights.`,
+    "",
+    "Payment paths after acceptance:",
+    `Ethereum address for ETH or ERC-20 USDC/USDT/DAI: ${ethereumPaymentAddress}`,
+    `Solana address for SOL or SPL USDC: ${solanaPaymentAddress}`,
+    `Payment proof form: ${paymentProofUrl}`,
+    `Payment proof service field: ${result.packageName}`,
+    "",
+    "Start rule:",
+    "The delivery target starts after written brief acceptance and verifiable payment confirmation.",
+    "",
+    "Usage guardrails:",
+    "AI-generated music can have copyright-registration limits; delivery includes usage notes, not legal clearance.",
+  ].join("\n");
+}
+
 function updateAiMusicPricing() {
   if (!aiMusicPricingForm) return;
   const result = aiMusicPricingResult(aiMusicPricingForm);
@@ -810,20 +854,27 @@ function updateAiMusicOrderDesk() {
   if (!aiMusicOrderForm) return;
   const result = aiMusicOrderResult(aiMusicOrderForm);
   const packet = buildAiMusicOrderPacket(aiMusicOrderForm, result);
+  const acceptancePacket = buildAiMusicOrderAcceptancePacket(aiMusicOrderForm, result);
   const data = new FormData(aiMusicOrderForm);
   const brand = compactTitle(data.get("brand"), "brand");
   const selectedPackage = aiMusicOrderForm.querySelector("[data-ai-music-order-package]");
   const selectedSample = aiMusicOrderForm.querySelector("[data-ai-music-order-sample]");
   const route = aiMusicOrderForm.querySelector("[data-ai-music-order-route]");
   const output = aiMusicOrderForm.querySelector("[data-ai-music-order-output]");
+  const acceptanceOutput = aiMusicOrderForm.querySelector("[data-ai-music-order-acceptance-output]");
   const emailLink = aiMusicOrderForm.querySelector("[data-ai-music-order-email]");
+  const acceptanceEmailLink = aiMusicOrderForm.querySelector("[data-ai-music-order-acceptance-email]");
   const openLink = aiMusicOrderForm.querySelector("[data-ai-music-order-open]");
+  const paymentProofLink = aiMusicOrderForm.querySelector("[data-ai-music-order-payment-proof]");
   selectedPackage.textContent = result.packageName;
   selectedSample.textContent = result.sample;
   route.textContent = result.template;
   output.value = packet;
+  acceptanceOutput.value = acceptancePacket;
   emailLink.href = mailtoHref(`AI music order brief: ${brand}`, packet);
+  acceptanceEmailLink.href = mailtoHref(`AI music accepted package: ${brand}`, acceptancePacket);
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(result.template)}&labels=${encodeURIComponent(result.labels)}&title=${encodeURIComponent(`AI music order: ${brand} - ${result.packageName}`)}&body=${encodeURIComponent(packet)}`;
+  paymentProofLink.href = paymentProofUrl;
 }
 
 document.querySelectorAll("[data-mailto-target]").forEach((link) => {
@@ -869,6 +920,17 @@ if (aiMusicOrderForm) {
   aiMusicOrderForm.querySelector("[data-copy-ai-music-order-packet]").addEventListener("click", async (event) => {
     updateAiMusicOrderDesk();
     const output = aiMusicOrderForm.querySelector("[data-ai-music-order-output]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
+  });
+  aiMusicOrderForm.querySelector("[data-copy-ai-music-order-acceptance]").addEventListener("click", async (event) => {
+    updateAiMusicOrderDesk();
+    const output = aiMusicOrderForm.querySelector("[data-ai-music-order-acceptance-output]");
     try {
       await navigator.clipboard.writeText(output.value);
       setButtonText(event.currentTarget, "Copied");

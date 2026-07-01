@@ -1851,6 +1851,7 @@ try {
     const aiMusicOrderText = await page.locator("body").innerText();
     if (
       !aiMusicOrderText.includes("Generate order packet") ||
+      !aiMusicOrderText.includes("Copy payment handoff") ||
       !aiMusicOrderText.includes("Payment after written brief acceptance only") ||
       !aiMusicOrderText.includes("Source material rights") ||
       !aiMusicOrderText.includes("SaaS Launch Hero Hook") ||
@@ -1862,6 +1863,7 @@ try {
     const aiMusicOrderHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicOrderHeroLoaded) throw new Error(`AI music order desk hero image failed to load in ${viewport.name}`);
     const defaultOrderPacket = await page.locator("[data-ai-music-order-output]").inputValue();
+    const defaultOrderAcceptance = await page.locator("[data-ai-music-order-acceptance-output]").inputValue();
     const defaultOrderHref = await page.locator("[data-ai-music-order-open]").getAttribute("href");
     if (
       !defaultOrderPacket.includes("AI music order desk packet") ||
@@ -1872,6 +1874,15 @@ try {
       !defaultOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")
     ) {
       throw new Error(`AI music order desk default packet missing SaaS route, contact, sample, or payment guardrail in ${viewport.name}`);
+    }
+    if (
+      !defaultOrderAcceptance.includes("AI music acceptance and payment handoff") ||
+      !defaultOrderAcceptance.includes("Package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !defaultOrderAcceptance.includes("Payment paths after acceptance:") ||
+      !defaultOrderAcceptance.includes("Ethereum address for ETH or ERC-20 USDC/USDT/DAI") ||
+      !defaultOrderAcceptance.includes("Payment proof form: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml")
+    ) {
+      throw new Error(`AI music order desk default acceptance handoff missing package, wallet path, or payment proof in ${viewport.name}`);
     }
     await page.locator("[data-ai-music-order-form] [name='useCase']").selectOption("UGC agency client approval");
     await page.locator("[data-ai-music-order-form] [name='packageChoice']").selectOption("USD $399 Sonic Launch Kit");
@@ -1892,12 +1903,24 @@ try {
       throw new Error(`AI music order desk did not route UGC agency $399 packet correctly in ${viewport.name}`);
     }
     const orderEmailHref = await page.locator("[data-ai-music-order-email]").getAttribute("href");
+    const ugcAcceptancePacket = await page.locator("[data-ai-music-order-acceptance-output]").inputValue();
+    const acceptanceEmailHref = await page.locator("[data-ai-music-order-acceptance-email]").getAttribute("href");
+    const paymentProofHref = await page.locator("[data-ai-music-order-payment-proof]").getAttribute("href");
     if (
       !orderEmailHref?.startsWith("mailto:jackjin1997@gmail.com") ||
       !decodeURIComponent(orderEmailHref).includes("USD $399 Sonic Launch Kit") ||
       !decodeURIComponent(orderEmailHref).includes("Payment timing: after written brief acceptance only")
     ) {
       throw new Error(`AI music order desk email packet missing recipient, package, or guardrail in ${viewport.name}`);
+    }
+    if (
+      !ugcAcceptancePacket.includes("Package: USD $399 Sonic Launch Kit") ||
+      !ugcAcceptancePacket.includes("Brand, product, show, or client: Northstar UGC Sprint") ||
+      !ugcAcceptancePacket.includes("Payment proof service field: USD $399 Sonic Launch Kit") ||
+      !decodeURIComponent(acceptanceEmailHref || "").includes("AI music accepted package: Northstar UGC Sprint") ||
+      paymentProofHref !== "https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=payment-confirmation.yml"
+    ) {
+      throw new Error(`AI music order desk acceptance handoff did not update for UGC agency $399 order in ${viewport.name}`);
     }
     const aiMusicOrderOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicOrderOverflow) throw new Error(`AI music order desk horizontal overflow detected in ${viewport.name}`);

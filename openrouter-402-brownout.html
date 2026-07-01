@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="OpenRouter 402 Payment Required and balance brownout runbook for teams that need affordable max_tokens caps, retry containment, and paid AI cost-control review routing.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html">
+    <meta property="og:title" content="OpenRouter 402 Brownout Runbook">
+    <meta property="og:description" content="Turn OpenRouter 402s, waiting-credits states, max_tokens caps, and retry storms into a scoped cost-control packet before more agent calls burn budget.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenRouter 402 Brownout Runbook">
+    <meta name="twitter:description" content="A focused checklist for OpenRouter insufficient credits, stale balance, max_tokens caps, streaming 402 fallback, and retry containment.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>OpenRouter 402 Brownout Runbook</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "OpenRouter 402 Brownout Cost-Control Review",
+        "description": "Fixed-scope review for OpenRouter 402 Payment Required failures, insufficient credits, stale balance snapshots, max_tokens caps, retry storms, and emergency AI spend containment.",
+        "url": "https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "USD $99 OpenRouter 402 Quick Triage",
+            "price": "99",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $299 AI Agent Cost Leak Review",
+            "price": "299",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $1,000 AI Cost Spike Emergency Sprint",
+            "price": "1000",
+            "priceCurrency": "USD"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
+        <a href="openrouter-actual-cost-reconciliation.html">Actual Cost</a>
+        <a href="openrouter-balance-guardrail.html">Balance Guardrail</a>
+        <a href="openrouter-402-brownout.html">402 Brownout</a>
+        <a href="litellm-budget-guardrail.html">LiteLLM Budget</a>
+        <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
+        <a href="ai-cost-spike-emergency.html">Cost Spike</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">OpenRouter incident intake</p>
+        <h1>OpenRouter 402 Brownout Runbook</h1>
+        <p>
+          A focused handoff for OpenRouter-backed apps that hit <code>402 Payment Required</code>, insufficient credits, stale balance snapshots, impossible <code>max_tokens</code> settings, or retry storms. The goal is to stop unsafe dispatch first, then choose the smallest paid review scope that can prove the fix.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://tokenmeter-mu.vercel.app/audit?path=emergency&source=openrouter-402-brownout">Open emergency intake</a>
+          <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-402-brownout">Open $99 quick triage</a>
+          <a class="button secondary dark" href="openrouter-balance-guardrail.html">Balance guardrail</a>
+          <a class="button secondary dark" href="openrouter-actual-cost-reconciliation.html">Actual cost check</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml">Request sprint</a>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Signal</span><strong>OpenRouter 402, waiting credits, or insufficient credits</strong></div>
+          <div><span>Gate</span><strong>Stop dispatch before another expensive agent step</strong></div>
+          <div><span>Quick</span><strong>USD $99 for one error path or launch guardrail</strong></div>
+          <div><span>Focused</span><strong>USD $299 for one live agent or SaaS workflow</strong></div>
+          <div><span>Emergency</span><strong>USD $1,000 when daily burn needs containment</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Brownout states to separate</h2>
+          <p>
+            Treat balance and dispatch as separate decisions. A user-facing "waiting credits" state can be useful, but the backend still needs a hard admission-control rule that decides whether the next model call is affordable, stale, unauthorized, or blocked.
+          </p>
+          <img class="service-visual" src="assets/audit-dashboard.png" alt="Cost-control audit dashboard with status rows and review bands">
+        </div>
+        <div class="report-preview" aria-label="OpenRouter 402 brownout states">
+          <div class="report-row high"><span>402</span><strong><code>Payment Required</code> blocks dispatch and records the active workflow state</strong></div>
+          <div class="report-row medium"><span>Cap</span><strong>Affordable <code>max_tokens</code> is calculated before the call, not after provider rejection</strong></div>
+          <div class="report-row low"><span>Retry</span><strong>Streaming fallback and retry policies cannot loop through the same failing budget state</strong></div>
+          <div class="report-row pass"><span>Receipt</span><strong>Actual generation cost reconciles after success and refunds unused reservation</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>What the review checks</h2>
+          <p>
+            The paid review is scoped around one OpenRouter cost boundary: the point where your app decides whether an agent step, chat response, background job, or tool loop is allowed to spend more money.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>Affordable cap:</strong> compute a viable <code>max_tokens</code> ceiling from balance, model price, prompt tokens, cache-read share, and safety margin.</div>
+          <div><strong>Viable floor:</strong> if the remaining budget cannot buy a useful response, return a clear waiting-credits or upgrade state instead of dispatching.</div>
+          <div><strong>Stale state:</strong> credits, current key limit, and cached usage snapshots have explicit TTLs and fail closed when stale.</div>
+          <div><strong>Retry containment:</strong> 402, 429, timeout, stream abort, and provider fallback do not re-enter the same expensive route without a new reservation.</div>
+          <div><strong>Task overrides:</strong> admin or high-priority tasks can have different caps, but every override leaves an audit trail.</div>
+          <div><strong>Actual-cost closeout:</strong> generation <code>total_cost</code> or <code>usage.cost</code> reconciles reservation, display, and budget ledger.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <p class="eyebrow">Scope routing</p>
+          <h2>Choose the smallest useful paid path</h2>
+          <p>
+            If the app is not burning money yet, the $99 path is enough for one brownout state or one launch guardrail. If a live workflow can repeatedly hit 402, retry, or degrade user output, use the $299 focused review. If the bill is already moving, use the $1,000 emergency sprint.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="ai-cost-spike-emergency.html">View emergency sprint</a>
+            <a class="button secondary dark" href="ai-agent-cost-leak-review.html">View $299 review</a>
+          </div>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>USD $99:</strong> one 402 error path, one <code>max_tokens</code> cap, one stale balance rule, or one launch-pricing sanity check.</div>
+          <div><strong>USD $299:</strong> one OpenRouter-backed agent workflow with reservation, retry containment, actual-cost reconciliation, and user-facing block states.</div>
+          <div><strong>USD $1,000:</strong> live production incident, daily burn spike, repeated agent loop, runaway retry path, or urgent launch-risk window.</div>
+          <div><strong>Start rule:</strong> Payment only after written scope acceptance. Do not paste prompts, API keys, account ids, billing screenshots with sensitive data, or raw production traces into public issues.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Sanitized evidence packet</h2>
+          <p>
+            Public intake can stay small. The useful packet is a redacted state transition, not a dump of production data.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Product or repo URL, plus the exact workflow that calls OpenRouter.</div>
+          <div>Observed error text: 402, insufficient credits, waiting credits, current-key limit, or provider fallback.</div>
+          <div>Model id, prompt token range, intended output token range, cache-read share, and current retry policy.</div>
+          <div>Whether streaming, background jobs, tool loops, or agent continuations can retry after the first failure.</div>
+          <div>Desired decision: block, degrade, cap, queue, ask user for credits, switch model, or trigger emergency stop.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="openrouter-cost-calculator.html">OpenRouter calculator</a>
+      <a href="openrouter-balance-guardrail.html">OpenRouter balance guardrail</a>
+      <a href="openrouter-actual-cost-reconciliation.html">OpenRouter actual-cost reconciliation</a>
+      <a href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-402-brownout">TokenMeter quick triage</a>
+      <a href="https://tokenmeter-mu.vercel.app/audit?path=emergency&source=openrouter-402-brownout">TokenMeter emergency</a>
+      <a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml">Emergency intake</a>
+    </footer>
+  </body>
+</html>

@@ -29,6 +29,7 @@ const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.ht
 const openRouterCostCalculator = `file://${resolve(root, "openrouter-cost-calculator.html")}`;
 const openRouterActualCostReconciliation = `file://${resolve(root, "openrouter-actual-cost-reconciliation.html")}`;
 const openRouterBalanceGuardrail = `file://${resolve(root, "openrouter-balance-guardrail.html")}`;
+const openRouter402Brownout = `file://${resolve(root, "openrouter-402-brownout.html")}`;
 const liteLlmBudgetGuardrail = `file://${resolve(root, "litellm-budget-guardrail.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
@@ -71,6 +72,7 @@ const requiredFiles = [
   "openrouter-cost-calculator.html",
   "openrouter-actual-cost-reconciliation.html",
   "openrouter-balance-guardrail.html",
+  "openrouter-402-brownout.html",
   "litellm-budget-guardrail.html",
   "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
@@ -232,6 +234,12 @@ if (!llmsText.includes("OpenRouter Actual Cost Reconciliation")) {
 if (!llmsText.includes("openrouter-actual-cost-reconciliation.html")) {
   throw new Error("llms.txt is missing the OpenRouter Actual Cost Reconciliation URL");
 }
+if (!llmsText.includes("OpenRouter 402 Brownout Runbook")) {
+  throw new Error("llms.txt is missing the OpenRouter 402 Brownout Runbook context");
+}
+if (!llmsText.includes("openrouter-402-brownout.html")) {
+  throw new Error("llms.txt is missing the OpenRouter 402 Brownout Runbook URL");
+}
 if (!llmsText.includes("LiteLLM Budget Guardrail")) {
   throw new Error("llms.txt is missing the LiteLLM Budget Guardrail context");
 }
@@ -258,6 +266,9 @@ if (!llmsText.includes("usage.cost") || !llmsText.includes("generation `total_co
 }
 if (!llmsText.includes("per-user quotas") || !llmsText.includes("policy snapshots")) {
   throw new Error("llms.txt is missing the LiteLLM budget guardrail routing context");
+}
+if (!llmsText.includes("402 Payment Required") || !llmsText.includes("waiting-credit states") || !llmsText.includes("max_tokens")) {
+  throw new Error("llms.txt is missing the OpenRouter 402 brownout routing context");
 }
 if (!llmsText.includes("ai-cost-spike-emergency.yml")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency intake link");
@@ -1462,6 +1473,9 @@ try {
     }
     if (!indexBody.includes("Open the OpenRouter actual cost reconciliation page")) {
       throw new Error(`Index page missing OpenRouter actual-cost reconciliation scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the OpenRouter 402 brownout page")) {
+      throw new Error(`Index page missing OpenRouter 402 brownout scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the LiteLLM budget guardrail")) {
       throw new Error(`Index page missing LiteLLM budget guardrail scanner link in ${viewport.name}`);
@@ -3521,6 +3535,31 @@ try {
     }
     const openRouterBalanceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (openRouterBalanceOverflow) throw new Error(`OpenRouter Balance Guardrail horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(openRouter402Brownout, { waitUntil: "networkidle" });
+    const openRouter402Title = await page.locator("h1").innerText();
+    if (!openRouter402Title.includes("OpenRouter 402 Brownout Runbook")) {
+      throw new Error(`Unexpected OpenRouter 402 Brownout h1 in ${viewport.name}: ${openRouter402Title}`);
+    }
+    const openRouter402Text = await page.locator("body").innerText();
+    if (
+      !openRouter402Text.includes("402 Payment Required") ||
+      !openRouter402Text.includes("insufficient credits") ||
+      !openRouter402Text.includes("max_tokens") ||
+      !openRouter402Text.includes("retry containment") ||
+      !openRouter402Text.includes("Payment only after written scope acceptance") ||
+      !openRouter402Text.includes("USD $99") ||
+      !openRouter402Text.includes("USD $299") ||
+      !openRouter402Text.includes("USD $1,000")
+    ) {
+      throw new Error(`OpenRouter 402 Brownout page missing brownout states, package routing, or payment guardrail in ${viewport.name}`);
+    }
+    const openRouter402ImageCount = await page.locator("img[src='assets/audit-dashboard.png']").count();
+    if (openRouter402ImageCount !== 1) {
+      throw new Error(`OpenRouter 402 Brownout page missing visual asset in ${viewport.name}`);
+    }
+    const openRouter402Overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (openRouter402Overflow) throw new Error(`OpenRouter 402 Brownout horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(liteLlmBudgetGuardrail, { waitUntil: "networkidle" });
     const liteLlmBudgetTitle = await page.locator("h1").innerText();

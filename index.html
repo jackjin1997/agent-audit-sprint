@@ -59,6 +59,7 @@
         <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
         <a href="openrouter-actual-cost-reconciliation.html">Actual Cost</a>
         <a href="openrouter-balance-guardrail.html">Balance Guardrail</a>
+        <a href="openrouter-402-brownout.html">402 Brownout</a>
         <a href="litellm-budget-guardrail.html">LiteLLM Budget</a>
         <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
         <a href="agent-auth-security-review.html">Agent Auth</a>
@@ -101,6 +102,7 @@
             <a class="button secondary" href="openrouter-cost-calculator.html">OpenRouter cost calculator</a>
             <a class="button secondary" href="openrouter-actual-cost-reconciliation.html">OpenRouter actual cost</a>
             <a class="button secondary" href="openrouter-balance-guardrail.html">OpenRouter balance guardrail</a>
+            <a class="button secondary" href="openrouter-402-brownout.html">OpenRouter 402 runbook</a>
             <a class="button secondary" href="litellm-budget-guardrail.html">LiteLLM budget guardrail</a>
             <a class="button secondary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml">Emergency intake</a>
             <a class="button secondary" href="ai-agent-cost-leak-review.html">Cost leak review</a>
@@ -151,11 +153,12 @@
           <p class="eyebrow">Free LLM cost estimator</p>
           <h2 id="openrouter-cost-title">OpenRouter Cost Calculator for model spend triage</h2>
           <p>
-            For teams comparing model routes or seeing unexpected OpenRouter spend, the calculator turns monthly requests, token volume, cache-read share, retry overhead, and tool-call fanout into a sanitized intake packet. The actual-cost reconciliation page compares product display against <code>usage.cost</code> or generation <code>total_cost</code> when provider billing disagrees. Both route small checks to the USD $99 quick audit, recurring leaks to the USD $299 cost review, and urgent burn-rate problems to the USD $1,000 emergency sprint.
+            For teams comparing model routes or seeing unexpected OpenRouter spend, the calculator turns monthly requests, token volume, cache-read share, retry overhead, and tool-call fanout into a sanitized intake packet. The actual-cost reconciliation page compares product display against <code>usage.cost</code> or generation <code>total_cost</code> when provider billing disagrees. The 402 brownout runbook handles insufficient credits, stale balance states, <code>max_tokens</code> caps, and retry containment. These route small checks to the USD $99 quick audit, recurring leaks to the USD $299 cost review, and urgent burn-rate problems to the USD $1,000 emergency sprint.
           </p>
           <a class="text-link" href="openrouter-cost-calculator.html">Open the OpenRouter Cost Calculator</a>
           <a class="text-link" href="openrouter-actual-cost-reconciliation.html">Open the OpenRouter Actual Cost Reconciliation</a>
           <a class="text-link" href="openrouter-balance-guardrail.html">Open the OpenRouter Balance Guardrail</a>
+          <a class="text-link" href="openrouter-402-brownout.html">Open the OpenRouter 402 Brownout Runbook</a>
           <a class="text-link" href="litellm-budget-guardrail.html">Open the LiteLLM Budget Guardrail</a>
           <a class="text-link" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-calculator">Open TokenMeter quick audit path</a>
           <a class="text-link" href="https://tokenmeter-mu.vercel.app/audit?path=emergency&source=openrouter-calculator">Open TokenMeter emergency path</a>
@@ -166,6 +169,7 @@
           <div class="report-row high"><span>$1,000</span><strong>AI Cost Spike Emergency Sprint when daily burn already needs containment</strong></div>
           <div class="report-row medium"><span>Actual</span><strong>Provider actual cost, generation id, cache-read tokens, and retry dedupe need one source of truth</strong></div>
           <div class="report-row low"><span>Gate</span><strong>Balance display, key limit, stale snapshot, and reservation checks before dispatch</strong></div>
+          <div class="report-row high"><span>402</span><strong>Insufficient credits, waiting-credit states, max_tokens caps, and retry storms need a stop rule</strong></div>
           <div class="report-row medium"><span>LiteLLM</span><strong>Per-user, per-agent, and per-team quota gates need policy snapshots and reconciliation</strong></div>
           <div class="report-row medium"><span>Safe</span><strong>Copy sanitized counts only; no private prompts, keys, customer data, or raw traces in public issues</strong></div>
         </div>
@@ -274,6 +278,7 @@
           <div class="fit-item"><a href="openrouter-cost-calculator.html">OpenRouter model spend estimates</a> for cache-read assumptions, retry overhead, tool-call fanout, and package routing</div>
           <div class="fit-item"><a href="openrouter-actual-cost-reconciliation.html">OpenRouter actual-cost reconciliation</a> for product-display mismatch, provider <code>usage.cost</code>, generation id dedupe, and audit trail fixes</div>
           <div class="fit-item"><a href="openrouter-balance-guardrail.html">OpenRouter balance guardrails</a> for credits, key limits, stale states, and pre-dispatch reservations</div>
+          <div class="fit-item"><a href="openrouter-402-brownout.html">OpenRouter 402 brownout reviews</a> for insufficient credits, waiting-credit states, <code>max_tokens</code> caps, streaming fallback, and retry containment</div>
           <div class="fit-item"><a href="litellm-budget-guardrail.html">LiteLLM budget guardrails</a> for per-user, per-agent, and per-team quota enforcement</div>
           <div class="fit-item"><a href="ai-agent-cost-leak-review.html">AI agent cost leak reviews</a> for token spend, RAG bloat, model-routing drift, retry loops, cache misses, and coding-agent tool-call loops</div>
           <div class="fit-item"><a href="agent-auth-security-review.html">Agent auth and cookie vault reviews</a> for token brokers, site_login flows, OAuth/HITL consent, and authenticated scraping</div>
@@ -297,6 +302,7 @@
           <a class="text-link" href="ai-cost-spike-emergency.html">Open the AI cost spike emergency page</a>
           <a class="text-link" href="openrouter-cost-calculator.html">Open the OpenRouter cost calculator</a>
           <a class="text-link" href="openrouter-actual-cost-reconciliation.html">Open the OpenRouter actual cost reconciliation page</a>
+          <a class="text-link" href="openrouter-402-brownout.html">Open the OpenRouter 402 brownout page</a>
           <a class="text-link" href="litellm-budget-guardrail.html">Open the LiteLLM budget guardrail</a>
           <a class="text-link" href="ai-agent-cost-leak-review.html">Open the AI agent cost leak review page</a>
           <a class="text-link" href="ai-agent-security-audit-service.html">Open the AI agent security audit page</a>

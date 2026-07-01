@@ -1,6 +1,6 @@
 # Agent/MCP Audit Sprint
 
-> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, USD $1,000 AI Cost Spike Emergency Sprint, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, editable OpenRouter Cost Calculator with JSON, JSONL, or CSV usage rows import, OpenRouter Actual Cost Reconciliation for product display vs provider `usage.cost` / generation `total_cost`, OpenRouter Balance Guardrail page for credits and key limits, LiteLLM Budget Guardrail page for per-user/per-agent/per-team quotas, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $49 rush, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for SaaS/Product Hunt launch videos, ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
+> Paid Agent/MCP security review packages: USD $99 Quick Scan Report, USD $299 Same-day Focused Review, USD $299 AI Agent Cost Leak Review, USD $299 Agent Auth Focused Review, USD $299 MCP SSRF Focused Review, USD $1,000 AI Cost Spike Emergency Sprint, or USD $1,000 Full Audit Sprint for one repo or product slice. Free no-execution scanner, editable OpenRouter Cost Calculator with JSON, JSONL, or CSV usage rows import, OpenRouter Actual Cost Reconciliation for product display vs provider `usage.cost` / generation `total_cost`, OpenRouter Balance Guardrail page for credits and key limits, OpenRouter 402 Brownout Runbook for 402 Payment Required, insufficient credits, waiting-credit states, `max_tokens` caps, and retry containment, LiteLLM Budget Guardrail page for per-user/per-agent/per-team quotas, SARIF GitHub Action, Code Scanning workflow, and public MCP Security Radar are available before booking. New AI Music Generator storefront and AI Jingle Generator offer: USD $29, USD $49 rush, USD $79, USD $149, and USD $399 AI-assisted short brand audio packages for SaaS/Product Hunt launch videos, ads, short-form TikTok/Reels/Shorts/UGC videos, real estate listing videos, wedding videos, podcasts, radio IDs, and creator intros. Podcast Sponsor Jingle Pack is the narrow USD $149 page for host-read ads, branded segments, media-kit upsells, and email-first sponsor briefs.
 
 Base URL: https://jackjin1997.github.io/agent-audit-sprint/
 Repository: https://github.com/jackjin1997/agent-audit-sprint
@@ -30,6 +30,7 @@ Delivery target: 48 hours after written scope acceptance and payment confirmatio
 OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
 OpenRouter Actual Cost Reconciliation: https://jackjin1997.github.io/agent-audit-sprint/openrouter-actual-cost-reconciliation.html
 OpenRouter Balance Guardrail: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html
+OpenRouter 402 Brownout Runbook: https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html
 LiteLLM Budget Guardrail: https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html
 
 ## Primary Pages
@@ -39,6 +40,7 @@ LiteLLM Budget Guardrail: https://jackjin1997.github.io/agent-audit-sprint/litel
 - OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
 - OpenRouter Actual Cost Reconciliation: https://jackjin1997.github.io/agent-audit-sprint/openrouter-actual-cost-reconciliation.html
 - OpenRouter Balance Guardrail: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html
+- OpenRouter 402 Brownout Runbook: https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html
 - LiteLLM Budget Guardrail: https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html
 - AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
@@ -146,6 +148,7 @@ LiteLLM Budget Guardrail: https://jackjin1997.github.io/agent-audit-sprint/litel
 - OpenRouter cost calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html for model-spend estimates, JSON, JSONL, or CSV usage rows import, cache-read assumptions, retry overhead, tool-call fanout, and package routing.
 - OpenRouter actual-cost reconciliation: https://jackjin1997.github.io/agent-audit-sprint/openrouter-actual-cost-reconciliation.html for provider actual-cost vs product display mismatches, `usage.cost`, generation `total_cost`, generation id idempotency, cache-read/reasoning pricing, retry dedupe, and audit trail fixes.
 - OpenRouter balance guardrail: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html for OpenRouter credits, key limits, stale-state UI, reservation-led admission control, and actual-cost reconciliation.
+- OpenRouter 402 brownout runbook: https://jackjin1997.github.io/agent-audit-sprint/openrouter-402-brownout.html for 402 Payment Required, insufficient credits, waiting-credit states, affordable `max_tokens` caps, stale balance snapshots, streaming fallback, and retry containment.
 - LiteLLM budget guardrail: https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html for LiteLLM key budgets, per-user/per-agent quotas, team allocation, soft and hard limits, policy snapshots, pre-dispatch reservations, key lifecycle, and daily spend reconciliation.
 - AI agent cost leak review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary.
 - AI Agent Cost Leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml

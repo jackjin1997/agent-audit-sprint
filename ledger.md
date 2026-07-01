@@ -255,6 +255,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music same-day rush dedicated intake | `.github/ISSUE_TEMPLATE/ai-music-rush-order.yml`, `.github/ISSUE_TEMPLATE/ai-jingle-order.yml`, `.github/workflows/respond-ai-jingle-order.yml`, `scripts/comment-ai-jingle-order.mjs`, `scripts/check-goal-status.mjs`, `ai-music-rush-order.html`, `script.js`, `README.md`, `llms.txt`, `scripts/check-site.mjs` | Added a dedicated USD $49 Same-Day Hook Sketch issue form with deadline/timezone, publishing-channel, source-rights, and payment-after-written-availability fields; routed the rush page and order desk to the new template, fixed the autoresponder so $49 rush orders are not classified as $29 sketches, and added monitor/test coverage for the `ai-music-rush-order` label; no accepted scope or payment counted |
 
+| AI Music same-day rush direct-order owned distribution refresh | GitHub profile README commit `c1ed43d8b6ce`, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 revision `7880993f124b`, discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/7 updated at `2026-07-01T15:32:05Z` | Added the dedicated `ai-music-rush-order.yml` USD $49 Same-Day Hook Sketch issue form to owned profile, gist, and discussion surfaces so ready buyers can open the direct rush order form without detouring through the order desk; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

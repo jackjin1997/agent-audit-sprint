@@ -247,6 +247,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music commercial-use packet page | `ai-music-commercial-use.html`, `index.html`, `ai-music-generator.html`, `ai-music-order-desk.html`, `sitemap.xml`, `README.md`, `llms.txt`, `scripts/check-site.mjs` | Added a commercial-use packet page for AI-assisted ad music, monetized video music, podcast/sponsor cues, ecommerce product clips, UGC client work, listing videos, and wedding highlights, with publishing-channel/source-rights intake, no-soundalike exclusions, source/tool note, usage memo, order desk fast lanes, email handoff, and payment-after-accepted-brief guardrails; no accepted scope or payment counted |
 
+| AI Music same-day rush order page | `ai-music-rush-order.html`, `script.js`, `index.html`, `ai-music-generator.html`, `ai-music-pricing-calculator.html`, `ai-music-order-desk.html`, `ai-music-commercial-use.html`, `sitemap.xml`, `README.md`, `llms.txt`, `scripts/check-site.mjs` | Added a USD $49 Same-Day Hook Sketch page and `?lane=rush` order-desk prefill for urgent launch videos, ads, podcast cues, product clips, and creator reels, with deadline/timezone intake, source-rights guardrails, availability confirmation before payment, email handoff, tracked order routing, payment proof after acceptance, and Playwright coverage; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

@@ -44,6 +44,7 @@ const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
 const aiMusicPricingCalculator = `file://${resolve(root, "ai-music-pricing-calculator.html")}`;
 const aiMusicOrderDesk = `file://${resolve(root, "ai-music-order-desk.html")}`;
 const aiMusicCommercialUse = `file://${resolve(root, "ai-music-commercial-use.html")}`;
+const aiMusicRushOrder = `file://${resolve(root, "ai-music-rush-order.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -85,6 +86,7 @@ const requiredFiles = [
   "ai-music-pricing-calculator.html",
   "ai-music-order-desk.html",
   "ai-music-commercial-use.html",
+  "ai-music-rush-order.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -301,6 +303,12 @@ if (!llmsText.includes("AI Music Order Desk") || !llmsText.includes("ai-music-or
 }
 if (!llmsText.includes("AI Music Commercial-Use Packet") || !llmsText.includes("ai-music-commercial-use.html")) {
   throw new Error("llms.txt is missing the AI Music Commercial-Use Packet page");
+}
+if (!llmsText.includes("AI Music Same-Day Rush Order") || !llmsText.includes("ai-music-rush-order.html")) {
+  throw new Error("llms.txt is missing the AI Music Same-Day Rush Order page");
+}
+if (!llmsText.includes("USD $49 Same-Day Hook Sketch") || !llmsText.includes("lane=rush")) {
+  throw new Error("llms.txt is missing the AI music rush package or fast-lane URL");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -1286,6 +1294,7 @@ try {
       !indexBody.includes("Open product video music page") ||
       !indexBody.includes("Open short-form ad music page") ||
       !indexBody.includes("Open UGC agency music hook page") ||
+      !indexBody.includes("Open the same-day $49 AI music rush packet") ||
       !indexBody.includes("Copy the AI music commercial-use packet") ||
       !indexBody.includes("SaaS/Product Hunt launch videos, product videos, ads, Reels, Shorts, UGC videos") ||
       !indexBody.includes("Payment after written brief acceptance only")
@@ -1422,10 +1431,14 @@ try {
     if (indexAiMusicCommercialUseLinks < 1) {
       throw new Error(`Index page missing AI music commercial-use packet link in ${viewport.name}`);
     }
+    const indexAiMusicRushLinks = await page.locator("a[href='ai-music-rush-order.html']").count();
+    if (indexAiMusicRushLinks < 1) {
+      throw new Error(`Index page missing AI music rush order page link in ${viewport.name}`);
+    }
     const indexAiMusicFastLaneLinks = await page.locator(
-      "a[href='ai-music-order-desk.html?lane=saas#order-desk'], a[href='ai-music-order-desk.html?lane=product#order-desk'], a[href='ai-music-order-desk.html?lane=ugc#order-desk'], a[href='ai-music-order-desk.html?lane=podcast#order-desk']"
+      "a[href='ai-music-order-desk.html?lane=saas#order-desk'], a[href='ai-music-order-desk.html?lane=product#order-desk'], a[href='ai-music-order-desk.html?lane=rush#order-desk'], a[href='ai-music-order-desk.html?lane=ugc#order-desk'], a[href='ai-music-order-desk.html?lane=podcast#order-desk']"
     ).count();
-    if (indexAiMusicFastLaneLinks < 4) {
+    if (indexAiMusicFastLaneLinks < 5) {
       throw new Error(`Index page missing AI music prefilled order desk links in ${viewport.name}`);
     }
 
@@ -1544,7 +1557,9 @@ try {
       !aiMusicGeneratorText.includes("Generate an order-ready AI music prompt") ||
       !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
       !aiMusicGeneratorText.includes("Commercial-use packet") ||
+      !aiMusicGeneratorText.includes("Same-day $49 rush") ||
       !aiMusicGeneratorText.includes("SaaS $29 order") ||
+      !aiMusicGeneratorText.includes("Rush $49 order") ||
       !aiMusicGeneratorText.includes("Podcast $149 order") ||
       !aiMusicGeneratorText.includes("Publishing channel") ||
       !aiMusicGeneratorText.includes("Source material rights") ||
@@ -1565,12 +1580,16 @@ try {
       throw new Error(`AI music generator page missing package, router, payment, or CTA copy in ${viewport.name}`);
     }
     const aiMusicGeneratorFastLaneLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
-    if (aiMusicGeneratorFastLaneLinks < 6) {
+    if (aiMusicGeneratorFastLaneLinks < 7) {
       throw new Error(`AI music generator page missing fast-lane order desk links in ${viewport.name}`);
     }
     const aiMusicGeneratorCommercialUseLinks = await page.locator("a[href='ai-music-commercial-use.html']").count();
     if (aiMusicGeneratorCommercialUseLinks < 1) {
       throw new Error(`AI music generator page missing commercial-use packet link in ${viewport.name}`);
+    }
+    const aiMusicGeneratorRushLinks = await page.locator("a[href='ai-music-rush-order.html']").count();
+    if (aiMusicGeneratorRushLinks < 1) {
+      throw new Error(`AI music generator page missing rush order page link in ${viewport.name}`);
     }
     const aiMusicGeneratorHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicGeneratorHeroLoaded) throw new Error(`AI music generator hero image failed to load in ${viewport.name}`);
@@ -1915,6 +1934,8 @@ try {
       !aiMusicOrderText.includes("Payment after written brief acceptance only") ||
       !aiMusicOrderText.includes("Source material rights") ||
       !aiMusicOrderText.includes("SaaS Launch Hero Hook") ||
+      !aiMusicOrderText.includes("Rush $49") ||
+      !aiMusicOrderText.includes("USD $49 Same-Day Hook Sketch") ||
       !aiMusicOrderText.includes("USD $399 Sonic Launch Kit") ||
       !aiMusicOrderText.includes("AI Music Pricing Calculator")
     ) {
@@ -2007,6 +2028,31 @@ try {
     ) {
       throw new Error(`AI music order desk podcast fast lane did not prefill acceptance/payment handoff in ${viewport.name}`);
     }
+    await page.goto(`${aiMusicOrderDesk}?lane=rush#order-desk`, { waitUntil: "networkidle" });
+    const rushLanePacket = await page.locator("[data-ai-music-order-output]").inputValue();
+    const rushLaneAcceptance = await page.locator("[data-ai-music-order-acceptance-output]").inputValue();
+    const rushLaneHref = await page.locator("[data-ai-music-order-open]").getAttribute("href");
+    const rushLaneEmail = await page.locator("[data-ai-music-order-email]").getAttribute("href");
+    if (
+      !rushLanePacket.includes("Requested package: USD $49 Same-Day Hook Sketch") ||
+      !rushLanePacket.includes("Use case: Short-form ad or UGC hook") ||
+      !rushLanePacket.includes("Reference sample: Product Demo Hook") ||
+      !rushLanePacket.includes("Contact: buyer@example.com") ||
+      !rushLanePacket.includes("Delivery timing: 24h rush requested, confirm availability first") ||
+      !rushLanePacket.includes("Payment timing: after written brief acceptance only") ||
+      !rushLaneHref?.includes("template=ai-jingle-order.yml") ||
+      !decodeURIComponent(rushLaneEmail || "").includes("AI music order brief: Same-Day Launch Clip")
+    ) {
+      throw new Error(`AI music order desk rush fast lane did not prefill the $49 packet in ${viewport.name}`);
+    }
+    if (
+      !rushLaneAcceptance.includes("Package: USD $49 Same-Day Hook Sketch") ||
+      !rushLaneAcceptance.includes("Amount: USD $49 equivalent") ||
+      !rushLaneAcceptance.includes("Brand, product, show, or client: Same-Day Launch Clip") ||
+      !rushLaneAcceptance.includes("Payment proof service field: USD $49 Same-Day Hook Sketch")
+    ) {
+      throw new Error(`AI music order desk rush fast lane did not prefill acceptance/payment handoff in ${viewport.name}`);
+    }
     const aiMusicOrderOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicOrderOverflow) throw new Error(`AI music order desk horizontal overflow detected in ${viewport.name}`);
 
@@ -2050,6 +2096,60 @@ try {
     if (!commercialUseHeroLoaded) throw new Error(`AI music commercial-use hero image failed to load in ${viewport.name}`);
     const commercialUseOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (commercialUseOverflow) throw new Error(`AI music commercial-use horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(aiMusicRushOrder, { waitUntil: "networkidle" });
+    const aiMusicRushTitle = await page.locator("h1").innerText();
+    if (!aiMusicRushTitle.includes("Same-Day AI Music Rush Order")) {
+      throw new Error(`Unexpected AI music rush order h1 in ${viewport.name}: ${aiMusicRushTitle}`);
+    }
+    const aiMusicRushText = await page.locator("body").innerText();
+    if (
+      !aiMusicRushText.includes("USD $49 Same-Day Hook Sketch") ||
+      !aiMusicRushText.includes("24h if accepted") ||
+      !aiMusicRushText.includes("Copy rush packet") ||
+      !aiMusicRushText.includes("Email rush packet") ||
+      !aiMusicRushText.includes("Open rush order desk") ||
+      !aiMusicRushText.includes("Source material rights") ||
+      !aiMusicRushText.includes("Payment timing: after written availability and brief acceptance only") ||
+      !aiMusicRushText.includes("Start rule: 24h target starts after written brief acceptance and verified payment confirmation") ||
+      !aiMusicRushText.includes("No known-artist soundalikes")
+    ) {
+      throw new Error(`AI music rush order page missing package, timing, rights, or payment guardrail copy in ${viewport.name}`);
+    }
+    const rushPacket = await page.locator("#rush-music-packet").innerText();
+    if (
+      !rushPacket.includes("Same-day AI music rush brief") ||
+      !rushPacket.includes("Package: USD $49 Same-Day Hook Sketch") ||
+      !rushPacket.includes("Deadline and timezone:") ||
+      !rushPacket.includes("Reference sample: Product Demo Hook") ||
+      !rushPacket.includes("Payment timing: after written availability and brief acceptance only")
+    ) {
+      throw new Error(`AI music rush packet missing deadline, sample, or payment text in ${viewport.name}`);
+    }
+    const rushCopyTarget = await page.locator("[data-copy-target='#rush-music-packet']").getAttribute("data-copy-target");
+    if (rushCopyTarget !== "#rush-music-packet") {
+      throw new Error(`AI music rush copy target missing in ${viewport.name}`);
+    }
+    const rushMailtoHref = await page.locator("[data-mailto-target='#rush-music-packet']").getAttribute("href");
+    if (
+      !rushMailtoHref?.startsWith("mailto:jackjin1997@gmail.com") ||
+      !decodeURIComponent(rushMailtoHref).includes("USD $49 Same-Day Hook Sketch") ||
+      !decodeURIComponent(rushMailtoHref).includes("Payment timing: after written availability and brief acceptance only")
+    ) {
+      throw new Error(`AI music rush email handoff missing package or payment guardrail in ${viewport.name}`);
+    }
+    const rushOrderDeskLinks = await page.locator("a[href='ai-music-order-desk.html?lane=rush#order-desk']").count();
+    if (rushOrderDeskLinks < 3) {
+      throw new Error(`AI music rush page missing prefilled rush order desk links in ${viewport.name}`);
+    }
+    const rushOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
+    if (rushOrderLinks < 1) {
+      throw new Error(`AI music rush page missing tracked AI jingle order link in ${viewport.name}`);
+    }
+    const rushHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!rushHeroLoaded) throw new Error(`AI music rush hero image failed to load in ${viewport.name}`);
+    const rushOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (rushOverflow) throw new Error(`AI music rush horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiSaasLaunchVideoMusic, { waitUntil: "networkidle" });
     const saasLaunchTitle = await page.locator("h1").innerText();

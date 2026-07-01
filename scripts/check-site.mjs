@@ -1828,6 +1828,7 @@ try {
     if (
       !aiMusicSamplesText.includes("USD $29 hook sketch") ||
       !aiMusicSamplesText.includes("Product $29 order") ||
+      !aiMusicSamplesText.includes("Rush $49 order") ||
       !aiMusicSamplesText.includes("Podcast $149 order") ||
       !aiMusicSamplesText.includes("SaaS Launch Hero Hook Packet") ||
       !aiMusicSamplesText.includes("Turn one sample into a filled order packet") ||
@@ -1837,6 +1838,7 @@ try {
       !aiMusicSamplesText.includes("Radio ID And Drop Packet") ||
       !aiMusicSamplesText.includes("Payment timing: after written brief acceptance only") ||
       !aiMusicSamplesText.includes("Submit payment proof after acceptance") ||
+      !aiMusicSamplesText.includes("Same-day AI music rush order") ||
       !aiMusicSamplesText.includes("ETH or ERC-20 USDC/USDT/DAI only after the written brief") ||
       !aiMusicSamplesText.includes("SOL or SPL USDC only after the written brief") ||
       !aiMusicSamplesText.includes("0xa7F2235a77FBc4eCcbF60923BCDF6Df74eC710FF") ||
@@ -1904,6 +1906,36 @@ try {
       !decodeURIComponent(sampleBuilderProductEmail).includes("Payment timing: after written brief acceptance only")
     ) {
       throw new Error(`AI music samples sample brief builder email link missing product sample or payment guardrail in ${viewport.name}`);
+    }
+    await page.locator("[data-sample-brief-form] [name='package']").selectOption("USD $49 Same-Day Hook Sketch");
+    await page.locator("[data-sample-brief-form] [name='deadline']").fill("Today 6pm PT after availability confirmation");
+    await page.locator("[data-sample-brief-form]").evaluate((form) => form.requestSubmit());
+    const sampleBuilderRushPacket = await page.locator("[data-sample-brief-output]").inputValue();
+    if (
+      !sampleBuilderRushPacket.includes("Package: USD $49 Same-Day Hook Sketch") ||
+      !sampleBuilderRushPacket.includes("Reference sample: Product Demo Hook") ||
+      !sampleBuilderRushPacket.includes("Best-fit service page: https://jackjin1997.github.io/agent-audit-sprint/ai-music-rush-order.html") ||
+      !sampleBuilderRushPacket.includes("Availability: written same-day slot confirmation before payment") ||
+      !sampleBuilderRushPacket.includes("Today 6pm PT after availability confirmation") ||
+      !sampleBuilderRushPacket.includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music samples sample brief builder rush packet missing rush package, availability, or payment guardrail in ${viewport.name}`);
+    }
+    const sampleBuilderRushHref = await page.locator("[data-sample-open-order]").getAttribute("href");
+    if (
+      !sampleBuilderRushHref?.includes("template=ai-music-rush-order.yml") ||
+      !sampleBuilderRushHref.includes("labels=ai-jingle-order%2Cai-music-rush-order") ||
+      !decodeURIComponent(sampleBuilderRushHref).includes("AI music rush order: Demo Bottle Launch - Product Demo Hook")
+    ) {
+      throw new Error(`AI music samples sample brief builder rush order link missing rush template, labels, or title in ${viewport.name}`);
+    }
+    const sampleBuilderRushEmail = await page.locator("[data-sample-email-brief]").getAttribute("href");
+    if (
+      !sampleBuilderRushEmail?.startsWith("mailto:jackjin1997@gmail.com") ||
+      !decodeURIComponent(sampleBuilderRushEmail).includes("Package: USD $49 Same-Day Hook Sketch") ||
+      !decodeURIComponent(sampleBuilderRushEmail).includes("Availability: written same-day slot confirmation before payment")
+    ) {
+      throw new Error(`AI music samples sample brief builder rush email link missing rush package or availability copy in ${viewport.name}`);
     }
     const aiMusicSamplePacketIds = [
       "#sample-packet-saas-launch",

@@ -259,6 +259,8 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 
 | AI Music same-day rush direct-order owned distribution refresh | GitHub profile README commit `c1ed43d8b6ce`, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07 revision `7880993f124b`, discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/7 updated at `2026-07-01T15:32:05Z` | Added the dedicated `ai-music-rush-order.yml` USD $49 Same-Day Hook Sketch issue form to owned profile, gist, and discussion surfaces so ready buyers can open the direct rush order form without detouring through the order desk; no accepted scope or payment counted |
 
+| AI Music sample-to-rush conversion path | `ai-music-samples.html`, `script.js`, `scripts/check-site.mjs`, `README.md`, `llms.txt` | Added a direct USD $49 Same-Day Hook Sketch option to the public sample brief builder so listeners can keep their chosen WAV reference while routing the generated copy/email/GitHub packet to the dedicated `ai-music-rush-order.yml` form with written availability confirmation before payment; no accepted scope or payment counted |
+
 ## Payment Addresses
 
 | Network | Address |

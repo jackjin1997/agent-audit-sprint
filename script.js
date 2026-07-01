@@ -1290,11 +1290,36 @@ function selectedSamplePackage(form, option) {
     : selectedPackage;
 }
 
+function isSameDayRushPackage(packageName) {
+  return packageName.includes("USD $49") || packageName.includes("Same-Day Hook Sketch");
+}
+
+function sampleBriefRoute(option, selectedPackage) {
+  if (isSameDayRushPackage(selectedPackage)) {
+    return {
+      template: "ai-music-rush-order.yml",
+      labels: "ai-jingle-order,ai-music-rush-order",
+      service: "https://jackjin1997.github.io/agent-audit-sprint/ai-music-rush-order.html",
+      delivery: "one selected 8-15 second same-day hook direction after written availability confirmation",
+      isRush: true,
+    };
+  }
+
+  return {
+    template: option?.dataset.template || "ai-jingle-order.yml",
+    labels: option?.dataset.labels || "ai-jingle-order",
+    service: option?.dataset.service || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html",
+    delivery: option?.dataset.delivery || "one selected short AI-assisted music hook sketch",
+    isRush: false,
+  };
+}
+
 function buildSampleBrief(form) {
   const data = new FormData(form);
   const option = selectedSampleOption(form);
   const sample = clean(option?.value, "SaaS Launch Hero Hook");
   const selectedPackage = selectedSamplePackage(form, option);
+  const route = sampleBriefRoute(option, selectedPackage);
   const brand = clean(data.get("brand"), "Brand, show, channel, or product TBD");
   const projectUrl = clean(data.get("projectUrl"), "Website, product page, or social link TBD");
   const channel = clean(data.get("channel"), "Publishing channel TBD");
@@ -1304,8 +1329,8 @@ function buildSampleBrief(form) {
   const deadline = clean(data.get("deadline"), "Deadline TBD");
   const sampleUrl = option?.dataset.url || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html";
   const primaryUse = option?.dataset.primaryUse || "short paid music hook";
-  const delivery = option?.dataset.delivery || "one selected short AI-assisted music hook sketch";
-  const service = option?.dataset.service || "https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html";
+  const delivery = route.delivery;
+  const service = route.service;
 
   return [
     "AI music sample brief",
@@ -1322,10 +1347,11 @@ function buildSampleBrief(form) {
     `Audience and offer: ${audience}`,
     `Required CTA or product claim: ${cta}`,
     `Deadline: ${deadline}`,
+    route.isRush ? "Availability: written same-day slot confirmation before payment" : "",
     `Delivery: ${delivery}, production prompt, rough cut note, source/tool note, commercial-use memo, and usage guardrails`,
     "Payment timing: after written brief acceptance only",
     "Avoid: known-artist soundalikes, celebrity/living voice clones, copyrighted songs, and third-party lyrics without rights",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 function updateSampleBrief() {
@@ -1333,12 +1359,14 @@ function updateSampleBrief() {
   const option = selectedSampleOption(sampleBriefForm);
   const packet = buildSampleBrief(sampleBriefForm);
   const selectedPackage = selectedSamplePackage(sampleBriefForm, option);
-  const template = option?.dataset.template || "ai-jingle-order.yml";
-  const labels = option?.dataset.labels || "ai-jingle-order";
+  const route = sampleBriefRoute(option, selectedPackage);
+  const template = route.template;
+  const labels = route.labels;
   const data = new FormData(sampleBriefForm);
   const brand = clean(data.get("brand"), "AI music sample");
   const sample = clean(option?.value, "sample reference");
-  const title = `AI music sample order: ${compactTitle(brand)} - ${sample}`;
+  const titlePrefix = route.isRush ? "AI music rush order" : "AI music sample order";
+  const title = `${titlePrefix}: ${compactTitle(brand)} - ${sample}`;
   const price = sampleBriefForm.querySelector("[data-sample-brief-price]");
   const templateSummary = sampleBriefForm.querySelector("[data-sample-brief-template]");
   const output = sampleBriefForm.querySelector("[data-sample-brief-output]");

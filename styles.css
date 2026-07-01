@@ -593,6 +593,19 @@ pre.brief-output {
   word-break: break-word;
 }
 
+pre.packet {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f7f4;
+  color: var(--graphite);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .request-actions {
   display: flex;
   flex-wrap: wrap;

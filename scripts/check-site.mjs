@@ -28,6 +28,7 @@ const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.
 const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.html")}`;
 const openRouterCostCalculator = `file://${resolve(root, "openrouter-cost-calculator.html")}`;
 const openRouterBalanceGuardrail = `file://${resolve(root, "openrouter-balance-guardrail.html")}`;
+const liteLlmBudgetGuardrail = `file://${resolve(root, "litellm-budget-guardrail.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
@@ -66,6 +67,7 @@ const requiredFiles = [
   "ai-cost-spike-emergency.html",
   "openrouter-cost-calculator.html",
   "openrouter-balance-guardrail.html",
+  "litellm-budget-guardrail.html",
   "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
   "mcp-ssrf-security-review.html",
@@ -217,6 +219,12 @@ if (!llmsText.includes("OpenRouter Cost Calculator")) {
 if (!llmsText.includes("openrouter-cost-calculator.html")) {
   throw new Error("llms.txt is missing the OpenRouter Cost Calculator URL");
 }
+if (!llmsText.includes("LiteLLM Budget Guardrail")) {
+  throw new Error("llms.txt is missing the LiteLLM Budget Guardrail context");
+}
+if (!llmsText.includes("litellm-budget-guardrail.html")) {
+  throw new Error("llms.txt is missing the LiteLLM Budget Guardrail URL");
+}
 if (!llmsText.includes("AI Cost Spike Emergency Sprint")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency Sprint context");
 }
@@ -231,6 +239,9 @@ if (!llmsText.includes("cache-read assumptions") || !llmsText.includes("tool-cal
 }
 if (!llmsText.includes("JSON, JSONL, or CSV usage rows")) {
   throw new Error("llms.txt is missing the OpenRouter usage import context");
+}
+if (!llmsText.includes("per-user quotas") || !llmsText.includes("policy snapshots")) {
+  throw new Error("llms.txt is missing the LiteLLM budget guardrail routing context");
 }
 if (!llmsText.includes("ai-cost-spike-emergency.yml")) {
   throw new Error("llms.txt is missing the AI Cost Spike Emergency intake link");
@@ -1305,6 +1316,13 @@ try {
     ) {
       throw new Error(`Index page missing OpenRouter cost calculator entry in ${viewport.name}`);
     }
+    if (
+      !indexBody.includes("LiteLLM budget guardrail") ||
+      !indexBody.includes("Open the LiteLLM Budget Guardrail") ||
+      !indexBody.includes("Per-user, per-agent, and per-team quota gates")
+    ) {
+      throw new Error(`Index page missing LiteLLM budget guardrail entry in ${viewport.name}`);
+    }
     if (!indexBody.includes("Cost leak review") || !indexBody.includes("AI agent cost leak reviews")) {
       throw new Error(`Index page missing AI Agent Cost Leak focused review entry in ${viewport.name}`);
     }
@@ -1331,6 +1349,9 @@ try {
     }
     if (!indexBody.includes("Open the OpenRouter cost calculator")) {
       throw new Error(`Index page missing OpenRouter cost calculator scanner link in ${viewport.name}`);
+    }
+    if (!indexBody.includes("Open the LiteLLM budget guardrail")) {
+      throw new Error(`Index page missing LiteLLM budget guardrail scanner link in ${viewport.name}`);
     }
     if (!indexBody.includes("Open the AI agent cost leak review page")) {
       throw new Error(`Index page missing AI Agent Cost Leak review scanner link in ${viewport.name}`);
@@ -1390,6 +1411,12 @@ try {
     const indexUgcAgencyMusicLinks = await page.locator("a[href='ugc-agency-ai-music-hooks.html']").count();
     if (indexUgcAgencyMusicLinks < 1) {
       throw new Error(`Index page missing UGC agency music hook page link in ${viewport.name}`);
+    }
+    const indexAiMusicFastLaneLinks = await page.locator(
+      "a[href='ai-music-order-desk.html?lane=saas#order-desk'], a[href='ai-music-order-desk.html?lane=product#order-desk'], a[href='ai-music-order-desk.html?lane=ugc#order-desk'], a[href='ai-music-order-desk.html?lane=podcast#order-desk']"
+    ).count();
+    if (indexAiMusicFastLaneLinks < 4) {
+      throw new Error(`Index page missing AI music prefilled order desk links in ${viewport.name}`);
     }
 
     await page.locator("[name='project']").fill("https://github.com/example/agent-mcp");
@@ -1506,6 +1533,8 @@ try {
       !aiMusicGeneratorText.includes("Open order form") ||
       !aiMusicGeneratorText.includes("Generate an order-ready AI music prompt") ||
       !aiMusicGeneratorText.includes("Choose the fastest buyer path") ||
+      !aiMusicGeneratorText.includes("SaaS $29 order") ||
+      !aiMusicGeneratorText.includes("Podcast $149 order") ||
       !aiMusicGeneratorText.includes("Publishing channel") ||
       !aiMusicGeneratorText.includes("Source material rights") ||
       !aiMusicGeneratorText.includes("Copy usage memo") ||
@@ -1523,6 +1552,10 @@ try {
       !aiMusicGeneratorText.includes("Podcast sponsor pack")
     ) {
       throw new Error(`AI music generator page missing package, router, payment, or CTA copy in ${viewport.name}`);
+    }
+    const aiMusicGeneratorFastLaneLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
+    if (aiMusicGeneratorFastLaneLinks < 6) {
+      throw new Error(`AI music generator page missing fast-lane order desk links in ${viewport.name}`);
     }
     const aiMusicGeneratorHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicGeneratorHeroLoaded) throw new Error(`AI music generator hero image failed to load in ${viewport.name}`);
@@ -1662,6 +1695,8 @@ try {
     const aiMusicSamplesText = await page.locator("body").innerText();
     if (
       !aiMusicSamplesText.includes("USD $29 hook sketch") ||
+      !aiMusicSamplesText.includes("Product $29 order") ||
+      !aiMusicSamplesText.includes("Podcast $149 order") ||
       !aiMusicSamplesText.includes("SaaS Launch Hero Hook Packet") ||
       !aiMusicSamplesText.includes("Turn one sample into a filled order packet") ||
       !aiMusicSamplesText.includes("Product Demo Hook Packet") ||
@@ -1776,6 +1811,10 @@ try {
     if (!aiMusicSamplesSaasOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")) {
       throw new Error(`AI music samples SaaS order link missing SaaS launch template in ${viewport.name}`);
     }
+    const aiMusicSamplesFastLaneLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
+    if (aiMusicSamplesFastLaneLinks < 3) {
+      throw new Error(`AI music samples page missing fast-lane order desk links in ${viewport.name}`);
+    }
     const aiMusicSamplesGeneralOrderLinks = await page.locator("a[href*='template=ai-jingle-order.yml']").count();
     if (aiMusicSamplesGeneralOrderLinks < 4) {
       throw new Error(`AI music samples page missing general AI music order links in ${viewport.name}`);
@@ -1794,6 +1833,8 @@ try {
       !aiMusicPricingText.includes("$79") ||
       !aiMusicPricingText.includes("USD $149") ||
       !aiMusicPricingText.includes("USD $399") ||
+      !aiMusicPricingText.includes("UGC $149 order") ||
+      !aiMusicPricingText.includes("Podcast $149 order") ||
       !aiMusicPricingText.includes("Payment after written brief acceptance only") ||
       !aiMusicPricingText.includes("Source material rights") ||
       !aiMusicPricingText.includes("Generate price packet")
@@ -1802,6 +1843,10 @@ try {
     }
     const aiMusicPricingHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
     if (!aiMusicPricingHeroLoaded) throw new Error(`AI music pricing hero image failed to load in ${viewport.name}`);
+    const aiMusicPricingFastLaneLinks = await page.locator("a[href^='ai-music-order-desk.html?lane=']").count();
+    if (aiMusicPricingFastLaneLinks < 3) {
+      throw new Error(`AI music pricing calculator missing fast-lane order desk links in ${viewport.name}`);
+    }
     const defaultPricingPacket = await page.locator("[data-ai-music-pricing-packet]").inputValue();
     const defaultPricingOrderHref = await page.locator("[data-ai-music-pricing-open-order]").getAttribute("href");
     if (
@@ -3137,6 +3182,41 @@ try {
     }
     const openRouterBalanceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (openRouterBalanceOverflow) throw new Error(`OpenRouter Balance Guardrail horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(liteLlmBudgetGuardrail, { waitUntil: "networkidle" });
+    const liteLlmBudgetTitle = await page.locator("h1").innerText();
+    if (!liteLlmBudgetTitle.includes("LiteLLM Budget Guardrail")) {
+      throw new Error(`Unexpected LiteLLM Budget Guardrail h1 in ${viewport.name}: ${liteLlmBudgetTitle}`);
+    }
+    const liteLlmBudgetText = await page.locator("body").innerText();
+    if (
+      !liteLlmBudgetText.includes("LiteLLM keys") ||
+      !liteLlmBudgetText.includes("per-user quotas") ||
+      !liteLlmBudgetText.includes("per-agent budgets") ||
+      !liteLlmBudgetText.includes("per-team allocation") ||
+      !liteLlmBudgetText.includes("pre-dispatch reservations") ||
+      !liteLlmBudgetText.includes("policy snapshots") ||
+      !liteLlmBudgetText.includes("Payment only after written scope acceptance") ||
+      !liteLlmBudgetText.includes("USD $99") ||
+      !liteLlmBudgetText.includes("USD $299") ||
+      !liteLlmBudgetText.includes("USD $1,000")
+    ) {
+      throw new Error(`LiteLLM Budget Guardrail page missing quota states, reservation policy, or package routing in ${viewport.name}`);
+    }
+    const liteLlmPacket = await page.locator("#litellm-budget-packet").innerText();
+    if (
+      !liteLlmPacket.includes("LiteLLM Budget Guardrail review request") ||
+      !liteLlmPacket.includes("Budget boundary") ||
+      !liteLlmPacket.includes("Payment timing: after written scope acceptance only")
+    ) {
+      throw new Error(`LiteLLM Budget Guardrail packet is missing scope or payment text in ${viewport.name}`);
+    }
+    const liteLlmImageCount = await page.locator("img[src='assets/audit-dashboard.png']").count();
+    if (liteLlmImageCount !== 1) {
+      throw new Error(`LiteLLM Budget Guardrail page missing visual asset in ${viewport.name}`);
+    }
+    const liteLlmBudgetOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (liteLlmBudgetOverflow) throw new Error(`LiteLLM Budget Guardrail horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiAgentCostLeakReview, { waitUntil: "networkidle" });
     const aiAgentCostTitle = await page.locator("h1").innerText();

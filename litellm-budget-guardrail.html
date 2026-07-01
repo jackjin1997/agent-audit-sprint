@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LiteLLM budget and quota guardrail checklist for per-user, per-agent, and per-team LLM spend enforcement before paid cost-control review.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html">
+    <meta property="og:title" content="LiteLLM Budget Guardrail">
+    <meta property="og:description" content="Turn LiteLLM keys, user quotas, agent quotas, and team budgets into testable admission-control checks before LLM calls run.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LiteLLM Budget Guardrail">
+    <meta name="twitter:description" content="A practical checklist for LiteLLM keys, soft and hard quotas, stale usage, reconciliation, and cost-control review routing.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>LiteLLM Budget Guardrail</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "LiteLLM Budget Guardrail Review",
+        "description": "Fixed-scope review for LiteLLM key budgets, per-user and per-agent quota enforcement, pre-dispatch reservations, usage reconciliation, and stale-cost states.",
+        "url": "https://jackjin1997.github.io/agent-audit-sprint/litellm-budget-guardrail.html",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "USD $99 Quick AI API Cost Audit",
+            "price": "99",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $299 AI Agent Cost Leak Review",
+            "price": "299",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $1,000 AI Cost Spike Emergency Sprint",
+            "price": "1000",
+            "priceCurrency": "USD"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
+        <a href="openrouter-balance-guardrail.html">Balance Guardrail</a>
+        <a href="litellm-budget-guardrail.html">LiteLLM Budget</a>
+        <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
+        <a href="ai-cost-spike-emergency.html">Cost Spike</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">LiteLLM spend control</p>
+        <h1>LiteLLM Budget Guardrail</h1>
+        <p>
+          A focused checklist for teams using LiteLLM keys, per-user quotas, per-agent budgets, and per-team allocation. The risky part is not showing a chart. It is deciding whether the next agent call is allowed before money is spent, then reconciling the reservation against actual usage.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=litellm-budget-guardrail">Open TokenMeter</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Request review</a>
+          <a class="button secondary dark" href="openrouter-cost-calculator.html">Estimate spend</a>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Budget enforcement is an admission-control problem</h2>
+          <p>
+            A LiteLLM dashboard can report spend after the fact. A production guardrail also needs a deterministic gate before dispatch: resolve the effective policy, reserve worst-case cost for the next call, and then refund or adjust when actual usage lands.
+          </p>
+          <img class="service-visual" src="assets/audit-dashboard.png" alt="Audit dashboard visual showing review rows and status bands">
+        </div>
+        <div class="report-preview" aria-label="LiteLLM budget guardrail signals">
+          <div class="report-row pass"><span>Policy</span><strong>User, agent, team, model route, environment, and job scope resolve before dispatch</strong></div>
+          <div class="report-row low"><span>Reserve</span><strong>Worst-case next-call cost is reserved before the model request leaves the app</strong></div>
+          <div class="report-row medium"><span>Usage</span><strong>Actual token and cost usage reconciles against the reservation after completion</strong></div>
+          <div class="report-row high"><span>State</span><strong>Missing price, missing usage, stale telemetry, revoked key, and admin override are explicit states</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Failure</span><strong>Parallel agents all pass the last-budget check and overspend</strong></div>
+          <div><span>Failure</span><strong>Team membership changes rewrite historical spend attribution</strong></div>
+          <div><span>Failure</span><strong>Streaming or retried calls never emit final usage</strong></div>
+          <div><span>Failure</span><strong>Revoked dynamic keys keep running in old agent jobs</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>What the review checks</h2>
+          <p>
+            The useful scope is one live or planned LiteLLM-backed workflow: key creation, quota resolution, pre-dispatch reservations, policy snapshots, budget blocking, dashboard stale states, and the tests that prove a billing edge does not become a launch incident.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>Policy snapshot:</strong> each usage row keeps the resolved user, agent, team, model/provider route, environment, source job, and policy version.</div>
+          <div><strong>Hard quota semantics:</strong> hard blocks happen before dispatch and return a structured reason, remaining budget, reset time, and escalation path.</div>
+          <div><strong>Soft warning semantics:</strong> 50%, 80%, and 100% warnings do not silently turn into hard blocks or disappear during telemetry delays.</div>
+          <div><strong>Unknown-cost behavior:</strong> new model alias, missing price, partial stream usage, 429 retry, timeout, and provider error choose fail-open or fail-closed deliberately.</div>
+          <div><strong>Reconciliation:</strong> internal ledger totals reconcile daily against LiteLLM spend by key, model, team, and window, with stale or unreconciled UI states.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Acceptance test matrix</h2>
+          <p>
+            These tests make the budget feature harder to pass accidentally in a single-user demo while failing under real agent parallelism.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Two concurrent calls race at the final budget unit; only one dispatches or both reserve correctly.</div>
+          <div>A streaming call has partial output and no final usage event; the reservation remains visible and safe.</div>
+          <div>A retry storm after 429 or 5xx cannot multiply spend without fresh admission checks.</div>
+          <div>A user moves teams mid-window; old rows keep historical attribution while new calls use the new policy.</div>
+          <div>An admin override, revoked key, reset boundary, and price change all produce stable dashboard and API responses.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Package routing</h2>
+          <p>
+            Use the free calculator for rough monthly exposure. Use the paid review when quota behavior will ship to users, agents can run in parallel, or a cost incident is already visible.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="ai-agent-cost-leak-review.html">View cost review</a>
+            <a class="button secondary dark" href="ai-cost-spike-emergency.html">View emergency sprint</a>
+          </div>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>USD $99:</strong> quick review for one LiteLLM quota design, key policy, or launch-pricing sanity check.</div>
+          <div><strong>USD $299:</strong> focused review for one LiteLLM-backed agent or SaaS workflow with recurring cost risk.</div>
+          <div><strong>USD $1,000:</strong> emergency sprint when current usage, retry loops, or routing drift already need containment.</div>
+          <div><strong>Start rule:</strong> Payment only after written scope acceptance. No private prompts, API keys, customer data, or raw production traces in public issues.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Copy a safe intake packet</h2>
+          <p>
+            This packet is intentionally sanitized. It gives enough context to scope a review without putting prompts, secrets, customer data, or raw traces into a public issue.
+          </p>
+          <div class="service-actions">
+            <button class="button secondary dark" type="button" data-copy-target="#litellm-budget-packet">Copy packet</button>
+            <a class="button primary" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Open intake</a>
+          </div>
+        </div>
+        <pre class="packet" id="litellm-budget-packet">LiteLLM Budget Guardrail review request
+
+Project or product URL:
+Budget boundary: per-user / per-agent / per-team / shared-key / BYOK
+Provider or model routes:
+Current monthly request estimate:
+Average input and output tokens:
+Retry or streaming behavior:
+Soft warning thresholds:
+Hard quota behavior:
+Known stale or missing usage states:
+Key lifecycle concern:
+Reconciliation source:
+Requested package: USD $99 quick audit / USD $299 focused review / USD $1,000 emergency sprint
+I will not include private prompts, API keys, customer data, or raw production traces in a public issue.
+Payment timing: after written scope acceptance only.</pre>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="openrouter-cost-calculator.html">OpenRouter calculator</a>
+      <a href="openrouter-balance-guardrail.html">OpenRouter guardrail</a>
+      <a href="ai-agent-cost-leak-review.html">Cost leak review</a>
+      <a href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=litellm-budget-guardrail">TokenMeter intake</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

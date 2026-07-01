@@ -897,6 +897,16 @@ pre code {
   padding: 16px;
 }
 
+.service-visual {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(23, 26, 31, 0.12);
+}
+
 .compact-list div {
   font-weight: 650;
 }

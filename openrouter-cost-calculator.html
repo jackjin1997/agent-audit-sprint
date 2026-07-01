@@ -49,6 +49,7 @@
       </a>
       <nav class="nav">
         <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
+        <a href="openrouter-balance-guardrail.html">Balance Guardrail</a>
         <a href="ai-cost-spike-emergency.html">Cost Spike</a>
         <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
         <a href="quick-scan.html">Quick Scan</a>
@@ -65,6 +66,7 @@
         </p>
         <div class="service-actions">
           <a class="button primary" href="#calculator">Run calculator</a>
+          <a class="button secondary dark" href="openrouter-balance-guardrail.html">Balance guardrail</a>
           <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-calculator">TokenMeter quick audit</a>
           <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=agent&source=openrouter-calculator">Agent cost review</a>
           <a class="button secondary dark" href="https://tokenmeter-mu.vercel.app/audit?path=emergency&source=openrouter-calculator">Emergency sprint</a>
@@ -189,6 +191,25 @@
 
       <section class="service-band service-split">
         <div>
+          <h2>Use balance as a signal, not permission</h2>
+          <p>
+            A credits or key-limit snapshot should inform the UI, but the dispatch gate still needs a reservation before the next model call and an actual-cost reconciliation after the generation finishes.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="openrouter-balance-guardrail.html">Open balance guardrail</a>
+            <a class="button secondary dark" href="https://openrouter.ai/docs/api/api-reference/api-keys/get-current-key">Open key docs</a>
+          </div>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>Account credits:</strong> track purchased and used credits separately from local monthly budgets.</div>
+          <div><strong>Key limits:</strong> treat remaining limit, reset policy, and usage as the current key scope, not a global account truth.</div>
+          <div><strong>Generation cost:</strong> reconcile token counts and usage after completion, including streaming and provider fallback cases.</div>
+          <div><strong>Stale state:</strong> block or degrade expensive calls when credits, key limits, or generation metadata cannot be trusted.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
           <p class="eyebrow">Routing</p>
           <h2>Pick the package from the cost shape</h2>
           <p>
@@ -228,6 +249,7 @@
     <footer class="footer">
       <span>Agent/MCP Audit Sprint</span>
       <a href="https://openrouter.ai/api/v1/models">OpenRouter model API</a>
+      <a href="openrouter-balance-guardrail.html">OpenRouter balance guardrail</a>
       <a href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-calculator">TokenMeter audit intake</a>
       <a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Cost leak intake</a>
       <a href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml">Emergency intake</a>

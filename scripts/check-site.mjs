@@ -27,6 +27,7 @@ const checklist = `file://${resolve(root, "checklist.html")}`;
 const aiAgentService = `file://${resolve(root, "ai-agent-security-audit-service.html")}`;
 const aiCostSpikeEmergency = `file://${resolve(root, "ai-cost-spike-emergency.html")}`;
 const openRouterCostCalculator = `file://${resolve(root, "openrouter-cost-calculator.html")}`;
+const openRouterBalanceGuardrail = `file://${resolve(root, "openrouter-balance-guardrail.html")}`;
 const aiAgentCostLeakReview = `file://${resolve(root, "ai-agent-cost-leak-review.html")}`;
 const agentAuthReview = `file://${resolve(root, "agent-auth-security-review.html")}`;
 const mcpSsrfReview = `file://${resolve(root, "mcp-ssrf-security-review.html")}`;
@@ -40,6 +41,7 @@ const quickScan = `file://${resolve(root, "quick-scan.html")}`;
 const aiMusicGenerator = `file://${resolve(root, "ai-music-generator.html")}`;
 const aiMusicSamples = `file://${resolve(root, "ai-music-samples.html")}`;
 const aiMusicPricingCalculator = `file://${resolve(root, "ai-music-pricing-calculator.html")}`;
+const aiMusicOrderDesk = `file://${resolve(root, "ai-music-order-desk.html")}`;
 const aiJingle = `file://${resolve(root, "ai-jingle-generator.html")}`;
 const aiJingleHookSketch = `file://${resolve(root, "ai-jingle-hook-sketch.html")}`;
 const aiCommercialJingle = `file://${resolve(root, "ai-commercial-jingle-generator.html")}`;
@@ -63,6 +65,7 @@ const requiredFiles = [
   "ai-agent-security-audit-service.html",
   "ai-cost-spike-emergency.html",
   "openrouter-cost-calculator.html",
+  "openrouter-balance-guardrail.html",
   "ai-agent-cost-leak-review.html",
   "agent-auth-security-review.html",
   "mcp-ssrf-security-review.html",
@@ -77,6 +80,7 @@ const requiredFiles = [
   "ai-music-generator.html",
   "ai-music-samples.html",
   "ai-music-pricing-calculator.html",
+  "ai-music-order-desk.html",
   "ai-jingle-generator.html",
   "ai-jingle-hook-sketch.html",
   "ai-commercial-jingle-generator.html",
@@ -278,6 +282,9 @@ if (!llmsText.includes("ai-music-samples.html")) {
 }
 if (!llmsText.includes("AI Music Pricing Calculator") || !llmsText.includes("ai-music-pricing-calculator.html")) {
   throw new Error("llms.txt is missing the AI Music Pricing Calculator page");
+}
+if (!llmsText.includes("AI Music Order Desk") || !llmsText.includes("ai-music-order-desk.html")) {
+  throw new Error("llms.txt is missing the AI Music Order Desk page");
 }
 if (!llmsText.includes("USD $29 Founding Hook Sketch")) {
   throw new Error("llms.txt is missing the AI jingle first-sale package");
@@ -1836,6 +1843,65 @@ try {
     const aiMusicPricingOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (aiMusicPricingOverflow) throw new Error(`AI music pricing calculator horizontal overflow detected in ${viewport.name}`);
 
+    await page.goto(aiMusicOrderDesk, { waitUntil: "networkidle" });
+    const aiMusicOrderTitle = await page.locator("h1").innerText();
+    if (!aiMusicOrderTitle.includes("AI Music Order Desk")) {
+      throw new Error(`Unexpected AI music order desk h1 in ${viewport.name}: ${aiMusicOrderTitle}`);
+    }
+    const aiMusicOrderText = await page.locator("body").innerText();
+    if (
+      !aiMusicOrderText.includes("Generate order packet") ||
+      !aiMusicOrderText.includes("Payment after written brief acceptance only") ||
+      !aiMusicOrderText.includes("Source material rights") ||
+      !aiMusicOrderText.includes("SaaS Launch Hero Hook") ||
+      !aiMusicOrderText.includes("USD $399 Sonic Launch Kit") ||
+      !aiMusicOrderText.includes("AI Music Pricing Calculator")
+    ) {
+      throw new Error(`AI music order desk is missing packet CTA, package ladder, sample, rights, or payment guardrail in ${viewport.name}`);
+    }
+    const aiMusicOrderHeroLoaded = await page.locator(".hero-bg").evaluate((img) => img.complete && img.naturalWidth > 0);
+    if (!aiMusicOrderHeroLoaded) throw new Error(`AI music order desk hero image failed to load in ${viewport.name}`);
+    const defaultOrderPacket = await page.locator("[data-ai-music-order-output]").inputValue();
+    const defaultOrderHref = await page.locator("[data-ai-music-order-open]").getAttribute("href");
+    if (
+      !defaultOrderPacket.includes("AI music order desk packet") ||
+      !defaultOrderPacket.includes("Requested package: USD $29 SaaS Launch Video Music Hook Sketch") ||
+      !defaultOrderPacket.includes("Reference sample: SaaS Launch Hero Hook") ||
+      !defaultOrderPacket.includes("Contact: founder@example.com") ||
+      !defaultOrderPacket.includes("Payment timing: after written brief acceptance only") ||
+      !defaultOrderHref?.includes("template=ai-saas-launch-video-music-order.yml")
+    ) {
+      throw new Error(`AI music order desk default packet missing SaaS route, contact, sample, or payment guardrail in ${viewport.name}`);
+    }
+    await page.locator("[data-ai-music-order-form] [name='useCase']").selectOption("UGC agency client approval");
+    await page.locator("[data-ai-music-order-form] [name='packageChoice']").selectOption("USD $399 Sonic Launch Kit");
+    await page.locator("[data-ai-music-order-form] [name='sample']").selectOption("Product Demo Hook");
+    await page.locator("[data-ai-music-order-form] [name='brand']").fill("Northstar UGC Sprint");
+    await page.locator("[data-ai-music-order-form] [name='contact']").fill("ops@example.com");
+    await page.locator("[data-ai-music-order-form]").evaluate((form) => form.requestSubmit());
+    const ugcOrderPacket = await page.locator("[data-ai-music-order-output]").inputValue();
+    const ugcOrderHref = await page.locator("[data-ai-music-order-open]").getAttribute("href");
+    if (
+      !ugcOrderPacket.includes("Requested package: USD $399 Sonic Launch Kit") ||
+      !ugcOrderPacket.includes("Package reason: buyer-selected package") ||
+      !ugcOrderPacket.includes("Reference sample: Product Demo Hook") ||
+      !ugcOrderPacket.includes("Contact: ops@example.com") ||
+      !ugcOrderHref?.includes("template=ugc-agency-music-hook-order.yml") ||
+      !decodeURIComponent(ugcOrderHref).includes("AI music order: Northstar UGC Sprint - USD $399 Sonic Launch Kit")
+    ) {
+      throw new Error(`AI music order desk did not route UGC agency $399 packet correctly in ${viewport.name}`);
+    }
+    const orderEmailHref = await page.locator("[data-ai-music-order-email]").getAttribute("href");
+    if (
+      !orderEmailHref?.startsWith("mailto:jackjin1997@gmail.com") ||
+      !decodeURIComponent(orderEmailHref).includes("USD $399 Sonic Launch Kit") ||
+      !decodeURIComponent(orderEmailHref).includes("Payment timing: after written brief acceptance only")
+    ) {
+      throw new Error(`AI music order desk email packet missing recipient, package, or guardrail in ${viewport.name}`);
+    }
+    const aiMusicOrderOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (aiMusicOrderOverflow) throw new Error(`AI music order desk horizontal overflow detected in ${viewport.name}`);
+
     await page.goto(aiSaasLaunchVideoMusic, { waitUntil: "networkidle" });
     const saasLaunchTitle = await page.locator("h1").innerText();
     if (!saasLaunchTitle.includes("AI SaaS Launch Video Music Generator")) {
@@ -2998,6 +3064,31 @@ try {
     }
     const openRouterOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (openRouterOverflow) throw new Error(`OpenRouter Cost Calculator horizontal overflow detected in ${viewport.name}`);
+
+    await page.goto(openRouterBalanceGuardrail, { waitUntil: "networkidle" });
+    const openRouterBalanceTitle = await page.locator("h1").innerText();
+    if (!openRouterBalanceTitle.includes("OpenRouter Balance Guardrail")) {
+      throw new Error(`Unexpected OpenRouter Balance Guardrail h1 in ${viewport.name}: ${openRouterBalanceTitle}`);
+    }
+    const openRouterBalanceText = await page.locator("body").innerText();
+    if (
+      !openRouterBalanceText.includes("/api/v1/credits") ||
+      !openRouterBalanceText.includes("/api/v1/key") ||
+      !openRouterBalanceText.includes("/api/v1/generation") ||
+      !openRouterBalanceText.includes("pre-dispatch reservation") ||
+      !openRouterBalanceText.includes("Payment only after written scope acceptance") ||
+      !openRouterBalanceText.includes("USD $99") ||
+      !openRouterBalanceText.includes("USD $299") ||
+      !openRouterBalanceText.includes("USD $1,000")
+    ) {
+      throw new Error(`OpenRouter Balance Guardrail page missing endpoints, reservation policy, or package routing in ${viewport.name}`);
+    }
+    const openRouterBalanceImageCount = await page.locator("img[src='assets/audit-dashboard.png']").count();
+    if (openRouterBalanceImageCount !== 1) {
+      throw new Error(`OpenRouter Balance Guardrail page missing visual asset in ${viewport.name}`);
+    }
+    const openRouterBalanceOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (openRouterBalanceOverflow) throw new Error(`OpenRouter Balance Guardrail horizontal overflow detected in ${viewport.name}`);
 
     await page.goto(aiAgentCostLeakReview, { waitUntil: "networkidle" });
     const aiAgentCostTitle = await page.locator("h1").innerText();

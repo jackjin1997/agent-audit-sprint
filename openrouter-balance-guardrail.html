@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="OpenRouter balance and key-limit guardrail checklist for teams that need stale-state handling, pre-dispatch reservations, and cost review routing.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Zexu Jin">
+    <link rel="canonical" href="https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html">
+    <meta property="og:title" content="OpenRouter Balance Guardrail">
+    <meta property="og:description" content="Turn OpenRouter credits, key limits, and generation usage into a safer budget gate before model calls leave your app.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html">
+    <meta property="og:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenRouter Balance Guardrail">
+    <meta name="twitter:description" content="A focused checklist for OpenRouter credits, key limits, stale balance states, and cost-control review routing.">
+    <meta name="twitter:image" content="https://jackjin1997.github.io/agent-audit-sprint/assets/audit-dashboard.png">
+    <title>OpenRouter Balance Guardrail</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "OpenRouter Balance Guardrail Review",
+        "description": "Fixed-scope review for OpenRouter credit checks, key-limit states, pre-dispatch cost reservations, and stale balance handling.",
+        "url": "https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html",
+        "provider": {
+          "@type": "Person",
+          "name": "Zexu Jin",
+          "url": "https://github.com/jackjin1997"
+        },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "USD $99 Quick AI API Cost Audit",
+            "price": "99",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $299 AI Agent Cost Leak Review",
+            "price": "299",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "USD $1,000 AI Cost Spike Emergency Sprint",
+            "price": "1000",
+            "priceCurrency": "USD"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agent/MCP Audit Sprint</span>
+      </a>
+      <nav class="nav">
+        <a href="openrouter-cost-calculator.html">OpenRouter Cost</a>
+        <a href="openrouter-balance-guardrail.html">Balance Guardrail</a>
+        <a href="ai-agent-cost-leak-review.html">Cost Leak</a>
+        <a href="ai-cost-spike-emergency.html">Cost Spike</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <main class="service-page">
+      <section class="service-hero">
+        <p class="eyebrow">OpenRouter spend control</p>
+        <h1>OpenRouter Balance Guardrail</h1>
+        <p>
+          A practical checklist for teams exposing OpenRouter balance, key limits, and model spend inside an agent or SaaS workflow. The useful gate is not the raw balance number. It is a clear stale-state policy, a pre-dispatch reservation, and an actual-usage refund path.
+        </p>
+        <div class="service-actions">
+          <a class="button primary" href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-balance-guardrail">Open TokenMeter</a>
+          <a class="button secondary dark" href="openrouter-cost-calculator.html">Use calculator</a>
+          <a class="button secondary dark" href="https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml">Request review</a>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Separate credits, limits, and usage</h2>
+          <p>
+            OpenRouter exposes account credits, current key details, and generation metadata as different API surfaces. A product guardrail should keep those meanings separate so a cached credits snapshot never becomes a false permission to dispatch an expensive run.
+          </p>
+          <img class="service-visual" src="assets/audit-dashboard.png" alt="Audit dashboard visual showing review rows and status bands">
+        </div>
+        <div class="report-preview" aria-label="OpenRouter balance guardrail signals">
+          <div class="report-row pass"><span>Credits</span><strong><code>/api/v1/credits</code> is account-level purchased and used credits</strong></div>
+          <div class="report-row low"><span>Key</span><strong><code>/api/v1/key</code> is current key limit, remaining limit, reset, and usage</strong></div>
+          <div class="report-row medium"><span>Usage</span><strong><code>/api/v1/generation</code> is per-generation tokens, usage, cost, provider, and model</strong></div>
+          <div class="report-row high"><span>Gate</span><strong>Admission control needs a reservation before dispatch and refund after actual usage</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band">
+        <div class="service-summary">
+          <div><span>Failure</span><strong>Zero balance confused with unavailable balance</strong></div>
+          <div><span>Failure</span><strong>Stale credits snapshot allows a costly retry loop</strong></div>
+          <div><span>Failure</span><strong>BYOK usage mixed into shared-key budget</strong></div>
+          <div><span>Failure</span><strong>Generation cost arrives after the UI already says safe</strong></div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Review shape</h2>
+          <p>
+            The review is scoped around one OpenRouter-backed workflow: UI balance display, budget guard, retry behavior, cache-read assumptions, and logs that prove cost without exposing prompts or API keys.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>State contract:</strong> available, unconfigured, unauthorized, rate-limited, stale, unavailable, and zero-credit states are distinct.</div>
+          <div><strong>Reservation ledger:</strong> the next call reserves worst-case cost before dispatch, then records actual usage after completion.</div>
+          <div><strong>Error policy:</strong> 401, 403, 429, timeout, malformed payload, and stale cache all block or degrade predictably.</div>
+          <div><strong>Scope policy:</strong> BYOK usage, shared keys, workspace budgets, and user-level caps do not overwrite each other.</div>
+          <div><strong>Audit trail:</strong> logs keep model, provider, token counts, and cost while stripping prompts, keys, account ids, and customer data.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Package routing</h2>
+          <p>
+            Use the free calculator for rough monthly exposure. Use the paid review when the workflow is live, confusing users, or already close to a budget edge.
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="openrouter-cost-calculator.html">Run calculator</a>
+            <a class="button secondary dark" href="ai-cost-spike-emergency.html">View emergency sprint</a>
+          </div>
+        </div>
+        <div class="service-list compact-list">
+          <div><strong>USD $99:</strong> quick review for one balance display, key-limit state, or launch-pricing sanity check.</div>
+          <div><strong>USD $299:</strong> focused review for one OpenRouter-backed agent or SaaS workflow with recurring cost risk.</div>
+          <div><strong>USD $1,000:</strong> emergency sprint when daily burn, retries, or model-routing drift already need containment.</div>
+          <div><strong>Start rule:</strong> Payment only after written scope acceptance. No private prompts, secrets, or raw customer traces in public issues.</div>
+        </div>
+      </section>
+
+      <section class="service-band service-split">
+        <div>
+          <h2>Useful intake evidence</h2>
+          <p>
+            A sanitized packet is enough to start scoping. Keep private data out of GitHub issues and use summarized counts where possible.
+          </p>
+        </div>
+        <div class="service-list compact-list">
+          <div>Workflow URL or product page, plus where OpenRouter calls happen.</div>
+          <div>Model ids, monthly request estimate, average input and output tokens, cache-read share, and retry rate.</div>
+          <div>Current balance or key-limit behavior, including stale, unauthorized, and rate-limited screenshots with account details removed.</div>
+          <div>One example generation id only if it is safe to share, otherwise a redacted cost summary.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Agent/MCP Audit Sprint</span>
+      <a href="openrouter-cost-calculator.html">OpenRouter calculator</a>
+      <a href="https://openrouter.ai/docs/api/api-reference/credits/get-credits">OpenRouter credits docs</a>
+      <a href="https://openrouter.ai/docs/api/api-reference/api-keys/get-current-key">OpenRouter key docs</a>
+      <a href="https://tokenmeter-mu.vercel.app/audit?path=quick&source=openrouter-balance-guardrail">TokenMeter intake</a>
+    </footer>
+  </body>
+</html>

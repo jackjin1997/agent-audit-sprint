@@ -11,13 +11,14 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - USD $99 quick scan, USD $299 focused review, or USD $1,000 full sprint for one agent, MCP server, or tool-using product slice
 - USD $1,000 AI Cost Spike Emergency Sprint for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk
 - Free OpenRouter Cost Calculator for editable model-spend estimates, JSON/JSONL/CSV usage import, cache-read assumptions, retry overhead, tool-call fanout, and direct $99/$299/$1,000 AI cost review routing
+- OpenRouter Balance Guardrail page for credits, current key limits, stale states, pre-dispatch reservations, actual usage reconciliation, BYOK separation, and $99/$299/$1,000 cost review routing
 - USD $299 AI Agent Cost Leak Review for token spend, context bloat, RAG over-retrieval, model-routing drift, retry loops, cache misses, and coding-agent tool-call loops
 - USD $299 Agent Auth Focused Review for token brokers, cookie vaults, site_login flows, OAuth/HITL consent, authenticated scraping, dynamic URL fetch/SSRF boundaries, and cache isolation
 - USD $299 MCP SSRF Focused Review for one dynamic URL fetch, pagination, callback, redirect, webhook, proxy, or SSRF-with-credentials boundary
 - Ranked findings with evidence, impact, and fix plan
 - Review areas: tool boundaries, secrets, auth, write actions, prompt/tool injection, tests, deployment assumptions
 - Payment-ready via ETH or SOL addresses after written scope acceptance, with invoice-first discussion available before work starts
-- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for SaaS/Product Hunt launch videos, ecommerce product videos, small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, pricing calculator, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, SaaS launch video music page with a SaaS Launch Hero Hook sample, product video music page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, central sample-to-order packet page with a sample brief builder, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
+- AI music revenue experiment: USD $29, USD $79, USD $149, and USD $399 AI-assisted jingle/ad-music packages for SaaS/Product Hunt launch videos, ecommerce product videos, small businesses, short-form Reels/Shorts/UGC ads, UGC agency client approval hooks, real estate listing videos, wedding videos, podcasts, radio IDs, YouTube/TikTok intros, and local ads; the buyer-routing AI music storefront now includes an order-ready prompt generator, pricing calculator, order desk, commercial-use memo generator, static and dynamic source-rights brief fields, dynamic acceptance/payment email handoff, browser sketch playback, downloadable WAV draft, email/order links, focused $29 hook sketch page, SaaS launch video music page with a SaaS Launch Hero Hook sample, product video music page, commercial jingle page, short-form ad music generator page, UGC agency music hook page, central sample-to-order packet page with a sample brief builder, real estate listing music page, wedding video music page, podcast intro page, broad generator, public sample audio, email brief path, and issue autoresponder
 
 ## Files
 
@@ -25,6 +26,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-agent-security-audit-service.html` / `docs/ai-agent-security-audit-service.md` - broader AI agent security audit service page
 - `ai-cost-spike-emergency.html` / `.github/ISSUE_TEMPLATE/ai-cost-spike-emergency.yml` - urgent $1,000 AI Cost Spike Emergency Sprint page and intake for runaway LLM bills, agent loops, retry storms, RAG over-retrieval, model routing, cache misses, and 24h containment planning
 - `openrouter-cost-calculator.html` - free editable OpenRouter / LLM API cost calculator that estimates monthly model spend from manual inputs or sanitized JSON/JSONL/CSV usage rows, cache-read savings, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review intake packet
+- `openrouter-balance-guardrail.html` - OpenRouter balance and key-limit guardrail page for separating account credits, current key limit, generation usage, stale-state behavior, and pre-dispatch reservation checks before paid review routing
 - `ai-agent-cost-leak-review.html` / `.github/ISSUE_TEMPLATE/agent-cost-leak-review.yml` - focused $299 AI Agent Cost Leak Review page and intake for token spend, context bloat, RAG cost, model routing, retry loops, cache misses, and tool-call loops
 - `agent-auth-security-review.html` - focused $299 Agent Auth and Cookie Vault Security Review page for token brokers, cookie vaults, site_login, OAuth/HITL auth, authenticated scraping, SSRF with cookies, redaction, and cache isolation
 - `mcp-ssrf-security-review.html` - focused $299 MCP SSRF and Dynamic URL Fetch Review page for scanner/SARIF findings involving pagination URLs, callbacks, redirects, webhooks, proxy URLs, and credential-bearing URL fetches
@@ -38,6 +40,7 @@ https://jackjin1997.github.io/agent-audit-sprint/
 - `ai-music-generator.html` - buyer-facing AI music generator storefront that routes SaaS launch videos, ads, Reels/Shorts/UGC hooks, listing videos, wedding highlights, podcast intros, sponsor cues, and creator intros to the fastest $29 or $149 paid path, with an on-page prompt generator, browser sketch playback, WAV download, source-rights email brief, generated acceptance/payment packet, commercial-use memo, dynamic acceptance and usage-memo email links, payment proof link, and order link
 - `ai-music-samples.html` - public AI music sample-to-order page with five WAV references, a sample brief builder that generates copy/email/GitHub order packets, copyable and email-ready paid brief packets, SaaS launch order routing, product-video order routing, general AI music order routing, and after-acceptance payment guardrails
 - `ai-music-pricing-calculator.html` - AI music pricing calculator that routes one brief to the smallest useful USD $29, $79, $149, or $399 package, then generates copy/email/GitHub order packets with publishing-channel, source-rights, and payment-after-written-acceptance guardrails
+- `ai-music-order-desk.html` - AI music order desk that combines use case, package, reference sample, buyer contact, source-rights, publishing channel, CTA, and creative notes into one email/GitHub order packet before payment
 - `ai-jingle-generator.html` / `.github/ISSUE_TEMPLATE/ai-jingle-order.yml` - AI-assisted jingle, ad music, podcast intro, and radio ID package page with a USD $29 first hook sketch, local brief builder, sample deliverables, public WAV samples, reference-sample intake field, browser audio sketch, WAV download, and email brief handoff
 - `ai-jingle-hook-sketch.html` - focused USD $29 Founding Hook Sketch page with copy-ready email brief, sample audio, order-form path, and written-brief-acceptance payment guardrail
 - `ai-commercial-jingle-generator.html` - local-business USD $29 commercial jingle page for audio ads, social promos, radio-style IDs, and small business campaigns
@@ -100,6 +103,7 @@ Browser:
 - AI music generator storefront: https://jackjin1997.github.io/agent-audit-sprint/ai-music-generator.html
 - AI music sample-to-order packets: https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html
 - AI music pricing calculator: https://jackjin1997.github.io/agent-audit-sprint/ai-music-pricing-calculator.html
+- AI music order desk: https://jackjin1997.github.io/agent-audit-sprint/ai-music-order-desk.html
 - AI jingle generator offer: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-generator.html
 - AI jingle $29 hook sketch: https://jackjin1997.github.io/agent-audit-sprint/ai-jingle-hook-sketch.html
 - AI commercial jingle generator: https://jackjin1997.github.io/agent-audit-sprint/ai-commercial-jingle-generator.html
@@ -117,6 +121,7 @@ Browser:
 - AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
 - AI Cost Spike emergency intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=ai-cost-spike-emergency.yml
 - OpenRouter Cost Calculator: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
+- OpenRouter Balance Guardrail: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html
 - AI Agent Cost Leak Review: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 - AI Agent cost leak focused review intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=agent-cost-leak-review.yml
 - Agent Auth and Cookie Vault Security Review: https://jackjin1997.github.io/agent-audit-sprint/agent-auth-security-review.html
@@ -137,6 +142,7 @@ Browser:
 - Private repo scan: use the local folder selector on the same page
 - Audit request packet: generated after each browser scan for copy/paste into a paid audit intake; auth-heavy scans add a USD $299 Agent Auth focused-review recommendation, dynamic URL fetch / SSRF scans add a USD $299 MCP SSRF focused-review recommendation, cost-heavy agent workflows can use the USD $299 AI Agent Cost Leak Review intake, and runaway bill spikes can use the USD $1,000 AI Cost Spike Emergency Sprint intake
 - OpenRouter cost packet: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html estimates model spend from manual inputs or sanitized JSON, JSONL, or CSV usage rows, cache-read share, retry overhead, and tool-call fanout, then generates a sanitized $99/$299/$1,000 AI cost review packet
+- OpenRouter balance guardrail: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html separates account credits, current key limits, generation usage, stale balance states, BYOK usage, and reservation-led dispatch gates before a paid cost-control review
 - Paid package intake: https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=paid-audit-intent.yml
 
 Terminal:
@@ -154,6 +160,7 @@ The scanner looks for tool registration, remote transports, write actions, crede
 The Markdown output and browser-generated audit request packet include paid audit request, fixed quote, and terms links so a free scanner artifact can become an audit handoff without losing scanner evidence. If token, cookie, session, OAuth, Bearer, API key, or credential-boundary signals appear, the scanner routes to the USD $299 Agent Auth focused-review intake. If pagination URL, callback URL, redirect URL, webhook, proxy fetch, or other MCP SSRF/dynamic fetch signals appear, it routes to the USD $299 MCP SSRF focused-review intake.
 The AI Cost Spike Emergency Sprint is a USD $1,000 urgent containment package for runaway LLM bills, repeated agent/tool loops, RAG over-retrieval, retry storms, model-routing drift, cache misses, and launch-pricing risk: https://jackjin1997.github.io/agent-audit-sprint/ai-cost-spike-emergency.html
 The OpenRouter Cost Calculator is a free editable estimator for model spend, cache-read assumptions, retry overhead, and tool-call fanout. It can also import sanitized JSON, JSONL, or CSV usage rows and scale them to a monthly estimate before generating a sanitized packet for the USD $99 quick audit, USD $299 AI Agent Cost Leak Review, or USD $1,000 AI Cost Spike Emergency Sprint: https://jackjin1997.github.io/agent-audit-sprint/openrouter-cost-calculator.html
+The OpenRouter Balance Guardrail page is a focused handoff for teams that need account credits, current key limits, stale states, BYOK separation, pre-dispatch reservations, and actual generation cost reconciliation before accepting a paid scope: https://jackjin1997.github.io/agent-audit-sprint/openrouter-balance-guardrail.html
 The AI Agent Cost Leak Review is a separate USD $299 focused review for one token spend, context bloat, RAG over-retrieval, model-routing, retry-loop, cache-miss, or tool-call loop cost boundary: https://jackjin1997.github.io/agent-audit-sprint/ai-agent-cost-leak-review.html
 The lead finder searches current GitHub issues for explicit agent/MCP security demand signals and is designed for manual review only; it does not post comments.
 

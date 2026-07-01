@@ -595,6 +595,7 @@ function mailtoHref(subject, body) {
 }
 
 const aiMusicPricingForm = document.querySelector("[data-ai-music-pricing-form]");
+const aiMusicOrderForm = document.querySelector("[data-ai-music-order-form]");
 
 function selectedAiMusicUseCaseOption(form) {
   return form.querySelector("[name='useCase']")?.selectedOptions?.[0] || null;
@@ -693,6 +694,98 @@ function buildAiMusicPricingPacket(form, result) {
   ].join("\n");
 }
 
+function amountFromPackageName(packageName, fallbackAmount = 29) {
+  const match = String(packageName || "").match(/USD\s+\$(\d+)/i);
+  return match ? Number.parseInt(match[1], 10) : fallbackAmount;
+}
+
+function selectedAiMusicOrderSampleOption(form) {
+  return form.querySelector("[name='sample']")?.selectedOptions?.[0] || null;
+}
+
+function aiMusicOrderResult(form) {
+  const pricingResult = aiMusicPricingResult(form);
+  const data = new FormData(form);
+  const packageChoice = clean(data.get("packageChoice"), "Use calculator recommendation");
+  const sampleOption = selectedAiMusicOrderSampleOption(form);
+  const selectedSample = clean(sampleOption?.value, "Use route default sample");
+  const packageName = packageChoice === "Use calculator recommendation" ? pricingResult.packageName : packageChoice;
+  const amount = amountFromPackageName(packageName, pricingResult.amount);
+  const sample = selectedSample === "Use route default sample" ? pricingResult.sample : selectedSample;
+  const sampleUrl = selectedSample === "Use route default sample"
+    ? "https://jackjin1997.github.io/agent-audit-sprint/ai-music-samples.html"
+    : sampleOption?.dataset.url || "Provided in buyer brief";
+  return {
+    ...pricingResult,
+    amount,
+    packageName,
+    reason: packageChoice === "Use calculator recommendation" ? pricingResult.reason : "buyer-selected package",
+    sample,
+    sampleUrl,
+  };
+}
+
+function buildAiMusicOrderPacket(form, result) {
+  const data = new FormData(form);
+  const useCase = clean(data.get("useCase"), "AI music brief");
+  const brand = clean(data.get("brand"), "Brand, product, show, or client TBD");
+  const projectUrl = clean(data.get("projectUrl"), "Website, product page, or media kit TBD");
+  const contact = clean(data.get("contact"), "Contact TBD");
+  const lengthSeconds = clean(data.get("lengthSeconds"), "15");
+  const variants = clean(data.get("variants"), "1");
+  const cutPlan = clean(data.get("cutPlan"), "single");
+  const revisions = clean(data.get("revisions"), "0");
+  const timing = clean(data.get("timing"), "48h target after accepted brief");
+  const channel = clean(data.get("channel"), "Publishing channel TBD");
+  const rights = clean(data.get("rights"), "Source material rights TBD");
+  const audience = clean(data.get("audience"), "Audience and offer TBD");
+  const cta = clean(data.get("cta"), "CTA, tagline, or product claim TBD");
+  const notes = clean(data.get("notes"), "Extra creative direction TBD");
+
+  return [
+    "AI music order desk packet",
+    "",
+    `Requested package: ${result.packageName}`,
+    `Estimated amount: ${usd(result.amount)}`,
+    `Package reason: ${result.reason}`,
+    `Best-fit service page: ${result.service}`,
+    `Tracked order template: ${result.template}`,
+    `Reference sample: ${result.sample}`,
+    `Reference sample URL: ${result.sampleUrl}`,
+    "",
+    "Buyer brief",
+    `Use case: ${useCase}`,
+    `Brand, product, show, or client: ${brand}`,
+    `Website, product page, or media kit: ${projectUrl}`,
+    `Contact: ${contact}`,
+    `Target length: ${lengthSeconds} seconds`,
+    `Directions or variants needed: ${variants}`,
+    `Cut plan: ${cutPlan}`,
+    `Revision need: ${revisions}`,
+    `Delivery timing: ${timing}`,
+    `Publishing channel: ${channel}`,
+    `Source material rights: ${rights}`,
+    "",
+    "Audience and offer",
+    audience,
+    "",
+    "CTA, tagline, or product claim",
+    cta,
+    "",
+    "Creative notes",
+    notes,
+    "",
+    "Acceptance rule",
+    "Payment timing: after written brief acceptance only.",
+    "Do not send payment until the package, source-material rights, publishing channel, delivery timing, and payment path are accepted in writing.",
+    "",
+    "Delivery notes",
+    "- Includes selected AI-assisted music direction, production prompt, rough cut note, source/tool note, and usage memo.",
+    "- No known-artist soundalikes, living voice clones, copyrighted songs, or third-party lyrics without rights.",
+    "- AI-generated music may have copyright-registration limits; delivery includes usage notes, not legal clearance.",
+  ].join("\n");
+}
+
 function updateAiMusicPricing() {
   if (!aiMusicPricingForm) return;
   const result = aiMusicPricingResult(aiMusicPricingForm);
@@ -711,6 +804,26 @@ function updateAiMusicPricing() {
   output.value = packet;
   emailLink.href = mailtoHref(`AI music price brief: ${brand}`, packet);
   openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(result.template)}&labels=${encodeURIComponent(result.labels)}&title=${encodeURIComponent(`AI music price brief: ${brand}`)}&body=${encodeURIComponent(packet)}`;
+}
+
+function updateAiMusicOrderDesk() {
+  if (!aiMusicOrderForm) return;
+  const result = aiMusicOrderResult(aiMusicOrderForm);
+  const packet = buildAiMusicOrderPacket(aiMusicOrderForm, result);
+  const data = new FormData(aiMusicOrderForm);
+  const brand = compactTitle(data.get("brand"), "brand");
+  const selectedPackage = aiMusicOrderForm.querySelector("[data-ai-music-order-package]");
+  const selectedSample = aiMusicOrderForm.querySelector("[data-ai-music-order-sample]");
+  const route = aiMusicOrderForm.querySelector("[data-ai-music-order-route]");
+  const output = aiMusicOrderForm.querySelector("[data-ai-music-order-output]");
+  const emailLink = aiMusicOrderForm.querySelector("[data-ai-music-order-email]");
+  const openLink = aiMusicOrderForm.querySelector("[data-ai-music-order-open]");
+  selectedPackage.textContent = result.packageName;
+  selectedSample.textContent = result.sample;
+  route.textContent = result.template;
+  output.value = packet;
+  emailLink.href = mailtoHref(`AI music order brief: ${brand}`, packet);
+  openLink.href = `https://github.com/jackjin1997/agent-audit-sprint/issues/new?template=${encodeURIComponent(result.template)}&labels=${encodeURIComponent(result.labels)}&title=${encodeURIComponent(`AI music order: ${brand} - ${result.packageName}`)}&body=${encodeURIComponent(packet)}`;
 }
 
 document.querySelectorAll("[data-mailto-target]").forEach((link) => {
@@ -734,6 +847,28 @@ if (aiMusicPricingForm) {
   aiMusicPricingForm.querySelector("[data-copy-ai-music-pricing-packet]").addEventListener("click", async (event) => {
     updateAiMusicPricing();
     const output = aiMusicPricingForm.querySelector("[data-ai-music-pricing-packet]");
+    try {
+      await navigator.clipboard.writeText(output.value);
+      setButtonText(event.currentTarget, "Copied");
+    } catch {
+      output.select();
+      setButtonText(event.currentTarget, "Select");
+    }
+  });
+}
+
+if (aiMusicOrderForm) {
+  updateAiMusicOrderDesk();
+  aiMusicOrderForm.addEventListener("input", updateAiMusicOrderDesk);
+  aiMusicOrderForm.addEventListener("change", updateAiMusicOrderDesk);
+  aiMusicOrderForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateAiMusicOrderDesk();
+    aiMusicOrderForm.querySelector("[data-ai-music-order-output]").focus();
+  });
+  aiMusicOrderForm.querySelector("[data-copy-ai-music-order-packet]").addEventListener("click", async (event) => {
+    updateAiMusicOrderDesk();
+    const output = aiMusicOrderForm.querySelector("[data-ai-music-order-output]");
     try {
       await navigator.clipboard.writeText(output.value);
       setButtonText(event.currentTarget, "Copied");

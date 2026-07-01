@@ -227,6 +227,7 @@ Checked on 2026-07-01 (monitor timestamp 2026-07-01T01:37:18Z):
 | Private email draft pack | `private-notes/email-drafts-2026-06-19.md` | 9 public-contact drafts prepared locally; not public, not sent |
 | Private Action/Code Scanning outreach draft pack | `private-notes/action-code-scanning-outreach-2026-06-20.md` | 16 current public MCP targets, P1/P2/P3 contact routes, and reusable SARIF Action pitch prepared locally; not public, not sent |
 | OpenRouter Balance Guardrail page | `openrouter-balance-guardrail.html` | Added an owned OpenRouter balance and key-limit guardrail page that separates account credits, current key limits, generation usage, stale-state handling, BYOK scope, pre-dispatch reservations, actual-cost reconciliation, and $99/$299/$1,000 AI cost review routing; no payment counted |
+| OpenRouter Balance Guardrail owned distribution refresh | GitHub profile README, public gist https://gist.github.com/jackjin1997/7252ed10f0737297ebd28edb0940be07, booking FAQ https://github.com/jackjin1997/agent-audit-sprint/discussions/1, scanner discussion https://github.com/jackjin1997/agent-audit-sprint/discussions/3 | Added owned distribution links for the OpenRouter Balance Guardrail page so credits, current key limits, stale balance states, BYOK separation, pre-dispatch reservations, and actual generation cost reconciliation route to $99/$299/$1,000 AI cost review paths before payment; no accepted scope or payment counted |
 
 ## Payment Addresses
 
